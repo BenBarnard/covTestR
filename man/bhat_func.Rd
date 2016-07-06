@@ -11,10 +11,8 @@ bhat_func(ahat21, ahat22)
 
 \item{ahat22}{see function}
 }
-\value{
-
-}
 \description{
 b hat used in method introduced by Chaipitak 2013 (helper function)
 }
+\keyword{internal}
 

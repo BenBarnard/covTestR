@@ -11,10 +11,8 @@ ahat1_func(p, sample_cov)
 
 \item{sample_cov}{sample covariance matrix}
 }
-\value{
-
-}
 \description{
 Estimator for expansion term in Frobenius Norm Schott 2007 (helper funciton)
 }
+\keyword{internal}
 

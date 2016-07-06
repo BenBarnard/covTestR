@@ -15,10 +15,8 @@ overall_cov_func(A1, A2, n1, n2)
 
 \item{n2}{sample size for group 2}
 }
-\value{
-
-}
 \description{
 Overall Covariance Matirx (helper function)
 }
+\keyword{internal}
 

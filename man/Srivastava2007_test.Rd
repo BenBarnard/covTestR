@@ -11,7 +11,13 @@ Srivastava2007_test(data, ...)
 
 \item{...}{other}
 }
+\value{
+Test statistic for Srivastava 2007
+}
 \description{
 Test of Equality of Covariances given by Srivastava 2007
+}
+\examples{
+Srivastava2007_test(mcSamples(c(0,0,0), diag(1, 3), 10, 2))
 }
 

@@ -17,10 +17,8 @@ deltahat2_func(ahatstar4, p, ahat2, n1, n2)
 
 \item{n2}{sample size for group 2}
 }
-\value{
-
-}
 \description{
 delta hat squared for Chaiptak 2013 (helper function)
 }
+\keyword{internal}
 

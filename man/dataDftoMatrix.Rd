@@ -9,9 +9,6 @@ dataDftoMatrix(data)
 \arguments{
 \item{data}{tidy dataframe}
 }
-\value{
-
-}
 \description{
 Turn Tidy data frame into data matrix (helper function)
 }

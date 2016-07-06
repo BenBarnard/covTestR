@@ -34,7 +34,7 @@ mcSamples <- function(meanVec, covMat, maxN, pops, ...){
 #' @param ahat21 see function
 #' @param ahat22 see function
 #'
-#' @return
+#' @keywords internal
 #'
 bhat_func <- function(ahat21, ahat22){
   ahat21 / ahat22
@@ -46,7 +46,7 @@ bhat_func <- function(ahat21, ahat22){
 #' @param p dimension
 #' @param sample_cov sample covariance matrix
 #'
-#' @return
+#' @keywords internal
 #'
 ahat2i_func <- function(n, p, sample_covs){
   (((n - 1) ^ 2) / (p * (n -2) * (n + 1))) *
@@ -59,7 +59,7 @@ ahat2i_func <- function(n, p, sample_covs){
 #' @param p dimension
 #' @param sample_cov sample covariance matrix
 #'
-#' @return
+#' @keywords internal
 #'
 ahat2_func <- function(n1, n2, p, overall_cov){
   n <- n1 + n2 - 2
@@ -72,9 +72,9 @@ ahat2_func <- function(n1, n2, p, overall_cov){
 #' @param p dimension
 #' @param sample_cov sample covariance matrix
 #'
-#' @return
+#' @keywords internal
 #'
-ahat1_func <- function(p, sample_cov){
+ahat1_func <- ahat1i_func <- function(p, sample_cov){
   (1 / p) * tr(sample_cov)
 }
 
@@ -87,7 +87,9 @@ ahat1_func <- function(p, sample_cov){
 #' @param n1 sample size for group 1
 #' @param n2 sample size for group 2
 #'
-#' @return
+#' @aliases ahat1i_func
+#'
+#' @keywords internal
 #'
 ahatStar4_func <- function(tau, p, sample_cov, n1, n2){
   n <- n1 + n2 - 2
@@ -103,7 +105,7 @@ ahatStar4_func <- function(tau, p, sample_cov, n1, n2){
 #'
 #' @param n sample size
 #'
-#' @return
+#' @keywords internal
 #'
 tau_func <- function(n1, n2){
   n <- n1 + n2 - 2
@@ -114,7 +116,7 @@ tau_func <- function(n1, n2){
 #'
 #' @param n sample size
 #'
-#' @return
+#' @keywords internal
 #'
 c0_func <- function(n){
   n * ((n ^ 3) + 6 * (n ^ 2) + 21 * n + 18)
@@ -124,7 +126,7 @@ c0_func <- function(n){
 #'
 #' @param n sample size
 #'
-#' @return
+#' @keywords internal
 #'
 c1_func <- function(n){
   2 * n * (2 * (n ^ 2) + 6 * n + 9)
@@ -134,7 +136,7 @@ c1_func <- function(n){
 #'
 #' @param n sample size
 #'
-#' @return
+#' @keywords internal
 #'
 c2_func <- function(n){
   2 * n * (3 * n + 2)
@@ -144,7 +146,7 @@ c2_func <- function(n){
 #'
 #' @param n sample size
 #'
-#' @return
+#' @keywords internal
 #'
 c3_func <- function(n){
   n * (2 * (n ^ 2) + 5 * n + 7)
@@ -157,7 +159,7 @@ c3_func <- function(n){
 #' @param n1 sample size for group 1
 #' @param n2 sample size for group 2
 #'
-#' @return
+#' @keywords internal
 #'
 overall_cov_func <- function(A1, A2, n1, n2){
   (1 / (n1 + n2 - 2)) * (A1 + A2)
@@ -167,7 +169,7 @@ overall_cov_func <- function(A1, A2, n1, n2){
 #'
 #' @param matrix data matrix
 #'
-#' @return
+#' @keywords internal
 #'
 A_func <- function(matrix){
   (t(matrix) - colMeans(matrix)) %*% t(t(matrix) - colMeans(matrix))
@@ -181,7 +183,7 @@ A_func <- function(matrix){
 #' @param n1 sample size for group 1
 #' @param n2 sample size for group 2
 #'
-#' @return
+#' @keywords internal
 #'
 deltahat2_func <- function(ahatstar4, p , ahat2, n1, n2){
   4 * (((2 * ahatstar4) / (p * ahat2 ^ 2)) * sum(1 / (n1 - 1), 1 / (n2 - 1)) + sum(1 / ((n1 - 1) ^ 2), 1 / ((n2 - 1) ^ 2)))
@@ -194,7 +196,7 @@ deltahat2_func <- function(ahatstar4, p , ahat2, n1, n2){
 #' @param ahat4 see function
 #' @param ahat2 see function
 #'
-#' @return
+#' @keywords internal
 #'
 etahat2i_func <- function(n, p, ahat4, ahat2){
   (4 / ((n - 1) ^ 2)) *
@@ -212,7 +214,7 @@ etahat2i_func <- function(n, p, ahat4, ahat2){
 #' @param ahat2 see function
 #' @param ahat1 see function
 #'
-#' @return
+#' @keywords internal
 #'
 ahat4_func <- function(A1, A2, p, n1, n2, ahat2, ahat1){
   n <- n1 + n2 - 2
@@ -224,11 +226,65 @@ ahat4_func <- function(A1, A2, p, n1, n2, ahat2, ahat1){
        n * (p ^ 3) * (ahat1 ^ 4))
 }
 
+#' Estimator for Gamma Srivastava and Yanagihara 2010 (helper function)
+#'
+#' @param ahat2i see function
+#' @param ahat1i see function
+#'
+#' @keywords internal
+#'
+gammahati_func <- function(ahat2i, ahat1i){
+  ahat2i / (ahat1i ^ 2)
+}
+
+#' Estimator for Ksi Srivastava and Yanagihara 2010 (helper function)
+#'
+#' @param n sample size
+#' @param p dimension
+#' @param ahat1 see function
+#' @param ahat2 see function
+#' @param ahat3 see function
+#' @param ahat4 see function
+#'
+#' @keywords internal
+#'
+ksihat2i_func <- function(n, p, ahat1, ahat2, ahat3, ahat4){
+  (4 / ((n - 1) ^ 2)) * (((ahat2 ^ 2) / (ahat1 ^ 4)) +
+                           ((2 * (n - 1)) / p) *
+                           (((ahat2 ^ 3) / (ahat1 ^ 6)) -
+                              ((2 * ahat2 * ahat3) / (ahat1 ^ 5)) +
+                              (ahat4 / (ahat1 ^ 4))))
+}
+
+#' Estimator for Frobenius norm expansion term (helper function)
+#'
+#' @param A1 sum of squares for group 1
+#' @param A2 sum of squares for group 2
+#' @param p dimension
+#' @param n1 sample size for group 1
+#' @param n2 sample size for group 2
+#' @param ahat2 see function
+#' @param ahat1 see function
+#'
+#' @keywords internal
+#'
+ahat3_func <- function(A1, A2, p, n1, n2, ahat2, ahat1){
+  n <- n1 + n2 - 2
+  (1 / (n * ((n ^ 2) + 3 * n + 4))) *
+    (((1 / p) * tr((A1 + A2) ^ 3)) -
+       (3 * n * (n + 1) * p * ahat2 * ahat1) -
+       (n * (p ^ 2) * (ahat1 ^ 3)))
+}
+
+ahat2iSrivatava2014_func <- function(){
+
+}
+
 #' Turn Tidy data frame into data matrix (helper function)
 #'
 #' @param data tidy dataframe
 #'
-#' @return
+#' @export
 #'
 #' @importFrom magrittr %>%
 #' @importFrom reshape2 acast
@@ -245,7 +301,7 @@ dataDftoMatrix <- function(data){
 #'
 #' @param mat matrix
 #'
-#' @return
+#' @keywords internal
 #'
 tr <- function(mat){
   sum(diag(mat))

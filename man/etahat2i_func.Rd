@@ -15,10 +15,8 @@ etahat2i_func(n, p, ahat4, ahat2)
 
 \item{ahat2}{see function}
 }
-\value{
-
-}
 \description{
 Estimator for eta squared Srivastave 2007 (helper function)
 }
+\keyword{internal}
 

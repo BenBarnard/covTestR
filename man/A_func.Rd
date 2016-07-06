@@ -9,10 +9,8 @@ A_func(matrix)
 \arguments{
 \item{matrix}{data matrix}
 }
-\value{
-
-}
 \description{
 Sum of Squares (helper function)
 }
+\keyword{internal}
 

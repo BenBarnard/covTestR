@@ -9,10 +9,8 @@ tr(mat)
 \arguments{
 \item{mat}{matrix}
 }
-\value{
-
-}
 \description{
 Trace of Matrix
 }
+\keyword{internal}
 

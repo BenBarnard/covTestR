@@ -9,10 +9,8 @@ tau_func(n1, n2)
 \arguments{
 \item{n}{sample size}
 }
-\value{
-
-}
 \description{
 Tau for Chaipitak 2013 (helper function)
 }
+\keyword{internal}
 
