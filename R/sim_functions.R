@@ -1,12 +1,22 @@
-#' Title
+#' Sim Function to get data for Critical Value Data
 #'
-#' @param data
+#' @param data the data
+#' @param tests list of test to simulate
 #'
-#' @return
 #' @export
 #'
 #' @examples critical_value_sim(mcSamples(c(0,0,0), diag(1, 3), 10, 2))
-critical_value_sim <- function(data){
+critical_value_sim <- function(data, tests){
+  UseMethod("critical_value_sim")
+}
+
+critical_value_sim.data.frame <- function(data, ...){
+  do.call(critical_value_sim.matrix,
+          data %>%
+            dlply(.(Group), dataDftoMatrix))
+}
+
+critical_value_sim <- function(data, tests){
   matrix_ls <- data %>%
     dlply(.(Group), dataDftoMatrix)
   n <- matrix_ls %>% llply(function(matrix){
