@@ -49,6 +49,7 @@ Schott2007_test.matrix<- function(...){
 #'
 #' @importFrom magrittr %>%
 #' @importFrom plyr dlply
+#' @importFrom plyr .
 #'
 Schott2007_test.data.frame <- function(data, ...){
   do.call(Schott2007_test.matrix,
