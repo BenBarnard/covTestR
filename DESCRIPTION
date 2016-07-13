@@ -9,3 +9,6 @@ Description: Simulations for comparing equality of covariances tests.
 License: MIT + file LICENSE
 LazyData: TRUE
 RoxygenNote: 5.0.1
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
