@@ -9,19 +9,26 @@
 #' @keywords internal
 #'
 #' @examples critical_value_sim_(mcSamples(c(0,0,0), diag(1, 3), 10, 2))
-critical_value_sim_ <- function(data, ...){
+critical_value_sim_ <- function(data, quantile, ..., dots){
   UseMethod("critical_value_sim_")
 }
 
 #' @importFrom magrittr %>%
 #' @importFrom plyr dlply
 #' @importFrom plyr .
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval as.lazy_dots
 #'
-critical_value_sim_.data.frame <- function(data, ...){
+#' @export
+#'
+#' @keywords internal
+#'
+critical_value_sim_.data.frame <- function(data, quantile, ..., dots){
+  dots <- as.lazy_dots(..., dots)
   do.call(critical_value_sim_.matrix,
-          data %>%
-            dlply(.(Group), dataDftoMatrix))
-}
+          list((data %>%
+               dlply(.(Group), dataDftoMatrix)), dots = dots, quantile = quantile))
+  }
 
 #' @importFrom plyr dlply
 #' @importFrom plyr llply
@@ -29,9 +36,13 @@ critical_value_sim_.data.frame <- function(data, ...){
 #' @importFrom plyr .
 #' @importFrom magrittr %>%
 #'
-critical_value_sim_.matrix <- function(data, ...){
-  matrix_ls <- data %>%
-    dlply(.(Group), dataDftoMatrix)
+#' @export
+#'
+#' @keywords internal
+#'
+critical_value_sim_.matrix <- function(..., quantile, dots){
+  browser()
+  matrix_ls <- list(...)
   n <- matrix_ls %>% llply(function(matrix){
     nrow(matrix)
   })
@@ -91,14 +102,15 @@ critical_value_sim_.matrix <- function(data, ...){
 #'
 #' @importFrom lazyeval lazy
 #' @importFrom lazyeval lazy_eval
+#' @importFrom lazyeval lazy_dots
 #' @importFrom magrittr %>%
 #' @importFrom plyr llply
 #'
 #' @keywords internal
 #'
-critical_value_sim <- function(sim_size, sim_data_func){
-  browser()
+critical_value_sim <- function(sim_size, sim_data_func, quantile, ...){
   lazydata <- lazy(sim_data_func)
-  replicate(sim_size, lazy_eval(lazydata), simplify = FALSE) %>% llply(critical_value_sim_)
+  dots <- lazy_dots(...)
+  replicate(sim_size, lazy_eval(lazydata), simplify = FALSE) %>% llply(critical_value_sim_, dots = dots, quantile = quantile)
 }
 
