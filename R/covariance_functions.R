@@ -7,6 +7,8 @@
 #'
 #' @keywords internal
 #'
+#' @export
+#'
 overall_cov_func <- function(A1, A2, n1, n2){
   (1 / (n1 + n2 - 2)) * (A1 + A2)
 }
@@ -17,6 +19,8 @@ overall_cov_func <- function(A1, A2, n1, n2){
 #'
 #' @keywords internal
 #'
+#' @export
+#'
 A_func <- function(matrix){
   (t(matrix) - colMeans(matrix)) %*% t(t(matrix) - colMeans(matrix))
 }
@@ -26,6 +30,8 @@ A_func <- function(matrix){
 #' @param matrix data matrix
 #'
 #' @keywords internal
+#'
+#' @export
 #'
 Di_func <- function(matrix){
   diag(matrix %*% t(matrix))
