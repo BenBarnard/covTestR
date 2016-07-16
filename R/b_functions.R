@@ -5,6 +5,8 @@
 #'
 #' @keywords internal
 #'
+#' @export
+#'
 bhat_func <- function(ahat21, ahat22){
   ahat21 / ahat22
 }
