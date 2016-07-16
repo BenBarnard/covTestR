@@ -7,6 +7,8 @@
 #'
 #' @keywords internal
 #'
+#' @export
+#'
 etahat2i_func <- function(n, p, ahat4, ahat2){
   (4 / ((n - 1) ^ 2)) *
     (ahat2 ^ 2) *
