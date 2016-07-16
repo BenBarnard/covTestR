@@ -22,32 +22,32 @@ SrivastavaYanagihara2010_test <- function(data, ...){
 #' @importFrom magrittr %>%
 #'
 SrivastavaYanagihara2010_test.matrix <- function(...){
-    matrix_ls <- list(...)
-    n <- matrix_ls %>% llply(function(matrix){
-      nrow(matrix)
-    })
-    p <- matrix_ls %>% llply(function(matrix){
-      ncol(matrix)
-    })
-    A_ls <- matrix_ls %>% llply(A_func)
-    sample_covs <- cbind(A_ls, n) %>% mlply(function(A_ls, n){
-      A_ls / (n - 1)
-    })
-    overall_cov <- (1 / (n[[1]] + n[[2]] - 2)) * (A_ls[[1]] + A_ls[[2]])
-    ahat2 <- ahat2_func(n[[1]], n[[2]], p[[1]], overall_cov)
-    ahat1 <- ahat1_func(p[[1]], overall_cov)
-    ahat2_ls <- cbind(n, p, sample_covs) %>% mlply(ahat2i_func)
-    ahat1_ls <- cbind(p, sample_covs) %>% mlply(function(p, sample_covs){
-      ahat1_func(p, sample_covs)
-    })
-    ahat3 <- ahat3_func(A_ls[[1]], A_ls[[2]], p[[1]], n[[1]], n[[2]], ahat2, ahat1)
-    ahat4 <- ahat4_func(A_ls[[1]], A_ls[[2]], p[[1]], n[[1]], n[[2]], ahat2, ahat1)
-    ksihat2_ls <- cbind(n, p, ahat1, ahat2, ahat3, ahat4) %>% mlply(ksihat2i_func)
-    gammahat_ls <- cbind(ahat2_ls, ahat1_ls) %>% mlply(function(ahat2_ls, ahat1_ls){
-      gammahati_func(ahat2_ls, ahat1_ls)
+  matrix_ls <- list(...)
+  n <- matrix_ls %>% llply(function(matrix){
+    nrow(matrix)
+  })
+  p <- matrix_ls %>% llply(function(matrix){
+    ncol(matrix)
+  })
+  A_ls <- matrix_ls %>% llply(A_func)
+  sample_covs <- cbind(A_ls, n) %>% mlply(function(A_ls, n){
+    A_ls / (n - 1)
+  })
+  overall_cov <- (1 / (n[[1]] + n[[2]] - 2)) * (A_ls[[1]] + A_ls[[2]])
+  ahat2 <- ahat2_func(n[[1]], n[[2]], p[[1]], overall_cov)
+  ahat1 <- ahat1_func(p[[1]], overall_cov)
+  ahat2_ls <- cbind(n, p, sample_covs) %>% mlply(ahat2i_func)
+  ahat1_ls <- cbind(p, sample_covs) %>% mlply(function(p, sample_covs){
+    ahat1_func(p, sample_covs)
+  })
+  ahat3 <- ahat3_func(A_ls[[1]], A_ls[[2]], p[[1]], n[[1]], n[[2]], ahat2, ahat1)
+  ahat4 <- ahat4_func(A_ls[[1]], A_ls[[2]], p[[1]], n[[1]], n[[2]], ahat2, ahat1)
+  ksihat2_ls <- cbind(n, p, ahat1, ahat2, ahat3, ahat4) %>% mlply(ksihat2i_func)
+  gammahat_ls <- cbind(ahat2_ls, ahat1_ls) %>% mlply(function(ahat2_ls, ahat1_ls){
+    gammahati_func(ahat2_ls, ahat1_ls)
+  })
 
-    SrivastavaYanagihara2010_test.default(gammahat_ls[[1]], gammahat_ls[[2]], ksihat2_ls[[1]], ksihat2_ls[[2]])
-    })
+  SrivastavaYanagihara2010_test.default(gammahat_ls[[1]], gammahat_ls[[2]], ksihat2_ls[[1]], ksihat2_ls[[2]])
 }
 
 
