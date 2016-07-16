@@ -4,7 +4,7 @@
 \alias{critical_value_sim_}
 \title{Sim Function to get data for Critical Value Data}
 \usage{
-critical_value_sim_(data, ...)
+critical_value_sim_(data, quantile, ..., dots)
 }
 \arguments{
 \item{data}{the data}
