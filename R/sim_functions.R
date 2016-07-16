@@ -1,22 +1,35 @@
 #' Sim Function to get data for Critical Value Data
 #'
 #' @param data the data
-#' @param tests list of test to simulate
+#' @param ... other stuff
+#'
 #'
 #' @export
 #'
-#' @examples critical_value_sim(mcSamples(c(0,0,0), diag(1, 3), 10, 2))
-critical_value_sim <- function(data, tests){
-  UseMethod("critical_value_sim")
+#' @keywords internal
+#'
+#' @examples critical_value_sim_(mcSamples(c(0,0,0), diag(1, 3), 10, 2))
+critical_value_sim_ <- function(data, ...){
+  UseMethod("critical_value_sim_")
 }
 
-critical_value_sim.data.frame <- function(data, ...){
-  do.call(critical_value_sim.matrix,
+#' @importFrom magrittr %>%
+#' @importFrom plyr dlply
+#' @importFrom plyr .
+#'
+critical_value_sim_.data.frame <- function(data, ...){
+  do.call(critical_value_sim_.matrix,
           data %>%
             dlply(.(Group), dataDftoMatrix))
 }
 
-critical_value_sim.matrix <- function(data, tests){
+#' @importFrom plyr dlply
+#' @importFrom plyr llply
+#' @importFrom plyr mlply
+#' @importFrom plyr .
+#' @importFrom magrittr %>%
+#'
+critical_value_sim_.matrix <- function(data, ...){
   matrix_ls <- data %>%
     dlply(.(Group), dataDftoMatrix)
   n <- matrix_ls %>% llply(function(matrix){
@@ -68,3 +81,24 @@ critical_value_sim.matrix <- function(data, tests){
       gammahat_ls[[1]], gammahat_ls[[2]], ksihat2_ls[[1]], ksihat2_ls[[2]])
   )
 }
+
+#' Critical Value Simulation
+#'
+#' @param sim_size
+#' @param sim_data_func
+#'
+#' @export
+#'
+#' @importFrom lazyeval lazy
+#' @importFrom lazyeval lazy_eval
+#' @importFrom magrittr %>%
+#' @importFrom plyr llply
+#'
+#' @keywords internal
+#'
+critical_value_sim <- function(sim_size, sim_data_func){
+  browser()
+  lazydata <- lazy(sim_data_func)
+  replicate(sim_size, lazy_eval(lazydata), simplify = FALSE) %>% llply(critical_value_sim_)
+}
+
