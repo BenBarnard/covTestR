@@ -2,19 +2,15 @@
 % Please edit documentation in R/sim_functions.R
 \name{critical_value_sim}
 \alias{critical_value_sim}
-\title{Sim Function to get data for Critical Value Data}
+\title{Critical Value Simulation}
 \usage{
-critical_value_sim(data, tests)
+critical_value_sim(sim_size, sim_data_func)
 }
 \arguments{
-\item{data}{the data}
-
-\item{tests}{list of test to simulate}
+\item{sim_data_func}{}
 }
 \description{
-Sim Function to get data for Critical Value Data
+Critical Value Simulation
 }
-\examples{
-critical_value_sim(mcSamples(c(0,0,0), diag(1, 3), 10, 2))
-}
+\keyword{internal}
 
