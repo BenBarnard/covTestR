@@ -6,6 +6,10 @@
 #' @importFrom reshape2 acast
 #' @importFrom dplyr select
 #'
+#' @keywords internal
+#'
+#' @export
+#'
 dataDftoMatrix <- function(data){
   data %>%
     select(-Group) %>%
@@ -18,6 +22,8 @@ dataDftoMatrix <- function(data){
 #' @param mat matrix
 #'
 #' @keywords internal
+#'
+#' @export
 #'
 tr <- function(mat){
   sum(diag(mat))
