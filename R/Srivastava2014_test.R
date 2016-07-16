@@ -36,7 +36,6 @@ Srivastava2014_test.matrix<- function(...){
   })
   D_ls <- matrix_ls %>% llply(Di_func)
   overall_cov <- (1 / (n[[1]] + n[[2]] - 2)) * (A_ls[[1]] + A_ls[[2]])
-  overall_n <- n[[1]] + n[[2]]
   ahat2i <- cbind(n, p, D_ls, A_ls) %>%
     mlply(function(n, p, D_ls, A_ls){
     ahat2iSrivastava2014_func(n, p, D_ls, A_ls)
