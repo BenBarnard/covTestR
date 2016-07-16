@@ -5,6 +5,8 @@
 #'
 #' @keywords internal
 #'
+#' @export
+#'
 gammahati_func <- function(ahat2i, ahat1i){
   ahat2i / (ahat1i ^ 2)
 }
