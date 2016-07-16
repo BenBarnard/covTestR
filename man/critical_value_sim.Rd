@@ -4,7 +4,7 @@
 \alias{critical_value_sim}
 \title{Critical Value Simulation}
 \usage{
-critical_value_sim(sim_size, sim_data_func)
+critical_value_sim(sim_size, sim_data_func, quantile, ...)
 }
 \arguments{
 \item{sim_data_func}{}
