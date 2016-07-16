@@ -12,4 +12,5 @@ dataDftoMatrix(data)
 \description{
 Turn Tidy data frame into data matrix (helper function)
 }
+\keyword{internal}
 
