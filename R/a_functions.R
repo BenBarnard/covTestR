@@ -6,6 +6,8 @@
 #'
 #' @keywords internal
 #'
+#' @export
+#'
 ahat2i_func <- function(n, p, sample_covs){
   (((n - 1) ^ 2) / (p * (n -2) * (n + 1))) *
     (tr(sample_covs ^ 2) - (1 / (n - 1)) * (tr(sample_covs)) ^ 2)
@@ -19,6 +21,8 @@ ahat2i_func <- function(n, p, sample_covs){
 #'
 #' @keywords internal
 #'
+#' @export
+#'
 ahat2_func <- function(n1, n2, p, overall_cov){
   n <- n1 + n2 - 2
   (((n) ^ 2) / (p * (n - 1) * (n + 2))) *
@@ -31,6 +35,8 @@ ahat2_func <- function(n1, n2, p, overall_cov){
 #' @param sample_cov sample covariance matrix
 #'
 #' @keywords internal
+#'
+#' @export
 #'
 ahat1_func <- ahat1i_func <- function(p, sample_cov){
   (1 / p) * tr(sample_cov)
@@ -48,6 +54,8 @@ ahat1_func <- ahat1i_func <- function(p, sample_cov){
 #' @aliases ahat1i_func
 #'
 #' @keywords internal
+#'
+#' @export
 #'
 ahatStar4_func <- function(tau, p, sample_cov, n1, n2){
   n <- n1 + n2 - 2
@@ -71,6 +79,8 @@ ahatStar4_func <- function(tau, p, sample_cov, n1, n2){
 #'
 #' @keywords internal
 #'
+#' @export
+#'
 ahat4_func <- function(A1, A2, p, n1, n2, ahat2, ahat1){
   n <- n1 + n2 - 2
   (1 / c0_func(n)) *
@@ -93,6 +103,8 @@ ahat4_func <- function(A1, A2, p, n1, n2, ahat2, ahat1){
 #'
 #' @keywords internal
 #'
+#' @export
+#'
 ahat3_func <- function(A1, A2, p, n1, n2, ahat2, ahat1){
   n <- n1 + n2 - 2
   (1 / (n * ((n ^ 2) + 3 * n + 4))) *
@@ -111,6 +123,8 @@ ahat3_func <- function(A1, A2, p, n1, n2, ahat2, ahat1){
 #'
 #' @keywords internal
 #'
+#' @export
+#'
 ahat2iSrivastava2014_func <- function(n, p, D, A){
   ((n - 2) * (n - 1) * tr(A ^ 2) -
      n * (n - 1) * tr(D ^ 2) +
@@ -126,6 +140,8 @@ ahat2iSrivastava2014_func <- function(n, p, D, A){
 #' @param n2 sample size group 2
 #'
 #' @keywords internal
+#'
+#' @export
 #'
 ahat2Srivastava2014_func <- function(ahat21, ahat22, n1, n2){
   ((n1 - 1) * ahat21 + (n2 - 1) * ahat22) / (n1 + n2 - 2)
