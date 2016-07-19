@@ -2,15 +2,24 @@
 % Please edit documentation in R/critical_value_sim.R
 \name{critical_value_sim}
 \alias{critical_value_sim}
-\title{Critical Value Simulation}
+\title{Sim Function to get data for Critical Value Data}
 \usage{
-critical_value_sim(sim_size, sim_data_func, quantile, ...)
+critical_value_sim(params, replications, quantile, test)
 }
 \arguments{
-\item{sim_data_func}{}
+\item{data}{the data}
+
+\item{...}{other stuff}
 }
 \description{
-Critical Value Simulation
+Sim Function to get data for Critical Value Data
+}
+\examples{
+critical_value_sim(list(meanVec = c(0,0,0),
+                                  covMat = diag(1, 3),
+                                  samples = 10,
+                                  pops = 2),
+                             100, .95, Chaipitak2013_test)
 }
 \keyword{internal}
 
