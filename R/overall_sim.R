@@ -1,3 +1,3 @@
-overall_sim <- function(params, ){
+overall_sim <- function(params){
 
 }
