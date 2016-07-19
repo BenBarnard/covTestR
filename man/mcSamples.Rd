@@ -4,16 +4,16 @@
 \alias{mcSamples}
 \title{Simulate Monte Carlo Samples from a Multivariate Normal Distribution}
 \usage{
-mcSamples(meanVec, covMat, maxN, pops, ...)
+mcSamples(meanVec, covMat, samples, pops, ...)
 }
 \arguments{
 \item{meanVec}{Numeric vector of means for the variables.}
 
 \item{covMat}{Positive-definite symmetric matrix of the variables.}
 
-\item{maxN}{Numeric scalar of the maximum of the sample sizes in the simulation.}
-
 \item{...}{Other variables used in mvnorm function in the mass package.}
+
+\item{maxN}{Numeric scalar of the maximum of the sample sizes in the simulation.}
 }
 \value{
 Matrix of maxN multivariate normal samples.
