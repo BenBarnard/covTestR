@@ -10,25 +10,8 @@
 #'
 #' @examples critical_value_sim_(mcSamples(c(0,0,0), diag(1, 3), 10, 2))
 critical_value_sim_ <- function(data, quantile, ..., dots){
-  UseMethod("critical_value_sim_")
-}
 
-#' @importFrom magrittr %>%
-#' @importFrom plyr dlply
-#' @importFrom plyr .
-#' @importFrom lazyeval lazy_dots
-#' @importFrom lazyeval as.lazy_dots
-#'
-#' @export
-#'
-#' @keywords internal
-#'
-critical_value_sim_.data.frame <- function(data, quantile, ..., dots){
-  dots <- as.lazy_dots(..., dots)
-  do.call(critical_value_sim_.matrix,
-          list((data %>%
-               dlply(.(Group), dataDftoMatrix)), dots = dots, quantile = quantile))
-  }
+}
 
 #' Critical Value Simulation
 #'
