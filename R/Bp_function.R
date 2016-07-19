@@ -11,9 +11,8 @@
 #'
 Bp_ <- function(n, i, p, X){
   ((n ^ (-1)) *
-     (gamma(n + 1) /
-        ((gamma(i)) * gamma(n - i + 1))) *
-     (p ^ (i - 1)) * ((1 - p) ^ (n - i))) * X
+    ((2 * pi * p * (1 - p) / (n + 1)) ^ (-1 / 2)) *
+    exp(- ((i / (n + 1) - p) ^ 2) / ((2 * p * (1 - p)) / (n + 1)))) * X
 }
 
 #' Brewer Kernel Quantile Estimator
@@ -28,6 +27,7 @@ Bp_ <- function(n, i, p, X){
 #' @importFrom magrittr %>%
 #' @importFrom plyr mlply
 #'
+#' @examples Bp_func(rnorm(100), .95)
 Bp_func <- function(data, p){
   n <- length(data)
   i <- seq(1:n)
