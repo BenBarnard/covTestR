@@ -18,9 +18,9 @@
 #'
 #' @examples
 #' mcSamples(c(0,0,0), diag(1, 3), 10, 2)
-mcSamples <- function(meanVec, covMat, maxN, pops, ...){
+mcSamples <- function(meanVec, covMat, samples, pops, ...){
   replicate(pops,
-            mvrnorm(n = maxN, mu = meanVec, Sigma = covMat) %>%
+            mvrnorm(n = samples, mu = meanVec, Sigma = covMat) %>%
               melt %>%
               setNames(c('Subjects', 'Variables', 'Value')),
             simplify = FALSE) %>%
