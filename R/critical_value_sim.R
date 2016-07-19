@@ -8,29 +8,14 @@
 #'
 #' @keywords internal
 #'
-#' @examples critical_value_sim_(mcSamples(c(0,0,0), diag(1, 3), 10, 2))
-critical_value_sim_ <- function(data, quantile, ..., dots){
+#' @examples critical_value_sim(list(mean = c(0,0,0),
+#'                                   cov = diag(1, 3),
+#'                                   samples = 10,
+#'                                   populations = 2),
+#'                              10000, .95, Chaipitak2013_test)
+critical_value_sim <- function(params, replications, quantile, test){
 
+  replicate(replications)
 }
 
-#' Critical Value Simulation
-#'
-#' @param sim_size
-#' @param sim_data_func
-#'
-#' @export
-#'
-#' @importFrom lazyeval lazy
-#' @importFrom lazyeval lazy_eval
-#' @importFrom lazyeval lazy_dots
-#' @importFrom magrittr %>%
-#' @importFrom plyr llply
-#'
-#' @keywords internal
-#'
-critical_value_sim <- function(sim_size, sim_data_func, quantile, ...){
-  lazydata <- lazy(sim_data_func)
-  dots <- lazy_dots(...)
-  replicate(sim_size, lazy_eval(lazydata), simplify = FALSE) %>% llply(critical_value_sim_, dots = dots, quantile = quantile)
-}
 
