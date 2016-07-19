@@ -14,5 +14,8 @@ Bp_func(data, p)
 \description{
 Brewer Kernel Quantile Estimator
 }
+\examples{
+Bp_func(rnorm(10000), .95)
+}
 \keyword{internal}
 
