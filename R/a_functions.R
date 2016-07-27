@@ -58,13 +58,18 @@ ahat1_func <- ahat1i_func <- function(p, sample_cov){
 #' @export
 #'
 ahatStar4_func <- function(tau, p, sample_cov, n1, n2){
+  browser()
   n <- n1 + n2 - 2
+  b <- - 4 / n
+  c <- - (2 * (n ^ 2) + 3 * n - 6) / (n * ((n ^ 2) + n + 2))
+  d <-  (2 * (5 * n + 6)) / (n * ((n ^ 2) + n + 2))
+  e <- - (5 * n + 6) / ((n ^ 2) * ((n ^ 2) + n + 2))
   (tau / p) *
-    (tr(sample_cov ^ 4) +
-       (-4 / n) * tr(sample_cov ^ 3) * tr(sample_cov) +
-       (-((2 * n ^ 2) + 3 * n - 6) / (n * ((n ^ 2) + n + 2))) * (tr(sample_cov ^ 2) ^ 2) +
-       ((2 * (5 * n + 6)) / (n * ((n ^ 2) + n + 2))) * tr(sample_cov ^ 2) * (tr(sample_cov) ^ 2) +
-       (-(5 * n + 6) / ((n ^ 2) * ((n ^ 2) + n + 2))) * tr(sample_cov) ^ 4)
+    (tr(sample_cov %*% sample_cov %*% sample_cov %*% sample_cov) +
+       b * tr(sample_cov ^ 3) * tr(sample_cov) +
+       c * (tr(sample_cov ^ 2) ^ 2) +
+       d * tr(sample_cov ^ 2) * (tr(sample_cov) ^ 2) +
+       e * tr(sample_cov) ^ 4)
 }
 
 #' Estimator for frobenius norm expansion term Srivastava 2007
@@ -82,9 +87,10 @@ ahatStar4_func <- function(tau, p, sample_cov, n1, n2){
 #' @export
 #'
 ahat4_func <- function(A1, A2, p, n1, n2, ahat2, ahat1){
+  browser()
   n <- n1 + n2 - 2
   (1 / c0_func(n)) *
-    ((1 / p) * (tr(A1 + A2) ^ 4) -
+    ((1 / p) * (tr((A1 + A2) ^ 4)) -
        p * c1_func(n) * ahat1 -
        (p ^ 2) * c2_func(n) * (ahat1 ^ 2) * ahat2 -
        p * c3_func(n) * (ahat2 ^ 2) -
