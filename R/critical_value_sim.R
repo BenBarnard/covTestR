@@ -10,8 +10,8 @@
 #'
 #' @keywords internal
 #'
-#' @examples critical_value_sim(list(meanVec = c(0,0,0),
-#'                                   covMat = diag(1, 3),
+#' @examples critical_value_sim(list(meanVec = rep(0, 100),
+#'                                   covMat = diag(1, 100),
 #'                                   samples = 10,
 #'                                   pops = 2),
 #'                              100, .95, Chaipitak2013_test)

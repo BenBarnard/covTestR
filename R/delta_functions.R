@@ -11,7 +11,9 @@
 #' @export
 #'
 deltahat2_func <- function(ahatstar4, p , ahat2, n1, n2){
-  4 * (((2 * ahatstar4) / (p * ahat2 ^ 2)) * sum(1 / (n1 - 1), 1 / (n2 - 1)) + sum(1 / ((n1 - 1) ^ 2), 1 / ((n2 - 1) ^ 2)))
+  4 * (((2 * ahatstar4) / (p * (ahat2 ^ 2))) *
+         sum(1 / (n1 - 1), 1 / (n2 - 1)) +
+         sum(1 / ((n1 - 1) ^ 2), 1 / ((n2 - 1) ^ 2)))
 }
 
 

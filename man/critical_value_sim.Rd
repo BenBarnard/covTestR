@@ -15,8 +15,8 @@ critical_value_sim(params, replications, quantile, test)
 Sim Function to get data for Critical Value Data
 }
 \examples{
-critical_value_sim(list(meanVec = c(0,0,0),
-                                  covMat = diag(1, 3),
+critical_value_sim(list(meanVec = rep(0, 100),
+                                  covMat = diag(1, 100),
                                   samples = 10,
                                   pops = 2),
                              100, .95, Chaipitak2013_test)
