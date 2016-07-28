@@ -10,7 +10,7 @@
 #'
 ahat2i_func <- function(n, p, sample_covs){
   (((n - 1) ^ 2) / (p * (n -2) * (n + 1))) *
-    (tr(sample_covs ^ 2) - (1 / (n - 1)) * (tr(sample_covs)) ^ 2)
+    (tr(sample_covs %*% sample_covs) - (1 / (n - 1)) * (tr(sample_covs)) ^ 2)
 }
 
 #' Estimator for expansion term in Frobenius Norm Schott 2007 (helper funciton)
@@ -26,7 +26,7 @@ ahat2i_func <- function(n, p, sample_covs){
 ahat2_func <- function(n1, n2, p, overall_cov){
   n <- n1 + n2 - 2
   (((n) ^ 2) / (p * (n - 1) * (n + 2))) *
-    (tr(overall_cov ^ 2) - (1 / (n)) * (tr(overall_cov)) ^ 2)
+    (tr(overall_cov %*% overall_cov) - (1 / (n)) * (tr(overall_cov)) ^ 2)
 }
 
 #' Estimator for expansion term in Frobenius Norm Schott 2007 (helper funciton)
@@ -66,9 +66,9 @@ ahatStar4_func <- function(tau, p, sample_cov, n1, n2){
   e <- - (5 * n + 6) / ((n ^ 2) * ((n ^ 2) + n + 2))
   (tau / p) *
     (tr(sample_cov %*% sample_cov %*% sample_cov %*% sample_cov) +
-       b * tr(sample_cov ^ 3) * tr(sample_cov) +
-       c * (tr(sample_cov ^ 2) ^ 2) +
-       d * tr(sample_cov ^ 2) * (tr(sample_cov) ^ 2) +
+       b * tr(sample_cov %*% sample_cov %*% sample_cov) * tr(sample_cov) +
+       c * (tr(sample_cov %*% sample_cov) ^ 2) +
+       d * tr(sample_cov %*% sample_cov) * (tr(sample_cov) ^ 2) +
        e * tr(sample_cov) ^ 4)
 }
 
@@ -132,8 +132,8 @@ ahat3_func <- function(A1, A2, p, n1, n2, ahat2, ahat1){
 #' @export
 #'
 ahat2iSrivastava2014_func <- function(n, p, D, A){
-  ((n - 2) * (n - 1) * tr(A ^ 2) -
-     n * (n - 1) * tr(D ^ 2) +
+  ((n - 2) * (n - 1) * tr(A %*% A) -
+     n * (n - 1) * tr(D %*% D) +
      tr(A) ^ 2) /
     (p * n * (n - 1) * (n - 2) * (n - 3))
 }
