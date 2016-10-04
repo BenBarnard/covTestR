@@ -7,24 +7,25 @@
 #'
 #' @return Matrix of maxN multivariate normal samples.
 #'
-#' @importFrom dplyr rename
-#' @importFrom plyr ldply
-#' @importFrom stats setNames
-#' @importFrom reshape2 melt
+#' @importFrom plyr mlply
 #' @importFrom MASS mvrnorm
-#' @importFrom magrittr %>%
 #'
 #' @export
 #'
 #' @examples
-#' mcSamples(c(0,0,0), diag(1, 3), 10, 2)
+#'
 mcSamples <- function(meanVec, covMat, samples, pops, ...){
-  replicate(pops,
-            mvrnorm(n = samples, mu = meanVec, Sigma = covMat) %>%
-              melt %>%
-              setNames(c('Subjects', 'Variables', 'Value')),
-            simplify = FALSE) %>%
-    setNames(c(1:pops)) %>%
-    ldply %>%
-    rename(Group = `.id`)
+  pop_list <- pop_lists(meanVec, covMat, samples, pops)
+  llply(pop_list, function(list){
+        mvrnorm(n = list$samples, mu = list$meanVec, Sigma = list$covMat)
+    })
 }
+
+pop_lists <- function(meanVec, covMat, samples, pops){
+  llply(seq(pops), function(pop, meanVec, covMat, samples){
+    list(meanVec = if(is.list(meanVec)){meanVec[pop]}else{meanVec},
+         covMat = if(is.list(covMat)){covMat[pop]}else{covMat},
+         samples = if(is.list(samples)){samples[pop]}else{samples})
+  }, meanVec = meanVec, covMat = covMat, samples = samples)
+}
+
