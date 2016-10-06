@@ -22,7 +22,8 @@ overall_cov_func <- function(A1, A2, n1, n2){
 #' @export
 #'
 A_func <- function(matrix){
-  (t(matrix) - colMeans(matrix)) %*% t(t(matrix) - colMeans(matrix))
+  row <- nrow(matrix)
+  t(matrix) %*% (diag(rep(1, row)) - matrix(rep(1 / row, row ^ 2), nrow = row)) %*% matrix
 }
 
 #' D diagonal matrix for Srivastava 2014 (helper funciton)
