@@ -47,14 +47,12 @@ Chaipitak2013_test.matrix <- function(...){
 
 #' @export
 #'
-#' @importFrom magrittr %>%
 #' @importFrom plyr dlply
 #' @importFrom plyr .
 #'
-Chaipitak2013_test.data.frame <- function(data, ...){
+Chaipitak2013_test.data.frame <- function(x, ...){
   do.call(Chaipitak2013_test.matrix,
-          data %>%
-            dlply(.(Group), dataDftoMatrix))
+          dlply(x, .(Group), dataDftoMatrix))
 }
 
 #' @export
