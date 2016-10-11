@@ -23,7 +23,7 @@ Chaipitak2013_test <- function(data, ...){
 #' @importFrom plyr mlply
 #'
 Chaipitak2013_test.matrix <- function(...){
-    matrix_ls <- list(...)
+  matrix_ls <- list(...)
     n <- matrix_ls %>% llply(function(matrix){
       nrow(matrix)
     })
