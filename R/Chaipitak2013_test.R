@@ -47,14 +47,22 @@ Chaipitak2013_test.matrix <- function(...){
 
 #' @export
 #'
-#' @importFrom magrittr %>%
 #' @importFrom plyr dlply
 #' @importFrom plyr .
 #'
-Chaipitak2013_test.data.frame <- function(data, ...){
-  do.call(Chaipitak2013_test.matrix,
-          data %>%
-            dlply(.(Group), dataDftoMatrix))
+Chaipitak2013_test.data.frame <- function(x, group, ..., tidy = FALSE){
+  if(tidy == TRUE){
+    do.call(what = Chaipitak2013_test.matrix,
+            args = c(dlply(.data = x,
+                           .variables = expr_find(group),
+                           .fun = dataDftoMatrix),
+                     group = expr_find(group),
+                     variables = expr_find(variables),
+                     samples = expr_find(samples)))
+  }else{
+    browser()
+
+  }
 }
 
 #' @export
