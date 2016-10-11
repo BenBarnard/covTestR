@@ -14,18 +14,31 @@
 #'
 #' @examples
 #'
-mcSamples <- function(meanVec, covMat, samples, pops, ...){
+mcSamples <- function(meanVec, covMat, samples, pops, ..., matrix = TRUE, tidy = FALSE){
   pop_list <- pop_lists(meanVec, covMat, samples, pops)
-  llply(pop_list, function(list){
-        mvrnorm(n = list$samples, mu = list$meanVec, Sigma = list$covMat)
+  if(matrix == TRUE){
+    llply(pop_list, function(list){
+      mvrnorm(n = list$samples, mu = list$meanVec, Sigma = list$covMat)
     })
+  }else{
+    if(tidy == FALSE){
+      ldply(pop_list, function(list){
+        mvrnorm(n = list$samples, mu = list$meanVec, Sigma = list$covMat)
+      }, .id = "population")
+    }else{
+      melt(ldply(pop_list, function(list){
+        mvrnorm(n = list$samples, mu = list$meanVec, Sigma = list$covMat)
+      }, .id = "population"), id = "population")
+    }
+  }
 }
 
 pop_lists <- function(meanVec, covMat, samples, pops){
-  llply(seq(pops), function(pop, meanVec, covMat, samples){
+  params <- llply(seq(pops), function(pop, meanVec, covMat, samples){
     list(meanVec = if(is.list(meanVec)){meanVec[pop]}else{meanVec},
          covMat = if(is.list(covMat)){covMat[pop]}else{covMat},
          samples = if(is.list(samples)){samples[pop]}else{samples})
   }, meanVec = meanVec, covMat = covMat, samples = samples)
+  setNames(params, 1:length(params))
 }
 
