@@ -2,19 +2,43 @@
 #'
 #' @param data tidy dataframe
 #'
-#' @importFrom magrittr %>%
-#' @importFrom reshape2 acast
-#' @importFrom dplyr select
+#' @importFrom plyr dlply
 #'
 #' @keywords internal
 #'
 #' @export
 #'
-tidyDataDftoMatrix <- function(data, group, variables, samples){
-  acast(select(data,
-               -expr_find(group)),
-        expr_find(samples)~expr_find(variables),
-        value.var = "Value")
+tidyDataDftoMatrix <- function(data, group, others, test){
+  browser()
+  do.call(what = paste(test),
+          args = dlply(.data = data,
+                       .variables = group,
+                       .fun = tidy_,
+                       group = group,
+                       others = others
+          )
+  )
+}
+
+#' Tidy helper
+#'
+#' @param data
+#' @param group
+#' @param others
+#' @param test
+#'
+#' @importFrom reshape2 acast
+#' @importFrom dplyr select
+#'
+#' @return
+#' @export
+#'
+#' @examples
+tidy_ <- function(data, group, others){
+  as.matrix(acast(select(data,
+               -eval(group)),
+        eval(others$samples$expr)~eval(others$variable$expr),
+        value.var = paste(others$value$expr)))
 }
 
 #' Turn Tidy data frame into data matrix (helper function)

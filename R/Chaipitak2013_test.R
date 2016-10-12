@@ -23,7 +23,7 @@ Chaipitak2013_test <- function(data, ...){
 #' @importFrom plyr mlply
 #'
 Chaipitak2013_test.matrix <- function(...){
-    matrix_ls <- list(...)
+  matrix_ls <- list(...)
     n <- matrix_ls %>% llply(function(matrix){
       nrow(matrix)
     })
@@ -49,18 +49,15 @@ Chaipitak2013_test.matrix <- function(...){
 #'
 #' @importFrom plyr dlply
 #' @importFrom plyr .
+#' @importFrom lazyeval lazy_dots
 #'
 Chaipitak2013_test.data.frame <- function(x, group, ..., variables, samples, tidy = FALSE){
   if(tidy == TRUE){
-    do.call(what = Chaipitak2013_test.matrix,
-            args = c(dlply(.data = x,
-                           .variables = expr_find(group),
-                           .fun = dataDftoMatrix),
-                     group = expr_find(group),
-                     variables = expr_find(variables),
-                     samples = expr_find(samples)))
+    tidyDataDftoMatrix(data = x,
+                       group = expr_find(group),
+                       others = lazy_dots(...),
+                       test = expr_find(Chaipitak2013_test.matrix))
   }else{
-    browser()
 
   }
 }
