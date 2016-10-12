@@ -47,3 +47,19 @@ dataDftoMatrix <- function(data, group){
 tr <- function(mat){
   sum(diag(mat))
 }
+
+
+function(x, test, group, variables, samples){
+  if(tidy == TRUE){
+  do.call(what = Chaipitak2013_test.matrix,
+          args = c(dlply(.data = x,
+                         .variables = expr_find(group),
+                         .fun = dataDftoMatrix),
+                   group = expr_find(group),
+                   variables = expr_find(variables),
+                   samples = expr_find(samples)))
+}else{
+  browser()
+
+}
+}

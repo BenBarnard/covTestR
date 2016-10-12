@@ -50,7 +50,7 @@ Chaipitak2013_test.matrix <- function(...){
 #' @importFrom plyr dlply
 #' @importFrom plyr .
 #'
-Chaipitak2013_test.data.frame <- function(x, group, ..., tidy = FALSE){
+Chaipitak2013_test.data.frame <- function(x, group, ..., variables, samples, tidy = FALSE){
   if(tidy == TRUE){
     do.call(what = Chaipitak2013_test.matrix,
             args = c(dlply(.data = x,
