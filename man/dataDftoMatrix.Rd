@@ -4,7 +4,7 @@
 \alias{dataDftoMatrix}
 \title{Turn Tidy data frame into data matrix (helper function)}
 \usage{
-dataDftoMatrix(data)
+dataDftoMatrix(data, group)
 }
 \arguments{
 \item{data}{tidy dataframe}
