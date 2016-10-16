@@ -16,6 +16,18 @@ SrivastavaYanagihara2010_test <- function(data, ...){
 #' @export
 #'
 #' @importFrom plyr dlply
+#' @importFrom plyr .
+#' @importFrom magrittr %>%
+#'
+SrivastavaYanagihara2010_test.data.frame <- function(data, ...){
+  do.call(SrivastavaYanagihara2010_test.matrix,
+          data %>%
+            dlply(.(Group), dataDftoMatrix))
+}
+
+#' @export
+#'
+#' @importFrom plyr dlply
 #' @importFrom plyr llply
 #' @importFrom plyr mlply
 #' @importFrom plyr .
@@ -48,19 +60,6 @@ SrivastavaYanagihara2010_test.matrix <- function(...){
   })
 
   SrivastavaYanagihara2010_test.default(gammahat_ls[[1]], gammahat_ls[[2]], ksihat2_ls[[1]], ksihat2_ls[[2]])
-}
-
-
-#' @export
-#'
-#' @importFrom plyr dlply
-#' @importFrom plyr .
-#' @importFrom magrittr %>%
-#'
-SrivastavaYanagihara2010_test.data.frame <- function(data, ...){
-  do.call(SrivastavaYanagihara2010_test.matrix,
-          data %>%
-            dlply(.(Group), dataDftoMatrix))
 }
 
 #' @export
