@@ -12,7 +12,17 @@ Srivastava2014_test <- function(data, ...) {
   UseMethod("Srivastava2014_test")
 }
 
-
+#' @export
+#'
+#' @importFrom magrittr %>%
+#' @importFrom plyr dlply
+#' @importFrom plyr .
+#'
+Srivastava2014_test.data.frame <- function(data, ...){
+  do.call(Srivastava2014_test.matrix,
+          data %>%
+            dlply(.(Group), dataDftoMatrix))
+}
 
 #' @export
 #'
@@ -44,21 +54,6 @@ Srivastava2014_test.matrix<- function(...){
 
   Srivastava2014_test.default(n, p, ahat2, ahat2i, sample_covs)
 }
-
-
-
-#' @export
-#'
-#' @importFrom magrittr %>%
-#' @importFrom plyr dlply
-#' @importFrom plyr .
-#'
-Srivastava2014_test.data.frame <- function(data, ...){
-  do.call(Srivastava2014_test.matrix,
-          data %>%
-            dlply(.(Group), dataDftoMatrix))
-}
-
 
 #' @export
 #'
