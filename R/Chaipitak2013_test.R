@@ -13,6 +13,22 @@ Chaipitak2013_test <- function(data, ...){
   UseMethod("Chaipitak2013_test")
 }
 
+#' @export
+#'
+#' @importFrom plyr dlply
+#' @importFrom plyr .
+#' @importFrom lazyeval lazy_dots
+#'
+Chaipitak2013_test.data.frame <- function(x, group, ..., variables, samples, tidy = FALSE){
+  if(tidy == TRUE){
+    tidyDataDftoMatrix(data = x,
+                       group = expr_find(group),
+                       others = lazy_dots(...),
+                       test = expr_find(Chaipitak2013_test.matrix))
+  }else{
+
+  }
+}
 
 #' @export
 #'
@@ -42,24 +58,6 @@ Chaipitak2013_test.matrix <- function(...){
     deltahat2 <- deltahat2_func(ahatStar4, p[[1]], ahat2, n[[1]], n[[2]])
     bhat <- bhat_func(ahat2i[[1]], ahat2i[[2]])
   Chaipitak2013_test.default(bhat, deltahat2)
-}
-
-
-#' @export
-#'
-#' @importFrom plyr dlply
-#' @importFrom plyr .
-#' @importFrom lazyeval lazy_dots
-#'
-Chaipitak2013_test.data.frame <- function(x, group, ..., variables, samples, tidy = FALSE){
-  if(tidy == TRUE){
-    tidyDataDftoMatrix(data = x,
-                       group = expr_find(group),
-                       others = lazy_dots(...),
-                       test = expr_find(Chaipitak2013_test.matrix))
-  }else{
-
-  }
 }
 
 #' @export
