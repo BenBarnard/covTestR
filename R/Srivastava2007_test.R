@@ -16,6 +16,18 @@ Srivastava2007_test <- function(data, ...){
 #' @export
 #'
 #' @importFrom plyr dlply
+#' @importFrom plyr .
+#' @importFrom magrittr %>%
+#'
+Srivastava2007_test.data.frame <- function(data, ...){
+  do.call(Srivastava2007_test.matrix,
+          data %>%
+            dlply(.(Group), dataDftoMatrix))
+}
+
+#' @export
+#'
+#' @importFrom plyr dlply
 #' @importFrom plyr llply
 #' @importFrom plyr mlply
 #' @importFrom plyr .
@@ -41,18 +53,6 @@ Srivastava2007_test.matrix <- function(...){
   etahat2i <- cbind(n, p, ahat4, ahat2) %>% mlply(etahat2i_func)
 
   Srivastava2007_test.default(ahat2i[[1]], ahat2i[[2]], etahat2i[[1]], etahat2i[[2]])
-}
-
-#' @export
-#'
-#' @importFrom plyr dlply
-#' @importFrom plyr .
-#' @importFrom magrittr %>%
-#'
-Srivastava2007_test.data.frame <- function(data, ...){
-  do.call(Srivastava2007_test.matrix,
-          data %>%
-            dlply(.(Group), dataDftoMatrix))
 }
 
 #' @export
