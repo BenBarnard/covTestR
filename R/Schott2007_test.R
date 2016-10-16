@@ -14,7 +14,17 @@ Schott2007_test <- function(data, ...) {
   UseMethod("Schott2007_test")
 }
 
-
+#' @export
+#'
+#' @importFrom magrittr %>%
+#' @importFrom plyr dlply
+#' @importFrom plyr .
+#'
+Schott2007_test.data.frame <- function(data, ...){
+  do.call(Schott2007_test.matrix,
+          data %>%
+            dlply(.(Group), dataDftoMatrix))
+}
 
 #' @export
 #'
@@ -42,21 +52,6 @@ Schott2007_test.matrix<- function(...){
 
   Schott2007_test.default(n, p, ahat2, ahat2i, sample_covs)
 }
-
-
-
-#' @export
-#'
-#' @importFrom magrittr %>%
-#' @importFrom plyr dlply
-#' @importFrom plyr .
-#'
-Schott2007_test.data.frame <- function(data, ...){
-  do.call(Schott2007_test.matrix,
-          data %>%
-            dlply(.(Group), dataDftoMatrix))
-}
-
 
 #' @export
 #'
