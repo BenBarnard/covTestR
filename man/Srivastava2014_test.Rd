@@ -18,7 +18,7 @@ Test Statistic for Srivastava 2014
 Test of Equality of Covariances given by Srivastava 2014
 }
 \examples{
-Srivastava2014_test(mcSamples(c(0,0,0), diag(1, 3), 10, 2))
+Srivastava2014_test(mcSamples(c(0,0,0), diag(1, 3), 10, 2, matrix = FALSE, tidy = TRUE), group = population, variables = variable, samples = samples, value = value, tidy = TRUE)
 
 }
 
