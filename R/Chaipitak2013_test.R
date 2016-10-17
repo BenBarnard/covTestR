@@ -7,7 +7,7 @@
 #'
 #' @export
 #'
-#' @examples Chaipitak2013_test(mcSamples(c(0,0,0), diag(1, 3), 10, 2))
+#' @examples Chaipitak2013_test(mcSamples(c(0,0,0), diag(1, 3), 10, 2, matrix = FALSE, tidy = TRUE), group = population, variables = variable, samples = samples, value = value, tidy = TRUE)
 #'
 Chaipitak2013_test <- function(data, ...){
   UseMethod("Chaipitak2013_test")
