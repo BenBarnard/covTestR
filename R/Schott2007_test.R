@@ -6,7 +6,7 @@
 #' @return Test Statistic for Schott 2007
 #' @export
 #'
-#' @examples Schott2007_test(mcSamples(c(0,0,0), diag(1, 3), 10, 2))
+#' @examples Schott2007_test(mcSamples(c(0,0,0), diag(1, 3), 10, 2, matrix = FALSE, tidy = TRUE), group = population, variables = variable, samples = samples, value = value, tidy = TRUE)
 #'
 Schott2007_test <- function(data, ...) {
   UseMethod("Schott2007_test")
