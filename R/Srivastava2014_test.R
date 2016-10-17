@@ -14,42 +14,52 @@ Srivastava2014_test <- function(data, ...) {
 
 #' @export
 #'
-#' @importFrom magrittr %>%
-#' @importFrom plyr dlply
-#' @importFrom plyr .
+#' @importFrom lazyeval expr_find
 #'
-Srivastava2014_test.data.frame <- function(data, ...){
-  do.call(Srivastava2014_test.matrix,
-          data %>%
-            dlply(.(Group), dataDftoMatrix))
+Srivastava2014_test.data.frame <- function(x, group, ..., variables, samples, value, tidy = FALSE){
+  if(tidy == TRUE){
+    tidyDataDftoMatrix(data = x,
+                       group = expr_find(group),
+                       variables = expr_find(variable),
+                       samples = expr_find(samples),
+                       value = expr_find(value),
+                       test = expr_find(Srivastava2014_test.matrix))
+  }else{
+    dataDftoMatrix(data = x,
+                   group = expr_find(group),
+                   test = expr_find(Srivastava2014_test.matrix))
+  }
 }
 
 #' @export
 #'
-#' @importFrom plyr dlply
 #' @importFrom plyr llply
 #' @importFrom plyr mlply
-#' @importFrom plyr .
-#' @importFrom magrittr %>%
 #'
 Srivastava2014_test.matrix<- function(...){
   matrix_ls <- list(...)
-  n <- matrix_ls %>% llply(function(matrix){
+
+  n <- llply(matrix_ls, function(matrix){
     nrow(matrix)
   })
-  p <- matrix_ls %>% llply(function(matrix){
+
+  p <- llply(matrix_ls, function(matrix){
     ncol(matrix)
   })
-  A_ls <- matrix_ls %>% llply(A_func)
-  sample_covs <- cbind(A_ls, n) %>% mlply(function(A_ls, n){
+
+  A_ls <- llply(matrix_ls, A_func)
+
+  sample_covs <- mlply(cbind(A_ls, n), function(A_ls, n){
     A_ls / (n - 1)
   })
-  D_ls <- matrix_ls %>% llply(Di_func)
+
+  D_ls <- llply(matrix_ls, Di_func)
   overall_cov <- (1 / (n[[1]] + n[[2]] - 2)) * (A_ls[[1]] + A_ls[[2]])
-  ahat2i <- cbind(n, p, D_ls, A_ls) %>%
-    mlply(function(n, p, D_ls, A_ls){
+
+  ahat2i <- mlply(cbind(n, p, D_ls, A_ls), function(n, p, D_ls, A_ls){
     ahat2iSrivastava2014_func(n, p, D_ls, A_ls)
   })
+
   ahat2 <- ahat2Srivastava2014_func(ahat2i[[1]], ahat2i[[2]], n[[1]], n[[1]])
 
   Srivastava2014_test.default(n, p, ahat2, ahat2i, sample_covs)
