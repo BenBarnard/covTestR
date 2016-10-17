@@ -51,7 +51,6 @@ ahat1_func <- ahat1i_func <- function(p, sample_cov){
 #' @param n1 sample size for group 1
 #' @param n2 sample size for group 2
 #'
-#' @aliases ahat1i_func
 #'
 #' @keywords internal
 #'
@@ -86,10 +85,9 @@ ahatStar4_func <- function(tau, p, sample_cov, n1, n2){
 #' @export
 #'
 ahat4_func <- function(A1, A2, p, n1, n2, ahat2, ahat1){
-  browser()
   n <- n1 + n2 - 2
   (1 / c0_func(n)) *
-    ((1 / p) * (tr((A1 + A2) ^ 4)) -
+    ((1 / p) * (tr((A1 + A2) %*% (A1 + A2) %*% (A1 + A2) %*% (A1 + A2))) -
        p * c1_func(n) * ahat1 -
        (p ^ 2) * c2_func(n) * (ahat1 ^ 2) * ahat2 -
        p * c3_func(n) * (ahat2 ^ 2) -
