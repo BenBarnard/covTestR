@@ -7,7 +7,7 @@
 #'
 #' @export
 #'
-#' @examples SrivastavaYanagihara2010_test(mcSamples(c(0,0,0), diag(1, 3), 10, 2))
+#' @examples SrivastavaYanagihara2010_test(mcSamples(c(0,0,0), diag(1, 3), 10, 2, matrix = FALSE, tidy = TRUE), group = population, variables = variable, samples = samples, value = value, tidy = TRUE)
 #'
 SrivastavaYanagihara2010_test <- function(data, ...){
   UseMethod("SrivastavaYanagihara2010_test")
