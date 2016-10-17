@@ -14,7 +14,24 @@ Ishii2016_test <- function(data, ...) {
   UseMethod("Ishii2016_test")
 }
 
-
+#' @export
+#'
+#' @importFrom lazyeval expr_find
+#'
+Ishii2016_test.data.frame <- function(x, group, ..., variables, samples, value, tidy = FALSE){
+  if(tidy == TRUE){
+    tidyDataDftoMatrix(data = x,
+                       group = expr_find(group),
+                       variables = expr_find(variable),
+                       samples = expr_find(samples),
+                       value = expr_find(value),
+                       test = expr_find(Ishii2016_test.matrix))
+  }else{
+    dataDftoMatrix(data = x,
+                   group = expr_find(group),
+                   test = expr_find(Ishii2016_test.matrix))
+  }
+}
 
 #' @export
 #'
@@ -28,21 +45,11 @@ Ishii2016_test.matrix<- function(...){
 
 }
 
-
-
 #' @export
 #'
-#' @importFrom magrittr %>%
-#' @importFrom plyr dlply
-#' @importFrom plyr .
-#'
-Ishii2016_test.data.frame <- function(data, ...){
+Ishii2016_test.default <- function(lambdaTilde, gammaTilde, hTilde){
+lambdaTilde1 <- lambdaTilde[[1]]
+lambdaTilde2 <- lambdaTilde[[2]]
 
-}
-
-
-#' @export
-#'
-Ishii2016_test.default <- function(n, p, ahat2, ahat2i, sample_covs){
-
+(lambdaTilde1 / lambdaTilde2) * hTilde * gammaTilde
 }
