@@ -4,12 +4,13 @@
 \alias{tidy_}
 \title{Tidy helper}
 \usage{
-tidy_(data, group, others)
+tidy_(data, group, variables, samples, value)
 }
 \arguments{
-\item{test}{}
+\item{value}{}
 }
 \description{
 Tidy helper
 }
+\keyword{internal}
 
