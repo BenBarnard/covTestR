@@ -58,7 +58,6 @@ ahat1_func <- ahat1i_func <- function(p, sample_cov){
 #' @export
 #'
 ahatStar4_func <- function(tau, p, sample_cov, n1, n2){
-  browser()
   n <- n1 + n2 - 2
   b <- - 4 / n
   c <- - (2 * (n ^ 2) + 3 * n - 6) / (n * ((n ^ 2) + n + 2))
