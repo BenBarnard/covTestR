@@ -15,47 +15,61 @@ SrivastavaYanagihara2010_test <- function(data, ...){
 
 #' @export
 #'
-#' @importFrom plyr dlply
-#' @importFrom plyr .
-#' @importFrom magrittr %>%
+#' @importFrom lazyeval expr_find
 #'
-SrivastavaYanagihara2010_test.data.frame <- function(data, ...){
-  do.call(SrivastavaYanagihara2010_test.matrix,
-          data %>%
-            dlply(.(Group), dataDftoMatrix))
+SrivastavaYanagihara2010_test.data.frame <- function(x, group, ..., variables, samples, value, tidy = FALSE){
+  if(tidy == TRUE){
+    tidyDataDftoMatrix(data = x,
+                       group = expr_find(group),
+                       variables = expr_find(variable),
+                       samples = expr_find(samples),
+                       value = expr_find(value),
+                       test = expr_find(SrivastavaYanagihara2010_test.matrix))
+  }else{
+    dataDftoMatrix(data = x,
+                   group = expr_find(group),
+                   test = expr_find(SrivastavaYanagihara2010_test.matrix))
+  }
 }
 
 #' @export
 #'
-#' @importFrom plyr dlply
 #' @importFrom plyr llply
 #' @importFrom plyr mlply
-#' @importFrom plyr .
-#' @importFrom magrittr %>%
 #'
 SrivastavaYanagihara2010_test.matrix <- function(...){
   matrix_ls <- list(...)
-  n <- matrix_ls %>% llply(function(matrix){
+
+  n <- llply(matrix_ls, function(matrix){
     nrow(matrix)
   })
-  p <- matrix_ls %>% llply(function(matrix){
+
+  p <- llply(matrix_ls, function(matrix){
     ncol(matrix)
   })
-  A_ls <- matrix_ls %>% llply(A_func)
-  sample_covs <- cbind(A_ls, n) %>% mlply(function(A_ls, n){
+
+  A_ls <- llply(matrix_ls, A_func)
+
+  sample_covs <- mlply(cbind(A_ls, n), function(A_ls, n){
     A_ls / (n - 1)
   })
+
   overall_cov <- (1 / (n[[1]] + n[[2]] - 2)) * (A_ls[[1]] + A_ls[[2]])
   ahat2 <- ahat2_func(n[[1]], n[[2]], p[[1]], overall_cov)
   ahat1 <- ahat1_func(p[[1]], overall_cov)
-  ahat2_ls <- cbind(n, p, sample_covs) %>% mlply(ahat2i_func)
-  ahat1_ls <- cbind(p, sample_covs) %>% mlply(function(p, sample_covs){
+
+  ahat2_ls <- mlply(cbind(n, p, sample_covs), ahat2i_func)
+
+  ahat1_ls <- mlply(cbind(p, sample_covs), function(p, sample_covs){
     ahat1_func(p, sample_covs)
   })
+
   ahat3 <- ahat3_func(A_ls[[1]], A_ls[[2]], p[[1]], n[[1]], n[[2]], ahat2, ahat1)
   ahat4 <- ahat4_func(A_ls[[1]], A_ls[[2]], p[[1]], n[[1]], n[[2]], ahat2, ahat1)
-  ksihat2_ls <- cbind(n, p, ahat1, ahat2, ahat3, ahat4) %>% mlply(ksihat2i_func)
-  gammahat_ls <- cbind(ahat2_ls, ahat1_ls) %>% mlply(function(ahat2_ls, ahat1_ls){
+
+  ksihat2_ls <- mlply(cbind(n, p, ahat1, ahat2, ahat3, ahat4), ksihat2i_func)
+
+  gammahat_ls <- mlply(cbind(ahat2_ls, ahat1_ls), function(ahat2_ls, ahat1_ls){
     gammahati_func(ahat2_ls, ahat1_ls)
   })
 
