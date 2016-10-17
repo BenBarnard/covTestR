@@ -15,44 +15,48 @@ Chaipitak2013_test <- function(data, ...){
 
 #' @export
 #'
-#' @importFrom plyr dlply
-#' @importFrom plyr .
-#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval expr_find
 #'
-Chaipitak2013_test.data.frame <- function(x, group, ..., variables, samples, tidy = FALSE){
+Chaipitak2013_test.data.frame <- function(x, group, ..., variables, samples, value, tidy = FALSE){
   if(tidy == TRUE){
     tidyDataDftoMatrix(data = x,
                        group = expr_find(group),
-                       others = lazy_dots(...),
+                       variables = expr_find(variable),
+                       samples = expr_find(samples),
+                       value = expr_find(value),
                        test = expr_find(Chaipitak2013_test.matrix))
   }else{
-
+    dataDftoMatrix(data = x,
+                   group = expr_find(group),
+                   test = expr_find(Chaipitak2013_test.matrix))
   }
 }
 
 #' @export
 #'
-#' @importFrom magrittr %>%
-#' @importFrom dplyr summarise
-#' @importFrom dplyr select
 #' @importFrom plyr llply
 #' @importFrom plyr mlply
 #'
 Chaipitak2013_test.matrix <- function(...){
   matrix_ls <- list(...)
-    n <- matrix_ls %>% llply(function(matrix){
+
+    n <- llply(matrix_ls, function(matrix){
       nrow(matrix)
     })
-    p <- matrix_ls %>% llply(function(matrix){
+
+    p <- llply(matrix_ls, function(matrix){
       ncol(matrix)
     })
-    A_ls <- matrix_ls %>% llply(A_func)
-    sample_covs <- cbind(A_ls, n) %>% mlply(function(A_ls, n){
+
+    A_ls <- llply(matrix_ls, A_func)
+
+    sample_covs <- mlply(cbind(A_ls, n), function(A_ls, n){
       A_ls / (n - 1)
     })
+
     overall_cov <- (1 / (n[[1]] + n[[2]] - 2)) * (A_ls[[1]] + A_ls[[2]])
     ahat2 <- ahat2_func(n[[1]], n[[2]], p[[1]], overall_cov)
-    ahat2i <- cbind(n, p, sample_covs) %>% mlply(ahat2i_func)
+    ahat2i <- mlply(cbind(n, p, sample_covs), ahat2i_func)
     tau <- tau_func(n[[1]], n[[2]])
     ahatStar4 <- ahatStar4_func(tau, p[[1]], overall_cov, n[[1]], n[[2]])
     deltahat2 <- deltahat2_func(ahatStar4, p[[1]], ahat2, n[[1]], n[[2]])
