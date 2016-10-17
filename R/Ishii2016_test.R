@@ -35,11 +35,8 @@ Ishii2016_test.data.frame <- function(x, group, ..., variables, samples, value, 
 
 #' @export
 #'
-#' @importFrom plyr dlply
 #' @importFrom plyr llply
 #' @importFrom plyr mlply
-#' @importFrom plyr .
-#' @importFrom magrittr %>%
 #'
 Ishii2016_test.matrix<- function(...){
 
