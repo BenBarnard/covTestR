@@ -10,11 +10,9 @@
 #'
 #' @return Matrix of maxN multivariate normal samples.
 #'
-#' @importFrom plyr mlply
 #' @importFrom plyr ldply
 #' @importFrom plyr llply
 #' @importFrom MASS mvrnorm
-#' @importFrom stats setNames
 #' @importFrom reshape2 melt
 #'
 #'
@@ -49,10 +47,13 @@ mcSamples <- function(meanVec, covMat, samples, pops, ..., matrix = FALSE, tidy 
 #' @param samples
 #' @param pops
 #'
-#' @return
+#' @importFrom plyr llply
+#' @importFrom stats setNames
+#'
+#' @keywords internal
+#'
 #' @export
 #'
-#' @examples
 pop_lists <- function(meanVec, covMat, samples, pops){
   params <- llply(seq(pops), function(pop, meanVec, covMat, samples){
     list(meanVec = if(is.list(meanVec)){meanVec[pop]}else{meanVec},
