@@ -2,15 +2,15 @@
 % Please edit documentation in R/helper_functions.R
 \name{dataDftoMatrix}
 \alias{dataDftoMatrix}
-\title{Turn Tidy data frame into data matrix (helper function)}
+\title{Turn no a Tidy data frame into data matrix (helper function)}
 \usage{
-dataDftoMatrix(data, group)
+dataDftoMatrix(data, group, test)
 }
 \arguments{
-\item{data}{tidy dataframe}
+\item{data}{not a tidy dataframe}
 }
 \description{
-Turn Tidy data frame into data matrix (helper function)
+Turn no a Tidy data frame into data matrix (helper function)
 }
 \keyword{internal}
 
