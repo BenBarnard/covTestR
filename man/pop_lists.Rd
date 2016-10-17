@@ -12,4 +12,5 @@ pop_lists(meanVec, covMat, samples, pops)
 \description{
 List population parameters
 }
+\keyword{internal}
 
