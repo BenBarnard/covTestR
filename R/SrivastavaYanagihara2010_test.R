@@ -7,7 +7,7 @@
 #'
 #' @export
 #'
-#' @examples SrivastavaYanagihara2010_test(mcSamples(c(0,0,0), diag(1, 3), 10, 2, matrix = FALSE, tidy = TRUE), group = population, variables = variable, samples = samples, value = value, tidy = TRUE)
+#' @examples SrivastavaYanagihara2010_test(mcSamples(c(0,0,0), diag(1, 3), 10, 2), group = population)
 #'
 SrivastavaYanagihara2010_test <- function(data, ...){
   UseMethod("SrivastavaYanagihara2010_test")
@@ -17,19 +17,10 @@ SrivastavaYanagihara2010_test <- function(data, ...){
 #'
 #' @importFrom lazyeval expr_find
 #'
-SrivastavaYanagihara2010_test.data.frame <- function(x, group, ..., variables, samples, value, tidy = FALSE){
-  if(tidy == TRUE){
-    tidyDataDftoMatrix(data = x,
-                       group = expr_find(group),
-                       variables = expr_find(variable),
-                       samples = expr_find(samples),
-                       value = expr_find(value),
-                       test = expr_find(SrivastavaYanagihara2010_test.matrix))
-  }else{
+SrivastavaYanagihara2010_test.data.frame <- function(x, group, ...){
     dataDftoMatrix(data = x,
                    group = expr_find(group),
                    test = expr_find(SrivastavaYanagihara2010_test.matrix))
-  }
 }
 
 #' @export
