@@ -42,11 +42,11 @@ Ishii2016_test.matrix<- function(...){
     A_func(t(x)) / (n - 1)
   })
   lambdahat <- lapply(covs, function(x){
-    svd(x)$d
+    eigen(x)$values
   })
   lambdatildes <- mapply(lambdatilde, lambdahat, dualcovs, SIMPLIFY = FALSE)
   eigdual <- lapply(dualcovs, function(x){
-    svd(x)$u
+    eigen(x)$vectors
   })
   htilde <- mapply(function(x, y, z){
     sapply(1:min(length(x), nrow(z)), function(k){
