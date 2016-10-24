@@ -58,5 +58,5 @@ Chaipitak2013_test.matrix <- function(...){
 #' @export
 #'
 Chaipitak2013_test.default <- function(bhat, deltahat2){
-  (bhat - 1) / sqrt(deltahat2)
+  ((bhat - 1) / sqrt(deltahat2)) ^ 2
 }
