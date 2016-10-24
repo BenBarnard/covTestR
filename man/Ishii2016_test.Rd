@@ -18,6 +18,7 @@ Test Statistic for Schott 2007
 Test of Equality of Covariances given by Schott 2007
 }
 \examples{
+Ishii2016_test(mcSamples(c(0,0,0), diag(1, 3), 10, 2), group = population)
 
 }
 
