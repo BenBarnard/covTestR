@@ -18,7 +18,7 @@ Difference of Traces for Covariance Matrices
 Difference in Trace of Covariance Matrices
 }
 \examples{
-diff_trace(mcSamples(c(0,0,0), diag(1, 3), 10, 2, matrix = FALSE, tidy = TRUE), group = population, variables = variable, samples = samples, value = value, tidy = TRUE)
+diff_trace(mcSamples(c(0,0,0), diag(1, 3), 10, 2), group = population)
 
 }
 
