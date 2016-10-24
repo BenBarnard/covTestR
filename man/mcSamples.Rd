@@ -4,7 +4,7 @@
 \alias{mcSamples}
 \title{Simulate Monte Carlo Samples from a Multivariate Normal Distribution}
 \usage{
-mcSamples(meanVec, covMat, samples, pops, ..., matrix = FALSE, tidy = FALSE)
+mcSamples(meanVec, covMat, samples, pops, ..., matrix = FALSE)
 }
 \arguments{
 \item{meanVec}{Numeric vector of means for the variables.}
