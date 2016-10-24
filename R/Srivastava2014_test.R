@@ -6,7 +6,7 @@
 #' @return Test Statistic for Srivastava 2014
 #' @export
 #'
-#' @examples Srivastava2014_test(mcSamples(c(0,0,0), diag(1, 3), 10, 2, matrix = FALSE, tidy = TRUE), group = population, variables = variable, samples = samples, value = value, tidy = TRUE)
+#' @examples Srivastava2014_test(mcSamples(c(0,0,0), diag(1, 3), 10, 2), group = population)
 #'
 Srivastava2014_test <- function(data, ...) {
   UseMethod("Srivastava2014_test")
@@ -16,19 +16,10 @@ Srivastava2014_test <- function(data, ...) {
 #'
 #' @importFrom lazyeval expr_find
 #'
-Srivastava2014_test.data.frame <- function(x, group, ..., variables, samples, value, tidy = FALSE){
-  if(tidy == TRUE){
-    tidyDataDftoMatrix(data = x,
-                       group = expr_find(group),
-                       variables = expr_find(variable),
-                       samples = expr_find(samples),
-                       value = expr_find(value),
-                       test = expr_find(Srivastava2014_test.matrix))
-  }else{
+Srivastava2014_test.data.frame <- function(x, group, ...){
     dataDftoMatrix(data = x,
                    group = expr_find(group),
                    test = expr_find(Srivastava2014_test.matrix))
-  }
 }
 
 #' @export
