@@ -63,5 +63,5 @@ Srivastava2007_test.default <- function(ahat2i, etahat2i){
   etahat21 <- etahat2i[[1]]
   etahat22 <- etahat2i[[2]]
 
-  ((ahat21 - ahat22) / (sqrt(etahat21 + etahat22)))
+  (((ahat21 - ahat22) / (sqrt(etahat21 + etahat22)))) ^ 2
 }
