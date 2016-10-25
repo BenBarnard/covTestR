@@ -67,6 +67,6 @@ Srivastava2014_test.default <- function(n, p, ahat2, ahat2i, sample_covs){
   ahat22 <- ahat2i[[2]]
   sample_cov1 <- sample_covs[[1]]
   sample_cov2 <- sample_covs[[2]]
-  (((n1 - 1) * (n2 - 1)) / (2 * (n1 + n2 - 2) * ahat2)) *
-    (ahat21 + ahat22 - (2 / p) * tr(sample_cov1 %*% sample_cov2))
+  ((((n1 - 1) * (n2 - 1)) / (2 * (n1 + n2 - 2) * ahat2)) *
+    (ahat21 + ahat22 - (2 / p) * tr(sample_cov1 %*% sample_cov2))) ^ 2
 }
