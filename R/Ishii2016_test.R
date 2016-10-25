@@ -81,6 +81,5 @@ Ishii2016_test.matrix<- function(...){
 Ishii2016_test.default <- function(lambdaTilde, gammaTilde, hTilde){
   lambdaTilde1 <- lambdaTilde[[1]]
   lambdaTilde2 <- lambdaTilde[[2]]
-  browser()
   (lambdaTilde1 / lambdaTilde2) * hTilde * gammaTilde
 }
