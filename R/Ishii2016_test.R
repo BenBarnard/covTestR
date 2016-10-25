@@ -57,9 +57,22 @@ Ishii2016_test.matrix<- function(...){
     tr(x) - y[[1]]
   }, dualcovs, lambdatildes, SIMPLIFY = FALSE)
 
-  lambdaTildes <- list(lambdatildes$`1`[[1]], lambdatildes$`2`[[1]])
-  hTilde <- max(abs(t(htilde[[1]][,1]) %*% htilde[[2]][,1]), abs(t(htilde[[1]][,1]) %*% htilde[[2]][,1]) ^ (-1))
-  gammaTilde <- max(ki[[1]] / ki[[2]], ki[[2]] / ki[[1]])
+  lambdaTildes <- list(max(lambdatildes$`1`[[1]], lambdatildes$`2`[[1]]),
+                       min(lambdatildes$`1`[[1]], lambdatildes$`2`[[1]]))
+
+  hTilde <- if(max(lambdatildes$`1`[[1]], lambdatildes$`2`[[1]]) == lambdatildes$`1`[[1]]){
+    max(abs(t(htilde[[1]][,1]) %*% htilde[[2]][,1]),
+        abs(t(htilde[[1]][,1]) %*% htilde[[2]][,1]) ^ (-1))
+    }else{
+      min(abs(t(htilde[[1]][,1]) %*% htilde[[2]][,1]),
+          abs(t(htilde[[1]][,1]) %*% htilde[[2]][,1]) ^ (-1))
+    }
+
+  gammaTilde <- if(max(lambdatildes$`1`[[1]], lambdatildes$`2`[[1]]) == lambdatildes$`1`[[1]]){
+    max(ki[[1]] / ki[[2]], ki[[2]] / ki[[1]])
+  }else{
+    min(ki[[1]] / ki[[2]], ki[[2]] / ki[[1]])
+  }
   Ishii2016_test.default(lambdaTildes, gammaTilde, hTilde)
 }
 
@@ -68,9 +81,6 @@ Ishii2016_test.matrix<- function(...){
 Ishii2016_test.default <- function(lambdaTilde, gammaTilde, hTilde){
   lambdaTilde1 <- lambdaTilde[[1]]
   lambdaTilde2 <- lambdaTilde[[2]]
-  if(lambdaTilde1 >= lambdaTilde2){
-    (lambdaTilde1 / lambdaTilde2) * hTilde * gammaTilde
-  }else{
-    (lambdaTilde1 / lambdaTilde2) * (hTilde ^ (-1)) * (gammaTilde ^ (-1))
-  }
+  browser()
+  (lambdaTilde1 / lambdaTilde2) * hTilde * gammaTilde
 }
