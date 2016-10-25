@@ -70,5 +70,5 @@ SrivastavaYanagihara2010_test.matrix <- function(...){
 #' @export
 #'
 SrivastavaYanagihara2010_test.default <- function(gammahat1, gammahat2, ksihat21, ksihat22){
-  ((gammahat1 - gammahat2) / sqrt(ksihat21 + ksihat22))
+  (((gammahat1 - gammahat2) / sqrt(ksihat21 + ksihat22))) ^ 2
 }
