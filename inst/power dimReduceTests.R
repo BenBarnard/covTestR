@@ -9,7 +9,6 @@ tests_ <- function(x, test, type){
 
   samples <- nrow(file) / (max(file$replication) * max(file$population))
   dimensions <- ncol(file[,-c(1,2)])
-
   readr::write_csv(plyr::ddply(file, plyr::.(replication),
                                function(file){
                                  do.call(test, list(x = file[,-1],
@@ -33,7 +32,5 @@ tests("Schott2007_test", "identity")
 tests("Srivastava2007_test", "identity")
 tests("Srivastava2014_test", "identity")
 tests("SrivastavaYanagihara2010_test", "identity")
-tests("diff_trace", "toeplitz")
-tests("diff_trace", "identity")
 tests("Ishii2016_test", "toeplitz")
 tests("Ishii2016_test", "identity")

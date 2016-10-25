@@ -27,9 +27,15 @@ SrivastavaYanagihara2010_test.data.frame <- function(x, group, ...){
 #'
 #' @importFrom plyr llply
 #' @importFrom plyr mlply
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+#' @importFrom stringr str_detect
+#' @importFrom stringr str_replace
 #'
 SrivastavaYanagihara2010_test.matrix <- function(...){
-  matrix_ls <- list(...)
+  ls <- lazy_dots(...)
+  matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
+  names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
 
   n <- llply(matrix_ls, function(matrix){
     nrow(matrix)
