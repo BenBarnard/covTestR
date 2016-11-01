@@ -20,7 +20,9 @@ crit_data(type = "identity",
                     difference = c(0, 1, 2, 3, 4, 5),
                     populations = 2,
                     replications = 10,
-                    reductionMethods = c("DataConcatScatter", "DataConcatScatterBlock", "SConcat"))
+                    reductionMethods = c("DataConcatScatter", "DataConcatScatterBlock",
+                    "SConcat", "SDiff"),
+                    directory = "~/Documents/R/Dissertation/data")
 
 }
 

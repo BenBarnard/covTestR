@@ -19,6 +19,7 @@
 #' @importFrom classReduce DataConcatScatter
 #' @importFrom classReduce DataConcatScatterBlock
 #' @importFrom classReduce SConcat
+#' @importFrom classReduce SDiff
 #' @importFrom readr write_csv
 #'
 #'
@@ -28,7 +29,8 @@
 #'                     difference = c(0, 1, 2, 3, 4, 5),
 #'                     populations = 2,
 #'                     replications = 10,
-#'                     reductionMethods = c("DataConcatScatter", "DataConcatScatterBlock", "SConcat"),
+#'                     reductionMethods = c("DataConcatScatter", "DataConcatScatterBlock",
+#'                     "SConcat", "SDiff"),
 #'                     directory = "~/Documents/R/Dissertation/data")
 #'
 crit_data <- function(type, dimensions, samples, difference, populations, replications, reductionMethods, directory){
@@ -48,18 +50,19 @@ crit_data <- function(type, dimensions, samples, difference, populations, replic
           }
 
           originaldata <- rdply(.n = replications,
-                                      mcSamples(meanVec = rep(0, nrow(covMat[[1]])),
-                                                covMat = covMat,
-                                                samples = samples,
-                                                pops = populations),
-                                      .id = "replication")
+                                mcSamples(meanVec = rep(0, nrow(covMat[[1]])),
+                                          covMat = covMat,
+                                          samples = samples,
+                                          pops = populations),
+                                .id = "replication")
           names(originaldata) <- c(names(originaldata)[names(originaldata) %in%
-                                                           c("replication", "population")],
+                                                         c("replication", "population")],
                                    paste0("V", names(originaldata)[!(names(originaldata) %in%
                                                                        c("replication", "population"))]))
           originaldata <- cbind(originaldata, data.frame(originaldimensions = dimensions,
-                                                                       difference = difference,
-                                                                       ReductionMethod = "None"))
+                                                         difference = difference,
+                                                         ReductionMethod = "None",
+                                                         type = type))
 
           write_csv(rbind(ldply(lapply(reductionMethods, function(reduction){
             cbind(ldply(lapply(1:replications, function(replication){
@@ -67,7 +70,8 @@ crit_data <- function(type, dimensions, samples, difference, populations, replic
                                                              !(names(originaldata) %in% c("originaldimensions",
                                                                                           "difference",
                                                                                           "replication",
-                                                                                          "ReductionMethod"))],
+                                                                                          "ReductionMethod",
+                                                                                          "type"))],
                                             group = expr_find(population),
                                             targetDim = dimensions))$reducedData,
                     originaldata[originaldata$replication == replication,
@@ -76,10 +80,10 @@ crit_data <- function(type, dimensions, samples, difference, populations, replic
                                                             "replication")]
               )
             })),
-            data.frame(ReductionMethod = rep(reduction, replications * populations * samples)))
-          })), originaldata), paste0(directory, "/dimensions ", dimensions,
-                                     " samples ", samples, " difference ",
-                                     difference, " .csv"))
+            data.frame(ReductionMethod = rep(reduction, replications * populations * samples),
+                       type = rep(type, replications * populations * samples)))
+          })), originaldata), paste0(directory, "/", dimensions, " ", samples,
+                                     " ", difference, " ", type, " .csv"))
         },
         replications = replications,
         type = type,
