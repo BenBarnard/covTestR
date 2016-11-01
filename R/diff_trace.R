@@ -57,5 +57,5 @@ diff_trace.default <- function(traces){
   trace1 <- traces[[1]]
   trace2 <- traces[[2]]
 
-  trace1 - trace2
+  (trace1 - trace2) ^ 2
 }
