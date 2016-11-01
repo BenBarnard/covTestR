@@ -33,7 +33,7 @@ crit_data(type = "identity",
           samples = c(15),
           difference = c(1, 2, 3, 4, 5),
           populations = 2,
-          replications = 10)
+          replications = 10000)
 
 crit_data(type = "toeplitz",
           dimensions = c(20, 25, 30, 35, 40, 45, 50),
