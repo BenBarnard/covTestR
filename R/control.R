@@ -1,4 +1,3 @@
-control <- function (data, control.data, control.expectation, ...)
-{
+control <- function (data, control.data){
 
 }

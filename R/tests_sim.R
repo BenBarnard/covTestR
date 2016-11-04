@@ -11,7 +11,7 @@
 #' @importFrom readr read_csv
 #'
 #' @examples tests(directory = "~/Documents/R/Dissertation/data",
-#'                 test_funcs = c("Chaipitak2013_test"),
+#'                 test_funcs = c("Schott2007_test"),
 #'                 dimensions = c(20, 19, 18))
 tests <- function(directory, test_funcs, dimensions){
 
@@ -25,12 +25,11 @@ tests <- function(directory, test_funcs, dimensions){
   lapply(crit_files, function(file){
     data <- read_csv(paste0(directory, "/", file))
     data <- data[,!(names(data) %in% c("difference"))]
-    browser()
+
     ddply(.data = data,
           .variables = c("ReductionMethod"),
           .fun = function(data, dimensions, test_funcs){
             if(unique(data$ReductionMethod) == "None"){
-              browser()
               difftrace <- ddply(.data = data,
                                  .variables = c("replication"),
                                  .fun = function(x){
@@ -41,7 +40,7 @@ tests <- function(directory, test_funcs, dimensions){
                                  })
 
               lapply(test_funcs, function(funcs){
-                browser()
+
                 test <- ddply(.data = data,
                               .variables = c("replication"),
                               .fun = function(x, funcs){
@@ -51,7 +50,7 @@ tests <- function(directory, test_funcs, dimensions){
                                                                          "replication"))], expr_find(population)))
                               }, funcs = funcs)
 
-               control <- contr(test$V1, difftrace$V1)
+               control <- contr(test$V1, difftrace$V1, .95)
 
 
               })
