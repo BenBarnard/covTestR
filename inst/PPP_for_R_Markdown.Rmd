@@ -1,0 +1,514 @@
+---
+title: "A Comparison of Four Test Statistics for High-Dimensional Mean Vectors"
+subtitle: "A Monte Carlo Power Simulation Study"
+author: "Whitney Burrow"
+date: "August 16, 2016"
+output:
+  ioslides_presentation:
+    incremental: true
+    transition: slower
+    widescreen: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, eval = FALSE)
+```
+
+## Overview of Topics
+
+- Introduction of the problem
+
+- Test Statistics
+
+- SVD reduction
+
+- Simulation study
+
+- Summary
+
+- Future work
+
+- References
+
+<div class="notes">
+Smile! :) You got this!
+</div>
+
+# Introduction
+
+## Introduction
+
+- Considering high-dimensional data
+
+- Interested in comparing mean vectors from two samples with equal covariance matrices
+
+- Four test statistics for testing difference of means
+
+- Dimension reduction via singular value decomposition
+
+
+<div class="notes">
+SVD is last bullet point!!!!
+</div>
+
+# Statistics for Testing for Differences of Mean Vectors
+
+## Statistic 1
+
+There are several methods for testing for a difference in mean vectors in high dimension. We consider the following:
+
+- Bai--Sarandasa (1996)
+
+    - Bai and Sarandasa proposed the test statistic given by
+    \[
+    T_{BS} = \frac{\left( \frac{1}{N_1} + \frac{1}{N_2} \right)^{-1} \left( \boldsymbol{\bar{x}}_1 - 
+      \boldsymbol{\bar{x}}_2 \right)' \left( \boldsymbol{\bar{x}}_1 - \boldsymbol{\bar{x}}_2 \right) - \text{tr}S}{
+      \left( 2 \left[ \text{tr}S^2 - \frac{1}{n} \left(\text{tr} S \right)^2 \right] \right)^{1/2}}.
+    \]
+
+## Statistic 2
+- Srivastava $T^{+^2}$ (2007)
+
+    - Srivastava proposed a statistic based on the Moore-Penrose inverse of the sample covariance matrix. This 
+    statistic is
+    \[ 
+    T^{+^2} = \left( \frac{1}{N_1} + \frac{1}{N_2} \right)^{-1} \left( \boldsymbol{\bar{x}}_1 - 
+    \boldsymbol{\bar{x}}_2 \right)' \boldsymbol{S}^+ \left( \boldsymbol{\bar{x}}_1 - \boldsymbol{\bar{x}}_2 \right),
+    \]
+    where  $S^+$ is the Moore-Penrose inverse of $S$.
+    
+<div class="notes">
+$S S^+ S = S$, $S^+ S S^+ = S^+$, $(S^+ S) ' = S^+ S$, and $(S S^+) ' = S S^+$.
+</div>
+    
+## Statistic 3
+    
+- Srivastava--Du (2008)
+
+    - Srivastava and Du proposed a statistic that is invariant under the transformation by any $p \times p$ 
+    non-singular diagonal matrix. This statistic is 
+      \[
+      T_{SD} = \frac{\left( \frac{1}{N_1} + \frac{1}{N_2} \right)^{-1} \left( \boldsymbol{\bar{x}}_1 - 
+      \boldsymbol{\bar{x}}_2 \right)' \boldsymbol{D}_S^{-1} \left( \boldsymbol{\bar{x}}_1 - \boldsymbol{\bar{x}}_2 
+      \right) - p}{\left[ 2 \left\lbrace \text{tr } \hat{\boldsymbol{R}}^2 - \left( \frac{p^2}{n} \right) 
+      \right\rbrace C_{p, n} \right]^{1/2}},
+      \]
+      where $\hat{\boldsymbol{R}} = \boldsymbol{D}_S^{-1/2} \boldsymbol{S D}_S^{-1/2}$, $\boldsymbol{D}_S = 
+      \text{diag } \boldsymbol{S}$, and 
+      \[
+      C_{p, n} = 1 + \frac{\text{tr } \hat{\boldsymbol{R}}^2}{p^{3/2}}.
+      \]
+      
+<div class="notes">
+Invariance to $p \times p$ non-singular diagonal matrix means that this statistic is invariant to measurement changes.
+</div>
+
+## Statistic 4 {.small}
+
+- Thulin's Random Subspaces (2014)
+
+    1. Randomly select $k \leq n_1 + n_2 - 2$ integers $i_1, \dots, i_k$ from 1 to $p$ without replacement.
+
+    2. Calculate Hotelling's test statistic, $T_i^2$, based on reduced dimensions $i_1, \dots, i_k$ of $\boldsymbol{X}_1$ 
+    and $\boldsymbol{X}_2$.
+
+    3. Repeat steps 1 and 2 $B_1$ times, obtaining statistics $T_1^2, \dots, T_{B_1}^2$.
+
+    4. Obtain $T_{rs}$ by
+    \[
+    T_{rs} = \frac{1}{B_1} \sum_{i = 1}^{B_1} T_i^2.
+    \]
+    
+<div class="notes">
+Defaults: $B_1 = 100$ and $k = \text{floor} ((n_1 + n_2 - 2) / 2 )$
+
+Hotelling's Test:
+\[
+T^2 = (\bar{\textbf{x}}_1 - \bar{\textbf{x}}_2)' \left[ S \left( \frac{1}{n_1} + \frac{1}{n_2} \right) \right]^{-1} (\bar{\textbf{x}}_1 - \bar{\textbf{x}}_2)
+\]
+where
+\[
+S = \frac{(n_1 - 1) S_1 + (n_2 - 1) S_2}{(n_1 - 1) + (n_2 - 1)}.
+\]
+</div>
+    
+## Assumptions
+
+- Each method assumes $\boldsymbol{\Sigma}_1 = \boldsymbol{\Sigma}_2 = \boldsymbol{\Sigma}$.
+
+- The hypotheses for all four tests are
+  \[
+  H_0: \boldsymbol{\mu}_1 = \boldsymbol{\mu}_2 \quad \text{vs.} \quad H_a: \boldsymbol{\mu}_1 \neq \boldsymbol{\mu}_2.
+  \]
+
+  
+# Dimension Reduction via the Singular Value Decomposition
+
+## Dimension Reduction using the Singular Value Decomposition 
+- For samples $\boldsymbol{X}_1$ and $\boldsymbol{X}_2$, let 
+  $\boldsymbol{X} = \left[ \boldsymbol{X}_1 \vdots \, \boldsymbol{X}_2 \right]^T$.
+
+- Let $\boldsymbol{S}_t$ represent the scatter matrix of $\boldsymbol{X}$, with rank $t$.
+
+- Let $\boldsymbol{S}_t = \boldsymbol{UDU}^T$ represent the singular value decompostion of $\boldsymbol{S}_t$.
+
+    - $\boldsymbol{U}$ is orthogonal.
+
+    - $\boldsymbol{D} = \begin{bmatrix} \boldsymbol{D}_t & \boldsymbol{O} \\ \boldsymbol{O} & \boldsymbol{O} \end{bmatrix}$.
+  
+<div class="notes">
+Scatter matrix: $X^t C X$ where $C = I - (1/n) 1_{n \times n}$
+</div>
+
+## Dimension Reduction Continued
+
+- Partition $\boldsymbol{U}$ such that $\boldsymbol{U} = \left[ \boldsymbol{U}_1 \vdots \, \boldsymbol{U}_2 
+  \right]$ with $\boldsymbol{U}_1 \in \mathbb{R}^{p \times t}$.
+
+- Project $\boldsymbol{X}_1$ and $\boldsymbol{X}_2$ to $t$ dimensions by taking $\boldsymbol{X}_{Ri}^T = \boldsymbol{U}_1^T 
+  \boldsymbol{X}_i^T$.
+
+# Quantile Estimators
+
+## Naive Quanitle Estimator for Critical Value
+
+- Simulate $r$ repetitions of the test statistic replications under the null hypothesis.
+
+- Select the $(r \alpha)^{th}$ largest value as the empirical critical point, $\hat{c}_{1 - \alpha}$.
+        
+## Brewer's Quanitle Estimator (1986) for Critical Value
+
+- Simulate $r$ repetitions of the test statistic replications under the null hypothesis.
+      
+- Estimate the $1 - \alpha$ quantile with 
+  $$
+  \begin{aligned}
+  B_{1 - \alpha} &= \sum_{i = 1}^r \left[ r^{-1} \left[ \frac{\Gamma(r + 1)}{\Gamma(i) \Gamma(r - i + 1)} \right] 
+  p^{i - 1} \left( 1 - p \right)^{r - i} \right] X_{(i)} \\
+  &\approx \left[ \frac{2 \pi p (1 - p)}{n + 1} \right]^{-1/2} \exp \left\lbrace {- \left( \frac{i}{n + 1} - p    
+  \right)^2} \middle/ {\frac{2pq}{n + 1}} \right\rbrace
+  \end{aligned}
+  $$
+
+    
+## Reduced Variability in Brewer Estimator
+
+```{r variability, message = FALSE, fig.width=10, fig.height=5.75}
+library(readr)
+library(ggplot2)
+library(magrittr)
+library(dplyr)
+library(raster)
+
+setwd("/Users/whitney_burrow/Box Sync/Research/PPP")
+varSimResults <- read_csv("variability_simulation.csv")
+varSimResults$estimator <- factor(varSimResults$estimator, levels = c("brewer", "crit"))
+
+# varSimResults[["reps"]] <- factor(varSimResults$reps, levels = seq(100, 1000, by = 100))
+
+# Consider variability measure.
+varSimSummaries <- varSimResults %>%
+  group_by(test, reps, estimator) %>%
+  summarise(sd = sd(qEst), cv = cv(qEst), avg = mean(qEst)) %>%
+  filter(test != "lee")
+
+# ggplot(varSimSummaries, aes(x = reps, y = sd)) +
+#   geom_line(aes(colour = test))
+
+varSimSummaries <- varSimSummaries %>%
+  group_by(test, reps) %>%
+  summarise(sdRatio = sd[estimator == "brewer"] / sd[estimator == "crit"], 
+            cvRatio = cv[estimator == "brewer"] / cv[estimator == "crit"],
+            meanRatio = avg[estimator == "brewer"] / avg[estimator == "crit"])
+
+varSimSummaries %<>% ungroup()
+
+varSimSummaries$reps <- varSimSummaries$reps %>%
+  as.character() %>% 
+  as.numeric()
+
+varSimSummaries$test <- factor(varSimSummaries$test)
+
+levels(varSimSummaries$test) <- c("Srivastava", "Srivastava-Du", "Thulin")
+
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+ggplot(varSimSummaries, (aes(x = reps, y = sdRatio))) + 
+  geom_line(aes(colour = test), size = I(1.5)) +
+  geom_point(aes(colour = test), size = I(1.5)) +
+  geom_hline(yintercept = 1, colour = "black") +
+  ylab("Ratio of Standard Deviations") +
+  xlab("Number of Repetitions") +
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test")) + 
+  theme(axis.text.x = element_text(size = 12),
+        axis.title.x = element_text(size = 16),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 16),
+        legend.text = element_text(size = 15),
+        legend.title = element_text(size = 16))
+
+```
+
+# Simulation Study
+
+## Parameters for Simulation Study
+
+The data sets generated for the simulation study have the following characteristics:
+
+- $n_1 = n_2 = 15$
+
+- $p = 100$
+
+- Generating data sets from $\mathcal{N}_p \left( \boldsymbol{\mu}_i, \boldsymbol{\Sigma} \right)$
+
+- Number of repetitions is 1000
+
+## Description of $\boldsymbol{\Sigma}$
+
+- Selected $\boldsymbol{\Sigma}_{0.5, 0.25}$
+
+    - $\boldsymbol{\Sigma}_{a, b}$ represents a covariance matrix with unit variances and blocks of size 25, where 
+      $\text{Cov}\left(X_{i}, X_{j} \right) = a$ if $X_i$ and $X_j$ belong to the same block and $b$ otherwise.
+      
+- For example, if the size of each block was 2 and $p = 6$, then
+  \[
+  \boldsymbol{\Sigma}_{a, b} = \begin{bmatrix}
+  1 & a & b & b & b & b \\
+  a & 1 & b & b & b & b \\
+  b & b & 1 & a & b & b \\
+  b & b & a & 1 & b & b \\
+  b & b & b & b & 1 & a \\
+  b & b & b & b & a & 1
+  \end{bmatrix}.
+  \]
+  
+## Description of $\boldsymbol{\mu}_i$
+
+- $\boldsymbol{\mu}_1 = \boldsymbol{1}_{100}$
+
+- $\boldsymbol{\mu}_2$ shifted the means evenly by some value $\delta$ for the first $m$ values per block of 
+  $\boldsymbol{\mu}_1$ with $m = (1, 5, 10)$.
+  
+    - In other words, 
+    \[
+    \boldsymbol{\mu}_{2i} = \left[ \left( \boldsymbol{1 + \delta} \right)_m \vdots \boldsymbol{1}_{25 - m} \right]
+    \]
+    for $i = 1, 2, 3, 4$.
+    
+    - Then
+    \[
+    \boldsymbol{\mu}_2 = \left[ \boldsymbol{\mu}_{21} \vdots \, \boldsymbol{\mu}_{22} \vdots \, \boldsymbol{\mu}_{23} \vdots
+    \, \boldsymbol{\mu}_{24} \right].
+    \]
+
+## Simulation Results for m = 1
+
+```{r param1, message = FALSE, fig.width=9.75, fig.height=5.75}
+library(readr)
+library(ggplot2)
+library(magrittr)
+library(dplyr)
+library(tidyr)
+library(gridExtra)
+
+setwd("/Users/whitney_burrow/Box Sync/Research/PPP/Power Results")
+
+powerResults1 <- read_csv("power_results_1_new.csv")
+
+powerResults1 %<>%
+  mutate(dist = sqrt(dist))
+
+powerResults1Difference <- powerResults1 %>%
+  group_by(test, dist) %>%
+  summarise(difference = power[datatype == "svd"] - power[datatype == "full"])
+
+powerResults1Difference$test <- factor(powerResults1Difference$test)
+
+levels(powerResults1Difference$test) <- c("Bai-Sarandasa", "Srivastava", "Srivastava-Du", "Thulin")
+
+### Plot power Results
+
+full <- ggplot(data = powerResults1 %>% filter(datatype == "full"), aes(x = dist, y = power)) +
+  geom_line(aes(colour = test), size = I(1.2)) +
+  xlab("") +
+  ylab("Full Power") +
+  scale_colour_manual(values = cbbPalette, name = "Test") +
+  scale_linetype_discrete(name = "Data Type") +
+  scale_alpha_discrete(name = "Data Type", range = c(0.5, 1)) +
+  theme(text = element_text(size=20), axis.text.y = element_text(size = 9),
+        axis.title.y = element_text(size = 12),
+        legend.position = "none") 
+
+svd <- ggplot(data = powerResults1 %>% filter(datatype == "svd"), aes(x = dist, y = power)) +
+  geom_line(aes(colour = test), size = I(1.2)) +
+  xlab("") +
+  ylab("SVD Power") +
+  scale_colour_manual(values = cbbPalette, name = "Test") +
+  scale_linetype_discrete(name = "Data Type") +
+  scale_alpha_discrete(name = "Data Type", range = c(0.5, 1)) +
+  theme(text = element_text(size=20), axis.text.y = element_text(size = 9),
+        axis.title.y = element_text(size = 12),
+        legend.position = "none")
+
+diff <- ggplot(data = powerResults1Difference, aes(x = dist, y = difference)) +
+  geom_line(aes(colour = test), size = I(1.2)) +
+  xlab("Mahalanobis Distance") +
+  ylab("Difference") +
+  scale_colour_manual(values = cbbPalette, name = "Test") +
+  scale_linetype_discrete(name = "Data Type") +
+  scale_alpha_discrete(name = "Data Type", range = c(0.5, 1)) +
+  theme(text = element_text(size=20), axis.text.y = element_text(size = 9),
+        axis.title.y = element_text(size = 12),
+        legend.position = "bottom", legend.direction="horizontal") 
+
+grid.arrange(full, svd, diff, ncol = 1, heights = c(0.3, 0.3, 0.4))
+```
+
+<div class="notes">
+$\sqrt{(\bar{x}_1 - \bar{x}_2)^T S^{-1} (\bar{x}_1 - \bar{x}_2)}$
+</div>
+
+## Simulation Results for m = 5
+
+```{r param2, message = FALSE, fig.width=10, fig.height=5.75}
+setwd("/Users/whitney_burrow/Box Sync/Research/PPP/Power Results")
+
+powerResults2 <- read_csv("power_results_2_new.csv")
+
+powerResults2 %<>%
+  mutate(dist = sqrt(dist))
+
+powerResults2Difference <- powerResults2 %>%
+  group_by(test, dist) %>%
+  summarise(difference = power[datatype == "svd"] - power[datatype == "full"])
+
+powerResults2Difference$test <- factor(powerResults2Difference$test)
+
+levels(powerResults2Difference$test) <- c("Bai-Sarandasa", "Srivastava", "Srivastava-Du", "Thulin")
+
+### Plot power Results
+
+full <- ggplot(data = powerResults2 %>% filter(datatype == "full"), aes(x = dist, y = power)) +
+  geom_line(aes(colour = test), size = I(1.2)) +
+  xlab("") +
+  ylab("Full Power") +
+  scale_colour_manual(values = cbbPalette, name = "Test") +
+  scale_linetype_discrete(name = "Data Type") +
+  scale_alpha_discrete(name = "Data Type", range = c(0.5, 1)) +
+  theme(text = element_text(size=20), axis.text.y = element_text(size = 9),
+        axis.title.y = element_text(size = 12),
+        legend.position = "none")
+
+svd <- ggplot(data = powerResults2 %>% filter(datatype == "svd"), aes(x = dist, y = power)) +
+  geom_line(aes(colour = test), size = I(1.2)) +
+  xlab("") +
+  ylab("SVD Power") +
+  scale_colour_manual(values = cbbPalette, name = "Test") +
+  scale_linetype_discrete(name = "Data Type") +
+  scale_alpha_discrete(name = "Data Type", range = c(0.5, 1)) +
+  theme(text = element_text(size=20), axis.text.y = element_text(size = 9),
+        axis.title.y = element_text(size = 12),
+        legend.position = "none")
+
+diff <- ggplot(data = powerResults2Difference, aes(x = dist, y = difference)) +
+  geom_line(aes(colour = test), size = I(1.2)) +
+  xlab("Mahalanobis Distance") +
+  ylab("Difference") +
+  scale_colour_manual(values = cbbPalette, name = "Test") +
+  scale_linetype_discrete(name = "Data Type") +
+  scale_alpha_discrete(name = "Data Type", range = c(0.5, 1)) +
+  theme(text = element_text(size=20), axis.text.y = element_text(size = 9),
+        axis.title.y = element_text(size = 12),
+        legend.position = "bottom", legend.direction="horizontal") 
+
+grid.arrange(full, svd, diff, ncol = 1, heights = c(0.3, 0.3, 0.4))
+```
+
+
+## Simulation Results for m = 10
+
+```{r param3, message = FALSE, fig.width=10, fig.height=5.75}
+setwd("/Users/whitney_burrow/Box Sync/Research/PPP/Power Results")
+
+powerResults3 <- read_csv("power_results_3_new.csv")
+
+powerResults3 %<>%
+  mutate(dist = sqrt(dist))
+
+powerResults3Difference <- powerResults3 %>%
+  group_by(test, dist) %>%
+  summarise(difference = power[datatype == "svd"] - power[datatype == "full"])
+
+powerResults3Difference$test <- factor(powerResults3Difference$test)
+
+levels(powerResults3Difference$test) <- c("Bai-Sarandasa", "Srivastava", "Srivastava-Du", "Thulin")
+
+### Plot power Results
+
+full <- ggplot(data = powerResults3 %>% filter(datatype == "full"), aes(x = dist, y = power)) +
+  geom_line(aes(colour = test), size = I(1.2)) +
+  xlab("") +
+  ylab("Full Power") +
+  scale_colour_manual(values = cbbPalette, name = "Test") +
+  scale_linetype_discrete(name = "Data Type") +
+  scale_alpha_discrete(name = "Data Type", range = c(0.5, 1)) +
+  theme(text = element_text(size=20), axis.text.y = element_text(size = 9),
+        axis.title.y = element_text(size = 12),
+        legend.position = "none") 
+
+svd <- ggplot(data = powerResults3 %>% filter(datatype == "svd"), aes(x = dist, y = power)) +
+  geom_line(aes(colour = test), size = I(1.2)) +
+  xlab("") +
+  ylab("SVD Power") +
+  scale_colour_manual(values = cbbPalette, name = "Test") +
+  scale_linetype_discrete(name = "Data Type") +
+  scale_alpha_discrete(name = "Data Type", range = c(0.5, 1)) +
+  theme(text = element_text(size=20), axis.text.y = element_text(size = 9),
+        axis.title.y = element_text(size = 12),
+        legend.position = "none")
+
+diff <- ggplot(data = powerResults3Difference, aes(x = dist, y = difference)) +
+  geom_line(aes(colour = test), size = I(1.2)) +
+  xlab("Mahalanobis Distance") +
+  ylab("Difference") +
+  scale_colour_manual(values = cbbPalette, name = "Test") +
+  scale_linetype_discrete(name = "Data Type") +
+  scale_alpha_discrete(name = "Data Type", range = c(0.5, 1)) +
+  theme(text = element_text(size=20), axis.text.y = element_text(size = 9),
+        axis.title.y = element_text(size = 12),
+        legend.position = "bottom", legend.direction="horizontal") 
+
+grid.arrange(full, svd, diff, ncol = 1, heights = c(0.3, 0.3, 0.4))
+```
+
+# Summary and References
+
+## Summary
+
+- Looked at two samples of high-dimensional data with equal covariance matrices
+
+- Considered four test statistics for testing differences in high-dimensional mean vectors
+
+- Used singular valued decomposition to reduce dimension of data sets
+
+- Considered two methods of quantile estimation
+
+- Compared methods via power simulation
+
+## Future Work
+
+- Dimension reduction method presented by Fan et al. (2012)
+
+- Additional dimension reduction using M-method to drop to low-dimensional scenario
+
+- Goal: perform low-dimensional tests on reduced data and seeing similar or better power
+  than high dimensional tests
+
+## References {.smaller}
+
+---
+nocite: |
+  @srivastava_multivariate_2007, @srivastava_test_2008, @ye_regularized_2006, 
+  @bai_effect_1996, @thulin_high-dimensional_2014
+...
+
