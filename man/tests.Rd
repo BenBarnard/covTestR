@@ -14,7 +14,7 @@ Title
 }
 \examples{
 tests(directory = "~/Documents/R/Dissertation/data",
-                test_funcs = c("Chaipitak2013_test"),
+                test_funcs = c("Schott2007_test"),
                 dimensions = c(20, 19, 18))
 }
 
