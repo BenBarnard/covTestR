@@ -4,7 +4,7 @@
 \alias{ahat2Srivastava2014_func}
 \title{Estimator for frobenius norm expansion term Srivastava 2014 (helper function)}
 \usage{
-ahat2Srivastava2014_func(ahat21, ahat22, n1, n2)
+ahat2Srivastava2014_func(ahat2i, n)
 }
 \arguments{
 \item{ahat21}{see function}

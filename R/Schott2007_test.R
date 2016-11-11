@@ -60,7 +60,7 @@ Schott2007_test.matrix<- function(...){
 #'
 Schott2007_test.default <- function(ns, p, ahat2, ahat2i, sample_covs){
   comb <- combn(length(ns), 2, simplify = FALSE)
-  theta <- 4 * ahat2 * (Reduce(`+`, lapply(comb, function(x){
+  theta <- 4 * (ahat2 ^ 2) * (Reduce(`+`, lapply(comb, function(x){
     ((1 / ns[[x[1]]]) + (1 / ns[[x[2]]])) ^ 2})) +
       (length(ns) - 1) * (length(ns) - 2) * Reduce(`+`, lapply(ns, function(x){x ^ 2})))
 

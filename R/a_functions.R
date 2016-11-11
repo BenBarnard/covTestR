@@ -56,8 +56,8 @@ ahat1_func <- ahat1i_func <- function(p, sample_cov){
 #'
 #' @export
 #'
-ahatStar4_func <- function(tau, p, sample_cov, n1, n2){
-  n <- n1 + n2 - 2
+ahatStar4_func <- function(tau, p, sample_cov, ns){
+  n <- Reduce(`+`, lapply(ns, function(x){x - 1}))
   b <- - 4 / n
   c <- - (2 * (n ^ 2) + 3 * n - 6) / (n * ((n ^ 2) + n + 2))
   d <-  (2 * (5 * n + 6)) / (n * ((n ^ 2) + n + 2))
@@ -148,6 +148,7 @@ ahat2iSrivastava2014_func <- function(n, p, D, A){
 #'
 #' @export
 #'
-ahat2Srivastava2014_func <- function(ahat21, ahat22, n1, n2){
-  ((n1 - 1) * ahat21 + (n2 - 1) * ahat22) / (n1 + n2 - 2)
+ahat2Srivastava2014_func <- function(ahat2i, n){
+  Reduce(`+`, mapply(function(n, ahat2i){(n - 1) * ahat2i}, n, ahat2i, SIMPLIFY = FALSE)) /
+    Reduce(`+`, lapply(n, function(x){x - 1}))
 }

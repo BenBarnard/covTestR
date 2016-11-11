@@ -18,7 +18,7 @@ Test Statistic for Schott 2007
 Test of Equality of Covariances given by Schott 2007
 }
 \examples{
-Schott2007_test(mcSamples(c(0,0,0), diag(1, 3), 10, 3), group = population)
+Schott2007_test(mcSamples(rep(0, 100), diag(1, 100), 10, 3), group = population)
 
 }
 

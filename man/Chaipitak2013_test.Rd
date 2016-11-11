@@ -18,7 +18,7 @@ Test statistic for Chaipitak 2013
 Test of Equality of Covariances given by Chaipitak 2013
 }
 \examples{
-Chaipitak2013_test(mcSamples(c(0,0,0), diag(1, 3), 10, 2), group = population)
+Chaipitak2013_test(mcSamples(rep(0, 100), diag(1, 100), 10, 3), group = population)
 
 }
 

@@ -47,7 +47,7 @@ Srivastava2007_test.matrix <- function(...){
 
   sample_covs <- lapply(matrix_ls, cov)
 
-  overall_cov <- Reduce(`+`, A_ls) / Reduce(`+`, lapply(ns, function(x){x - 1}))
+  overall_cov <- overall_cov_func(A_ls, ns)
 
   ahat2i <- mapply(ahat2i_func, ns, p, sample_covs, SIMPLIFY = FALSE)
   ahat2 <- ahat2_func(ns, overall_cov, p[[1]])

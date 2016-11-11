@@ -4,7 +4,7 @@
 \alias{tau_func}
 \title{Tau for Chaipitak 2013 (helper function)}
 \usage{
-tau_func(n1, n2)
+tau_func(ns)
 }
 \arguments{
 \item{n}{sample size}

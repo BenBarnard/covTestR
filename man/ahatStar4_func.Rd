@@ -4,7 +4,7 @@
 \alias{ahatStar4_func}
 \title{Estimator for expansion term in Frobenius Norm Chaipitak 2013 (helper funciton)}
 \usage{
-ahatStar4_func(tau, p, sample_cov, n1, n2)
+ahatStar4_func(tau, p, sample_cov, ns)
 }
 \arguments{
 \item{tau}{see function}

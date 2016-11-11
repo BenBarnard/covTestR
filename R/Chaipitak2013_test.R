@@ -7,7 +7,7 @@
 #'
 #' @export
 #'
-#' @examples Chaipitak2013_test(mcSamples(c(0,0,0), diag(1, 3), 10, 2), group = population)
+#' @examples Chaipitak2013_test(mcSamples(rep(0, 100), diag(1, 100), 10, 3), group = population)
 #'
 Chaipitak2013_test <- function(data, ...){
   UseMethod("Chaipitak2013_test")
@@ -25,8 +25,6 @@ Chaipitak2013_test.data.frame <- function(x, group, ...){
 
 #' @export
 #'
-#' @importFrom plyr llply
-#' @importFrom plyr mlply
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_replace
@@ -37,32 +35,35 @@ Chaipitak2013_test.matrix <- function(...){
   matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
   names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
 
-    n <- llply(matrix_ls, function(matrix){
-      nrow(matrix)
-    })
+  ns <- lapply(matrix_ls, function(matrix){
+    nrow(matrix)
+  })
 
-    p <- llply(matrix_ls, function(matrix){
-      ncol(matrix)
-    })
+  p <- lapply(matrix_ls, function(matrix){
+    ncol(matrix)
+  })
 
-    A_ls <- llply(matrix_ls, A_func)
+  A_ls <- lapply(matrix_ls, A_func)
 
-    sample_covs <- mlply(cbind(A_ls, n), function(A_ls, n){
-      A_ls / (n - 1)
-    })
+  sample_covs <- lapply(matrix_ls, cov)
 
-    overall_cov <- (1 / (n[[1]] + n[[2]] - 2)) * (A_ls[[1]] + A_ls[[2]])
-    ahat2 <- ahat2_func(n[[1]], n[[2]], p[[1]], overall_cov)
-    ahat2i <- mlply(cbind(n, p, sample_covs), ahat2i_func)
-    tau <- tau_func(n[[1]], n[[2]])
-    ahatStar4 <- ahatStar4_func(tau, p[[1]], overall_cov, n[[1]], n[[2]])
-    deltahat2 <- deltahat2_func(ahatStar4, p[[1]], ahat2, n[[1]], n[[2]])
-    bhat <- bhat_func(ahat2i[[1]], ahat2i[[2]])
-  Chaipitak2013_test.default(bhat, deltahat2)
+  overall_cov <- overall_cov_func(A_ls, ns)
+
+  ahat2i <- mapply(ahat2i_func, ns, p, sample_covs, SIMPLIFY = FALSE)
+  ahat2 <- ahat2_func(ns, overall_cov, p[[1]])
+
+    tau <- tau_func(ns)
+    ahatStar4 <- ahatStar4_func(tau, p[[1]], overall_cov, ns)
+    deltahat2 <- deltahat2_func(ahatStar4, p[[1]], ahat2, ns)
+
+  Chaipitak2013_test.default(ahat2i, deltahat2)
 }
 
 #' @export
 #'
-Chaipitak2013_test.default <- function(bhat, deltahat2){
-  ((bhat - 1) / sqrt(deltahat2)) ^ 2
+Chaipitak2013_test.default <- function(ahat2i, deltahat2){
+  comb <- combn(length(ahat2i), 2, simplify = FALSE)
+  Reduce(`+`, lapply(comb, function(x){
+    (max(sapply(ahat2i[x], function(x){x})) / min(sapply(ahat2i[x], function(x){x})) - 1) ^ 2 / deltahat2
+  }))
 }

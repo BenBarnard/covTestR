@@ -18,7 +18,7 @@ Test statistic for Srivastava and Yanagihara 2010
 Test of Equality of Covariances given by Srivastava and Yanagihara 2010
 }
 \examples{
-SrivastavaYanagihara2010_test(mcSamples(c(0,0,0), diag(1, 3), 10, 2), group = population)
+SrivastavaYanagihara2010_test(mcSamples(rep(0, 100), diag(1, 100), 10, 2), group = population)
 
 }
 

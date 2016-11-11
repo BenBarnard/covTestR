@@ -4,7 +4,7 @@
 \alias{deltahat2_func}
 \title{delta hat squared for Chaiptak 2013 (helper function)}
 \usage{
-deltahat2_func(ahatstar4, p, ahat2, n1, n2)
+deltahat2_func(ahatstar4, p, ahat2, n)
 }
 \arguments{
 \item{ahatstar4}{see function}
@@ -13,9 +13,7 @@ deltahat2_func(ahatstar4, p, ahat2, n1, n2)
 
 \item{ahat2}{see function}
 
-\item{n1}{sample size for group 1}
-
-\item{n2}{sample size for group 2}
+\item{n}{sample size}
 }
 \description{
 delta hat squared for Chaiptak 2013 (helper function)
