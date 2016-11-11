@@ -25,8 +25,6 @@ Srivastava2007_test.data.frame <- function(x, group, ...){
 
 #' @export
 #'
-#' @importFrom plyr llply
-#' @importFrom plyr mlply
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
@@ -37,26 +35,29 @@ Srivastava2007_test.matrix <- function(...){
   matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
   names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
 
-  n <- llply(matrix_ls, function(matrix){
+  ns <- lapply(matrix_ls, function(matrix){
     nrow(matrix)
   })
 
-  p <- llply(matrix_ls, function(matrix){
+  p <- lapply(matrix_ls, function(matrix){
     ncol(matrix)
   })
 
-  A_ls <- llply(matrix_ls, A_func)
+  A_ls <- lapply(matrix_ls, A_func)
 
-  sample_covs <- mlply(cbind(A_ls, n), function(A_ls, n){
-    A_ls / (n - 1)
-  })
+  sample_covs <- lapply(matrix_ls, cov)
 
-  overall_cov <- (1 / (n[[1]] + n[[2]] - 2)) * (A_ls[[1]] + A_ls[[2]])
-  ahat2 <- ahat2_func(n[[1]], n[[2]], p[[1]], overall_cov)
+  overall_cov <- Reduce(`+`, A_ls) / Reduce(`+`, lapply(ns, function(x){x - 1}))
+
+  ahat2i <- mapply(ahat2i_func, ns, p, sample_covs, SIMPLIFY = FALSE)
+  ahat2 <- ahat2_func(ns, overall_cov, p[[1]])
+
   ahat1 <- ahat1_func(p[[1]], overall_cov)
-  ahat2i <- mlply(cbind(n, p, sample_covs), ahat2i_func)
-  ahat4 <- ahat4_func(A_ls[[1]], A_ls[[2]], p[[1]], n[[1]], n[[2]], ahat2, ahat1)
-  etahat2i <- mlply(cbind(n, p, ahat4, ahat2), etahat2i_func)
+
+  ahat4 <- ahat4_func(A_ls, p[[1]], ns, ahat2, ahat1)
+
+  etahat2i <- mapply(etahat2i_func, ns, p, ahat4, ahat2, SIMPLIFY = FALSE)
+
 
   Srivastava2007_test.default(ahat2i, etahat2i)
 }
@@ -64,10 +65,10 @@ Srivastava2007_test.matrix <- function(...){
 #' @export
 #'
 Srivastava2007_test.default <- function(ahat2i, etahat2i){
-  ahat21 <- ahat2i[[1]]
-  ahat22 <- ahat2i[[2]]
-  etahat21 <- etahat2i[[1]]
-  etahat22 <- etahat2i[[2]]
-
-  (((ahat21 - ahat22) / (sqrt(etahat21 + etahat22)))) ^ 2
+  ahatbar <- Reduce(`+`, mapply(function(ahat2i, etahat2i){ahat2i / etahat2i},
+                                ahat2i, etahat2i, SIMPLIFY = FALSE)) /
+    Reduce(`+`, lapply(etahat2i, function(x){1 / x}))
+  Reduce(`+`, mapply(function(ahat2i, etahat2i){
+    ((ahat2i - ahatbar) ^ 2) / etahat2i
+  }, ahat2i, etahat2i, SIMPLIFY = FALSE))
 }

@@ -6,7 +6,7 @@
 #' @return Test Statistic for Schott 2007
 #' @export
 #'
-#' @examples Schott2007_test(mcSamples(c(0,0,0), diag(1, 3), 10, 2), group = population)
+#' @examples Schott2007_test(mcSamples(c(0,0,0), diag(1, 3), 10, 3), group = population)
 #'
 Schott2007_test <- function(data, ...) {
   UseMethod("Schott2007_test")
@@ -24,8 +24,6 @@ Schott2007_test.data.frame <- function(x, group, ...){
 
 #' @export
 #'
-#' @importFrom plyr llply
-#' @importFrom plyr mlply
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
@@ -36,39 +34,37 @@ Schott2007_test.matrix<- function(...){
   matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
   names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
 
-    n <- llply(matrix_ls, function(matrix){
+    ns <- lapply(matrix_ls, function(matrix){
       nrow(matrix)
     })
 
-    p <- llply(matrix_ls, function(matrix){
+    p <- lapply(matrix_ls, function(matrix){
       ncol(matrix)
     })
 
-    A_ls <- llply(matrix_ls, A_func)
+    A_ls <- lapply(matrix_ls, A_func)
 
-    sample_covs <- mlply(cbind(A_ls, n), function(A_ls, n){
-      A_ls / (n - 1)
-    })
+    sample_covs <- lapply(matrix_ls, cov)
 
-    overall_cov <- (1 / (n[[1]] + n[[2]] - 2)) * (A_ls[[1]] + A_ls[[2]])
-    ahat2 <- ahat2_func(n[[1]], n[[2]], p[[1]], overall_cov)
-    ahat2i <- mlply(cbind(n, p, sample_covs), ahat2i_func)
+    overall_cov <- Reduce(`+`, A_ls) / Reduce(`+`, lapply(ns, function(x){x - 1}))
 
-  Schott2007_test.default(n, p, ahat2, ahat2i, sample_covs)
+    ahat2i <- mapply(ahat2i_func, ns, p, sample_covs, SIMPLIFY = FALSE)
+    ahat2 <- ahat2_func(ns, overall_cov, p[[1]])
+
+
+  Schott2007_test.default(ns, p[[1]], ahat2, ahat2i, sample_covs)
 }
 
 #' @export
 #'
-Schott2007_test.default <- function(n, p, ahat2, ahat2i, sample_covs){
-  n1 <- n[[1]]
-  n2 <- n[[2]]
-  p <- p[[1]]
-  ahat2 <- ahat2
-  ahat21 <- ahat2i[[1]]
-  ahat22 <- ahat2i[[2]]
-  sample_cov1 <- sample_covs[[1]]
-  sample_cov2 <- sample_covs[[2]]
+Schott2007_test.default <- function(ns, p, ahat2, ahat2i, sample_covs){
+  comb <- combn(length(ns), 2, simplify = FALSE)
+  theta <- 4 * ahat2 * (Reduce(`+`, lapply(comb, function(x){
+    ((1 / ns[[x[1]]]) + (1 / ns[[x[2]]])) ^ 2})) +
+      (length(ns) - 1) * (length(ns) - 2) * Reduce(`+`, lapply(ns, function(x){x ^ 2})))
 
-  ((((n1 - 1) * (n2 - 1)) / (2 * (n1 + n2 - 2) * ahat2)) *
-    (ahat21 + ahat22 - (2 / p) * tr(sample_cov1 %*% sample_cov2))) ^ 2
+  Reduce(`+`, lapply(comb, function(x){
+    ((ahat2i[[x[1]]] + ahat2i[[x[2]]] -
+       (2 / p) * tr(sample_covs[[x[1]]] %*% sample_covs[[x[2]]])) ^ 2) / theta
+    }))
 }

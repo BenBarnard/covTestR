@@ -4,7 +4,7 @@
 \alias{ahat2_func}
 \title{Estimator for expansion term in Frobenius Norm Schott 2007 (helper funciton)}
 \usage{
-ahat2_func(n1, n2, p, overall_cov)
+ahat2_func(ns, overall_cov, p)
 }
 \arguments{
 \item{p}{dimension}
