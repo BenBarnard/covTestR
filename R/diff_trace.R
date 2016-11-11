@@ -26,8 +26,6 @@ diff_trace.data.frame <- function(x, group, ...){
 
 #' @export
 #'
-#' @importFrom plyr llply
-#' @importFrom plyr mlply
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_replace
@@ -38,28 +36,32 @@ diff_trace.matrix<- function(...){
   matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
   names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
 
-  A_ls <- llply(matrix_ls, A_func)
-
-  n <- llply(matrix_ls, function(matrix){
+  ns <- lapply(matrix_ls, function(matrix){
     nrow(matrix)
   })
 
-  p <- llply(matrix_ls, function(matrix){
+  p <- lapply(matrix_ls, function(matrix){
     ncol(matrix)
   })
 
-   sample_traces <- mlply(cbind(A_ls, n), function(A_ls, n){
-     tr(A_ls / (n - 1))
-   })
+  A_ls <- lapply(matrix_ls, A_func)
 
-diff_trace.default(sample_traces)
+  sample_covs <- lapply(matrix_ls, cov)
+
+  overall_cov <- overall_cov_func(A_ls, ns)
+
+  ahat2i <- mapply(ahat2i_func, ns, p, sample_covs, SIMPLIFY = FALSE)
+
+diff_trace.default(ahat2i, p[[1]], sample_covs)
 }
 
 #' @export
 #'
-diff_trace.default <- function(traces){
-   trace1 <- traces[[1]]
-   trace2 <- traces[[2]]
+diff_trace.default <- function(ahat2i, p, sample_covs){
+  comb <- combn(length(ahat2i), 2, simplify = FALSE)
 
-   (trace1 - trace2) ^ 2
+  Reduce(`+`, lapply(comb, function(x){
+    (ahat2i[[x[1]]] + ahat2i[[x[2]]] -
+      (2 / p) * tr(sample_covs[[x[1]]] %*% sample_covs[[x[2]]])) ^ 2
+  }))
 }

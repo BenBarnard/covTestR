@@ -23,17 +23,17 @@
 #' @importFrom readr write_csv
 #'
 #'
-#' @examples crit_data(type = "identity",
+#' @examples crit_data3(type = "identity",
 #'                     dimensions = c(100, 125, 150, 175, 200),
 #'                     samples = c(15),
 #'                     difference = c(0, 1, 2, 3, 4, 5),
-#'                     populations = 2,
+#'                     populations = 3,
 #'                     replications = 1000,
 #'                     reductionMethods = c("DataConcatScatter", "DataConcatScatterBlock",
 #'                     "SConcat", "SDiff"),
 #'                     directory = "~/Documents/R/Dissertation/data")
 #'
-crit_data <- function(type, dimensions, samples, difference, populations, replications, reductionMethods, directory){
+crit_data3 <- function(type, dimensions, samples, difference, populations, replications, reductionMethods, directory){
   comn <-  expand.grid(dimensions = dimensions,
                        samples = samples,
                        difference = difference)
@@ -41,12 +41,12 @@ crit_data <- function(type, dimensions, samples, difference, populations, replic
   m_ply(comn,
         function(dimensions, samples, difference, populations, replications, type, reductionMethods, directory){
           if(type == "identity"){
-            covMat <- list(diag(1, dimensions), diag(1 + sqrt(difference / dimensions), dimensions))
+            covMat <- list(diag(1, dimensions), diag(1, dimensions), diag(1 + sqrt(difference / dimensions), dimensions))
           }
 
           if(type == "toeplitz"){
             mat <- toeplitz(.5 ^ seq(0, (dimensions - 1)))
-            covMat <- list(mat, mat + sqrt(difference / (dimensions ^ 2)))
+            covMat <- list(mat, mat, mat + sqrt(difference / (dimensions ^ 2)))
           }
 
           originaldata <- rdply(.n = replications,
@@ -83,7 +83,7 @@ crit_data <- function(type, dimensions, samples, difference, populations, replic
             data.frame(ReductionMethod = rep(reduction, replications * populations * samples),
                        type = rep(type, replications * populations * samples)))
           })), originaldata), paste0(directory, "/", dimensions, " ", samples,
-                                     " ", difference, " ", type, " 2 .csv"))
+                                     " ", difference, " ", type, " 3 .csv"))
         },
         replications = replications,
         type = type,
@@ -91,4 +91,3 @@ crit_data <- function(type, dimensions, samples, difference, populations, replic
         reductionMethods = reductionMethods,
         directory = directory)
 }
-
