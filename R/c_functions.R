@@ -6,6 +6,18 @@
 #'
 #' @export
 #'
+ci_func <- function(n, p){
+  p / n
+}
+
+#' Sample size expansion term Srivastava 2007 (helper function)
+#'
+#' @param n sample size
+#'
+#' @keywords internal
+#'
+#' @export
+#'
 c0_func <- function(n){
   n * ((n ^ 3) + 6 * (n ^ 2) + 21 * n + 18)
 }

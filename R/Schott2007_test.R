@@ -24,8 +24,6 @@ Schott2007_test.data.frame <- function(x, group, ...){
 
 #' @export
 #'
-#' @importFrom plyr llply
-#' @importFrom plyr mlply
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
@@ -36,39 +34,52 @@ Schott2007_test.matrix<- function(...){
   matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
   names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
 
-    n <- llply(matrix_ls, function(matrix){
-      nrow(matrix)
+    ni <- lapply(matrix_ls, function(matrix){
+      nrow(matrix) - 1
     })
 
-    p <- llply(matrix_ls, function(matrix){
+    p <- lapply(matrix_ls, function(matrix){
       ncol(matrix)
     })
 
-    A_ls <- llply(matrix_ls, A_func)
+    sample_covs <- lapply(matrix_ls, cov)
 
-    sample_covs <- mlply(cbind(A_ls, n), function(A_ls, n){
-      A_ls / (n - 1)
-    })
+    scatterMat <- lapply(matrix_ls, A_func)
 
-    overall_cov <- (1 / (n[[1]] + n[[2]] - 2)) * (A_ls[[1]] + A_ls[[2]])
-    ahat2 <- ahat2_func(n[[1]], n[[2]], p[[1]], overall_cov)
-    ahat2i <- mlply(cbind(n, p, sample_covs), ahat2i_func)
+    overalln <- Reduce(`+`, ni)
 
-  Schott2007_test.default(n, p, ahat2, ahat2i, sample_covs)
+    overallScatter <- Reduce(`+`, scatterMat) / overalln
+
+
+    ahat2 <- (1 / ((overalln - 1) * (overalln + 2) * p[[1]])) * (tr(overallScatter %*% overallScatter) - (1 / overalln) * (tr(overallScatter)) ^ 2)
+
+    npops <- length(matrix_ls)
+
+    its <- combn(seq(npops), 2, simplify = FALSE)
+
+
+    firstCSum <- Reduce(`+`, lapply(its, function(x){
+      (ci_func(ni[[x[1]]], p[[1]]) + ci_func(ni[[x[2]]], p[[1]])) ^ 2
+    }))
+
+    secondCSum <- Reduce(`+`, lapply(ni, function(x){
+      (ci_func(x, p[[1]])) ^ 2
+    }))
+
+    theta2 <- 4 * (ahat2 ^ 2) * (firstCSum + (npops - 1) * (npops - 2) * secondCSum)
+
+
+  Schott2007_test.default(theta2, sample_covs)
 }
 
 #' @export
 #'
-Schott2007_test.default <- function(n, p, ahat2, ahat2i, sample_covs){
-  n1 <- n[[1]]
-  n2 <- n[[2]]
-  p <- p[[1]]
-  ahat2 <- ahat2
-  ahat21 <- ahat2i[[1]]
-  ahat22 <- ahat2i[[2]]
-  sample_cov1 <- sample_covs[[1]]
-  sample_cov2 <- sample_covs[[2]]
+Schott2007_test.default <- function(theta2, sample_covs){
 
-  ((((n1 - 1) * (n2 - 1)) / (2 * (n1 + n2 - 2) * ahat2)) *
-    (ahat21 + ahat22 - (2 / p) * tr(sample_cov1 %*% sample_cov2))) ^ 2
+  its <- combn(seq(length(sample_covs)), 2, simplify = FALSE)
+
+  Reduce(`+`, lapply(its, function(x){
+    (tr(sample_covs[[x[1]]] - sample_covs[[x[2]]]) ^ 4) / theta2
+    }))
+
 }

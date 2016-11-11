@@ -30,10 +30,6 @@ knitr::opts_chunk$set(echo = FALSE, eval = FALSE)
 
 - References
 
-<div class="notes">
-Smile! :) You got this!
-</div>
-
 # Introduction
 
 ## Introduction
@@ -51,20 +47,11 @@ Smile! :) You got this!
 SVD is last bullet point!!!!
 </div>
 
-# Statistics for Testing for Differences of Mean Vectors
+# Statistics for Testing Equality of Covariance Matrices
 
 ## Statistic 1
 
-There are several methods for testing for a difference in mean vectors in high dimension. We consider the following:
-
-- Bai--Sarandasa (1996)
-
-    - Bai and Sarandasa proposed the test statistic given by
-    \[
-    T_{BS} = \frac{\left( \frac{1}{N_1} + \frac{1}{N_2} \right)^{-1} \left( \boldsymbol{\bar{x}}_1 - 
-      \boldsymbol{\bar{x}}_2 \right)' \left( \boldsymbol{\bar{x}}_1 - \boldsymbol{\bar{x}}_2 \right) - \text{tr}S}{
-      \left( 2 \left[ \text{tr}S^2 - \frac{1}{n} \left(\text{tr} S \right)^2 \right] \right)^{1/2}}.
-    \]
+- Schott (2007)
 
 ## Statistic 2
 - Srivastava $T^{+^2}$ (2007)
