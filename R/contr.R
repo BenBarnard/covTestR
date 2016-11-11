@@ -8,10 +8,10 @@
 #'
 #' @examples
 contr <- function(stat, control.var, quantile_variate){
-  df <- data.frame(stat = stat, control.var = control.var)
-  quant <- quantile(df$control.var, probs <- quantile_variate)
+browser()
 
-  browser()
+  df <- data.frame(stat = stat, control.var = control.var)
+  quant <- mean(boot(control.var, f.quantile, R = 10000, probs = .95)$t)
 
   n <- length(df$stat)
 
@@ -42,4 +42,18 @@ contr <- function(stat, control.var, quantile_variate){
   p10 <- ((1 - quantile_variate) * N10) / (N1)
   cdf <- p00 + p10
   cdf
+}
+
+#' Title
+#'
+#' @param x
+#' @param ind
+#' @param ...
+#'
+#' @return
+#' @export
+#'
+#' @examples
+f.quantile <- function(x, ind, ...){
+  quantile(x[ind], ...)
 }

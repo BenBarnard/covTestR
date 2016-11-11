@@ -45,7 +45,10 @@ export(c0_func)
 export(c1_func)
 export(c2_func)
 export(c3_func)
+<<<<<<< HEAD
 export(ci_func)
+=======
+>>>>>>> 8250b7d97832b1a55bc7941f5f470838d46915cd
 export(contr)
 export(crit_data)
 export(dataDftoMatrix)
@@ -53,6 +56,7 @@ export(deltahat2_func)
 export(diff_trace)
 export(dot_data.frame)
 export(etahat2i_func)
+export(f.quantile)
 export(gammahati_func)
 export(ksihat2i_func)
 export(lambdatilde)

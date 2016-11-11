@@ -33,7 +33,7 @@ tests <- function(directory, test_funcs, dimensions){
               difftrace <- ddply(.data = data,
                                  .variables = c("replication"),
                                  .fun = function(x){
-                                   diff_trace(x[,!(names(x) %in% c("originaldimensions",
+                                   Schott2007_test(x[,!(names(x) %in% c("originaldimensions",
                                                                          "ReductionMethod",
                                                                          "type",
                                                                          "replication"))], population)
