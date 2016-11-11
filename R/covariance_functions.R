@@ -9,8 +9,8 @@
 #'
 #' @export
 #'
-overall_cov_func <- function(A1, A2, n1, n2){
-  (1 / (n1 + n2 - 2)) * (A1 + A2)
+overall_cov_func <- function(A_ls, ns){
+  Reduce(`+`, A_ls) / Reduce(`+`, lapply(ns, function(x){x - 1}))
 }
 
 #' Sum of Squares (helper function)

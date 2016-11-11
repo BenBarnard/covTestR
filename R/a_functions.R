@@ -109,10 +109,11 @@ ahat4_func <- function(A, p, ns, ahat2, ahat1){
 #'
 #' @export
 #'
-ahat3_func <- function(A1, A2, p, n1, n2, ahat2, ahat1){
-  n <- n1 + n2 - 2
+ahat3_func <- function(A, p, ns, ahat2, ahat1){
+  n <- Reduce(`+`, lapply(ns, function(x){x - 1}))
+  As <- Reduce(`+`, A)
   (1 / (n * ((n ^ 2) + 3 * n + 4))) *
-    (((1 / p) * tr((A1 + A2) ^ 3)) -
+    (((1 / p) * tr((As) ^ 3)) -
        (3 * n * (n + 1) * p * ahat2 * ahat1) -
        (n * (p ^ 2) * (ahat1 ^ 3)))
 }

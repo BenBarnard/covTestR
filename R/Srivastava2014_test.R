@@ -6,7 +6,7 @@
 #' @return Test Statistic for Srivastava 2014
 #' @export
 #'
-#' @examples Srivastava2014_test(mcSamples(c(0,0,0), diag(1, 3), 10, 2), group = population)
+#' @examples Srivastava2014_test(mcSamples(c(0,0,0), diag(1, 3), 10, 3), group = population)
 #'
 Srivastava2014_test <- function(data, ...) {
   UseMethod("Srivastava2014_test")

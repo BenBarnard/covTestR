@@ -4,7 +4,7 @@
 \alias{overall_cov_func}
 \title{Overall Covariance Matirx (helper function)}
 \usage{
-overall_cov_func(A1, A2, n1, n2)
+overall_cov_func(A_ls, ns)
 }
 \arguments{
 \item{A1}{sum of squares for group 1}

@@ -7,7 +7,7 @@
 #'
 #' @export
 #'
-#' @examples SrivastavaYanagihara2010_test(mcSamples(c(0,0,0), diag(1, 3), 10, 2), group = population)
+#' @examples SrivastavaYanagihara2010_test(mcSamples(rep(0, 100), diag(1, 100), 10, 2), group = population)
 #'
 SrivastavaYanagihara2010_test <- function(data, ...){
   UseMethod("SrivastavaYanagihara2010_test")
@@ -25,8 +25,6 @@ SrivastavaYanagihara2010_test.data.frame <- function(x, group, ...){
 
 #' @export
 #'
-#' @importFrom plyr llply
-#' @importFrom plyr mlply
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
@@ -37,44 +35,44 @@ SrivastavaYanagihara2010_test.matrix <- function(...){
   matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
   names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
 
-  n <- llply(matrix_ls, function(matrix){
+  ns <- lapply(matrix_ls, function(matrix){
     nrow(matrix)
   })
 
-  p <- llply(matrix_ls, function(matrix){
+  p <- lapply(matrix_ls, function(matrix){
     ncol(matrix)
   })
 
-  A_ls <- llply(matrix_ls, A_func)
+  A_ls <- lapply(matrix_ls, A_func)
 
-  sample_covs <- mlply(cbind(A_ls, n), function(A_ls, n){
-    A_ls / (n - 1)
-  })
+  sample_covs <- lapply(matrix_ls, cov)
 
-  overall_cov <- (1 / (n[[1]] + n[[2]] - 2)) * (A_ls[[1]] + A_ls[[2]])
-  ahat2 <- ahat2_func(n[[1]], n[[2]], p[[1]], overall_cov)
+  overall_cov <- overall_cov_func(A_ls, ns)
+
+  ahat2 <- ahat2_func(ns, overall_cov, p[[1]])
   ahat1 <- ahat1_func(p[[1]], overall_cov)
 
-  ahat2_ls <- mlply(cbind(n, p, sample_covs), ahat2i_func)
+  ahat2i <- mapply(ahat2i_func, ns, p, sample_covs, SIMPLIFY = FALSE)
 
-  ahat1_ls <- mlply(cbind(p, sample_covs), function(p, sample_covs){
-    ahat1_func(p, sample_covs)
-  })
+  ahat1i <- lapply(sample_covs, function(x){ahat1i_func(p[[1]], x)})
 
-  ahat3 <- ahat3_func(A_ls[[1]], A_ls[[2]], p[[1]], n[[1]], n[[2]], ahat2, ahat1)
-  ahat4 <- ahat4_func(A_ls[[1]], A_ls[[2]], p[[1]], n[[1]], n[[2]], ahat2, ahat1)
+  ahat3 <- ahat3_func(A_ls, p[[1]], ns, ahat2, ahat1)
+  ahat4 <- ahat4_func(A_ls, p[[1]], ns, ahat2, ahat1)
 
-  ksihat2_ls <- mlply(cbind(n, p, ahat1, ahat2, ahat3, ahat4), ksihat2i_func)
+  ksihat2_ls <- mapply(ksihat2i_func, ns, p, ahat1, ahat2, ahat3, ahat4, SIMPLIFY = FALSE)
 
-  gammahat_ls <- mlply(cbind(ahat2_ls, ahat1_ls), function(ahat2_ls, ahat1_ls){
-    gammahati_func(ahat2_ls, ahat1_ls)
-  })
+  gammahat_ls <- mapply(gammahati_func, ahat2i, ahat1i, SIMPLIFY = FALSE)
 
-  SrivastavaYanagihara2010_test.default(gammahat_ls[[1]], gammahat_ls[[2]], ksihat2_ls[[1]], ksihat2_ls[[2]])
+  SrivastavaYanagihara2010_test.default(gammahat_ls, ksihat2_ls)
 }
 
 #' @export
 #'
-SrivastavaYanagihara2010_test.default <- function(gammahat1, gammahat2, ksihat21, ksihat22){
-  (((gammahat1 - gammahat2) / sqrt(ksihat21 + ksihat22))) ^ 2
+SrivastavaYanagihara2010_test.default <- function(gammahat_ls, ksihat2_ls){
+  gammahatbar <- Reduce(`+`, mapply(function(gammahat_ls, ksihat2_ls){gammahat_ls / ksihat2_ls},
+                                    gammahat_ls, ksihat2_ls, SIMPLIFY = FALSE)) /
+    Reduce(`+`, lapply(ksihat2_ls, function(x){1 / x}))
+  Reduce(`+`, mapply(function(gammahat_ls, ksihat2_ls){
+    ((gammahat_ls - gammahatbar) ^ 2) / ksihat2_ls
+  }, gammahat_ls, ksihat2_ls, SIMPLIFY = FALSE))
 }
