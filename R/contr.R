@@ -8,10 +8,10 @@
 #'
 #' @examples
 contr <- function(stat, control.var, quantile_variate){
-
+browser()
 
   df <- data.frame(stat = stat, control.var = control.var)
-  quant <- mean(boot(control.var, f.quantile, R = 1000000, probs = .95)$t)
+  quant <- mean(boot(control.var, f.quantile, R = 10000, probs = .95)$t)
 
   n <- length(df$stat)
 

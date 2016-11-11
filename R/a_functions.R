@@ -23,8 +23,8 @@ ahat2i_func <- function(n, p, sample_covs){
 #'
 #' @export
 #'
-ahat2_func <- function(n1, n2, p, overall_cov){
-  n <- n1 + n2 - 2
+ahat2_func <- function(ns, p, overall_cov){
+  n <- Reduce(`+`, ns) - length(ns)
   (((n) ^ 2) / (p * (n - 1) * (n + 2))) *
     (tr(overall_cov %*% overall_cov) - (1 / (n)) * (tr(overall_cov)) ^ 2)
 }

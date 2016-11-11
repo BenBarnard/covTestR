@@ -44,9 +44,13 @@ diff_trace.matrix<- function(...){
     nrow(matrix)
   })
 
-  sample_traces <- mlply(cbind(A_ls, n), function(A_ls, n){
-    tr(A_ls / (n - 1))
+  p <- llply(matrix_ls, function(matrix){
+    ncol(matrix)
   })
+
+   sample_traces <- mlply(cbind(A_ls, n), function(A_ls, n){
+     tr(A_ls / (n - 1))
+   })
 
 diff_trace.default(sample_traces)
 }
@@ -54,8 +58,8 @@ diff_trace.default(sample_traces)
 #' @export
 #'
 diff_trace.default <- function(traces){
-  trace1 <- traces[[1]]
-  trace2 <- traces[[2]]
+   trace1 <- traces[[1]]
+   trace2 <- traces[[2]]
 
-  (trace1 - trace2) ^ 2
+   (trace1 - trace2) ^ 2
 }
