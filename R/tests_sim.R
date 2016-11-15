@@ -21,11 +21,9 @@ tests <- function(directory, test_funcs, dimensions){
 
   files <- list.files(directory)
 
-  lapply(files, function(file){
+  ldply(lapply(files, function(file){
     filegroup <- as.data.frame(str_split(file, " ", simplify = TRUE))
     names(filegroup) <- c("dimension", "samples", "difference", "type", "extension")
-    browser()
-
     data <- read_csv(paste0(directory, "/", file))
 
     ddply(.data = data, .variables = c("replication", "originaldimensions",
@@ -46,5 +44,5 @@ tests <- function(directory, test_funcs, dimensions){
               }))
             }, data = data, test_funcs = test_funcs)
           }, dimensions = c(dimensions, sum(str_detect(names(data), "V"))), test_funcs = test_funcs)
-  })
+  }))
 }
