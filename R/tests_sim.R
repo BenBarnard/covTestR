@@ -9,6 +9,7 @@
 #'
 #' @importFrom stringr str_split
 #' @importFrom readr read_csv
+#' @importFrom readr write_csv
 #' @importFrom plyr ddply
 #' @importFrom plyr ldply
 #' @importFrom stringr str_detect
@@ -21,12 +22,12 @@ tests <- function(directory, test_funcs, dimensions){
 
   files <- list.files(directory)
 
-  ldply(lapply(files, function(file){
+  lapply(files, function(file){
     filegroup <- as.data.frame(str_split(file, " ", simplify = TRUE))
     names(filegroup) <- c("dimension", "samples", "difference", "type", "extension")
     data <- read_csv(paste0(directory, "/", file))
 
-    ddply(.data = data, .variables = c("replication", "originaldimensions",
+    write_csv(ddply(.data = data, .variables = c("replication", "originaldimensions",
                                        "difference", "ReductionMethod"),
           .fun = function(data, dimensions, test_funcs){
             ldply(.data = dimensions, .fun = function(dimensions, data, test_funcs){
@@ -43,6 +44,8 @@ tests <- function(directory, test_funcs, dimensions){
                                                    group = quote(population))))
               }))
             }, data = data, test_funcs = test_funcs)
-          }, dimensions = c(dimensions, sum(str_detect(names(data), "V"))), test_funcs = test_funcs)
-  }))
+          }, dimensions = c(dimensions, sum(str_detect(names(data), "V"))), test_funcs = test_funcs),
+  paste0("~/Documents/R/tests/", unique(data$originaldimensions), " ", max(data$sample), " ", unique(data$type), " ", max(data$population), ".csv"))
+  })
+
 }
