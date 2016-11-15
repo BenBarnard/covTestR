@@ -45,7 +45,7 @@ tests <- function(directory, test_funcs, dimensions){
               }))
             }, data = data, test_funcs = test_funcs)
           }, dimensions = c(dimensions, sum(str_detect(names(data), "V"))), test_funcs = test_funcs),
-  paste0("~/Documents/R/tests/", unique(data$originaldimensions), " ", max(data$sample), " ", unique(data$type), " ", max(data$population), ".csv"))
+  paste0("~/Documents/R/Dissertation/tests/", unique(data$originaldimensions), " ", max(data$sample), " ", unique(data$type), " ", max(data$population), ".csv"))
   })
 
 }
