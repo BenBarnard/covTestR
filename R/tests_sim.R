@@ -9,69 +9,42 @@
 #'
 #' @importFrom stringr str_split
 #' @importFrom readr read_csv
+#' @importFrom plyr ddply
+#' @importFrom plyr ldply
+#' @importFrom stringr str_detect
+#'
 #'
 #' @examples tests(directory = "~/Documents/R/Dissertation/data",
-#'                 test_funcs = c("Schott2007_test"),
-#'                 dimensions = c(20, 19, 18))
+#'                 test_funcs = c("Schott2007_test", "Srivastava2007_test"),
+#'                 dimensions = seq(20, 5))
 tests <- function(directory, test_funcs, dimensions){
 
   files <- list.files(directory)
 
-  filegroups <- as.data.frame(str_split(files, " ", simplify = TRUE))
-  names(filegroups) <- c("dimension", "samples", "difference", "type", "extension")
+  lapply(files, function(file){
+    filegroup <- as.data.frame(str_split(file, " ", simplify = TRUE))
+    names(filegroup) <- c("dimension", "samples", "difference", "type", "extension")
+    browser()
 
-  crit_files <- files[filegroups$difference == 0]
-
-  lapply(crit_files, function(file){
     data <- read_csv(paste0(directory, "/", file))
-    data <- data[,!(names(data) %in% c("difference"))]
 
-    ddply(.data = data,
-          .variables = c("ReductionMethod"),
+    ddply(.data = data, .variables = c("replication", "originaldimensions",
+                                       "difference", "ReductionMethod"),
           .fun = function(data, dimensions, test_funcs){
-            if(unique(data$ReductionMethod) == "None"){
-              difftrace <- ddply(.data = data,
-                                 .variables = c("replication"),
-                                 .fun = function(x){
-                                   diff_trace(x[,!(names(x) %in% c("originaldimensions",
-                                                                         "ReductionMethod",
-                                                                         "type",
-                                                                         "replication"))], population)
-                                 })
-
-              lapply(test_funcs, function(funcs){
-
-                test <- ddply(.data = data,
-                              .variables = c("replication"),
-                              .fun = function(x, funcs){
-                                do.call(funcs, list(x[,!(names(x) %in% c("originaldimensions",
-                                                                         "ReductionMethod",
-                                                                         "type",
-                                                                         "replication"))], expr_find(population)))
-                              }, funcs = funcs)
-
-               control <- contr(test$V1, difftrace$V1, .95)
-
-
-              })
-            }else{
-
-            }
-          }, dimensions = dimensions,
-          test_funcs = test_funcs)
-
+            ldply(.data = dimensions, .fun = function(dimensions, data, test_funcs){
+              ldply(lapply(test_funcs, function(x){
+                data.frame(replication = unique(data$replication),
+                           originaldimensions = unique(data$originaldimensions),
+                           difference = unique(data$difference),
+                           ReductionMethod = unique(data$ReductionMethod),
+                           type = unique(data$type),
+                           ReducedDimension = dimensions,
+                           populations = max(data$population),
+                           test = x,
+                           value = do.call(x, list(x = data[, c(seq(dimensions), which(names(data) == "population"))],
+                                                   group = quote(population))))
+              }))
+            }, data = data, test_funcs = test_funcs)
+          }, dimensions = c(dimensions, sum(str_detect(names(data), "V"))), test_funcs = test_funcs)
   })
-
-  file <- readr::read_csv(paste0(type, "/", x))
-
-  samples <- nrow(file) / (max(file$replication) * max(file$population))
-  dimensions <- ncol(file[,-c(1,2)])
-
-  readr::write_csv(plyr::ddply(file, plyr::.(replication),
-                               function(file){
-                                 do.call(test, list(x = file[,-1],
-                                                    group = lazyeval::expr_find(population),
-                                                    tidy = FALSE))
-                                 }),
-                   paste(type, "/", "tests", "/", test, "_", x, sep = ""))
 }

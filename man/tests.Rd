@@ -14,7 +14,7 @@ Title
 }
 \examples{
 tests(directory = "~/Documents/R/Dissertation/data",
-                test_funcs = c("Schott2007_test"),
-                dimensions = c(20, 19, 18))
+                test_funcs = c("Schott2007_test", "Srivastava2007_test"),
+                dimensions = seq(20, 5))
 }
 
