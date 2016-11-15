@@ -44,6 +44,10 @@ knitr::opts_chunk$set(echo = FALSE, eval = FALSE)
 
 # Statistics for Testing Equality of Covariance Matrices
 
+## Tests based on an estimator of distance
+
+$$ d^2 = \frac{tr(\Sigma - \Sigma)^2}{p}$$
+
 ## Schott 2007
 
 $$ T_{Sc} = \sum \limits^{k}_{i < j} \frac{(\hat{a}_{2i} + \hat{a}_{2j} - \frac{2}{p}tr(S_i S_j)) ^ 2}{\theta}$$
