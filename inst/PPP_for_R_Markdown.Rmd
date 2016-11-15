@@ -36,97 +36,44 @@ knitr::opts_chunk$set(echo = FALSE, eval = FALSE)
 
 - Considering high-dimensional data
 
-- Interested in comparing mean vectors from two samples with equal covariance matrices
+- Interested in comparing equality of 2 and k (3) covariance matrices
 
-- Four test statistics for testing difference of means
+- ???? test statistics for testing equality of covariance matrices
 
-- Dimension reduction via singular value decomposition
-
-
-<div class="notes">
-SVD is last bullet point!!!!
-</div>
+- ???? dimension reduction methods via singular value decomposition
 
 # Statistics for Testing Equality of Covariance Matrices
 
-## Statistic 1
+## Schott 2007
 
-- Schott (2007)
+$$ T_{Sc} = \sum \limits^{k}_{i < j} \frac{(\hat{a}_{2i} + \hat{a}_{2j} - \frac{2}{p}tr(S_i S_j)) ^ 2}{\theta}$$
+$$\theta = 4 \hat{a}_2^2 \left( \sum \limits_{i < j}^ k (\frac{1}{n_i} + \frac{1}{n_j}) + (k - 1)(k - 2) \sum \limits_{i = 1}^k n_i^{-2} \right)$$
+$$\hat{a}_{2i} = \frac{tr(V_i^2) - \frac{1}{n_i}tr(V_i)^2}{(n_i - 1)(n_i + 2)p}$$
+$$\hat{a}_2 = \frac{tr(V^2) - \frac{1}{n}tr(V)^2}{(n - 1)(n + 2)p} $$
 
-## Statistic 2
-- Srivastava $T^{+^2}$ (2007)
+## Srivastava 2007
 
-    - Srivastava proposed a statistic based on the Moore-Penrose inverse of the sample covariance matrix. This 
-    statistic is
-    \[ 
-    T^{+^2} = \left( \frac{1}{N_1} + \frac{1}{N_2} \right)^{-1} \left( \boldsymbol{\bar{x}}_1 - 
-    \boldsymbol{\bar{x}}_2 \right)' \boldsymbol{S}^+ \left( \boldsymbol{\bar{x}}_1 - \boldsymbol{\bar{x}}_2 \right),
-    \]
-    where  $S^+$ is the Moore-Penrose inverse of $S$.
+$$T_S = \sum \limits^k_{i=1} \frac{(\hat{a}_{2i} - \bar{\hat{a}}_2)^2}{\hat{\eta}_i^2}$$
+$$\bar{\hat{a}}_2 = \frac{\sum \limits^k_{i = 1} \frac{\hat{a}_{2i}}{\hat{\eta}_i^2}}{\sum \limits^k_{i = 1} \hat{\eta}_i^{-2}}$$
+$$\hat{\eta}_i^2 = \frac{4}{n^2_i}\hat{a}^2_2 \left( 1 + \frac{2 n_i \hat{a}_4}{p \hat{a}^2_2} \right)$$
+$$\hat{a}_4 = \frac{p^{-1}tr(V^4) - p(4n^3+ 12n^2 + 18n)\hat{a}_1  - p^2(6n^2 4n)\hat{a}^2_1\hat{a}_2 - p(2n^3 + 5n^2 + 7n)\hat{a}^2_2 - p^3 n \hat{a}^4_1}{n^4 + 6n^3 + 21n^2 + 18n}$$
+
+$$\hat{a}_1 = \frac{tr(S)}{p}$$
+
     
-<div class="notes">
-$S S^+ S = S$, $S^+ S S^+ = S^+$, $(S^+ S) ' = S^+ S$, and $(S S^+) ' = S S^+$.
-</div>
-    
-## Statistic 3
-    
-- Srivastava--Du (2008)
+## Srivastava and Yanagihara 2010
 
-    - Srivastava and Du proposed a statistic that is invariant under the transformation by any $p \times p$ 
-    non-singular diagonal matrix. This statistic is 
-      \[
-      T_{SD} = \frac{\left( \frac{1}{N_1} + \frac{1}{N_2} \right)^{-1} \left( \boldsymbol{\bar{x}}_1 - 
-      \boldsymbol{\bar{x}}_2 \right)' \boldsymbol{D}_S^{-1} \left( \boldsymbol{\bar{x}}_1 - \boldsymbol{\bar{x}}_2 
-      \right) - p}{\left[ 2 \left\lbrace \text{tr } \hat{\boldsymbol{R}}^2 - \left( \frac{p^2}{n} \right) 
-      \right\rbrace C_{p, n} \right]^{1/2}},
-      \]
-      where $\hat{\boldsymbol{R}} = \boldsymbol{D}_S^{-1/2} \boldsymbol{S D}_S^{-1/2}$, $\boldsymbol{D}_S = 
-      \text{diag } \boldsymbol{S}$, and 
-      \[
-      C_{p, n} = 1 + \frac{\text{tr } \hat{\boldsymbol{R}}^2}{p^{3/2}}.
-      \]
-      
-<div class="notes">
-Invariance to $p \times p$ non-singular diagonal matrix means that this statistic is invariant to measurement changes.
-</div>
+$$T_{SY} = \sum \limits^k_{i = 1} \frac{(\hat{\gamma}_i - \bar{\hat{\gamma}})^2}{\hat{\xi}^2_i}$$
+$$\hat{\gamma}_i = \frac{\hat{a}_{2i}}{\hat{a}^2_{1i}}$$
+$$\hat{\xi}^2_i = \frac{4}{n^2_i}\left( \frac{\hat{a}^2_2}{\hat{a}^4_1} + \frac{2 n_i}{p} \left( \frac{\hat{a}^3_2}{\hat{a}^4_1} - \frac{2\hat{a}_2\hat{a}_3}{\hat{a}_1^5} + \frac{\hat{a}_4}{\hat{a}_1^4}\right)\right)$$
+$$\hat{a}_3 = \frac{p^{-1}tr(V^3) - p(3n^2 + 3n)\hat{a}_2\hat{a}_1 - p^2n\hat{a}^3_1}{n^3 +3n^2 + 4n}$$
+$$\bar{\hat{\gamma}} = \frac{\sum \limits^k_{i = 1} \frac{\hat{\gamma}_{2i}}{\hat{\xi}_i^2}}{\sum \limits^k_{i = 1} \hat{\xi}_i^{-2}}$$
 
-## Statistic 4 {.small}
+## Chaipitak and Chongcharoen 2013
 
-- Thulin's Random Subspaces (2014)
+## Srivastava et al. 2014
 
-    1. Randomly select $k \leq n_1 + n_2 - 2$ integers $i_1, \dots, i_k$ from 1 to $p$ without replacement.
-
-    2. Calculate Hotelling's test statistic, $T_i^2$, based on reduced dimensions $i_1, \dots, i_k$ of $\boldsymbol{X}_1$ 
-    and $\boldsymbol{X}_2$.
-
-    3. Repeat steps 1 and 2 $B_1$ times, obtaining statistics $T_1^2, \dots, T_{B_1}^2$.
-
-    4. Obtain $T_{rs}$ by
-    \[
-    T_{rs} = \frac{1}{B_1} \sum_{i = 1}^{B_1} T_i^2.
-    \]
-    
-<div class="notes">
-Defaults: $B_1 = 100$ and $k = \text{floor} ((n_1 + n_2 - 2) / 2 )$
-
-Hotelling's Test:
-\[
-T^2 = (\bar{\textbf{x}}_1 - \bar{\textbf{x}}_2)' \left[ S \left( \frac{1}{n_1} + \frac{1}{n_2} \right) \right]^{-1} (\bar{\textbf{x}}_1 - \bar{\textbf{x}}_2)
-\]
-where
-\[
-S = \frac{(n_1 - 1) S_1 + (n_2 - 1) S_2}{(n_1 - 1) + (n_2 - 1)}.
-\]
-</div>
-    
-## Assumptions
-
-- Each method assumes $\boldsymbol{\Sigma}_1 = \boldsymbol{\Sigma}_2 = \boldsymbol{\Sigma}$.
-
-- The hypotheses for all four tests are
-  \[
-  H_0: \boldsymbol{\mu}_1 = \boldsymbol{\mu}_2 \quad \text{vs.} \quad H_a: \boldsymbol{\mu}_1 \neq \boldsymbol{\mu}_2.
-  \]
+## Ishii et al. 2016
 
   
 # Dimension Reduction via the Singular Value Decomposition
