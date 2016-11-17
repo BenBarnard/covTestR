@@ -44,16 +44,28 @@ knitr::opts_chunk$set(echo = FALSE, eval = FALSE)
 
 # Statistics for Testing Equality of Covariance Matrices
 
-## Tests based on an estimator of distance
+## Frobenius Norm
 
-$$ d^2 = \frac{tr(\Sigma - \Sigma)^2}{p}$$
+Most of the tests given are based off of the Frobenius Norm.
+
+ 
+$$ d^2 = \frac{tr(\Sigma_i - \Sigma_j)^2}{p} $$
+
+We could just substitute with the sample covariances and and divide by the estimated variance.
+
+$$ d^2 = \frac{tr(\Sigma_i^2)}{p} + \frac{tr(\Sigma_j^2)}{p} - \frac{2tr(\Sigma_i \Sigma_j)}{p} $$
+
+## Consistent Estimators
+
+$$\hat{a}_{2i} = \frac{tr(V_i^2) - \frac{1}{n_i}tr(V_i)^2}{(n_i - 1)(n_i + 2)p}$$
+$$\hat{a}_2 = \frac{tr(V^2) - \frac{1}{n}tr(V)^2}{(n - 1)(n + 2)p}$$
 
 ## Schott 2007
 
 $$ T_{Sc} = \sum \limits^{k}_{i < j} \frac{(\hat{a}_{2i} + \hat{a}_{2j} - \frac{2}{p}tr(S_i S_j)) ^ 2}{\theta}$$
 $$\theta = 4 \hat{a}_2^2 \left( \sum \limits_{i < j}^ k (\frac{1}{n_i} + \frac{1}{n_j}) + (k - 1)(k - 2) \sum \limits_{i = 1}^k n_i^{-2} \right)$$
-$$\hat{a}_{2i} = \frac{tr(V_i^2) - \frac{1}{n_i}tr(V_i)^2}{(n_i - 1)(n_i + 2)p}$$
-$$\hat{a}_2 = \frac{tr(V^2) - \frac{1}{n}tr(V)^2}{(n - 1)(n + 2)p} $$
+
+
 
 ## Srivastava 2007
 
