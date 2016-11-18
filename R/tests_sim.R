@@ -46,7 +46,7 @@ tests <- function(directory, test_funcs, dimensions){
               }))
             }, data = data, test_funcs = test_funcs)
           }, dimensions = c(dimensions, sum(str_detect(names(data), "V"))), test_funcs = test_funcs),
-  paste0("~/Documents/R/Dissertation/tests/200", file))
+  paste0("~/Documents/R/Dissertation/tests/100/", file))
   }, dimensions = dimensions, test_funcs = test_funcs)
 
 }
