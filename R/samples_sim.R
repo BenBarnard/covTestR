@@ -41,12 +41,12 @@ crit_data <- function(type, dimensions, samples, difference, populations, replic
   m_ply(comn,
         function(dimensions, samples, difference, populations, replications, type, reductionMethods, directory){
           if(type == "identity"){
-            covMat <- list(diag(1, dimensions), diag(1 + sqrt(difference / dimensions), dimensions))
+            covMat <- list(diag(1, dimensions), diag(1 + difference, dimensions))
           }
 
           if(type == "toeplitz"){
             mat <- toeplitz(.5 ^ seq(0, (dimensions - 1)))
-            covMat <- list(mat, mat + sqrt(difference / (dimensions ^ 2)))
+            covMat <- list(mat, mat + difference)
           }
 
           originaldata <- rdply(.n = replications,
