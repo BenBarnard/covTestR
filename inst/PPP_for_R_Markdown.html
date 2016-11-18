@@ -118,9 +118,23 @@
 
 </article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Statistics for Testing Equality of Covariance Matrices</h2></hgroup><article  id="statistics-for-testing-equality-of-covariance-matrices">
 
+</article></slide><slide class=''><hgroup><h2>Frobenius Norm</h2></hgroup><article  id="frobenius-norm">
+
+<p>Most of the tests given are based off of the Frobenius Norm.</p>
+
+<p>\[ d^2 = \frac{tr(\Sigma_i - \Sigma_j)^2}{p} \]</p>
+
+<p>We could just substitute with the sample covariances and and divide by the estimated variance.</p>
+
+<p>\[ d^2 = \frac{tr(\Sigma_i^2)}{p} + \frac{tr(\Sigma_j^2)}{p} - \frac{2tr(\Sigma_i \Sigma_j)}{p} \]</p>
+
+</article></slide><slide class=''><hgroup><h2>Consistent Estimators</h2></hgroup><article  id="consistent-estimators">
+
+<p>\[\hat{a}_{2i} = \frac{tr(V_i^2) - \frac{1}{n_i}tr(V_i)^2}{(n_i - 1)(n_i + 2)p}\] \[\hat{a}_2 = \frac{tr(V^2) - \frac{1}{n}tr(V)^2}{(n - 1)(n + 2)p}\]</p>
+
 </article></slide><slide class=''><hgroup><h2>Schott 2007</h2></hgroup><article  id="schott-2007">
 
-<p>\[ T_{Sc} = \sum \limits^{k}_{i &lt; j} \frac{(\hat{a}_{2i} + \hat{a}_{2j} - \frac{2}{p}tr(S_i S_j)) ^ 2}{\theta}\] \[\theta = 4 \hat{a}_2^2 \left( \sum \limits_{i &lt; j}^ k (\frac{1}{n_i} + \frac{1}{n_j}) + (k - 1)(k - 2) \sum \limits_{i = 1}^k n_i^{-2} \right)\] \[\hat{a}_{2i} = \frac{tr(V_i^2) - \frac{1}{n_i}tr(V_i)^2}{(n_i - 1)(n_i + 2)p}\] \[\hat{a}_2 = \frac{tr(V^2) - \frac{1}{n}tr(V)^2}{(n - 1)(n + 2)p} \]</p>
+<p>\[ T_{Sc} = \sum \limits^{k}_{i &lt; j} \frac{(\hat{a}_{2i} + \hat{a}_{2j} - \frac{2}{p}tr(S_i S_j)) ^ 2}{\theta}\] \[\theta = 4 \hat{a}_2^2 \left( \sum \limits_{i &lt; j}^ k (\frac{1}{n_i} + \frac{1}{n_j}) + (k - 1)(k - 2) \sum \limits_{i = 1}^k n_i^{-2} \right)\]</p>
 
 </article></slide><slide class=''><hgroup><h2>Srivastava 2007</h2></hgroup><article  id="srivastava-2007">
 
