@@ -19,11 +19,11 @@
 #' @examples tests(directory = "~/Documents/R/Dissertation/data",
 #'                 test_funcs = c("Schott2007_test", "Srivastava2007_test"),
 #'                 dimensions = seq(20, 5))
-tests <- function(directory, test_funcs, dimensions){
+tests <- function(directory, save, test_funcs, dimensions){
 
   files <- list.files(directory)
 
-  l_ply(files, function(file, dimensions, test_funcs){
+  l_ply(files, function(file, dimensions, test_funcs, save){
     filegroup <- as.data.frame(str_split(file, " ", simplify = TRUE))
     names(filegroup) <- c("dimension", "samples", "difference", "type", "extension")
     data <- read_csv(paste0(directory, "/", file))
@@ -46,7 +46,7 @@ tests <- function(directory, test_funcs, dimensions){
               }))
             }, data = data, test_funcs = test_funcs)
           }, dimensions = c(dimensions, sum(str_detect(names(data), "V"))), test_funcs = test_funcs),
-  paste0("~/Documents/R/Dissertation/tests/100/", file))
-  }, dimensions = dimensions, test_funcs = test_funcs)
+  paste0(save, "/", file))
+  }, dimensions = dimensions, test_funcs = test_funcs, save = save)
 
 }
