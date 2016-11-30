@@ -73,14 +73,14 @@ ggplot(data = filter(powerfiltered,
 
 ggplot(data = filter(powerfiltered,
                      type == "identity",
-                     populations == 3,
+                     populations == 2,
                      Samples == 15,
                      ReductionMethod == "None")) +
   geom_line(aes(x = difference, y = power, color = test))
 
 ggplot(data = filter(powerfiltered,
                      type == "toeplitz",
-                     populations == 3,
+                     populations == 2,
                      Samples == 15,
                      ReductionMethod == "None")) +
   geom_line(aes(x = difference, y = power, color = test))
