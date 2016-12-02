@@ -4,7 +4,7 @@
 \alias{tests}
 \title{Title}
 \usage{
-tests(directory, test_funcs, dimensions)
+tests(directory, save, test_funcs, dimensions)
 }
 \arguments{
 \item{type}{}
