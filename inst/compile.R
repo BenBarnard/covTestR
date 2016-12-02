@@ -44,11 +44,7 @@ write_csv(power, "~/Box Sync/Dissert Data/power/15.csv")
 
 ggplot(data = filter(power,
                      type == "toeplitz",
-<<<<<<< HEAD
                      populations == 2)) +
-=======
-                     populations == 3)) +
->>>>>>> 00be3ba955644b8d189930850db4a66cf31077ec
   geom_line(aes(x = difference, y = power, color = test)) +
   facet_grid(ReductionMethod ~ ReducedDimension)
 
