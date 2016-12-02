@@ -44,15 +44,13 @@ write_csv(power, "~/Box Sync/Dissert Data/power/45.csv")
 
 ggplot(data = filter(power,
                      type == "toeplitz",
-                     populations == 2,
-                     Samples == 45)) +
+                     populations == 3)) +
   geom_line(aes(x = difference, y = power, color = test)) +
   facet_grid(ReductionMethod ~ ReducedDimension)
 
-ggplot(data = filter(powerfiltered,
+ggplot(data = filter(power,
                      type == "identity",
-                     populations == 2,
-                     Samples == 15)) +
+                     populations == 3)) +
   geom_line(aes(x = difference, y = power, color = test)) +
   facet_grid(ReductionMethod ~ ReducedDimension)
 
