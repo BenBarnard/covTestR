@@ -1,44 +1,44 @@
 crit_data(type = "identity",
           dimensions = c(100),
           samples = c(15, 45, 75),
-          difference = seq(0, 10),
+          difference = seq(.1, .9, .1),
           populations = 2,
           replications = 1000,
           reductionMethods = c("DataConcatScatter", "DataConcatScatterBlock",
                                "SConcat", "SDiff"),
-          directory = "~/Documents/R/Dissertation/data/100")
+          directory = "~/Documents/R/Dissertation/data/100_1")
 
 crit_data3(type = "identity",
            dimensions = c(100),
            samples = c(15, 45, 75),
-           difference = seq(0, 10),
+           difference = seq(.1, .9, .1),
            populations = 3,
            replications = 1000,
            reductionMethods = c("DataConcatScatter", "DataConcatScatterBlock",
                                 "SConcat", "SDiff"),
-           directory = "~/Documents/R/Dissertation/data/100")
+           directory = "~/Documents/R/Dissertation/data/100_1")
 
 crit_data(type = "toeplitz",
           dimensions = c(100),
           samples = c(15, 45, 75),
-          difference = seq(0, 10),
+          difference = seq(.1, .9, .1),
           populations = 2,
           replications = 1000,
           reductionMethods = c("DataConcatScatter", "DataConcatScatterBlock",
                                "SConcat", "SDiff"),
-          directory = "~/Documents/R/Dissertation/data/100")
+          directory = "~/Documents/R/Dissertation/data/100_1")
 
 crit_data3(type = "toeplitz",
            dimensions = c(100),
            samples = c(15, 45, 75),
-           difference = seq(0, 10),
+           difference = seq(.1, .9, .1),
            populations = 3,
            replications = 1000,
            reductionMethods = c("DataConcatScatter", "DataConcatScatterBlock",
                                 "SConcat", "SDiff"),
-           directory = "~/Documents/R/Dissertation/data/100")
+           directory = "~/Documents/R/Dissertation/data/100_1")
 
-tests(directory = "~/Documents/R/Dissertation/data/100",
+tests(directory = "~/Documents/R/Dissertation/data/100_1",
       save = "~/Dropbox",
       test_funcs = c("Schott2007_test", "Srivastava2007_test",
                      "SrivastavaYanagihara2010_test",
