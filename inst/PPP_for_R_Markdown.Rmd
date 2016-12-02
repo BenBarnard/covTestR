@@ -47,12 +47,14 @@ knitr::opts_chunk$set(echo = FALSE, eval = FALSE)
 
 Most of the tests given are based off of the Frobenius Norm.
 
- 
-$$ d^2 = \frac{tr(\Sigma_i - \Sigma_j)^2}{p} $$
+$$
+\begin{align} 
+d^2 &= \frac{tr(\Sigma_i - \Sigma_j)^2}{p} \\
+&= \frac{tr(\Sigma_i^2)}{p} + \frac{tr(\Sigma_j^2)}{p} - \frac{2tr(\Sigma_i \Sigma_j)}{p}
+\end{align}
+$$
+Lets just put in the Sample Covariances?
 
-We could just substitute with the sample covariances and and divide by the estimated variance.
-
-$$ d^2 = \frac{tr(\Sigma_i^2)}{p} + \frac{tr(\Sigma_j^2)}{p} - \frac{2tr(\Sigma_i \Sigma_j)}{p} $$
 
 ## Consistent Estimators
 
