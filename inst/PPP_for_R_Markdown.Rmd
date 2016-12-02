@@ -1,8 +1,7 @@
 ---
-title: "A Comparison of Four Test Statistics for High-Dimensional Mean Vectors"
+title: "A Comparison of Tests Statistics for Equality of High-Dimensional Covariance Vectors"
 subtitle: "A Monte Carlo Power Simulation Study"
-author: "Whitney Burrow"
-date: "August 16, 2016"
+author: "Ben Barnard"
 output:
   ioslides_presentation:
     incremental: true

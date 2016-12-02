@@ -18,12 +18,12 @@ power_func <- function(x, critical_values){
   data.frame(power = mean(x$value >= critical_value))
 }
 
-files <- list.files("~/Box Sync/Dissert Data/100/45")
+files <- list.files("~/Box Sync/Dissert Data/100/15")
 
 data <- ldply(files, function(x){
   filegroup <- as.data.frame(str_split(x, " ", simplify = TRUE))
   names(filegroup) <- c("dimension", "samples", "difference", "type", "extension")
-  data <- read_csv(paste0("~/Box Sync/Dissert Data/100/45/", x))
+  data <- read_csv(paste0("~/Box Sync/Dissert Data/100/15/", x))
   cbind(data, data.frame(Samples = rep(filegroup$samples, nrow(data))))
   })
 
@@ -40,12 +40,11 @@ power <- ddply(power_data, .variables = c("ReductionMethod", "type",
                                           "test", "difference", "Samples"),
                .fun = power_func, critical_values = critical_values)
 
-write_csv(power, "~/Box Sync/Dissert Data/power/45.csv")
+write_csv(power, "~/Box Sync/Dissert Data/power/15.csv")
 
 ggplot(data = filter(power,
                      type == "toeplitz",
-                     populations == 2,
-                     Samples == 45)) +
+                     populations == 2)) +
   geom_line(aes(x = difference, y = power, color = test)) +
   facet_grid(ReductionMethod ~ ReducedDimension)
 
