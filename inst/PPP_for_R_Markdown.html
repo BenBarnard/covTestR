@@ -130,7 +130,7 @@
 
 </article></slide><slide class=''><hgroup><h2>Consistent Estimators</h2></hgroup><article  id="consistent-estimators">
 
-<p>\[\hat{a}_{2i} = \frac{tr(V_i^2) - \frac{1}{n_i}tr(V_i)^2}{(n_i - 1)(n_i + 2)p}\] \[\hat{a}_2 = \frac{tr(V^2) - \frac{1}{n}tr(V)^2}{(n - 1)(n + 2)p}\]</p>
+<p>\[\hat{a}_{2i} = \frac{tr(V_i^2) - \frac{1}{n_i}tr(V_i)^2}{(n_i - 1)(n_i + 2)p} \xrightarrow{P} \frac{tr(\Sigma_i^2)}{p}\] \[\hat{a}_2 = \frac{tr(V^2) - \frac{1}{n}tr(V)^2}{(n - 1)(n + 2)p} \xrightarrow{P} \frac{tr(\Sigma^2)}{p}\]</p>
 
 </article></slide><slide class=''><hgroup><h2>Schott 2007</h2></hgroup><article  id="schott-2007">
 
@@ -138,7 +138,7 @@
 
 </article></slide><slide class=''><hgroup><h2>Srivastava 2007</h2></hgroup><article  id="srivastava-2007">
 
-<p>\[T_S = \sum \limits^k_{i=1} \frac{(\hat{a}_{2i} - \bar{\hat{a}}_2)^2}{\hat{\eta}_i^2}\] \[\bar{\hat{a}}_2 = \frac{\sum \limits^k_{i = 1} \frac{\hat{a}_{2i}}{\hat{\eta}_i^2}}{\sum \limits^k_{i = 1} \hat{\eta}_i^{-2}}\] \[\hat{\eta}_i^2 = \frac{4}{n^2_i}\hat{a}^2_2 \left( 1 + \frac{2 n_i \hat{a}_4}{p \hat{a}^2_2} \right)\] \[\hat{a}_4 = \frac{p^{-1}tr(V^4) - p(4n^3+ 12n^2 + 18n)\hat{a}_1  - p^2(6n^2 4n)\hat{a}^2_1\hat{a}_2 - p(2n^3 + 5n^2 + 7n)\hat{a}^2_2 - p^3 n \hat{a}^4_1}{n^4 + 6n^3 + 21n^2 + 18n}\]</p>
+<p>\[T_S = \sum \limits^k_{i=1} \frac{(\hat{a}_{2i} - \bar{\hat{a}}_2)^2}{\hat{\eta}_i^2}\] \[\bar{\hat{a}}_2 = \frac{\sum \limits^k_{i = 1} \frac{\hat{a}_{2i}}{\hat{\eta}_i^2}}{\sum \limits^k_{i = 1} \hat{\eta}_i^{-2}}\] \[\hat{\eta}_i^2 = \frac{4}{n^2_i}\hat{a}^2_2 \left( 1 + \frac{2 n_i \hat{a}_4}{p \hat{a}^2_2} \right)\] \[\hat{a}_4 = \frac{p^{-1}tr(V^4) - p(4n^3+ 12n^2 + 18n)\hat{a}_1  - p^2(6n^2 4n)\hat{a}^2_1\hat{a}_2 - p(2n^3 + 5n^2 + 7n)\hat{a}^2_2 - p^3 n \hat{a}^4_1}{n^4 + 6n^3 + 21n^2 + 18n} \xrightarrow{P} \frac{tr(\Sigma^4)}{p}\]</p>
 
 <p>\[\hat{a}_1 = \frac{tr(S)}{p}\]</p>
 
@@ -176,31 +176,6 @@
 <li><p>Project \(\boldsymbol{X}_1\) and \(\boldsymbol{X}_2\) to \(t\) dimensions by taking \(\boldsymbol{X}_{Ri}^T = \boldsymbol{U}_1^T  \boldsymbol{X}_i^T\).</p></li>
 </ul>
 
-</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Quantile Estimators</h2></hgroup><article  id="quantile-estimators">
-
-</article></slide><slide class=''><hgroup><h2>Naive Quanitle Estimator for Critical Value</h2></hgroup><article  id="naive-quanitle-estimator-for-critical-value">
-
-<ul class = 'build'>
-<li><p>Simulate \(r\) repetitions of the test statistic replications under the null hypothesis.</p></li>
-<li><p>Select the \((r \alpha)^{th}\) largest value as the empirical critical point, \(\hat{c}_{1 - \alpha}\).</p></li>
-</ul>
-
-</article></slide><slide class=''><hgroup><h2>Brewer&#39;s Quanitle Estimator (1986) for Critical Value</h2></hgroup><article  id="brewers-quanitle-estimator-1986-for-critical-value">
-
-<ul class = 'build'>
-<li><p>Simulate \(r\) repetitions of the test statistic replications under the null hypothesis.</p></li>
-<li><p>Estimate the \(1 - \alpha\) quantile with \[
-  \begin{aligned}
-  B_{1 - \alpha} &amp;= \sum_{i = 1}^r \left[ r^{-1} \left[ \frac{\Gamma(r + 1)}{\Gamma(i) \Gamma(r - i + 1)} \right] 
-  p^{i - 1} \left( 1 - p \right)^{r - i} \right] X_{(i)} \\
-  &amp;\approx \left[ \frac{2 \pi p (1 - p)}{n + 1} \right]^{-1/2} \exp \left\lbrace {- \left( \frac{i}{n + 1} - p    
-  \right)^2} \middle/ {\frac{2pq}{n + 1}} \right\rbrace
-  \end{aligned}
-  \]</p></li>
-</ul>
-
-</article></slide><slide class=''><hgroup><h2>Reduced Variability in Brewer Estimator</h2></hgroup><article  id="reduced-variability-in-brewer-estimator">
-
 </article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Simulation Study</h2></hgroup><article  id="simulation-study">
 
 </article></slide><slide class=''><hgroup><h2>Parameters for Simulation Study</h2></hgroup><article  id="parameters-for-simulation-study">
@@ -217,43 +192,24 @@
 </article></slide><slide class=''><hgroup><h2>Description of \(\boldsymbol{\Sigma}\)</h2></hgroup><article  id="description-of-boldsymbolsigma">
 
 <ul class = 'build'>
-<li><p>Selected \(\boldsymbol{\Sigma}_{0.5, 0.25}\)</p>
+<li><p>Selected \(\boldsymbol{\Sigma}_{0.5}\)</p>
 
 <ul class = 'build'>
-<li>\(\boldsymbol{\Sigma}_{a, b}\) represents a covariance matrix with unit variances and blocks of size 25, where \(\text{Cov}\left(X_{i}, X_{j} \right) = a\) if \(X_i\) and \(X_j\) belong to the same block and \(b\) otherwise.</li>
+<li>\(\boldsymbol{\Sigma}_{a}\) represents a covariance matrix with unit variances, where \(\text{Cov}\left(X_{i}, X_{j} \right) = a\).</li>
 </ul></li>
-<li><p>For example, if the size of each block was 2 and \(p = 6\), then \[
-  \boldsymbol{\Sigma}_{a, b} = \begin{bmatrix}
-  1 &amp; a &amp; b &amp; b &amp; b &amp; b \\
-  a &amp; 1 &amp; b &amp; b &amp; b &amp; b \\
-  b &amp; b &amp; 1 &amp; a &amp; b &amp; b \\
-  b &amp; b &amp; a &amp; 1 &amp; b &amp; b \\
-  b &amp; b &amp; b &amp; b &amp; 1 &amp; a \\
-  b &amp; b &amp; b &amp; b &amp; a &amp; 1
+<li><p>For example, if \(p = 6\), then \[
+  \boldsymbol{\Sigma}_{a} = \begin{bmatrix}
+  1 &amp; a &amp; a^2 &amp; a^3 &amp; a^4 &amp; a^5 \\
+  a &amp; 1 &amp; a &amp; a^2 &amp; a^3 &amp; a^4 \\
+  a^2 &amp; a &amp; 1 &amp; a &amp; a^2 &amp; a^3 \\
+  a^3 &amp; a^2 &amp; a &amp; 1 &amp; a &amp; a^2 \\
+  a^4 &amp; a^3 &amp; a^2 &amp; a &amp; 1 &amp; a \\
+  a^5 &amp; a^4 &amp; a^3 &amp; a^2 &amp; a &amp; 1
   \end{bmatrix}.
   \]</p></li>
 </ul>
 
-</article></slide><slide class=''><hgroup><h2>Description of \(\boldsymbol{\mu}_i\)</h2></hgroup><article  id="description-of-boldsymbolmu_i">
-
-<ul class = 'build'>
-<li><p>\(\boldsymbol{\mu}_1 = \boldsymbol{1}_{100}\)</p></li>
-<li><p>\(\boldsymbol{\mu}_2\) shifted the means evenly by some value \(\delta\) for the first \(m\) values per block of \(\boldsymbol{\mu}_1\) with \(m = (1, 5, 10)\).</p>
-
-<ul class = 'build'>
-<li><p>In other words, \[
-\boldsymbol{\mu}_{2i} = \left[ \left( \boldsymbol{1 + \delta} \right)_m \vdots \boldsymbol{1}_{25 - m} \right]
-\] for \(i = 1, 2, 3, 4\).</p></li>
-<li><p>Then \[
-\boldsymbol{\mu}_2 = \left[ \boldsymbol{\mu}_{21} \vdots \, \boldsymbol{\mu}_{22} \vdots \, \boldsymbol{\mu}_{23} \vdots
-\, \boldsymbol{\mu}_{24} \right].
-\]</p></li>
-</ul></li>
-</ul>
-
 </article></slide><slide class=''><hgroup><h2>Simulation Results for m = 1</h2></hgroup><article  id="simulation-results-for-m-1">
-
-<aside class='note'><section><p>\(\sqrt{(\bar{x}_1 - \bar{x}_2)^T S^{-1} (\bar{x}_1 - \bar{x}_2)}\)</p></section></aside>
 
 </article></slide><slide class=''><hgroup><h2>Simulation Results for m = 5</h2></hgroup><article  id="simulation-results-for-m-5">
 
@@ -263,21 +219,7 @@
 
 </article></slide><slide class=''><hgroup><h2>Summary</h2></hgroup><article  id="summary">
 
-<ul class = 'build'>
-<li><p>Looked at two samples of high-dimensional data with equal covariance matrices</p></li>
-<li><p>Considered four test statistics for testing differences in high-dimensional mean vectors</p></li>
-<li><p>Used singular valued decomposition to reduce dimension of data sets</p></li>
-<li><p>Considered two methods of quantile estimation</p></li>
-<li><p>Compared methods via power simulation</p></li>
-</ul>
-
 </article></slide><slide class=''><hgroup><h2>Future Work</h2></hgroup><article  id="future-work">
-
-<ul class = 'build'>
-<li><p>Dimension reduction method presented by Fan et al. (2012)</p></li>
-<li><p>Additional dimension reduction using M-method to drop to low-dimensional scenario</p></li>
-<li><p>Goal: perform low-dimensional tests on reduced data and seeing similar or better power than high dimensional tests</p></li>
-</ul>
 
 </article></slide><slide class=''><hgroup><h2>References</h2></hgroup><article  id="references" class="smaller"></article></slide>
 
