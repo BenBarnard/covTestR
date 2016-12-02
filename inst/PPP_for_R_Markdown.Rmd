@@ -2,11 +2,7 @@
 title: "A Comparison of Tests Statistics for Equality of High-Dimensional Covariance Vectors"
 subtitle: "A Monte Carlo Power Simulation Study"
 author: "Ben Barnard"
-output:
-  ioslides_presentation:
-    incremental: true
-    transition: slower
-    widescreen: true
+output: revealjs::revealjs_presentation
 ---
 
 ```{r setup, include=FALSE}
@@ -70,7 +66,7 @@ $$\theta = 4 \hat{a}_2^2 \left( \sum \limits_{i < j}^ k (\frac{1}{n_i} + \frac{1
 
 ## Srivastava 2007
 
-$$T_S = \sum \limits^k_{i=1} \frac{(\hat{a}_{2i} - \bar{\hat{a}}_2)^2}{\hat{\eta}_i^2}$$
+$$T_{S7} = \sum \limits^k_{i=1} \frac{(\hat{a}_{2i} - \bar{\hat{a}}_2)^2}{\hat{\eta}_i^2}$$
 $$\bar{\hat{a}}_2 = \frac{\sum \limits^k_{i = 1} \frac{\hat{a}_{2i}}{\hat{\eta}_i^2}}{\sum \limits^k_{i = 1} \hat{\eta}_i^{-2}}$$
 $$\hat{\eta}_i^2 = \frac{4}{n^2_i}\hat{a}^2_2 \left( 1 + \frac{2 n_i \hat{a}_4}{p \hat{a}^2_2} \right)$$
 $$\hat{a}_4 = \frac{p^{-1}tr(V^4) - p(4n^3+ 12n^2 + 18n)\hat{a}_1  - p^2(6n^2 4n)\hat{a}^2_1\hat{a}_2 - p(2n^3 + 5n^2 + 7n)\hat{a}^2_2 - p^3 n \hat{a}^4_1}{n^4 + 6n^3 + 21n^2 + 18n} \xrightarrow{P} \frac{tr(\Sigma^4)}{p}$$
@@ -88,10 +84,25 @@ $$\bar{\hat{\gamma}} = \frac{\sum \limits^k_{i = 1} \frac{\hat{\gamma}_{2i}}{\ha
 
 ## Chaipitak and Chongcharoen 2013
 
+$$T_{C} = \sum \limits^{k}_{i < j} \frac{(\hat{b} - 1)^2}{\hat{\delta}^2}$$
+
+$$\hat{b} = \frac{max(\hat{a}_{2i}, \hat{a}_{2j})}{min(\hat{a}_{2i}, \hat{a}_{2j})}$$
+$$\hat{\delta}^2 = 4 \left( \frac{2\hat{a}_4}{p \hat{a}_2^2} \sum \limits^2_{i=1} \frac{1}{n_i -1} + \sum \limits^2_{i=1} \frac{1}{(n_i - 1)^2} \right)$$
+
 ## Srivastava et al. 2014
+
+$$ T_{S14} = \sum \limits^{k}_{i < j} \frac{(\hat{a}_{2i} + \hat{a}_{2j} - \frac{2}{p}tr(S_i S_j)) ^ 2}{\theta}$$
+$$\hat{a}_{2i} = \frac{1}{pn_i(n_i -1)(n_i -2)(n_i -3)}\left( (n_i -2)(n_i -1)tr(V_i^2) - n(n - k)tr(D^2_i) + tr(V_i)^2 \right)$$
+$$\hat{a}_2 = \frac{\sum \limits^k_{i=1} n_i \hat{a}_{2i}}{\sum \limits^k_{i=1} n_i}$$
 
 ## Ishii et al. 2016
 
+$$T_I = \prod \limits^{k}_{i < j} \tilde{\lambda}_* \tilde{h}_* \tilde{\gamma}_*$$
+$$\tilde{\lambda}_* = \frac{max(\tilde{\lambda}_i, \tilde{\lambda}_j)}{min(\tilde{\lambda}_i, \tilde{\lambda}_j)}$$
+$$\tilde{\lambda}_i = \hat{\lambda}_i - \frac{tr(S_D) - \sum \limits^i_{j = 1}\hat{\lambda}_j}{n - 1-i}$$
+
+$$\tilde{h}_* = max()$$
+$$\tilde{\gamma}_* = max()$$
   
 # Dimension Reduction via the Singular Value Decomposition
 
