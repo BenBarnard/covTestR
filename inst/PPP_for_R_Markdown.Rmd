@@ -49,8 +49,6 @@ d^2 &= \frac{tr(\Sigma_i - \Sigma_j)^2}{p} \\
 &= \frac{tr(\Sigma_i^2)}{p} + \frac{tr(\Sigma_j^2)}{p} - \frac{2tr(\Sigma_i \Sigma_j)}{p}
 \end{align}
 $$
-Lets just put in the Sample Covariances?
-
 
 ## Consistent Estimators
 
@@ -101,7 +99,8 @@ $$T_I = \prod \limits^{k}_{i < j} \tilde{\lambda}_* \tilde{h}_* \tilde{\gamma}_*
 $$\tilde{\lambda}_* = \frac{max(\tilde{\lambda}_i, \tilde{\lambda}_j)}{min(\tilde{\lambda}_i, \tilde{\lambda}_j)}$$
 $$\tilde{\lambda}_i = \hat{\lambda}_i - \frac{tr(S_D) - \sum \limits^i_{j = 1}\hat{\lambda}_j}{n - 1-i}$$
 
-$$\tilde{h}_* = max()$$
+$$\tilde{h}_* = max(|\tilde{h}^T_i \tilde{h}_j|, |\tilde{h}^T_i \tilde{h}_j|^{-1})$$
+$$\tilde{h}_i = ((n-1)\tilde{\lambda}_i)^{-1/2}(\boldsymbol{X} - \boldsymbol{\overline{X}})\hat{\boldsymbol{\mu}}_i$$
 $$\tilde{\gamma}_* = max()$$
   
 # Dimension Reduction via the Singular Value Decomposition
