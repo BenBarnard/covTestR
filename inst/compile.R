@@ -42,12 +42,14 @@ power <- ddply(power_data, .variables = c("ReductionMethod", "type",
 
 write_csv(power, "~/Box Sync/Dissert Data/power/15.csv")
 
+power <- read_csv("~/Box Sync/Dissert Data/power/15.csv")
+
 ggplot(data = filter(power,
                      type == "toeplitz",
                      populations == 2,
                      Samples == 15,
                      !(ReductionMethod == "DataConcatScatterBlock"),
-                     difference <= 1)) +
+                     difference <= 10)) +
   geom_line(aes(x = difference, y = power, color = test)) +
   facet_grid(ReductionMethod ~ ReducedDimension)
 

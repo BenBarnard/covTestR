@@ -2,11 +2,18 @@
 title: "A Comparison of Tests Statistics for Equality of High-Dimensional Covariance Vectors"
 subtitle: "A Monte Carlo Power Simulation Study"
 author: "Ben Barnard"
-output: revealjs::revealjs_presentation
+output: ioslides_presentation
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, eval = FALSE)
+library(plyr)
+library(stringr)
+library(tidyverse)
+knitr::opts_chunk$set(echo = FALSE)
+
+power15 <- read_csv("~/Box Sync/Dissert Data/power/15.csv")
+power15 <- filter(power15, ReducedDimension %in% c(5, 10, 15, 20, 100), 
+                  !(ReductionMethod == "DataConcatScatterBlock"))
 ```
 
 ## Overview of Topics
@@ -25,8 +32,6 @@ knitr::opts_chunk$set(echo = FALSE, eval = FALSE)
 
 - References
 
-# Introduction
-
 ## Introduction
 
 - Considering high-dimensional data
@@ -41,87 +46,187 @@ knitr::opts_chunk$set(echo = FALSE, eval = FALSE)
 
 ## Frobenius Norm
 
-Most of the tests given are based off of the Frobenius Norm.
+- Ledoit and Wolf 2004 showed some nice properties of the frobenius norm:
 
 $$
-\begin{align} 
-d^2 &= \frac{tr(\Sigma_i - \Sigma_j)^2}{p} \\
-&= \frac{tr(\Sigma_i^2)}{p} + \frac{tr(\Sigma_j^2)}{p} - \frac{2tr(\Sigma_i \Sigma_j)}{p}
-\end{align}
+d^2 = \frac{tr(\Sigma_i - \Sigma_j)^2}{p} = \frac{tr(\Sigma_i^2)}{p} + \frac{tr(\Sigma_j^2)}{p} - \frac{2tr(\Sigma_i \Sigma_j)}{p}.
 $$
 
-## Consistent Estimators
+- Dividing by $p$ is not typical but allows the norm of the Identity to be 1.
 
-$$\hat{a}_{2i} = \frac{tr(V_i^2) - \frac{1}{n_i}tr(V_i)^2}{(n_i - 1)(n_i + 2)p} \xrightarrow{P} \frac{tr(\Sigma_i^2)}{p}$$
-$$\hat{a}_2 = \frac{tr(V^2) - \frac{1}{n}tr(V)^2}{(n - 1)(n + 2)p} \xrightarrow{P} \frac{tr(\Sigma^2)}{p}$$
+- The norm is invariant by rotation. Problem?
 
 ## Schott 2007
 
+- Schott proposed a test in 2007 based on the frobenius norm.
+
+<br>
+
 $$ T_{Sc} = \sum \limits^{k}_{i < j} \frac{(\hat{a}_{2i} + \hat{a}_{2j} - \frac{2}{p}tr(S_i S_j)) ^ 2}{\theta}$$
+<br>
 $$\theta = 4 \hat{a}_2^2 \left( \sum \limits_{i < j}^ k (\frac{1}{n_i} + \frac{1}{n_j}) + (k - 1)(k - 2) \sum \limits_{i = 1}^k n_i^{-2} \right)$$
+
+## Schott 2007
+
+- The $a$ terms are consistent estimators.
+
+<br>
+
+$$\hat{a}_{2i} = \frac{tr(V_i^2) - \frac{1}{n_i}tr(V_i)^2}{(n_i - 1)(n_i + 2)p} \xrightarrow{P} \frac{tr(\Sigma_i^2)}{p}$$
+<br>
+
+$$\hat{a}_2 = \frac{tr(V^2) - \frac{1}{n}tr(V)^2}{(n - 1)(n + 2)p} \approx \frac{\sum \limits^k_{i=1} n_i \hat{a}_{2i}}{\sum \limits^k_{i=1} n_i} \xrightarrow{P} \frac{tr(\Sigma^2)}{p}$$
 
 
 
 ## Srivastava 2007
 
+- Srivastava in 2007 proposed a test based on the lower bound of the frobenius norm.
+
+<br>
+
 $$T_{S7} = \sum \limits^k_{i=1} \frac{(\hat{a}_{2i} - \bar{\hat{a}}_2)^2}{\hat{\eta}_i^2}$$
-$$\bar{\hat{a}}_2 = \frac{\sum \limits^k_{i = 1} \frac{\hat{a}_{2i}}{\hat{\eta}_i^2}}{\sum \limits^k_{i = 1} \hat{\eta}_i^{-2}}$$
+<br>
+
 $$\hat{\eta}_i^2 = \frac{4}{n^2_i}\hat{a}^2_2 \left( 1 + \frac{2 n_i \hat{a}_4}{p \hat{a}^2_2} \right)$$
-$$\hat{a}_4 = \frac{p^{-1}tr(V^4) - p(4n^3+ 12n^2 + 18n)\hat{a}_1  - p^2(6n^2 4n)\hat{a}^2_1\hat{a}_2 - p(2n^3 + 5n^2 + 7n)\hat{a}^2_2 - p^3 n \hat{a}^4_1}{n^4 + 6n^3 + 21n^2 + 18n} \xrightarrow{P} \frac{tr(\Sigma^4)}{p}$$
 
-$$\hat{a}_1 = \frac{tr(S)}{p}$$
+## Srivastava 2007
 
+- The estimator $\bar{\hat{a}}_2$ is a weighted mean of $\hat{a}_{2i}$.
+
+<br>
+
+$$\bar{\hat{a}}_2 = \frac{\sum \limits^k_{i = 1} \frac{\hat{a}_{2i}}{\hat{\eta}_i^2}}{\sum \limits^k_{i = 1} \hat{\eta}_i^{-2}}$$
+<br>
+$$\hat{a}_4 \xrightarrow{P} \frac{tr(\Sigma^4)}{p} \quad \quad \hat{a}_1 \xrightarrow{P} \frac{tr(\Sigma)}{p}$$
     
 ## Srivastava and Yanagihara 2010
 
+- Srivastava and Yanagihara proposed a test in 2010 based on a distance estimator $tr(\Sigma^2_1)/ (tr(\Sigma_1))^2 - tr(\Sigma^2_2)/ (tr(\Sigma_2))^2$.
+
+<br>
+
 $$T_{SY} = \sum \limits^k_{i = 1} \frac{(\hat{\gamma}_i - \bar{\hat{\gamma}})^2}{\hat{\xi}^2_i}$$
+<br>
+
 $$\hat{\gamma}_i = \frac{\hat{a}_{2i}}{\hat{a}^2_{1i}}$$
+
+
+## Srivastava and Yanagihara 2010
+
+- The estimator $\bar{\hat{\gamma}}$ is a weighted mean of $\hat{\gamma}_{i}$.
+
+<br>
+
+$$\hat{a}_3 \xrightarrow{P} \frac{tr(\Sigma^3)}{p} \quad \quad \bar{\hat{\gamma}} = \frac{\sum \limits^k_{i = 1} \frac{\hat{\gamma}_{2i}}{\hat{\xi}_i^2}}{\sum \limits^k_{i = 1} \hat{\xi}_i^{-2}}$$
+<br>
 $$\hat{\xi}^2_i = \frac{4}{n^2_i}\left( \frac{\hat{a}^2_2}{\hat{a}^4_1} + \frac{2 n_i}{p} \left( \frac{\hat{a}^3_2}{\hat{a}^4_1} - \frac{2\hat{a}_2\hat{a}_3}{\hat{a}_1^5} + \frac{\hat{a}_4}{\hat{a}_1^4}\right)\right)$$
-$$\hat{a}_3 = \frac{p^{-1}tr(V^3) - p(3n^2 + 3n)\hat{a}_2\hat{a}_1 - p^2n\hat{a}^3_1}{n^3 +3n^2 + 4n}$$
-$$\bar{\hat{\gamma}} = \frac{\sum \limits^k_{i = 1} \frac{\hat{\gamma}_{2i}}{\hat{\xi}_i^2}}{\sum \limits^k_{i = 1} \hat{\xi}_i^{-2}}$$
 
 ## Chaipitak and Chongcharoen 2013
 
-$$T_{C} = \sum \limits^{k}_{i < j} \frac{(\hat{b} - 1)^2}{\hat{\delta}^2}$$
+- Chaipitak and Chongcharoen proposed a test in 2013 based on a distance estimator $b = tr(\Sigma^2_1) / tr(\Sigma^2_2)$.
 
-$$\hat{b} = \frac{max(\hat{a}_{2i}, \hat{a}_{2j})}{min(\hat{a}_{2i}, \hat{a}_{2j})}$$
-$$\hat{\delta}^2 = 4 \left( \frac{2\hat{a}_4}{p \hat{a}_2^2} \sum \limits^2_{i=1} \frac{1}{n_i -1} + \sum \limits^2_{i=1} \frac{1}{(n_i - 1)^2} \right)$$
+$$T_{C} = \sum \limits^{k}_{i < j} \frac{(\hat{b} - 1)^2}{\hat{\delta}^2}$$
+<br>
+
+$$\hat{b} = \frac{\hat{a}_{2i}}{\hat{a}_{2j}} \quad \quad \hat{\delta}^2 = 4 \left( \frac{2\hat{a}_4}{p \hat{a}_2^2} \sum \limits^2_{i=1} \frac{1}{n_i -1} + \sum \limits^2_{i=1} \frac{1}{(n_i - 1)^2} \right)$$
 
 ## Srivastava et al. 2014
 
+- Srivastava et al. proposed a test in 2014 that had the same form as Schott 2007 but used an unbiased consistent estimator for $\hat{a}_{2i}$.
+
+<br>
+
 $$ T_{S14} = \sum \limits^{k}_{i < j} \frac{(\hat{a}_{2i} + \hat{a}_{2j} - \frac{2}{p}tr(S_i S_j)) ^ 2}{\theta}$$
-$$\hat{a}_{2i} = \frac{1}{pn_i(n_i -1)(n_i -2)(n_i -3)}\left( (n_i -2)(n_i -1)tr(V_i^2) - n(n - k)tr(D^2_i) + tr(V_i)^2 \right)$$
-$$\hat{a}_2 = \frac{\sum \limits^k_{i=1} n_i \hat{a}_{2i}}{\sum \limits^k_{i=1} n_i}$$
+<br>
+$$\hat{a}_{2i} = \frac{(n_i -2)(n_i -1)tr(V_i^2) - n(n - k)tr(D^2_i) + tr(V_i)^2}{pn_i(n_i -1)(n_i -2)(n_i -3)}$$
 
 ## Ishii et al. 2016
 
+- Ishii et al proposed their test in 2016 using ratios of the first eigenvalues and first eigenvectors.
+
+<br>
+
 $$T_I = \prod \limits^{k}_{i < j} \tilde{\lambda}_* \tilde{h}_* \tilde{\gamma}_*$$
+
+<br>
+
+- Components of the test use noise reduced values since the largest eigenvalue is biased upwards with high dimensional data.
+
+## Ishii et al. 2016
+
+- The first noise reduced eigenvalue is solved by using the sum of the other non zero eigenvalues of the covariance matrix.
+
+<br>
+
 $$\tilde{\lambda}_* = \frac{max(\tilde{\lambda}_i, \tilde{\lambda}_j)}{min(\tilde{\lambda}_i, \tilde{\lambda}_j)}$$
+
+<br>
+
 $$\tilde{\lambda}_i = \hat{\lambda}_i - \frac{tr(S_D) - \sum \limits^i_{j = 1}\hat{\lambda}_j}{n - 1-i}$$
 
+## Ishii et al. 2016
+
+- The noise reduced first eigenvector is solved using the first eigenvalue.
+
+<br>
+
 $$\tilde{h}_* = max(|\tilde{h}^T_i \tilde{h}_j|, |\tilde{h}^T_i \tilde{h}_j|^{-1})$$
+
+<br>
+
 $$\tilde{h}_i = ((n-1)\tilde{\lambda}_i)^{-1/2}(\boldsymbol{X} - \boldsymbol{\overline{X}})\hat{\boldsymbol{\mu}}_i$$
-$$\tilde{\gamma}_* = max()$$
+
+## Ishii et al. 2016
+
+- The final part of the test consists of the sum of all the other non zero eigenvalues of the covariance matrix.
+
+<br>
+
+$$\tilde{\gamma}_* = max(\frac{\tilde{\kappa}_1}{\tilde{\kappa}_2}, \frac{\tilde{\kappa}_2}{\tilde{\kappa}_1})$$
+
+<br>
+
+$$\tilde{\kappa}_i = tr(S_{D(i)}) - \tilde{\lambda}_{1(i)}$$
   
 # Dimension Reduction via the Singular Value Decomposition
 
-## Dimension Reduction using the Singular Value Decomposition 
-- For samples $\boldsymbol{X}_1$ and $\boldsymbol{X}_2$, let 
-  $\boldsymbol{X} = \left[ \boldsymbol{X}_1 \vdots \, \boldsymbol{X}_2 \right]^T$.
+## Data Scatter Matrix 
 
-- Let $\boldsymbol{S}_t$ represent the scatter matrix of $\boldsymbol{X}$, with rank $t$.
+- For samples $\boldsymbol{X}_i$, let 
+  $\boldsymbol{X} = \left[ \boldsymbol{X}_1 \vdots \ \ldots \ \vdots \boldsymbol{X}_i\vdots \ \ldots \ \vdots \boldsymbol{X}_k \right]^T$.
 
-- Let $\boldsymbol{S}_t = \boldsymbol{UDU}^T$ represent the singular value decompostion of $\boldsymbol{S}_t$.
+- Let $\boldsymbol{V}_t$ represent the scatter matrix of $\boldsymbol{X}$, with rank $t$.
 
-    - $\boldsymbol{U}$ is orthogonal.
+- Let $\boldsymbol{V}_t = \boldsymbol{UDU}^T$ represent the singular value decompostion of $\boldsymbol{V}_t$.
 
-    - $\boldsymbol{D} = \begin{bmatrix} \boldsymbol{D}_t & \boldsymbol{O} \\ \boldsymbol{O} & \boldsymbol{O} \end{bmatrix}$.
+- Partition $\boldsymbol{U}$ such that $\boldsymbol{U} = \left[ \boldsymbol{U}_1 \vdots \, \boldsymbol{U}_2 
+  \right]$ with $\boldsymbol{U}_1 \in \mathbb{R}^{p \times t}$.
+
+- Project $\boldsymbol{X}_1$ and $\boldsymbol{X}_2$ to $t$ dimensions by taking $\boldsymbol{X}_{Ri}^T = \boldsymbol{U}_1^T 
+  \boldsymbol{X}_i^T$.
   
-<div class="notes">
-Scatter matrix: $X^t C X$ where $C = I - (1/n) 1_{n \times n}$
-</div>
+## Covariance Concatination Matrix 
 
-## Dimension Reduction Continued
+- For groups $\boldsymbol{X}_i$ let $\boldsymbol{S_i}$ be the covariance matrix.
+
+- Let $\widehat{\boldsymbol{M}} := \left[S_1 \vdots \ldots \vdots S_i \vdots \ldots \vdots S_k \right]$ where $i = 1, \ldots, k$ groups.
+
+- Let $\widehat{\boldsymbol{M}} = \boldsymbol{UDU}^T$ represent the singular value decompostion of $\widehat{\boldsymbol{M}}$.
+
+- Partition $\boldsymbol{U}$ such that $\boldsymbol{U} = \left[ \boldsymbol{U}_1 \vdots \, \boldsymbol{U}_2 
+  \right]$ with $\boldsymbol{U}_1 \in \mathbb{R}^{p \times t}$.
+
+- Project $\boldsymbol{X}_1$ and $\boldsymbol{X}_2$ to $t$ dimensions by taking $\boldsymbol{X}_{Ri}^T = \boldsymbol{U}_1^T 
+  \boldsymbol{X}_i^T$.
+  
+## Covariance Difference Concatination Matrix 
+
+- For groups $\boldsymbol{X}_i$ let $\boldsymbol{S_i}$ be the covariance matrix.
+
+- Let $\widehat{\boldsymbol{M}} := \left[S_2 - S_1 \vdots \ldots \vdots S_i - S_1 \vdots \ldots \vdots S_k - S_1 \right]$ where $i = 1, \ldots, k$ groups.
+
+- Let $\widehat{\boldsymbol{M}} = \boldsymbol{UDU}^T$ represent the singular value decompostion of $\widehat{\boldsymbol{M}}$.
 
 - Partition $\boldsymbol{U}$ such that $\boldsymbol{U} = \left[ \boldsymbol{U}_1 \vdots \, \boldsymbol{U}_2 
   \right]$ with $\boldsymbol{U}_1 \in \mathbb{R}^{p \times t}$.
@@ -131,50 +236,157 @@ Scatter matrix: $X^t C X$ where $C = I - (1/n) 1_{n \times n}$
 
 # Simulation Study
 
-## Parameters for Simulation Study
+## Critical Value Simulation
 
-The data sets generated for the simulation study have the following characteristics:
+The critical value data sets generated for the simulation study have the following characteristics:
 
 - $n_i = 15$
 
 - $p = 100$
 
-- Generating data sets from $\mathcal{N}_p \left( \boldsymbol{0}, \boldsymbol{\Sigma} \right)$
+- Generating k groups from $\mathcal{N}_p \left( \boldsymbol{0}, \boldsymbol{\Sigma} \right)$.
 
-- Number of repetitions is 1000
+- Number of repetitions is 100000.
 
-## Description of $\boldsymbol{\Sigma}$
+- $cv = inf\{x  \in  \mathbb{R}  :  1 - \alpha  \leq  \hat{F}_{T}(x) \}$, where $\alpha = .05$.
 
-- Selected $\boldsymbol{\Sigma}_{0.5}$
+## Power Simulation
 
-    - $\boldsymbol{\Sigma}_{a}$ represents a covariance matrix with unit variances, where 
-      $\text{Cov}\left(X_{i}, X_{j} \right) = a$.
-      
-- For example, if $p = 6$, then
-  \[
-  \boldsymbol{\Sigma}_{a} = \begin{bmatrix}
-  1 & a & a^2 & a^3 & a^4 & a^5 \\
-  a & 1 & a & a^2 & a^3 & a^4 \\
-  a^2 & a & 1 & a & a^2 & a^3 \\
-  a^3 & a^2 & a & 1 & a & a^2 \\
-  a^4 & a^3 & a^2 & a & 1 & a \\
-  a^5 & a^4 & a^3 & a^2 & a & 1
-  \end{bmatrix}.
-  \]
+The power simulation data sets generated for the simulation study have the following characteristics:
 
-## Simulation Results for m = 1
+- $n_i = 15$
 
-## Simulation Results for m = 5
+- $p = 100$
 
-## Simulation Results for m = 10
+- Generating k groups from $\mathcal{N}_p \left( \boldsymbol{0}, \boldsymbol{\Sigma} \right)$, and $\mathcal{N}_p \left( \boldsymbol{0}, \boldsymbol{\Sigma} + c \right)$.
+
+- Number of repetitions is 1000.
+
+$$power = \frac{\sum \limits^{1000}_{i = 1} I(T_i \geq cv)}{1000}$$
+
+# Results
+
+## Toeplitz 15 100 2
+
+```{r}
+ggplot(data = filter(power15,
+                     type == "toeplitz",
+                     populations == 2,
+                     Samples == 15,
+                     ReducedDimension == 100,
+                     ReductionMethod == "None",
+                     difference <= 1)) +
+  geom_line(aes(x = difference, y = power, color = test)) +
+  theme_bw() 
+```
+
+## Toeplitz 15 100 2
+
+```{r}
+ggplot(data = filter(power15,
+                     type == "toeplitz",
+                     populations == 2,
+                     Samples == 15,
+                     !(ReductionMethod == "None"),
+                     difference <= 1)) +
+  geom_line(aes(x = difference, y = power, color = test)) +
+  facet_grid(ReductionMethod ~ ReducedDimension) +
+  theme_bw() +
+  theme(legend.position="none")
+```
+
+## Toeplitz 15 100 3
+
+```{r}
+ggplot(data = filter(power15,
+                     type == "toeplitz",
+                     populations == 3,
+                     Samples == 15,
+                     ReducedDimension == 100,
+                     ReductionMethod == "None",
+                     difference <= 1)) +
+  geom_line(aes(x = difference, y = power, color = test)) +
+  theme_bw()
+```
+
+## Toeplitz 15 100 3
+
+```{r}
+ggplot(data = filter(power15,
+                     type == "toeplitz",
+                     populations == 3,
+                     Samples == 15,
+                     !(ReductionMethod == "None"),
+                     difference <= 1)) +
+  geom_line(aes(x = difference, y = power, color = test)) +
+  facet_grid(ReductionMethod ~ ReducedDimension) +
+  theme_bw() +
+  theme(legend.position="none")
+```
+
+## Identity 15 100 2
+
+```{r}
+ggplot(data = filter(power15,
+                     type == "identity",
+                     populations == 2,
+                     Samples == 15,
+                     ReducedDimension == 100,
+                     ReductionMethod == "None",
+                     difference <= 1)) +
+  geom_line(aes(x = difference, y = power, color = test)) +
+  theme_bw()
+```
+
+## Identity 15 100 2
+
+```{r}
+ggplot(data = filter(power15,
+                     type == "identity",
+                     populations == 2,
+                     Samples == 15,
+                     !(ReductionMethod == "None"),
+                     difference <= 1)) +
+  geom_line(aes(x = difference, y = power, color = test)) +
+  facet_grid(ReductionMethod ~ ReducedDimension) +
+  theme_bw() +
+  theme(legend.position="none")
+```
+
+## Identity 15 100 3
+
+```{r}
+ggplot(data = filter(power15,
+                     type == "identity",
+                     populations == 3,
+                     Samples == 15,
+                     ReducedDimension == 100,
+                     ReductionMethod == "None",
+                     difference <= 1)) +
+  geom_line(aes(x = difference, y = power, color = test)) +
+  theme_bw()
+```
+
+## Identity 15 100 3
+
+```{r}
+ggplot(data = filter(power15,
+                     type == "identity",
+                     populations == 3,
+                     Samples == 15,
+                     !(ReductionMethod == "None"),
+                     difference <= 1)) +
+  geom_line(aes(x = difference, y = power, color = test)) +
+  facet_grid(ReductionMethod ~ ReducedDimension) +
+  theme_bw() +
+  theme(legend.position="none")
+```
 
 # Summary and References
 
 ## Summary
 
-
 ## Future Work
-
 
 ## References {.smaller}
 
