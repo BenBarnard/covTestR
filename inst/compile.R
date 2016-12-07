@@ -42,6 +42,8 @@ power <- ddply(power_data, .variables = c("ReductionMethod", "type",
 
 write_csv(power, "~/Box Sync/Dissert Data/power/15.csv")
 
+power <- read_csv("~/Box Sync/Dissert Data/power/15.csv")
+
 ggplot(data = filter(power,
                      type == "identity",
                      populations == 3,
