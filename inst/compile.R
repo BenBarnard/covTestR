@@ -18,12 +18,12 @@ power_func <- function(x, critical_values){
   data.frame(power = mean(x$value >= critical_value))
 }
 
-files <- list.files("~/Box Sync/Dissert Data/100/15")
+files <- list.files("~/Box Sync/Dissert Data/100/boxesM")
 
 data <- ldply(files, function(x){
   filegroup <- as.data.frame(str_split(x, " ", simplify = TRUE))
   names(filegroup) <- c("dimension", "samples", "difference", "type", "extension")
-  data <- read_csv(paste0("~/Box Sync/Dissert Data/100/15/", x))
+  data <- read_csv(paste0("~/Box Sync/Dissert Data/100/boxesM/", x))
   cbind(data, data.frame(Samples = rep(filegroup$samples, nrow(data))))
   })
 
@@ -42,45 +42,42 @@ power <- ddply(power_data, .variables = c("ReductionMethod", "type",
 
 write_csv(power, "~/Box Sync/Dissert Data/power/15.csv")
 
+power <- read_csv("~/Box Sync/Dissert Data/power/15.csv")
+
+ggplot(data = filter(power,
+                     type == "identity",
+                     populations == 3,
+                     Samples == 15,
+                     !(ReductionMethod == "DataConcatScatterBlock"),
+                     difference <= .5)) +
+  geom_line(aes(x = difference, y = power, color = test)) +
+  facet_grid(ReductionMethod ~ ReducedDimension) +
+  theme_bw()
+
 ggplot(data = filter(power,
                      type == "toeplitz",
                      populations == 3,
+                     Samples == 15,
+                     !(ReductionMethod == "DataConcatScatterBlock"),
                      difference <= 1)) +
   geom_line(aes(x = difference, y = power, color = test)) +
   facet_grid(ReductionMethod ~ ReducedDimension)
 
 ggplot(data = filter(power,
                      type == "identity",
-                     populations == 3)) +
-  geom_line(aes(x = difference, y = power, color = test)) +
-  facet_grid(ReductionMethod ~ ReducedDimension)
-
-ggplot(data = filter(powerfiltered,
-                     type == "toeplitz",
-                     populations == 3,
-                     Samples == 15)) +
-  geom_line(aes(x = difference, y = power, color = test)) +
-  facet_grid(ReductionMethod ~ ReducedDimension)
-
-ggplot(data = filter(powerfiltered,
-                     type == "identity",
-                     populations == 3,
-                     Samples == 15)) +
+                     populations == 2,
+                     Samples == 15,
+                     !(ReductionMethod == "DataConcatScatterBlock"),
+                     difference <= 1)) +
   geom_line(aes(x = difference, y = power, color = test)) +
   facet_grid(ReductionMethod ~ ReducedDimension)
 
 ggplot(data = filter(power,
                      type == "identity",
-                     populations == 2,
-                     ReductionMethod == "None",
-                     ReducedDimension == 100)) +
-  geom_line(aes(x = difference, y = power, color = test))
-
-ggplot(data = filter(power,
-                     type == "toeplitz",
-                     populations == 2,
-                     Samples == 45,
-                     ReductionMethod == "None",
-                     ReducedDimension == 100)) +
-  geom_line(aes(x = difference, y = power, color = test))
+                     populations == 3,
+                     Samples == 15,
+                     !(ReductionMethod == "DataConcatScatterBlock"),
+                     difference <= 1)) +
+  geom_line(aes(x = difference, y = power, color = test)) +
+  facet_grid(ReductionMethod ~ ReducedDimension)
 
