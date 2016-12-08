@@ -49,6 +49,13 @@ crit_data3 <- function(type, dimensions, samples, difference, populations, repli
             covMat <- list(mat, mat, mat + difference)
           }
 
+          if(type == "eliptical"){
+            mat <- cov_maker(keepers = list(c(20, 1, rep(5, 8))),
+                             offs = list(0, nrow = 10, ncol = 90),
+                             losers = list(c(1, rep(0, 89))))
+            covMat <- list(mat, mat + difference)
+          }
+
           originaldata <- rdply(.n = replications,
                                 mcSamples(meanVec = rep(0, nrow(covMat[[1]])),
                                           covMat = covMat,
