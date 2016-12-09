@@ -51,8 +51,8 @@ crit_data <- function(type, dimensions, samples, difference, populations, replic
 
           if(type == "elliptical"){
             mat <- cov_maker(keepers = list(c(20, 1, rep(5, 8))),
-                             offs = list(0, nrow = 10, ncol = 90),
-                             losers = list(c(1, rep(0, 89))))
+                             offs = list(0, nrow = 10, ncol = dimensions - 10),
+                             losers = list(c(1, rep(0, dimensions - 11))))
             covMat <- list(mat, mat + difference)
           }
 
