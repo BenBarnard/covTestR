@@ -13,6 +13,8 @@ cov_maker(keepers, offs, losers)
 Covariance Maker
 }
 \examples{
-cov_maker(keepers = list(c(20, 1, rep(5, 8))), offs = list(0, nrow = 10, ncol = 90), losers = list(c(1, rep(0, 89))))
+cov_maker(keepers = list(c(20, 1, rep(5, 8))),
+                    offs = list(0, nrow = 10, ncol = 90),
+                    losers = list(c(1, rep(0, 89))))
 }
 
