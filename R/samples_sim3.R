@@ -60,7 +60,7 @@ crit_data3 <- function(type, dimensions, samples, difference, populations, repli
             mat <- cov_maker(keepers = list(c(20, 1, rep(5, 8))),
                              offs = list(0, nrow = 10, ncol = dimensions - 10),
                              losers = list(c(1, rep(0, dimensions - 11))))
-            covMat <- list(mat, mat * difference)
+            covMat <- list(mat, mat, mat * difference)
           }
 
           originaldata <- rdply(.n = replications,
