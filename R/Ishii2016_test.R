@@ -27,6 +27,16 @@ Ishii2016_test.data.frame <- function(x, group, ...){
 
 #' @export
 #'
+#' @importFrom lazyeval expr_find
+#'
+Ishii2016_test.grouped_df <- function(x, ...){
+  dataDftoMatrix(data = x,
+                 group = attributes(x)$vars[[1]],
+                 test = expr_find(Ishii2016_test.matrix))
+}
+
+#' @export
+#'
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
