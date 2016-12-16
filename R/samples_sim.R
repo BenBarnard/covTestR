@@ -49,6 +49,11 @@ crit_data <- function(type, dimensions, samples, difference, populations, replic
             covMat <- list(mat, mat + difference)
           }
 
+          if(type == "toeplitz "){
+            mat <- toeplitz(.5 ^ seq(0, (dimensions - 1)))
+            covMat <- list(mat, mat * difference)
+          }
+
           if(type == "elliptical"){
             mat <- cov_maker(keepers = list(c(20, 1, rep(5, 8))),
                              offs = list(0, nrow = 10, ncol = dimensions - 10),
@@ -56,7 +61,7 @@ crit_data <- function(type, dimensions, samples, difference, populations, replic
             covMat <- list(mat, mat + difference)
           }
 
-          if(type == "elliptical2"){
+          if(type == "elliptical "){
             mat <- cov_maker(keepers = list(c(20, 1, rep(5, 8))),
                              offs = list(0, nrow = 10, ncol = dimensions - 10),
                              losers = list(c(1, rep(0, dimensions - 11))))
