@@ -1,48 +1,45 @@
 #' Test of Equality of Covariances given by Schott 2007
 #'
-#' @param data tidy data frame
+#' @param x data
+#' @param group gropuing variable
 #' @param ... other
 #'
-#'
-#'
-#' @return Test Statistic for Schott 2007
+#' @return Test Statistic for
 #' @export
 #'
 #' @examples Ishii2016_test(mcSamples(rep(0, 100), diag(1, 100), 10, 3), group = population)
-#'
 Ishii2016_test <- function(data, ...) {
   UseMethod("Ishii2016_test")
 }
 
 #' @export
-#'
+#' @rdname Ishii2016_test
 #' @importFrom lazyeval expr_find
-#'
 Ishii2016_test.data.frame <- function(x, group, ...){
   dataDftoMatrix(data = x,
                  group = expr_find(group),
-                 test = expr_find(Ishii2016_test.matrix))
+                 method = expr_find(Ishii2016_test.matrix),
+                 .dots = lazy_dots(...))
 
 }
 
 #' @export
-#'
+#' @rdname Ishii2016_test
 #' @importFrom lazyeval expr_find
-#'
 Ishii2016_test.grouped_df <- function(x, ...){
   dataDftoMatrix(data = x,
                  group = attributes(x)$vars[[1]],
-                 test = expr_find(Ishii2016_test.matrix))
+                 method = expr_find(Ishii2016_test.matrix),
+                 .dots = lazy_dots(...))
 }
 
 #' @export
-#'
+#' @rdname Ishii2016_test
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_replace
-#'
-Ishii2016_test.matrix<- function(...){
+Ishii2016_test.matrix <- function(...){
   ls <- lazy_dots(...)
   matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
   names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
@@ -77,7 +74,7 @@ Ishii2016_test.matrix<- function(...){
 }
 
 #' @export
-#'
+#' @rdname Ishii2016_test
 Ishii2016_test.default <- function(lambdatildes, htilde, ki){
   comb <- combn(length(ki), 2, simplify = FALSE)
 
