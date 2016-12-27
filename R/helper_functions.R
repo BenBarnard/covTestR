@@ -8,20 +8,23 @@
 #'
 #' @export
 #'
-dataDftoMatrix <- function(data, group, test){
-  do.call(what = paste(test),
+dataDftoMatrix <- function(data, group, method, ..., .dots){
+  do.call(what = paste(method),
           args = c(x = dlply(.data = data,
-                       .variables = group,
-                       .fun = Tidy_,
-                       group = group),
-                   group = group)
+                             .variables = group,
+                             .fun = Tidy_,
+                             group = group),
+                   group = group,
+                   lazy_eval(lazy_dots(...)),
+                   lazy_eval(.dots)
+          )
   )
 }
 
-#' tidy helper
+#' not tidy helper
 #'
-#' @param data
-#' @param group
+#' @param data data
+#' @param group grouping variable
 #'
 #' @importFrom dplyr select
 #'
