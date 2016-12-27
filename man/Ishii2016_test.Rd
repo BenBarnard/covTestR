@@ -2,23 +2,36 @@
 % Please edit documentation in R/Ishii2016_test.R
 \name{Ishii2016_test}
 \alias{Ishii2016_test}
+\alias{Ishii2016_test.data.frame}
+\alias{Ishii2016_test.default}
+\alias{Ishii2016_test.grouped_df}
+\alias{Ishii2016_test.matrix}
 \title{Test of Equality of Covariances given by Schott 2007}
 \usage{
 Ishii2016_test(data, ...)
+
+\method{Ishii2016_test}{data.frame}(x, group, ...)
+
+\method{Ishii2016_test}{grouped_df}(x, ...)
+
+\method{Ishii2016_test}{matrix}(...)
+
+\method{Ishii2016_test}{default}(lambdatildes, htilde, ki)
 }
 \arguments{
-\item{data}{tidy data frame}
-
 \item{...}{other}
+
+\item{x}{data}
+
+\item{group}{gropuing variable}
 }
 \value{
-Test Statistic for Schott 2007
+Test Statistic for
 }
 \description{
 Test of Equality of Covariances given by Schott 2007
 }
 \examples{
 Ishii2016_test(mcSamples(rep(0, 100), diag(1, 100), 10, 3), group = population)
-
 }
 
