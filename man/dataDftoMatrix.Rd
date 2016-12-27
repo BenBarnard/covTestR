@@ -4,7 +4,7 @@
 \alias{dataDftoMatrix}
 \title{Turn no a Tidy data frame into data matrix (helper function)}
 \usage{
-dataDftoMatrix(data, group, test)
+dataDftoMatrix(data, group, method, ..., .dots)
 }
 \arguments{
 \item{data}{not a tidy dataframe}
