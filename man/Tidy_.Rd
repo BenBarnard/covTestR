@@ -2,15 +2,17 @@
 % Please edit documentation in R/helper_functions.R
 \name{Tidy_}
 \alias{Tidy_}
-\title{tidy helper}
+\title{not tidy helper}
 \usage{
 Tidy_(data, group)
 }
 \arguments{
-\item{group}{}
+\item{data}{data}
+
+\item{group}{grouping variable}
 }
 \description{
-tidy helper
+not tidy helper
 }
 \keyword{internal}
 
