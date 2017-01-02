@@ -1,0 +1,68 @@
+---
+title: "extra"
+author: "Ben Barnard"
+date: "1/1/2017"
+output: html_document
+---
+
+<!-- 
+## Covariance Concatination Matrix 
+
+- For groups $\boldsymbol{X}_i$ let $\boldsymbol{S_i}$ be the covariance matrix.
+
+- Let $\widehat{\boldsymbol{M}} := \left[S_1 \vdots \ldots \vdots S_i \vdots \ldots \vdots S_k \right]$ where $i = 1, \ldots, k$ groups.
+
+- Let $\widehat{\boldsymbol{M}} = \boldsymbol{UDU}^T$ represent the singular value decompostion of $\widehat{\boldsymbol{M}}$.
+
+- Partition $\boldsymbol{U}$ such that $\boldsymbol{U} = \left[ \boldsymbol{U}_1 \vdots \, \boldsymbol{U}_2 
+  \right]$ with $\boldsymbol{U}_1 \in \mathbb{R}^{p \times t}$.
+
+- Project $\boldsymbol{X}_1$ and $\boldsymbol{X}_2$ to $t$ dimensions by taking $\boldsymbol{X}_{Ri}^T = \boldsymbol{U}_1^T 
+  \boldsymbol{X}_i^T$.
+  -->
+  
+  <!--
+
+## Srivastava 2007
+
+- Srivastava in 2007 proposed a test based on the lower bound of the frobenius norm.
+
+<br>
+
+$$T_{S7} = \sum \limits^k_{i=1} \frac{(\hat{a}_{2i} - \bar{\hat{a}}_2)^2}{\hat{\eta}_i^2}$$
+<br>
+
+$$\hat{\eta}_i^2 = \frac{4}{n^2_i}\hat{a}^2_2 \left( 1 + \frac{2 n_i \hat{a}_4}{p \hat{a}^2_2} \right)$$
+
+## Srivastava 2007
+
+- The estimator $\bar{\hat{a}}_2$ is a weighted mean of $\hat{a}_{2i}$.
+
+<br>
+
+$$\bar{\hat{a}}_2 = \frac{\sum \limits^k_{i = 1} \frac{\hat{a}_{2i}}{\hat{\eta}_i^2}}{\sum \limits^k_{i = 1} \hat{\eta}_i^{-2}}$$
+<br>
+$$\hat{a}_4 \xrightarrow{P} \frac{tr(\Sigma^4)}{p} \quad \quad \hat{a}_1 \xrightarrow{P} \frac{tr(\Sigma)}{p}$$
+    
+## Srivastava and Yanagihara 2010
+
+- Srivastava and Yanagihara proposed a test in 2010 based on a distance estimator $tr(\Sigma^2_i)/ (tr(\Sigma_i))^2 - tr(\Sigma^2)/ (tr(\Sigma))^2$.
+
+<br>
+
+$$T_{SY} = \sum \limits^k_{i = 1} \frac{(\hat{\gamma}_i - \bar{\hat{\gamma}})^2}{\hat{\xi}^2_i}$$
+<br>
+
+$$\hat{\gamma}_i = \frac{\hat{a}_{2i}}{\hat{a}^2_{1i}}$$
+
+
+## Srivastava and Yanagihara 2010
+
+- The estimator $\bar{\hat{\gamma}}$ is a weighted mean of $\hat{\gamma}_{i}$.
+
+<br>
+
+$$\hat{a}_3 \xrightarrow{P} \frac{tr(\Sigma^3)}{p} \quad \quad \bar{\hat{\gamma}} = \frac{\sum \limits^k_{i = 1} \frac{\hat{\gamma}_{2i}}{\hat{\xi}_i^2}}{\sum \limits^k_{i = 1} \hat{\xi}_i^{-2}}$$
+<br>
+$$\hat{\xi}^2_i = \frac{4}{n^2_i}\left( \frac{\hat{a}^2_2}{\hat{a}^4_1} + \frac{2 n_i}{p} \left( \frac{\hat{a}^3_2}{\hat{a}^4_1} - \frac{2\hat{a}_2\hat{a}_3}{\hat{a}_1^5} + \frac{\hat{a}_4}{\hat{a}_1^4}\right)\right)$$
+-->
