@@ -1,36 +1,41 @@
 ---
-title: "A Comparison of Tests Statistics for Equality of High-Dimensional Covariance Vectors"
+title: "A Comparison of Tests Statistics for Equality of High-Dimensional Covariance Matrices"
 subtitle: "A Monte Carlo Power Simulation Study"
 author: "Ben Barnard"
-output: ioslides_presentation
+output: 
+  ioslides_presentation:
+    widescreen: TRUE
+bibliography: presentation.bib
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 library(plyr)
 library(stringr)
 library(tidyverse)
 knitr::opts_chunk$set(echo = FALSE)
+options(warn = -1)
+```
 
-power15 <- read_csv("~/Box Sync/Dissert Data/power/15.csv")
-power15 <- filter(power15, ReducedDimension %in% c(5, 10, 15, 20, 100), 
-                  !(ReductionMethod == "DataConcatScatterBlock"))
+```{r data, include = FALSE}
+power <- read_csv("~/Box Sync/Dissert Data/power/powertotal.csv")
 ```
 
 ## Overview of Topics
 
 - Introduction of the problem
 
-- Test Statistics
+- Statistics for Testing Equality of High Dimensional Covariance Matrices
 
-- SVD reduction
+- Dimension Reduction via the Singular Value Decomposition
 
-- Simulation study
+- Simulation study setup
 
-- Summary
+- Results
 
-- Future work
+- Summary and References
 
-- References
+
+# Introduction of the problem
 
 ## Introduction
 
@@ -38,11 +43,40 @@ power15 <- filter(power15, ReducedDimension %in% c(5, 10, 15, 20, 100),
 
 - Interested in comparing equality of 2 and k (3) covariance matrices
 
-- ???? test statistics for testing equality of covariance matrices
+- Five test statistics for testing equality of covariance matrices
 
-- ???? dimension reduction methods via singular value decomposition
+- Two dimension reduction methods via singular value decomposition
 
-# Statistics for Testing Equality of Covariance Matrices
+## Testing Equality of Covariances
+
+If the $m \times m$ covariance matrices from the ith population is $\Sigma_i$, we wish to test
+
+$$H_0 : \Sigma_1 = \ldots = \Sigma_g.$$
+Then our independent estimates of $\Sigma_1, \ldots , \Sigma_g$, $S_1, \ldots S_g$ are $n_i S_i \sim W_m(\Sigma_i, n_i)$. 
+
+We aren't going to worry to much about this since we aren't finding any asymmptotic distributions for the tests, but this might be future work. 
+
+## Modified Likelihood Ratio Test
+
+<br>
+
+$$M = n \log |S| - \sum \limits^g_{i=1} n_i \log |S_i|$$
+
+<br>
+
+This modified likelihood ratio test is only valid when $S_i$ is nonsingular or when $n_i \gg m$.
+
+## Wald Test
+
+<br>
+
+$$W = \frac{n}{2} \left \{ \sum \limits^g_{i = 1}\frac{n_i}{n} tr(S_iS^{-1}S_iS^{-1}) - \sum \limits^g_{i=1}\sum \limits^g_{j=1}\frac{n_in_j}{n^2}tr(S_iS^{-1}S_jS^{-1})  \right \}$$
+
+<br>
+
+This wald test is only valid when $S$ is nonsingular or when $n \gg m$.
+
+# Statistics for Testing Equality of High Dimensional Covariance Matrices
 
 ## Frobenius Norm
 
@@ -78,53 +112,9 @@ $$\hat{a}_{2i} = \frac{tr(V_i^2) - \frac{1}{n_i}tr(V_i)^2}{(n_i - 1)(n_i + 2)p} 
 $$\hat{a}_2 = \frac{tr(V^2) - \frac{1}{n}tr(V)^2}{(n - 1)(n + 2)p} \approx \frac{\sum \limits^k_{i=1} n_i \hat{a}_{2i}}{\sum \limits^k_{i=1} n_i} \xrightarrow{P} \frac{tr(\Sigma^2)}{p}$$
 
 
-
-## Srivastava 2007
-
-- Srivastava in 2007 proposed a test based on the lower bound of the frobenius norm.
-
-<br>
-
-$$T_{S7} = \sum \limits^k_{i=1} \frac{(\hat{a}_{2i} - \bar{\hat{a}}_2)^2}{\hat{\eta}_i^2}$$
-<br>
-
-$$\hat{\eta}_i^2 = \frac{4}{n^2_i}\hat{a}^2_2 \left( 1 + \frac{2 n_i \hat{a}_4}{p \hat{a}^2_2} \right)$$
-
-## Srivastava 2007
-
-- The estimator $\bar{\hat{a}}_2$ is a weighted mean of $\hat{a}_{2i}$.
-
-<br>
-
-$$\bar{\hat{a}}_2 = \frac{\sum \limits^k_{i = 1} \frac{\hat{a}_{2i}}{\hat{\eta}_i^2}}{\sum \limits^k_{i = 1} \hat{\eta}_i^{-2}}$$
-<br>
-$$\hat{a}_4 \xrightarrow{P} \frac{tr(\Sigma^4)}{p} \quad \quad \hat{a}_1 \xrightarrow{P} \frac{tr(\Sigma)}{p}$$
-    
-## Srivastava and Yanagihara 2010
-
-- Srivastava and Yanagihara proposed a test in 2010 based on a distance estimator $tr(\Sigma^2_1)/ (tr(\Sigma_1))^2 - tr(\Sigma^2_2)/ (tr(\Sigma_2))^2$.
-
-<br>
-
-$$T_{SY} = \sum \limits^k_{i = 1} \frac{(\hat{\gamma}_i - \bar{\hat{\gamma}})^2}{\hat{\xi}^2_i}$$
-<br>
-
-$$\hat{\gamma}_i = \frac{\hat{a}_{2i}}{\hat{a}^2_{1i}}$$
-
-
-## Srivastava and Yanagihara 2010
-
-- The estimator $\bar{\hat{\gamma}}$ is a weighted mean of $\hat{\gamma}_{i}$.
-
-<br>
-
-$$\hat{a}_3 \xrightarrow{P} \frac{tr(\Sigma^3)}{p} \quad \quad \bar{\hat{\gamma}} = \frac{\sum \limits^k_{i = 1} \frac{\hat{\gamma}_{2i}}{\hat{\xi}_i^2}}{\sum \limits^k_{i = 1} \hat{\xi}_i^{-2}}$$
-<br>
-$$\hat{\xi}^2_i = \frac{4}{n^2_i}\left( \frac{\hat{a}^2_2}{\hat{a}^4_1} + \frac{2 n_i}{p} \left( \frac{\hat{a}^3_2}{\hat{a}^4_1} - \frac{2\hat{a}_2\hat{a}_3}{\hat{a}_1^5} + \frac{\hat{a}_4}{\hat{a}_1^4}\right)\right)$$
-
 ## Chaipitak and Chongcharoen 2013
 
-- Chaipitak and Chongcharoen proposed a test in 2013 based on a distance estimator $b = tr(\Sigma^2_1) / tr(\Sigma^2_2)$.
+- Chaipitak and Chongcharoen proposed a test in 2013 based on a distance estimator $b = tr(\Sigma^2_i) / tr(\Sigma^2_j)$.
 
 $$T_{C} = \sum \limits^{k}_{i < j} \frac{(\hat{b} - 1)^2}{\hat{\delta}^2}$$
 <br>
@@ -206,20 +196,6 @@ $$\tilde{\kappa}_i = tr(S_{D(i)}) - \tilde{\lambda}_{1(i)}$$
 - Project $\boldsymbol{X}_1$ and $\boldsymbol{X}_2$ to $t$ dimensions by taking $\boldsymbol{X}_{Ri}^T = \boldsymbol{U}_1^T 
   \boldsymbol{X}_i^T$.
   
-## Covariance Concatination Matrix 
-
-- For groups $\boldsymbol{X}_i$ let $\boldsymbol{S_i}$ be the covariance matrix.
-
-- Let $\widehat{\boldsymbol{M}} := \left[S_1 \vdots \ldots \vdots S_i \vdots \ldots \vdots S_k \right]$ where $i = 1, \ldots, k$ groups.
-
-- Let $\widehat{\boldsymbol{M}} = \boldsymbol{UDU}^T$ represent the singular value decompostion of $\widehat{\boldsymbol{M}}$.
-
-- Partition $\boldsymbol{U}$ such that $\boldsymbol{U} = \left[ \boldsymbol{U}_1 \vdots \, \boldsymbol{U}_2 
-  \right]$ with $\boldsymbol{U}_1 \in \mathbb{R}^{p \times t}$.
-
-- Project $\boldsymbol{X}_1$ and $\boldsymbol{X}_2$ to $t$ dimensions by taking $\boldsymbol{X}_{Ri}^T = \boldsymbol{U}_1^T 
-  \boldsymbol{X}_i^T$.
-  
 ## Covariance Difference Concatination Matrix 
 
 - For groups $\boldsymbol{X}_i$ let $\boldsymbol{S_i}$ be the covariance matrix.
@@ -234,7 +210,7 @@ $$\tilde{\kappa}_i = tr(S_{D(i)}) - \tilde{\lambda}_{1(i)}$$
 - Project $\boldsymbol{X}_1$ and $\boldsymbol{X}_2$ to $t$ dimensions by taking $\boldsymbol{X}_{Ri}^T = \boldsymbol{U}_1^T 
   \boldsymbol{X}_i^T$.
 
-# Simulation Study
+# Simulation Study Setup
 
 ## Critical Value Simulation
 
@@ -258,7 +234,7 @@ The power simulation data sets generated for the simulation study have the follo
 
 - $p = 100$
 
-- Generating k groups from $\mathcal{N}_p \left( \boldsymbol{0}, \boldsymbol{\Sigma} \right)$, and $\mathcal{N}_p \left( \boldsymbol{0}, \boldsymbol{\Sigma} + c \right)$.
+- Generating k groups from $\mathcal{N}_p \left( \boldsymbol{0}, \boldsymbol{\Sigma} \right)$, and $\mathcal{N}_p \left( \boldsymbol{0}, \boldsymbol{\Sigma} * c \right)$.
 
 - Number of repetitions is 1000.
 
@@ -266,133 +242,235 @@ $$power = \frac{\sum \limits^{1000}_{i = 1} I(T_i \geq cv)}{1000}$$
 
 # Results
 
-## Toeplitz 15 100 2
+## Toeplitz 2
 
-```{r}
-ggplot(data = filter(power15,
-                     type == "toeplitz",
+```{r, message = FALSE}
+powertoe <- rename(filter(power, type == "toeplitz"), `Reduction Method` = Reduction.Method, Power = power)
+ggplot(data = filter(powertoe,
                      populations == 2,
-                     Samples == 15,
+                     originaldimensions == 100,
                      ReducedDimension == 100,
-                     ReductionMethod == "None",
-                     difference <= 1)) +
-  geom_line(aes(x = difference, y = power, color = test)) +
+                     Samples == 15,
+                     Test %in% c("Modified Likelihood Ratio", "Chaipitak and Chongcharoen 2013", 
+"Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
+                     `Reduction Method` %in% c("None"),
+                     ReducedDimension %in% c(5, 100))) +
+  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test, linetype = Test)) +
   theme_bw() 
 ```
 
-## Toeplitz 15 100 2
+## Toeplitz 2
 
-```{r}
-ggplot(data = filter(power15,
-                     type == "toeplitz",
+```{r, message = FALSE}
+ggplot(data = filter(powertoe,
                      populations == 2,
+                     originaldimensions == 100,
                      Samples == 15,
-                     !(ReductionMethod == "None"),
-                     difference <= 1)) +
-  geom_line(aes(x = difference, y = power, color = test)) +
-  facet_grid(ReductionMethod ~ ReducedDimension) +
-  theme_bw() +
-  theme(legend.position="none")
+                     Test %in% c("Modified Likelihood Ratio", "Chaipitak and Chongcharoen 2013", 
+"Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
+                     `Reduction Method` %in% c("Covariance Differences", "Data Scatter"),
+                     ReducedDimension %in% c(5, 100))) +
+  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test, linetype = Test)) +
+  facet_grid(`Reduction Method` ~ ReducedDimension) +
+  theme_bw() 
 ```
 
-## Toeplitz 15 100 3
+## Toeplitz 2
 
-```{r}
-ggplot(data = filter(power15,
-                     type == "toeplitz",
-                     populations == 3,
-                     Samples == 15,
-                     ReducedDimension == 100,
-                     ReductionMethod == "None",
-                     difference <= 1)) +
-  geom_line(aes(x = difference, y = power, color = test)) +
-  theme_bw()
-```
-
-## Toeplitz 15 100 3
-
-```{r}
-ggplot(data = filter(power15,
-                     type == "toeplitz",
-                     populations == 3,
-                     Samples == 15,
-                     !(ReductionMethod == "None"),
-                     difference <= 1)) +
-  geom_line(aes(x = difference, y = power, color = test)) +
-  facet_grid(ReductionMethod ~ ReducedDimension) +
-  theme_bw() +
-  theme(legend.position="none")
-```
-
-## Identity 15 100 2
-
-```{r}
-ggplot(data = filter(power15,
-                     type == "identity",
+```{r, message = FALSE}
+ggplot(data = filter(powertoe,
                      populations == 2,
+                     originaldimensions == 100,
                      Samples == 15,
-                     ReducedDimension == 100,
-                     ReductionMethod == "None",
-                     difference <= 1)) +
-  geom_line(aes(x = difference, y = power, color = test)) +
-  theme_bw()
+                     Test %in% c("Modified Likelihood Ratio", "Chaipitak and Chongcharoen 2013", 
+"Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
+                     `Reduction Method` %in% c("Covariance Differences", "Data Scatter"),
+                     `Frobenius Norm` >= 0.01,
+                     `Frobenius Norm` <= 0.014,
+                     ReducedDimension <= 25)) +
+  geom_line(aes(x = ReducedDimension, y = Power, color = Test, linetype = Test)) +
+  facet_wrap(~ `Reduction Method`) +
+  theme_bw() 
 ```
 
-## Identity 15 100 2
+## Toeplitz 3
 
-```{r}
-ggplot(data = filter(power15,
-                     type == "identity",
+```{r, message = FALSE}
+powertoe <- rename(filter(power, type == "toeplitz"), `Reduction Method` = Reduction.Method, Power = power)
+ggplot(data = filter(powertoe,
+                     populations == 3,
+                     originaldimensions == 100,
+                     ReducedDimension == 100,
+                     Samples == 15,
+                     Test %in% c("Modified Likelihood Ratio", "Chaipitak and Chongcharoen 2013", 
+"Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
+                     `Reduction Method` %in% c("None"),
+                     ReducedDimension %in% c(5, 100))) +
+  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test, linetype = Test)) +
+  theme_bw() 
+```
+
+## Toeplitz 3
+
+```{r, message = FALSE}
+ggplot(data = filter(powertoe,
+                     populations == 3,
+                     originaldimensions == 100,
+                     Samples == 15,
+                     Test %in% c("Modified Likelihood Ratio", "Chaipitak and Chongcharoen 2013", 
+"Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
+                     `Reduction Method` %in% c("Covariance Differences", "Data Scatter"),
+                     ReducedDimension %in% c(5, 100))) +
+  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test, linetype = Test)) +
+  facet_grid(`Reduction Method` ~ ReducedDimension) +
+  theme_bw() 
+```
+
+## Toeplitz 3
+
+```{r, message = FALSE}
+ggplot(data = filter(powertoe,
+                     populations == 3,
+                     originaldimensions == 100,
+                     Samples == 15,
+                     Test %in% c("Modified Likelihood Ratio", "Chaipitak and Chongcharoen 2013", 
+"Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
+                     `Reduction Method` %in% c("Covariance Differences", "Data Scatter"),
+                     `Frobenius Norm` >= 0.015,
+                     `Frobenius Norm` <= 0.02,
+                     ReducedDimension <= 25)) +
+  geom_line(aes(x = ReducedDimension, y = Power, color = Test, linetype = Test)) +
+  facet_wrap(~ `Reduction Method`) +
+  theme_bw() 
+```
+
+## Elliptical 2
+
+```{r, message = FALSE}
+powerell <- rename(filter(power, type == "elliptical"), `Reduction Method` = Reduction.Method, Power = power)
+ggplot(data = filter(powerell,
                      populations == 2,
-                     Samples == 15,
-                     !(ReductionMethod == "None"),
-                     difference <= 1)) +
-  geom_line(aes(x = difference, y = power, color = test)) +
-  facet_grid(ReductionMethod ~ ReducedDimension) +
-  theme_bw() +
-  theme(legend.position="none")
-```
-
-## Identity 15 100 3
-
-```{r}
-ggplot(data = filter(power15,
-                     type == "identity",
-                     populations == 3,
-                     Samples == 15,
+                     originaldimensions == 100,
                      ReducedDimension == 100,
-                     ReductionMethod == "None",
-                     difference <= 1)) +
-  geom_line(aes(x = difference, y = power, color = test)) +
-  theme_bw()
+                     Samples == 15,
+                     Test %in% c("Modified Likelihood Ratio", "Chaipitak and Chongcharoen 2013", 
+"Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
+                     `Reduction Method` %in% c("None"),
+                     ReducedDimension %in% c(5, 100))) +
+  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test, linetype = Test)) +
+  theme_bw() 
 ```
 
-## Identity 15 100 3
+## Elliptical 2
 
-```{r}
-ggplot(data = filter(power15,
-                     type == "identity",
-                     populations == 3,
+```{r, message = FALSE}
+ggplot(data = filter(powerell,
+                     populations == 2,
+                     originaldimensions == 100,
                      Samples == 15,
-                     !(ReductionMethod == "None"),
-                     difference <= 1)) +
-  geom_line(aes(x = difference, y = power, color = test)) +
-  facet_grid(ReductionMethod ~ ReducedDimension) +
-  theme_bw() +
-  theme(legend.position="none")
+                     Test %in% c("Modified Likelihood Ratio", "Chaipitak and Chongcharoen 2013", 
+"Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
+                     `Reduction Method` %in% c("Covariance Differences", "Data Scatter"),
+                     ReducedDimension %in% c(5, 100))) +
+  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test, linetype = Test)) +
+  facet_grid(`Reduction Method` ~ ReducedDimension) +
+  theme_bw() 
+```
+
+## Elliptical 2
+
+```{r, message = FALSE}
+ggplot(data = filter(powerell,
+                     populations == 2,
+                     originaldimensions == 100,
+                     Samples == 15,
+                     Test %in% c("Modified Likelihood Ratio", "Chaipitak and Chongcharoen 2013", 
+"Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
+                     `Reduction Method` %in% c("Covariance Differences", "Data Scatter"),
+                     `Frobenius Norm` >= 0.75,
+                     `Frobenius Norm` <= 0.85,
+                     ReducedDimension <= 25)) +
+  geom_line(aes(x = ReducedDimension, y = Power, color = Test, linetype = Test)) +
+  facet_wrap(~ `Reduction Method`) +
+  theme_bw() 
+```
+
+## Elliptical 3
+
+```{r, message = FALSE}
+powertoe <- rename(filter(power, type == "toeplitz"), `Reduction Method` = Reduction.Method, Power = power)
+ggplot(data = filter(powerell,
+                     populations == 3,
+                     originaldimensions == 100,
+                     ReducedDimension == 100,
+                     Samples == 15,
+                     Test %in% c("Modified Likelihood Ratio", "Chaipitak and Chongcharoen 2013", 
+"Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
+                     `Reduction Method` %in% c("None"),
+                     ReducedDimension %in% c(5, 100))) +
+  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test, linetype = Test)) +
+  theme_bw() 
+```
+
+## Elliptical 3
+
+```{r, message = FALSE}
+ggplot(data = filter(powerell,
+                     populations == 3,
+                     originaldimensions == 100,
+                     Samples == 15,
+                     Test %in% c("Modified Likelihood Ratio", "Chaipitak and Chongcharoen 2013", 
+"Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
+                     `Reduction Method` %in% c("Covariance Differences", "Data Scatter"),
+                     ReducedDimension %in% c(5, 100))) +
+  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test, linetype = Test)) +
+  facet_grid(`Reduction Method` ~ ReducedDimension) +
+  theme_bw() 
+```
+
+## Elliptical 3
+
+```{r, message = FALSE}
+ggplot(data = filter(powerell,
+                     populations == 3,
+                     originaldimensions == 100,
+                     Samples == 15,
+                     Test %in% c("Modified Likelihood Ratio", "Chaipitak and Chongcharoen 2013", 
+"Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
+                     `Reduction Method` %in% c("Covariance Differences", "Data Scatter"),
+                     `Frobenius Norm` >= 0.95,
+                     `Frobenius Norm` <= 1.05,
+                     ReducedDimension <= 25)) +
+  geom_line(aes(x = ReducedDimension, y = Power, color = Test, linetype = Test)) +
+  facet_wrap(~ `Reduction Method`) +
+  theme_bw() 
 ```
 
 # Summary and References
 
 ## Summary
 
+- Dimension reduction improves power after some $n \gg m$???
+
+- It appears the more pointed a covarince matrix becomes the worse the high dimension tests do and dimension reduction method doesn't help much
+
+- Dimension reduction with the modified likelihood ratio test did well and with the pointed covariance structure even appeared to do better than the high dimensional tests.
+
 ## Future Work
+
+- Explore some of the asymptotic properties a little better in some of these tests.
+
+- Why does the Data Scatter dimension reduction method appear to do better than the covariance differences method.
+
+- Looking at a another nontrivial k $(k \neq 3)$ group situation.
+
+- Look at the Wald test with dimension reduction.
+
+- Shrinkage estimators
+
+- One sample tests
 
 ## References {.smaller}
 
----
-nocite: |
-  @srivastava_multivariate_2007, @srivastava_test_2008, @ye_regularized_2006, 
-  @bai_effect_1996, @thulin_high-dimensional_2014
-...
-
+  @schott_test_2007, @srivastava_tests_2014, @ishii_asymptotic_2016, 
+  @chaipitak_test_2013, @ledoit_well-conditioned_2004
