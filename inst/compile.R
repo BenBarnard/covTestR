@@ -12,19 +12,19 @@ power_func <- function(x, critical_values){
   sa <- unique(x$Samples)
   od <- unique(x$originaldimensions)
 
-  critical_value <- filter(critical_values, ReductionMethod == redMeth, type == ty, originaldimensions = od,
+  critical_value <- filter(critical_values, ReductionMethod == redMeth, type == ty, originaldimensions == od,
                            ReducedDimension == redDim, populations == pop, test == te,
                            Samples == sa)$Crit
 
   data.frame(power = mean(x$value >= critical_value))
 }
 
-files <- list.files("~/Box Sync/Dissert Data/bigsim/elliptical")
+files <- list.files("~/Box Sync/Dissert Data/100/75")
 
 data <- ldply(files, function(x){
   filegroup <- as.data.frame(str_split(x, " ", simplify = TRUE))
   names(filegroup) <- c("dimension", "samples", "difference", "type", "extension")
-  data <- read_csv(paste0("~/Box Sync/Dissert Data/bigsim/elliptical/", x))
+  data <- read_csv(paste0("~/Box Sync/Dissert Data/100/75/", x))
   cbind(data, data.frame(Samples = rep(filegroup$samples, nrow(data))))
   })
 
@@ -41,16 +41,16 @@ power <- ddply(power_data, .variables = c("ReductionMethod", "type", "originaldi
                                           "test", "difference", "Samples"),
                .fun = power_func, critical_values = critical_values)
 
-write_csv(power, "~/Box Sync/Dissert Data/power/bigsimEllipticalAdd.csv")
+write_csv(power, "~/Box Sync/Dissert Data/power/75.csv")
 
-power <- read_csv("~/Box Sync/Dissert Data/power/15.csv")
+power <- read_csv("~/Box Sync/Dissert Data/power/bigsimtoeplitzmultiply.csv")
 
 ggplot(data = filter(power,
-                     type == "identity",
+                     type == "toeplitz",
                      populations == 3,
-                     Samples == 15,
-                     !(ReductionMethod == "DataConcatScatterBlock"),
-                     difference <= .5)) +
+                     originaldimensions == 100,
+                     Samples == 20,
+                     !(ReductionMethod == "DataConcatScatterBlock"))) +
   geom_line(aes(x = difference, y = power, color = test)) +
   facet_grid(ReductionMethod ~ ReducedDimension) +
   theme_bw()
