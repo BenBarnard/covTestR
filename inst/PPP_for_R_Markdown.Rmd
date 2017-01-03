@@ -212,6 +212,29 @@ $$\tilde{\kappa}_i = tr(S_{D(i)}) - \tilde{\lambda}_{1(i)}$$
 
 # Simulation Study Setup
 
+## Covariance Structures
+
+\[
+  \boldsymbol{\Sigma} = \begin{bmatrix}
+  1 & .5 & .25 & .125 \\
+  .5 & 1 & .5 & .25 \\
+  .25 & .5 & 1 & .5 \\
+  .125 & .25 & .5 & 1 
+  \end{bmatrix}.
+  \]
+  
+  \[
+  \boldsymbol{\Sigma} = \begin{bmatrix}
+  20      & 1      & 3      & 3      & \\
+  1       & \ddots & \ddots & 3      & \\
+  3       & \ddots & 20     & 1      & \\
+  3       & 3      & 1      & 5      & 4 \\
+  3       & \ldots & 3      & 4      & \ddots \\
+  \vdots  & \ddots & \vdots & \vdots & \ddots \\
+  3       & \ldots & 3      & 4      & \ldots & 4
+  \end{bmatrix}.
+  \]
+
 ## Critical Value Simulation
 
 The critical value data sets generated for the simulation study have the following characteristics:
@@ -398,7 +421,6 @@ ggplot(data = filter(powerell,
 ## Elliptical 3
 
 ```{r, message = FALSE}
-powertoe <- rename(filter(power, type == "toeplitz"), `Reduction Method` = Reduction.Method, Power = power)
 ggplot(data = filter(powerell,
                      populations == 3,
                      originaldimensions == 100,
