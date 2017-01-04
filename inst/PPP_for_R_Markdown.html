@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>A Comparison of Tests Statistics for Equality of High-Dimensional Covariance Matrices</title>
+  <title>A Comparison of Test Statistics for Equality of High-Dimensional Covariance Matrices using Dimension Reduction</title>
 
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -20,7 +20,7 @@
     var SLIDE_CONFIG = {
       // Slide settings
       settings: {
-                title: 'A Comparison of Tests Statistics for Equality of High-Dimensional Covariance Matrices',
+                title: 'A Comparison of Test Statistics for Equality of High-Dimensional Covariance Matrices using Dimension Reduction',
                         subtitle: 'A Monte Carlo Power Simulation Study',
                 useBuilds: true,
         usePrettify: true,
@@ -100,111 +100,136 @@
 <slide class=''><hgroup><h2>Overview of Topics</h2></hgroup><article  id="overview-of-topics">
 
 <ul>
-<li><p>Introduction of the problem</p></li>
+<li><p>Introduction of the Problem</p></li>
 <li><p>Statistics for Testing Equality of High Dimensional Covariance Matrices</p></li>
 <li><p>Dimension Reduction via the Singular Value Decomposition</p></li>
-<li><p>Simulation study setup</p></li>
+<li><p>Simulation Study Setup</p></li>
 <li><p>Results</p></li>
-<li><p>Summary and References</p></li>
+<li><p>Summary</p></li>
+<li><p>Future Work</p></li>
+<li><p>References</p></li>
 </ul>
 
-</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Introduction of the problem</h2></hgroup><article  id="introduction-of-the-problem">
+<aside class='note'><section><p>First, I will introduce the problem. Then, I will talk about some tests equality of covariance matrices for high dimensional data. I will then talk about some dimension reduction methods. The simulation Study Setup will follow with the results for the study being next. Last, I will summarize some findings and discuss future work.</p></section></aside>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Introduction of the Problem</h2></hgroup><article  id="introduction-of-the-problem">
 
 </article></slide><slide class=''><hgroup><h2>Introduction</h2></hgroup><article  id="introduction">
 
 <ul>
 <li><p>Considering high-dimensional data</p></li>
-<li><p>Interested in comparing equality of 2 and k (3) covariance matrices</p></li>
 <li><p>Five test statistics for testing equality of covariance matrices</p></li>
 <li><p>Two dimension reduction methods via singular value decomposition</p></li>
+<li><p>Interested in comparing equality of 2 and \(k\) covariance matrices</p></li>
 </ul>
+
+<aside class='note'><section><p>In this simulation I am considering high dimensional data. When I say high dimensional data I mean when the dimension/variables/features is larger than the number of samples. A common example would be genetic data from cancer patients where we could be looking at thousands of genes and tens of patients. I will present four equality of covariance matrix tests for high dimensional data and compare the tests with a modifed likelihood ratio test. Next, I will present two dimension reduction methods using singular value decomposition. For this presentation we are interested in the equality of 2 and k covariance matrices. More specifically we are testing 3 covariance matrices for k.</p></section></aside>
 
 </article></slide><slide class=''><hgroup><h2>Testing Equality of Covariances</h2></hgroup><article  id="testing-equality-of-covariances">
 
-<p>If the \(m \times m\) covariance matrices from the ith population is \(\Sigma_i\), we wish to test</p>
+<ul>
+<li><p>Let \(\boldsymbol{\Sigma}_i \in \mathbb{R}_{p \times p}^&gt;\) be the covariance matrix of the \(i^\text{th}\) population for \(i = 1, 2, \dots, k\).</p></li>
+<li><p>We wish to test</p></li>
+</ul>
 
-<p>\[H_0 : \Sigma_1 = \ldots = \Sigma_g.\] Then our independent estimates of \(\Sigma_1, \ldots , \Sigma_g\), \(S_1, \ldots S_g\) are \(n_i S_i \sim W_m(\Sigma_i, n_i)\).</p>
+<p>\[H_0 : \boldsymbol{\Sigma}_1 = \ldots = \boldsymbol{\Sigma}_k.\] - Our sample covariance matrices, \(\boldsymbol{S}_1, \ldots \boldsymbol{S}_k\), are distributed \(n_i \boldsymbol{S}_i \sim W_p(\boldsymbol{\Sigma}_i, n_i)\).</p>
 
-<p>We aren&#39;t going to worry to much about this since we aren&#39;t finding any asymmptotic distributions for the tests, but this might be future work.</p>
+<aside class='note'><section><p>For testing the equality of covariance matrices let sigma be the covariance matrix of the ith population for i from 1 to k of in our case 2 or 3. We wish to test the null hypothesis sigma one equals sigma two and so on and so on to sigma k. Our sample covariance matrices s one to s i are distributed n i S i wishart with mean sigma i and degrees of freedom n i but we aren&#39;t going to worry to much about this since we aren&#39;t finding any theoretical asymmptotic distributions for the tests, but this might be future work.</p></section></aside>
 
 </article></slide><slide class=''><hgroup><h2>Modified Likelihood Ratio Test</h2></hgroup><article  id="modified-likelihood-ratio-test">
 
 <p><br></p>
 
-<p>\[M = n \log |S| - \sum \limits^g_{i=1} n_i \log |S_i|\]</p>
+<p>\[M = n \log |\boldsymbol{S}| - \sum \limits^k_{i=1} n_i \log |\boldsymbol{S}_i| \xrightarrow{d} \chi^2\]</p>
 
 <p><br></p>
 
-<p>This modified likelihood ratio test is only valid when \(S_i\) is nonsingular or when \(n_i \gg m\).</p>
+<p>This modified likelihood ratio test is only valid when \(\boldsymbol{S}_i\) is nonsingular or when \(n_i \gg m\).</p>
+
+<aside class='note'><section><p>This is a modified likelihood ratio test. Some of you will recognize this as Boxe&#39;s M. This modified likelihood ratio test is only valid when the sample covariance matrix for the populations are nonsingular or when n i is much greater than m. This really won&#39;t work for high dimensional data.</p></section></aside>
 
 </article></slide><slide class=''><hgroup><h2>Wald Test</h2></hgroup><article  id="wald-test">
 
 <p><br></p>
 
-<p>\[W = \frac{n}{2} \left \{ \sum \limits^g_{i = 1}\frac{n_i}{n} tr(S_iS^{-1}S_iS^{-1}) - \sum \limits^g_{i=1}\sum \limits^g_{j=1}\frac{n_in_j}{n^2}tr(S_iS^{-1}S_jS^{-1})  \right \}\]</p>
+<p>\[W = \frac{n}{2} \left \{ \sum \limits^k_{i = 1}\frac{n_i}{n} tr \left(\boldsymbol{S}_i\boldsymbol{S}^{-1}\boldsymbol{S}_i\boldsymbol{S}^{-1}\right) - \sum \limits^k_{i=1}\sum \limits^k_{j = 1}\frac{n_in_j}{n^2}tr \left(\boldsymbol{S}_i\boldsymbol{S}^{-1}\boldsymbol{S}_j\boldsymbol{S}^{-1}\right)  \right \} \xrightarrow{d} \chi^2\]</p>
 
 <p><br></p>
 
-<p>This wald test is only valid when \(S\) is nonsingular or when \(n \gg m\).</p>
+<p>This Wald test is only valid when \(\boldsymbol{S}\) is nonsingular or when \(n \gg m\).</p>
 
-</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Statistics for Testing Equality of High Dimensional Covariance Matrices</h2></hgroup><article  id="statistics-for-testing-equality-of-high-dimensional-covariance-matrices">
+<aside class='note'><section><p>Schott in 2001 proposed a Wald test. This Wald test is only valid when the pooled sample covariance matrix is nonsingular or when n is much greater than m. This really won&#39;t work for high dimensional data, but for testing many populations it might be workable.</p></section></aside>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Statistics for Testing Equality of <br> High Dimensional Covariance Matrices</h2></hgroup><article  id="statistics-for-testing-equality-of-high-dimensional-covariance-matrices">
 
 </article></slide><slide class=''><hgroup><h2>Frobenius Norm</h2></hgroup><article  id="frobenius-norm">
 
 <ul>
-<li>Ledoit and Wolf 2004 showed some nice properties of the frobenius norm:</li>
+<li>Ledoit and Wolf 2004 showed some nice properties of the Frobenius norm:</li>
 </ul>
 
 <p>\[
-d^2 = \frac{tr(\Sigma_i - \Sigma_j)^2}{p} = \frac{tr(\Sigma_i^2)}{p} + \frac{tr(\Sigma_j^2)}{p} - \frac{2tr(\Sigma_i \Sigma_j)}{p}.
+d^2 = \frac{tr \left( \boldsymbol{\Sigma}_i - \boldsymbol{\Sigma}_j \right)^2 }{p} = \frac{tr \left( \boldsymbol{\Sigma}_i^2 \right) }{p} + \frac{tr \left( \boldsymbol{\Sigma}_j^2 \right) }{p} - \frac{2tr \left( \boldsymbol{\Sigma}_i \boldsymbol{\Sigma}_j \right) }{p}.
 \]</p>
 
 <ul>
 <li><p>Dividing by \(p\) is not typical but allows the norm of the Identity to be 1.</p></li>
-<li><p>The norm is invariant by rotation. Problem?</p></li>
+<li><p>The norm is invariant to rotation.</p></li>
 </ul>
+
+<aside class='note'><section><p>Ledoit and Wolf in 2004 showed some nice properties of the Frobenius norm which form most of the tests for equality of covariance matrices for high dimensional data have formulations that use the expansion terms. Some of you that know what the frobenius norm is are probably asking where did that p come from. This is not typical but dividing by p allows the norm of the identity to be one. This allows us also to see how different the average volume by dimension of the matrices. The Frobenius norm is also invariant to rotation which could be a problem if the matrices with the same volme are oriented in different ways.</p></section></aside>
 
 </article></slide><slide class=''><hgroup><h2>Schott 2007</h2></hgroup><article  id="schott-2007">
 
 <ul>
-<li>Schott proposed a test in 2007 based on the frobenius norm.</li>
+<li>Schott proposed a test in 2007 based on the Frobenius norm.</li>
 </ul>
 
 <p><br></p>
 
-<p>\[ T_{Sc} = \sum \limits^{k}_{i &lt; j} \frac{(\hat{a}_{2i} + \hat{a}_{2j} - \frac{2}{p}tr(S_i S_j)) ^ 2}{\theta}\] <br> \[\theta = 4 \hat{a}_2^2 \left( \sum \limits_{i &lt; j}^ k (\frac{1}{n_i} + \frac{1}{n_j}) + (k - 1)(k - 2) \sum \limits_{i = 1}^k n_i^{-2} \right)\]</p>
+<p>\[ T_{Sc} = \sum \limits^{k}_{i &lt; j} \frac{ \left( \hat{a}_{2i} + \hat{a}_{2j} - \frac{2}{p}tr \left( S_i S_j \right) \right) ^ 2}{\theta} \xrightarrow{d} \chi^2\] <br> \[\theta = 4 \hat{a}_2^2 \left( \sum \limits_{i &lt; j}^ k \left( \frac{1}{n_i} + \frac{1}{n_j} \right) + (k - 1)(k - 2) \sum \limits_{i = 1}^k n_i^{-2} \right)\]</p>
+
+<aside class='note'><section><p>Schott proposed a test in 2007 based off the Frobenius norm. This is not Schott&#39;s original formulation of the test that he proposed. Srivastava and Yanagihara in 2010 proposed a test which I am not showing but in that article they did some algebra and it up. In this test theta is just a consistent estimator for the variance of the numerator. Take note that there is an a hat two squared term in theta because I will bring this up again.</p></section></aside>
 
 </article></slide><slide class=''><hgroup><h2>Schott 2007</h2></hgroup><article  id="schott-2007-1">
 
 <ul>
-<li>The \(a\) terms are consistent estimators.</li>
+<li>The \(a_{ji}\) terms are consistent estimators of \(\frac{tr\left( \boldsymbol{\Sigma}^j\right)}{p}\).</li>
 </ul>
 
 <p><br></p>
 
-<p>\[\hat{a}_{2i} = \frac{tr(V_i^2) - \frac{1}{n_i}tr(V_i)^2}{(n_i - 1)(n_i + 2)p} \xrightarrow{P} \frac{tr(\Sigma_i^2)}{p}\] <br></p>
+<p>\[\hat{a}_{2i} = \frac{tr \left( \boldsymbol{V}_i^2 \right) - \frac{1}{n_i}tr \left( \boldsymbol{V}_i \right)^2}{ \left( n_i - 1 \right) \left(n_i + 2 \right)p} \xrightarrow{P} \frac{tr \left( \boldsymbol{\Sigma}_i^2 \right) }{p}\] <br></p>
 
-<p>\[\hat{a}_2 = \frac{tr(V^2) - \frac{1}{n}tr(V)^2}{(n - 1)(n + 2)p} \approx \frac{\sum \limits^k_{i=1} n_i \hat{a}_{2i}}{\sum \limits^k_{i=1} n_i} \xrightarrow{P} \frac{tr(\Sigma^2)}{p}\]</p>
+<p>\[\hat{a}_2 = \frac{tr \left( \boldsymbol{V}^2 \right) - \frac{1}{n}tr \left( \boldsymbol{V} \right)^2 }{(n - 1)(n + 2)p} \xrightarrow{P} \frac{tr \left( \boldsymbol{\Sigma}^2 \right) }{p}\]</p>
+
+<aside class='note'><section><p>The a terms are consistent estimators of the traces of the covariance parameter raised to a power divided by the dimension. So a hat 2 i is a consistent estimator of the trace of the covariance parameter squard divided by the dimension where V i is just the numerator of the sample covariance matrix and a hat 2 would be the pooled estimator where v would be the numerator of the pooled covariance.</p></section></aside>
 
 </article></slide><slide class=''><hgroup><h2>Chaipitak and Chongcharoen 2013</h2></hgroup><article  id="chaipitak-and-chongcharoen-2013">
 
 <ul>
-<li>Chaipitak and Chongcharoen proposed a test in 2013 based on a distance estimator \(b = tr(\Sigma^2_i) / tr(\Sigma^2_j)\).</li>
+<li>Chaipitak and Chongcharoen proposed a test in 2013 based on a distance estimator \(b = tr \left( \boldsymbol{\Sigma}^2_i \right) / tr \left( \boldsymbol{\Sigma}^2_j \right)\)</li>
 </ul>
 
-<p>\[T_{C} = \sum \limits^{k}_{i &lt; j} \frac{(\hat{b} - 1)^2}{\hat{\delta}^2}\] <br></p>
+<p>\[T_{C} = \sum \limits^{k}_{i &lt; j} \frac{ \left( \hat{b} - 1 \right)^2 }{\hat{\delta}^2} \xrightarrow{d} \chi^2\] <br></p>
 
-<p>\[\hat{b} = \frac{\hat{a}_{2i}}{\hat{a}_{2j}} \quad \quad \hat{\delta}^2 = 4 \left( \frac{2\hat{a}_4}{p \hat{a}_2^2} \sum \limits^2_{i=1} \frac{1}{n_i -1} + \sum \limits^2_{i=1} \frac{1}{(n_i - 1)^2} \right)\]</p>
+<p>\[\hat{b} = \frac{\hat{a}_{2i}}{\hat{a}_{2j}} \quad \quad \hat{\delta}^2 = 4 \left( \frac{2\hat{a}_4}{p \hat{a}_2^2} \sum \limits^k_{i=1} \frac{1}{n_i -1} + \sum \limits^k_{i=1} \frac{1}{ \left( n_i - 1 \right)^2 } \right)\]</p>
+
+<aside class='note'><section><p>Chaipitak and Chongcharoen proposed a test in 2013 based on a distance estimator b which is just the ratio of of the first expansion terms of the Frobenius norm. and delta hat squared is a consistent estimator of the variance of the numerator. a hat four is a consistent estimator for the trace of the pooled covariance parameter to the fourth power divided by the dimension.</p></section></aside>
+
+<p>\[ T_{S14} = \sum \limits^{k}_{i &lt; j} \frac{ \left( \hat{a}_{2i} + \hat{a}_{2j} - \frac{2}{p}tr \left( \boldsymbol{S}_i \boldsymbol{S}_j \right) \right) ^ 2}{\theta} \xrightarrow{d} \chi^2\] <br></p>
+
+<p>\[\hat{a}_{2i} = \frac{ \left(n_i -2 \right) \left( n_i -1 \right) tr \left( \boldsymbol{V}_i^2 \right) - n \left( n - k \right) tr \left( \boldsymbol{D}^2_i \right) + tr \left( \boldsymbol{V}_i \right)^2 }{pn_i \left( n_i -1 \right) \left( n_i -2 \right) \left( n_i -3 \right) } \xrightarrow{P} \frac{tr \left( \boldsymbol{\Sigma}^2 \right) }{p}\]</p>
+
+<aside class='note'><section><p>Srivastava et al. proposed a test in 2014 that had the same form as Schott 2007 but used an unbiased consistent estimator for a hat 2 i. V i is still the numerator of the popuation sample covariance matrix.</p></section></aside>
 
 </article></slide><slide class=''><hgroup><h2>Srivastava et al. 2014</h2></hgroup><article  id="srivastava-et-al.-2014">
 
-<ul>
-<li>Srivastava et al. proposed a test in 2014 that had the same form as Schott 2007 but used an unbiased consistent estimator for \(\hat{a}_{2i}\).</li>
-</ul>
-
 <p><br></p>
 
-<p>\[ T_{S14} = \sum \limits^{k}_{i &lt; j} \frac{(\hat{a}_{2i} + \hat{a}_{2j} - \frac{2}{p}tr(S_i S_j)) ^ 2}{\theta}\] <br> \[\hat{a}_{2i} = \frac{(n_i -2)(n_i -1)tr(V_i^2) - n(n - k)tr(D^2_i) + tr(V_i)^2}{pn_i(n_i -1)(n_i -2)(n_i -3)}\]</p>
+\[\boldsymbol{A}_i = \left(\boldsymbol{X}_i - \overline{\boldsymbol{X}_i} \right) \left( \boldsymbol{X}_i - \overline{\boldsymbol{X}_i} \right)&#39; \quad \quad \boldsymbol{D}_i = diag \left(  a_{ij}\right)\]
+
+<aside class='note'><section><p>If the numerator for the sample covariance for our data is the matrix x i - x bar transpose times x i - x bar then A i is xi - x bar times x i - x bar transpose. D i is the diagonalization of the elements of the matrix A i.</p></section></aside>
 
 </article></slide><slide class=''><hgroup><h2>Ishii et al. 2016</h2></hgroup><article  id="ishii-et-al.-2016">
 
@@ -214,13 +239,15 @@ d^2 = \frac{tr(\Sigma_i - \Sigma_j)^2}{p} = \frac{tr(\Sigma_i^2)}{p} + \frac{tr(
 
 <p><br></p>
 
-<p>\[T_I = \prod \limits^{k}_{i &lt; j} \tilde{\lambda}_* \tilde{h}_* \tilde{\gamma}_*\]</p>
+<p>\[T_I = \prod \limits^{k}_{i &lt; j} \tilde{\lambda}_* \tilde{h}_* \tilde{\gamma}_* \xrightarrow{d} F\]</p>
 
 <p><br></p>
 
 <ul>
 <li>Components of the test use noise reduced values since the largest eigenvalue is biased upwards with high dimensional data.</li>
 </ul>
+
+<aside class='note'><section><p>Ishii et al proposed their test in 2016 using ratios of the first eigenvalues and first eigenvectors. Components of the test use noise reduced values since the largest eigenvalue is biased upwards with high dimensional data. It gets worse.</p></section></aside>
 
 </article></slide><slide class=''><hgroup><h2>Ishii et al. 2016</h2></hgroup><article  id="ishii-et-al.-2016-1">
 
@@ -230,25 +257,25 @@ d^2 = \frac{tr(\Sigma_i - \Sigma_j)^2}{p} = \frac{tr(\Sigma_i^2)}{p} + \frac{tr(
 
 <p><br></p>
 
-<p>\[\tilde{\lambda}_* = \frac{max(\tilde{\lambda}_i, \tilde{\lambda}_j)}{min(\tilde{\lambda}_i, \tilde{\lambda}_j)}\]</p>
+<p>\[\tilde{\lambda}_* = \frac{max(\tilde{\lambda}_{i1}, \tilde{\lambda}_{j1})}{min(\tilde{\lambda}_{i1}, \tilde{\lambda}_{j1})}\]</p>
 
 <p><br></p>
 
-<p>\[\tilde{\lambda}_i = \hat{\lambda}_i - \frac{tr(S_D) - \sum \limits^i_{j = 1}\hat{\lambda}_j}{n - 1-i}\]</p>
+<p>\[\tilde{\lambda}_{i1} = \hat{\lambda}_{i1} - \frac{tr(S_i) - \hat{\lambda}_{i1}}{n_i - 2}\]</p>
+
+<aside class='note'><section><p>Lambda tilde star is the max of the first noise reduced eigenvalues of group i and group j divided by the minimum. Where the first noised reduced eigenvalue is just the first eigenvalue of the sample covariance minus the sum of all the other eigenvalues divided by the sample size of the group minus two.</p></section></aside>
 
 </article></slide><slide class=''><hgroup><h2>Ishii et al. 2016</h2></hgroup><article  id="ishii-et-al.-2016-2">
 
 <ul>
-<li>The noise reduced first eigenvector is solved using the first eigenvalue.</li>
+<li>The noise reduced first eigenvector is solved using the first noise reduced eigenvalue.</li>
 </ul>
 
 <p><br></p>
 
 <p>\[\tilde{h}_* = max(|\tilde{h}^T_i \tilde{h}_j|, |\tilde{h}^T_i \tilde{h}_j|^{-1})\]</p>
 
-<p><br></p>
-
-<p>\[\tilde{h}_i = ((n-1)\tilde{\lambda}_i)^{-1/2}(\boldsymbol{X} - \boldsymbol{\overline{X}})\hat{\boldsymbol{\mu}}_i\]</p>
+<aside class='note'><section><p>h tilde the noise reduced first eigenvector is solved using the noised reduced first eigenvalue. h tilde star is the max of the scalar from the first noise reduced eigenvectors times each other or the inverse.</p></section></aside>
 
 </article></slide><slide class=''><hgroup><h2>Ishii et al. 2016</h2></hgroup><article  id="ishii-et-al.-2016-3">
 
@@ -258,11 +285,13 @@ d^2 = \frac{tr(\Sigma_i - \Sigma_j)^2}{p} = \frac{tr(\Sigma_i^2)}{p} + \frac{tr(
 
 <p><br></p>
 
-<p>\[\tilde{\gamma}_* = max(\frac{\tilde{\kappa}_1}{\tilde{\kappa}_2}, \frac{\tilde{\kappa}_2}{\tilde{\kappa}_1})\]</p>
+<p>\[\tilde{\gamma}_* = max(\frac{\tilde{\kappa}_i}{\tilde{\kappa}_j}, \frac{\tilde{\kappa}_j}{\tilde{\kappa}_i})\]</p>
 
 <p><br></p>
 
-<p>\[\tilde{\kappa}_i = tr(S_{D(i)}) - \tilde{\lambda}_{1(i)}\]</p>
+\[\tilde{\kappa}_i = tr(S_{i}) - \tilde{\lambda}_{i1}\]
+
+<aside class='note'><section><p>The final part of the test consists of the sum of all the other non zero eigenvalues of the covariance matrix. so kappa is the sum of the eigenvalues of the sample covariance minus the first noise reduced eigenvalue. Gamma tilde star is the max of ratio of the kappa tildes.</p></section></aside>
 
 </article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Dimension Reduction via the Singular Value Decomposition</h2></hgroup><article  id="dimension-reduction-via-the-singular-value-decomposition">
 
@@ -270,10 +299,10 @@ d^2 = \frac{tr(\Sigma_i - \Sigma_j)^2}{p} = \frac{tr(\Sigma_i^2)}{p} + \frac{tr(
 
 <ul>
 <li><p>For samples \(\boldsymbol{X}_i\), let \(\boldsymbol{X} = \left[ \boldsymbol{X}_1 \vdots \ \ldots \ \vdots \boldsymbol{X}_i\vdots \ \ldots \ \vdots \boldsymbol{X}_k \right]^T\).</p></li>
-<li><p>Let \(\boldsymbol{V}_t\) represent the scatter matrix of \(\boldsymbol{X}\), with rank \(t\).</p></li>
-<li><p>Let \(\boldsymbol{V}_t = \boldsymbol{UDU}^T\) represent the singular value decompostion of \(\boldsymbol{V}_t\).</p></li>
-<li><p>Partition \(\boldsymbol{U}\) such that \(\boldsymbol{U} = \left[ \boldsymbol{U}_1 \vdots \, \boldsymbol{U}_2  \right]\) with \(\boldsymbol{U}_1 \in \mathbb{R}^{p \times t}\).</p></li>
-<li><p>Project \(\boldsymbol{X}_1\) and \(\boldsymbol{X}_2\) to \(t\) dimensions by taking \(\boldsymbol{X}_{Ri}^T = \boldsymbol{U}_1^T  \boldsymbol{X}_i^T\).</p></li>
+<li><p>Let \(\boldsymbol{V}\) represent the scatter matrix of \(\boldsymbol{X}\)</p></li>
+<li><p>Let \(\boldsymbol{V} = \boldsymbol{UDU}^T\) represent the singular value decompostion of \(\boldsymbol{V}\).</p></li>
+<li><p>Partition \(\boldsymbol{U}\) such that \(\boldsymbol{U} = \left[ \boldsymbol{U}_1 \vdots \, \boldsymbol{U}_2  \right]\) with \(\boldsymbol{U}_1 \in \mathbb{R}^{p \times q}\), where \(q = 1, 2, \dots , p\).</p></li>
+<li><p>Project \(\boldsymbol{X}_i\) to \(q\) dimensions by taking \(\boldsymbol{X}_{Ri}^T = \boldsymbol{U}_1^T  \boldsymbol{X}_i^T\).</p></li>
 </ul>
 
 </article></slide><slide class=''><hgroup><h2>Covariance Difference Concatination Matrix</h2></hgroup><article  id="covariance-difference-concatination-matrix">
@@ -281,9 +310,9 @@ d^2 = \frac{tr(\Sigma_i - \Sigma_j)^2}{p} = \frac{tr(\Sigma_i^2)}{p} + \frac{tr(
 <ul>
 <li><p>For groups \(\boldsymbol{X}_i\) let \(\boldsymbol{S_i}\) be the covariance matrix.</p></li>
 <li><p>Let \(\widehat{\boldsymbol{M}} := \left[S_2 - S_1 \vdots \ldots \vdots S_i - S_1 \vdots \ldots \vdots S_k - S_1 \right]\) where \(i = 1, \ldots, k\) groups.</p></li>
-<li><p>Let \(\widehat{\boldsymbol{M}} = \boldsymbol{UDU}^T\) represent the singular value decompostion of \(\widehat{\boldsymbol{M}}\).</p></li>
-<li><p>Partition \(\boldsymbol{U}\) such that \(\boldsymbol{U} = \left[ \boldsymbol{U}_1 \vdots \, \boldsymbol{U}_2  \right]\) with \(\boldsymbol{U}_1 \in \mathbb{R}^{p \times t}\).</p></li>
-<li><p>Project \(\boldsymbol{X}_1\) and \(\boldsymbol{X}_2\) to \(t\) dimensions by taking \(\boldsymbol{X}_{Ri}^T = \boldsymbol{U}_1^T  \boldsymbol{X}_i^T\).</p></li>
+<li><p>Let \(\widehat{\boldsymbol{M}} = \boldsymbol{UDV}^T\) represent the singular value decompostion of \(\widehat{\boldsymbol{M}}\).</p></li>
+<li><p>Partition \(\boldsymbol{U}\) such that \(\boldsymbol{U} = \left[ \boldsymbol{U}_1 \vdots \, \boldsymbol{U}_2  \right]\) with \(\boldsymbol{U}_1 \in \mathbb{R}^{p \times q}\).</p></li>
+<li><p>Project \(\boldsymbol{X}_i\) to \(q\) dimensions by taking \(\boldsymbol{X}_{Ri}^T = \boldsymbol{U}_1^T  \boldsymbol{X}_i^T\).</p></li>
 </ul>
 
 </article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Simulation Study Setup</h2></hgroup><article  id="simulation-study-setup">
@@ -295,8 +324,8 @@ d^2 = \frac{tr(\Sigma_i - \Sigma_j)^2}{p} = \frac{tr(\Sigma_i^2)}{p} + \frac{tr(
 <ul>
 <li><p>\(n_i = 15\)</p></li>
 <li><p>\(p = 100\)</p></li>
-<li><p>Generating k groups from \(\mathcal{N}_p \left( \boldsymbol{0}, \boldsymbol{\Sigma} \right)\).</p></li>
-<li><p>Number of repetitions is 100000.</p></li>
+<li><p>Generating the \(k\) populations from \(\mathcal{N}_p \left( \boldsymbol{0}, \boldsymbol{\Sigma}_i \right)\).</p></li>
+<li><p>Number of repetitions is 100,000.</p></li>
 <li><p>\(cv = inf\{x \in \mathbb{R} : 1 - \alpha \leq \hat{F}_{T}(x) \}\), where \(\alpha = .05\).</p></li>
 </ul>
 
@@ -307,11 +336,11 @@ d^2 = \frac{tr(\Sigma_i - \Sigma_j)^2}{p} = \frac{tr(\Sigma_i^2)}{p} + \frac{tr(
 <ul>
 <li><p>\(n_i = 15\)</p></li>
 <li><p>\(p = 100\)</p></li>
-<li><p>Generating k groups from \(\mathcal{N}_p \left( \boldsymbol{0}, \boldsymbol{\Sigma} \right)\), and \(\mathcal{N}_p \left( \boldsymbol{0}, \boldsymbol{\Sigma} * c \right)\).</p></li>
-<li><p>Number of repetitions is 1000.</p></li>
+<li><p>Generating the \(k\) populations from \(\mathcal{N}_p \left( \boldsymbol{0}, \boldsymbol{\Sigma}_i \right)\), and \(\mathcal{N}_p \left( \boldsymbol{0}, \boldsymbol{\Sigma}_i * c \right)\).</p></li>
+<li><p>Number of repetitions is 1,000.</p></li>
 </ul>
 
-<p>\[power = \frac{\sum \limits^{1000}_{i = 1} I(T_i \geq cv)}{1000}\]</p>
+<p>\[power = \frac{\sum \limits^{1000}_{i = 1} I(T \geq cv)}{1000}\]</p>
 
 </article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Results</h2></hgroup><article  id="results">
 
