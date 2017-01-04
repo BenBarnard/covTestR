@@ -12,8 +12,9 @@ bibliography: presentation.bib
 library(plyr)
 library(stringr)
 library(tidyverse)
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, fig.width=10, fig.height=5.5)
 options(warn = -1)
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 ```
 
 ```{r data, include = FALSE}
@@ -162,7 +163,8 @@ $$\hat{b} = \frac{\hat{a}_{2i}}{\hat{a}_{2j}} \quad \quad \hat{\delta}^2 = 4 \le
 
 <div class = "notes">
 Chaipitak and Chongcharoen proposed a test in 2013 based on a distance estimator b which is just the ratio of of the first expansion terms of the Frobenius norm. and delta hat squared is a consistent estimator of the variance of the numerator. a hat four is a consistent estimator for the trace of the pooled covariance parameter to the fourth power divided by the dimension.
-</div
+</div>
+
 
 ## Srivastava et al. 2014
 
@@ -173,19 +175,24 @@ Chaipitak and Chongcharoen proposed a test in 2013 based on a distance estimator
 $$ T_{S14} = \sum \limits^{k}_{i < j} \frac{ \left( \hat{a}_{2i} + \hat{a}_{2j} - \frac{2}{p}tr \left( \boldsymbol{S}_i \boldsymbol{S}_j \right) \right) ^ 2}{\theta} \xrightarrow{d} \chi^2$$
 <br>
 
-$$\hat{a}_{2i} = \frac{ \left(n_i -2 \right) \left( n_i -1 \right) tr \left( \boldsymbol{V}_i^2 \right) - n \left( n - k \right) tr \left( \boldsymbol{D}^2_i \right) + tr \left( \boldsymbol{V}_i \right)^2 }{pn_i \left( n_i -1 \right) \left( n_i -2 \right) \left( n_i -3 \right) } \xrightarrow{P} \frac{tr \left( \boldsymbol{\Sigma}^2 \right) }{p}$$
+
 
 <div class = "notes">
-Srivastava et al. proposed a test in 2014 that had the same form as Schott 2007 but used an unbiased consistent estimator for a hat 2 i. V i is still the numerator of the popuation sample covariance matrix.
+Srivastava et al. proposed a test in 2014 that had the same form as Schott 2007 but used an unbiased consistent estimator for a hat 2 i.
 </div>
+
 
 ## Srivastava et al. 2014
 
 <br>
 
-$$\boldsymbol{A}_i = \boldsymbol{X}_i\boldsymbol{X}_i^T \quad \quad \boldsymbol{D}_i = diag \left(  a_{ij}\right)$$
+$$\hat{a}_{2i} = \frac{ \left(n_i -2 \right) \left( n_i -1 \right) tr \left( \boldsymbol{V}_i^2 \right) - n \left( n - k \right) tr \left( \boldsymbol{D}^2_i \right) + tr \left( \boldsymbol{V}_i \right)^2 }{pn_i \left( n_i -1 \right) \left( n_i -2 \right) \left( n_i -3 \right) } \xrightarrow{P} \frac{tr \left( \boldsymbol{\Sigma}^2 \right) }{p}$$
+
+<br>
+
+$$\boldsymbol{A}_i = \boldsymbol{X}_i^T\boldsymbol{X}_i \quad \quad \boldsymbol{D}_i = diag \left(  a_{ij}\right)$$
 <div class = "notes">
-If the numerator for the sample covariance for our data is the matrix x i transpose times x i then A i is xi times x i transpose. D i is the diagonalization of the elements of the matrix A i. 
+This is our new unbiased consistent estimator of a hat 2 i where v i is still the numerator of the sample covariance matrix. For D if the numerator for the sample covariance for our data is the matrix x i x i transpose then A i is xi transpose x i. D i is the diagonalization of the elements of the matrix A i, or just the sum of its elements.
 </div>
 
 ## Ishii et al. 2016
@@ -227,6 +234,8 @@ Lambda tilde star is the max of the first noise reduced eigenvalues of group i a
 <br>
 
 $$\tilde{h}_* = max(|\tilde{h}^T_i \tilde{h}_j|, |\tilde{h}^T_i \tilde{h}_j|^{-1})$$
+
+$$\tilde{h}_i $$
 
 <div class = "notes">
 h tilde the noise reduced first eigenvector is solved using the noised reduced first eigenvalue. h tilde star is the max of the scalar from the first noise reduced eigenvectors times each other or the inverse.  
@@ -330,7 +339,7 @@ The power simulation data sets generated for the simulation study have the follo
 
 ## Toeplitz Covariance No Dimension Reduction
 
-```{r, message = FALSE}
+```{r}
 powertoe <- rename(filter(power, type == "toeplitz"), `Reduction Method` = Reduction.Method, Power = power)
 ggplot(data = filter(powertoe,
                      populations == 2,
@@ -341,13 +350,14 @@ ggplot(data = filter(powertoe,
 "Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
                      `Reduction Method` %in% c("None"),
                      ReducedDimension %in% c(5, 100))) +
-  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test, linetype = Test)) +
-  theme_bw() 
+  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test), size = 1.5) +
+  theme_bw() +
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test"))
 ```
 
 ## Toeplitz Covariance Dimension Reduction
 
-```{r, message = FALSE}
+```{r}
 ggplot(data = filter(powertoe,
                      populations == 2,
                      originaldimensions == 100,
@@ -356,14 +366,15 @@ ggplot(data = filter(powertoe,
 "Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
                      `Reduction Method` %in% c("Covariance Differences", "Data Scatter"),
                      ReducedDimension %in% c(5, 100))) +
-  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test, linetype = Test)) +
+  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test), size = 1.5) +
   facet_grid(`Reduction Method` ~ ReducedDimension) +
-  theme_bw() 
+  theme_bw() +
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test"))
 ```
 
 ## Toeplitz Covariance at a Frobenius Norm of 0.01
 
-```{r, message = FALSE}
+```{r}
 ggplot(data = filter(powertoe,
                      populations == 2,
                      originaldimensions == 100,
@@ -374,15 +385,16 @@ ggplot(data = filter(powertoe,
                      `Frobenius Norm` >= 0.01,
                      `Frobenius Norm` <= 0.014,
                      ReducedDimension <= 25)) +
-  geom_line(aes(x = ReducedDimension, y = Power, color = Test, linetype = Test)) +
+  geom_line(aes(x = ReducedDimension, y = Power, color = Test), size = 1.5) +
   facet_wrap(~ `Reduction Method`) +
-  theme_bw() 
+  theme_bw()  +
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test"))
 ```
 
 
 ## Spiked Covariance No Dimension Reduction
 
-```{r, message = FALSE}
+```{r}
 powerell <- rename(filter(power, type == "elliptical"), `Reduction Method` = Reduction.Method, Power = power)
 ggplot(data = filter(powerell,
                      populations == 2,
@@ -393,13 +405,14 @@ ggplot(data = filter(powerell,
 "Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
                      `Reduction Method` %in% c("None"),
                      ReducedDimension %in% c(5, 100))) +
-  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test, linetype = Test)) +
-  theme_bw() 
+  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test), size = 1.5) +
+  theme_bw()  +
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test"))
 ```
 
 ## Spiked Covariance Dimension Reduction
 
-```{r, message = FALSE}
+```{r}
 ggplot(data = filter(powerell,
                      populations == 2,
                      originaldimensions == 100,
@@ -408,14 +421,15 @@ ggplot(data = filter(powerell,
 "Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
                      `Reduction Method` %in% c("Covariance Differences", "Data Scatter"),
                      ReducedDimension %in% c(5, 100))) +
-  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test, linetype = Test)) +
+  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test), size = 1.5) +
   facet_grid(`Reduction Method` ~ ReducedDimension) +
-  theme_bw() 
+  theme_bw()  +
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test"))
 ```
 
 ## Spiked Covariance at a Frobenius Norm of 0.7
 
-```{r, message = FALSE}
+```{r}
 ggplot(data = filter(powerell,
                      populations == 2,
                      originaldimensions == 100,
@@ -426,9 +440,10 @@ ggplot(data = filter(powerell,
                      `Frobenius Norm` >= 0.75,
                      `Frobenius Norm` <= 0.85,
                      ReducedDimension <= 25)) +
-  geom_line(aes(x = ReducedDimension, y = Power, color = Test, linetype = Test)) +
+  geom_line(aes(x = ReducedDimension, y = Power, color = Test), size = 1.5) +
   facet_wrap(~ `Reduction Method`) +
-  theme_bw() 
+  theme_bw()  +
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test"))
 ```
 
 
@@ -436,8 +451,7 @@ ggplot(data = filter(powerell,
 
 ## Toeplitz Covariance No Dimension Reduction
 
-```{r, message = FALSE}
-powertoe <- rename(filter(power, type == "toeplitz"), `Reduction Method` = Reduction.Method, Power = power)
+```{r}
 ggplot(data = filter(powertoe,
                      populations == 3,
                      originaldimensions == 100,
@@ -447,13 +461,14 @@ ggplot(data = filter(powertoe,
 "Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
                      `Reduction Method` %in% c("None"),
                      ReducedDimension %in% c(5, 100))) +
-  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test, linetype = Test)) +
-  theme_bw() 
+  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test), size = 1.5) +
+  theme_bw()  +
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test"))
 ```
 
 ## Toeplitz Covariance Dimension Reduction
 
-```{r, message = FALSE}
+```{r}
 ggplot(data = filter(powertoe,
                      populations == 3,
                      originaldimensions == 100,
@@ -462,14 +477,15 @@ ggplot(data = filter(powertoe,
 "Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
                      `Reduction Method` %in% c("Covariance Differences", "Data Scatter"),
                      ReducedDimension %in% c(5, 100))) +
-  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test, linetype = Test)) +
+  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test), size = 1.5) +
   facet_grid(`Reduction Method` ~ ReducedDimension) +
-  theme_bw() 
+  theme_bw()  +
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test"))
 ```
 
 ## Toeplitz Covariance at a Frobenius Norm of 0.1
 
-```{r, message = FALSE}
+```{r}
 ggplot(data = filter(powertoe,
                      populations == 3,
                      originaldimensions == 100,
@@ -480,16 +496,17 @@ ggplot(data = filter(powertoe,
                      `Frobenius Norm` >= 0.015,
                      `Frobenius Norm` <= 0.02,
                      ReducedDimension <= 25)) +
-  geom_line(aes(x = ReducedDimension, y = Power, color = Test, linetype = Test)) +
+  geom_line(aes(x = ReducedDimension, y = Power, color = Test), size = 1.5) +
   facet_wrap(~ `Reduction Method`) +
-  theme_bw() 
+  theme_bw()  +
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test"))
 ```
 
 
 
 ## Spiked Covariance No Dimension Reduction
 
-```{r, message = FALSE}
+```{r}
 ggplot(data = filter(powerell,
                      populations == 3,
                      originaldimensions == 100,
@@ -499,13 +516,14 @@ ggplot(data = filter(powerell,
 "Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
                      `Reduction Method` %in% c("None"),
                      ReducedDimension %in% c(5, 100))) +
-  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test, linetype = Test)) +
-  theme_bw() 
+  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test), size = 1.5) +
+  theme_bw()  +
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test"))
 ```
 
 ## Spiked Covariance Dimension Reduction
 
-```{r, message = FALSE}
+```{r}
 ggplot(data = filter(powerell,
                      populations == 3,
                      originaldimensions == 100,
@@ -514,14 +532,15 @@ ggplot(data = filter(powerell,
 "Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
                      `Reduction Method` %in% c("Covariance Differences", "Data Scatter"),
                      ReducedDimension %in% c(5, 100))) +
-  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test, linetype = Test)) +
+  geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test), size = 1.5) +
   facet_grid(`Reduction Method` ~ ReducedDimension) +
-  theme_bw() 
+  theme_bw()  +
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test"))
 ```
 
 ## Spiked Covariance at a Frobenius Norm of 0.9
 
-```{r, message = FALSE}
+```{r}
 ggplot(data = filter(powerell,
                      populations == 3,
                      originaldimensions == 100,
@@ -532,9 +551,17 @@ ggplot(data = filter(powerell,
                      `Frobenius Norm` >= 0.95,
                      `Frobenius Norm` <= 1.05,
                      ReducedDimension <= 25)) +
-  geom_line(aes(x = ReducedDimension, y = Power, color = Test, linetype = Test)) +
+  geom_line(aes(x = ReducedDimension, y = Power, color = Test), size = 1.5) +
   facet_wrap(~ `Reduction Method`) +
-  theme_bw() 
+  theme_bw()  +
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test")) + 
+  theme(axis.text.x = element_text(size = 12),
+        axis.title.x = element_text(size = 16),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 16),
+        legend.text = element_text(size = 15),
+        legend.title = element_text(size = 16)) + 
+    ylim(c(0,1))
 ```
 
 # Summary and References
