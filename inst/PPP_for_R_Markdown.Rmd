@@ -12,6 +12,7 @@ bibliography: presentation.bib
 library(plyr)
 library(stringr)
 library(tidyverse)
+library(EqualCov)
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, fig.width=10, fig.height=5.5)
 options(warn = -1)
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
@@ -88,20 +89,6 @@ This modified likelihood ratio test is only valid when $\boldsymbol{S}_i$ is non
 
 <div class = "notes">
 This is a modified likelihood ratio test. Some of you will recognize this as Boxe's M. This modified likelihood ratio test is only valid when the sample covariance matrix for the populations are nonsingular or when n i is much greater than m. This really won't work for high dimensional data.
-</div>
-
-## Wald Test
-
-<br>
-
-$$W = \frac{n}{2} \left \{ \sum \limits^k_{i = 1}\frac{n_i}{n} tr \left(\boldsymbol{S}_i\boldsymbol{S}^{-1}\boldsymbol{S}_i\boldsymbol{S}^{-1}\right) - \sum \limits^k_{i=1}\sum \limits^k_{j = 1}\frac{n_in_j}{n^2}tr \left(\boldsymbol{S}_i\boldsymbol{S}^{-1}\boldsymbol{S}_j\boldsymbol{S}^{-1}\right)  \right \} \xrightarrow{d} \chi^2$$
-
-<br>
-
-This Wald test is only valid when $\boldsymbol{S}$ is nonsingular or when $n \gg m$.
-
-<div class = "notes">
-Schott in 2001 proposed a Wald test. This Wald test is only valid when the pooled sample covariance matrix is nonsingular or when n is much greater than m. This really won't work for high dimensional data, but for testing many populations it might be workable.
 </div>
 
 # Statistics for Testing Equality of <br> High Dimensional Covariance Matrices
@@ -217,11 +204,11 @@ Ishii et al proposed their test in 2016 using ratios of the first eigenvalues an
 
 <br>
 
-$$\tilde{\lambda}_* = \frac{max(\tilde{\lambda}_{i1}, \tilde{\lambda}_{j1})}{min(\tilde{\lambda}_{i1}, \tilde{\lambda}_{j1})}$$
+$$\tilde{\lambda}_* = \frac{max \left( \tilde{\lambda}_{i1}, \tilde{\lambda}_{j1} \right) }{min \left( \tilde{\lambda}_{i1}, \tilde{\lambda}_{j1} \right) }$$
 
 <br>
 
-$$\tilde{\lambda}_{i1} = \hat{\lambda}_{i1} - \frac{tr(S_i) - \hat{\lambda}_{i1}}{n_i - 2}$$
+$$\tilde{\lambda}_{i1} = \hat{\lambda}_{i1} - \frac{tr \left( S_i \right) - \hat{\lambda}_{i1}}{n_i - 2}$$
 
 <div class = "notes">
 Lambda tilde star is the max of the first noise reduced eigenvalues of group i and group j divided by the minimum. Where the first noised reduced eigenvalue is just the first eigenvalue of the sample covariance minus the sum of all the other eigenvalues divided by the sample size of the group minus two.
@@ -233,12 +220,12 @@ Lambda tilde star is the max of the first noise reduced eigenvalues of group i a
 
 <br>
 
-$$\tilde{h}_* = max(|\tilde{h}^T_i \tilde{h}_j|, |\tilde{h}^T_i \tilde{h}_j|^{-1})$$
+$$\tilde{h}_* = max \left( \left|\tilde{h}^T_i \tilde{h}_j \right| , \left| \tilde{h}^T_i \tilde{h}_j \right|^{-1} \right) $$
 
-$$\tilde{h}_i $$
+$$\tilde{h}_{i1} = \left\{ (n -1) \tilde{\lambda}_{i1}\right\}^{-1/2}\left( \boldsymbol{X}_i - \overline{\boldsymbol{X}}_i\right) \hat{\boldsymbol{\mu}}_{i1}$$
 
 <div class = "notes">
-h tilde the noise reduced first eigenvector is solved using the noised reduced first eigenvalue. h tilde star is the max of the scalar from the first noise reduced eigenvectors times each other or the inverse.  
+h tilde the noise reduced first eigenvector is solved using the noised reduced first eigenvalue. h tilde star is the max of the scalar from the first noise reduced eigenvectors times each other or the inverse. We find the first noise reduced eigenvector by using the first noise reduced eigenvalue by using this equation.
 </div>
 
 ## Ishii et al. 2016
@@ -247,11 +234,11 @@ h tilde the noise reduced first eigenvector is solved using the noised reduced f
 
 <br>
 
-$$\tilde{\gamma}_* = max(\frac{\tilde{\kappa}_i}{\tilde{\kappa}_j}, \frac{\tilde{\kappa}_j}{\tilde{\kappa}_i})$$
+$$\tilde{\gamma}_* = max \left( \frac{\tilde{\kappa}_i}{\tilde{\kappa}_j}, \frac{\tilde{\kappa}_j}{\tilde{\kappa}_i} \right) $$
 
 <br>
 
-$$\tilde{\kappa}_i = tr(S_{i}) - \tilde{\lambda}_{i1}$$
+$$\tilde{\kappa}_i = tr \left( S_{i} \right) - \tilde{\lambda}_{i1}$$
 
 <div class = "notes">
 The final part of the test consists of the sum of all the other non zero eigenvalues of the covariance matrix. so kappa is the sum of the eigenvalues of the sample covariance minus the first noise reduced eigenvalue. Gamma tilde star is the max of ratio of the kappa tildes.
@@ -282,12 +269,12 @@ The final part of the test consists of the sum of all the other non zero eigenva
 
 - For groups $\boldsymbol{X}_i$ let $\boldsymbol{S_i}$ be the sample covariance matrix.
 
-- Let $\widehat{\boldsymbol{M}} := \left[\boldsymbol{S}_2 - \boldsymbol{S}_1 \vdots \ldots \vdots \boldsymbol{S}_i - \boldsymbol{S}_1 \vdots \ldots \vdots \boldsymbol{S}_k - \boldsymbol{S}_1 \right]$ where $i = 1, \ldots, k$ groups.
+- Let $\widehat{\boldsymbol{M}} := \left[ \boldsymbol{S}_2 - \boldsymbol{S}_1 \vdots \ldots \vdots \boldsymbol{S}_i - \boldsymbol{S}_1 \vdots \ldots \vdots \boldsymbol{S}_k - \boldsymbol{S}_1 \right]$ where $i = 1, \ldots, k$ groups.
 
 - Let $\widehat{\boldsymbol{M}} = \boldsymbol{UDV}^T$ represent the singular value decompostion of $\widehat{\boldsymbol{M}}$.
 
-- Partition $\boldsymbol{U}$ such that $\boldsymbol{U} = \left[ \boldsymbol{U}_1 \vdots \, \boldsymbol{U}_2 
-  \right]$ with $\boldsymbol{U}_1 \in \mathbb{R}^{p \times q}$.
+- Partition $\boldsymbol{U}$ such that $ \boldsymbol{U} = \left[ \boldsymbol{U}_1 \vdots, \boldsymbol{U}_2 
+  \right] $  with $\boldsymbol{U}_1 \in \mathbb{R}^{p \times q}$.
 
 - Project $\boldsymbol{X}_i$ to $q$ dimensions by taking $\boldsymbol{X}_{Ri}^T = \boldsymbol{U}_1^T 
   \boldsymbol{X}_i^T$.
@@ -333,6 +320,93 @@ $$Power = \frac{\sum \limits^{1000}_{i = 1} I(T \geq cv)}{1000}$$
 The power simulation data sets generated for the simulation study have the following characteristics: n i 15 and dimensions 100. We generated the k populations from a multivariate normal with mean vectors 0 and covariances sigma i and sigma i times some constant c. I only changed one matrix so with three populations only one population has the covariance of sigma i time c and the other two are just sigma i. For right now I chose to just multiply by some constant c as to not change the structure of the eigenvalues of the covariance matrices and the frobenius norm might not detect diferences caused by other changes. I also didn't want to keep you for five days. This will just scale the eigenvalues upward. I will not go to in depth what values c takes on since we are going to look at how power increases with the frobenius norm so just know as c increases so should the frobenius norm. 
 </div>
 
+## Toeplitz Covariance Structure
+
+<br>
+
+$$
+  \boldsymbol{\Sigma} = \begin{bmatrix}
+  1 & .5 & .25 & .125 \\
+  .5 & 1 & .5 & .25 \\
+  .25 & .5 & 1 & .5 \\
+  .125 & .25 & .5 & 1 
+  \end{bmatrix}.
+  $$
+<div class = "notes">
+This is the general form of the toeplitz matrix I used but with 100 dimensions.
+</div>
+
+
+## Toeplitz Covariance Structure
+
+```{r}
+eig <- eigen(toeplitz(.5 ^ seq(0, (100 - 1))))$values
+df <- data_frame(Eigenvalues = eig,
+                 Index = seq(1, length(eig), 1))
+ggplot(df) +
+  geom_point(aes(x = Index, y = Eigenvalues)) +
+  theme_bw() +
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test")) + 
+  theme(axis.text.x = element_text(size = 12),
+        axis.title.x = element_text(size = 16),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 16),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 16),
+        strip.text = element_text(size = 12))
+```
+
+<div class = "notes">
+The plot of the eigenvalues looks like this.
+</div>
+  
+  
+## Spiked Covariance Structure
+
+<br>
+  
+  $$
+  \boldsymbol{\Sigma} = \begin{bmatrix}
+  20      & 1      & 3      & 3      & 3      & \ldots  & 3\\
+  1       & \ddots & \ddots & 3      & \vdots & \ddots  & \vdots\\
+  3       & \ddots & 20     & 1      & 3      & \ldots  & 3\\
+  3       & 3      & 1      & 5      & 4      & \ldots  & 4 \\
+  3       & \ldots & 3      & 4      & \ddots & \ddots  & \vdots \\
+  \vdots  & \ddots & \vdots & \vdots & \ddots & \ddots  & 4\\
+  3       & \ldots & 3      & 4      & \ldots & 4       & 5
+  \end{bmatrix}.
+  $$
+  
+<div class = "notes">
+This is the structure of the spiked covariance matrix I used.  
+</div>
+  
+## Spiked Covariance Structure
+
+```{r}
+eig <- eigen(cov_maker(keepers = list(c(20, 1, rep(3, 8))),
+                             offs = list(3, nrow = 10, ncol = 100 - 10),
+                             losers = list(c(5, rep(4, 100 - 11)))))$values
+df <- data_frame(Eigenvalues = eig,
+                 Index = seq(1, length(eig), 1))
+ggplot(df) +
+  geom_point(aes(x = Index, y = Eigenvalues)) +
+  theme_bw() +
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test")) + 
+  theme(axis.text.x = element_text(size = 12),
+        axis.title.x = element_text(size = 16),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 16),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 16),
+        strip.text = element_text(size = 12))
+```
+
+<div class = "notes">
+The plot of the eigenvalues looks like this.
+</div>
+
+
 # Results
 
 # Two Populations
@@ -352,7 +426,15 @@ ggplot(data = filter(powertoe,
                      ReducedDimension %in% c(5, 100))) +
   geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test), size = 1.5) +
   theme_bw() +
-  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test"))
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test")) + 
+  theme(axis.text.x = element_text(size = 12),
+        axis.title.x = element_text(size = 16),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 16),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 16),
+        strip.text = element_text(size = 12)) +
+  ylim(c(0, 1))
 ```
 
 ## Toeplitz Covariance Dimension Reduction
@@ -369,7 +451,15 @@ ggplot(data = filter(powertoe,
   geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test), size = 1.5) +
   facet_grid(`Reduction Method` ~ ReducedDimension) +
   theme_bw() +
-  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test"))
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test")) + 
+  theme(axis.text.x = element_text(size = 12),
+        axis.title.x = element_text(size = 16),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 16),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 16),
+        strip.text = element_text(size = 12))+
+  ylim(c(0, 1))
 ```
 
 ## Toeplitz Covariance at a Frobenius Norm of 0.01
@@ -388,7 +478,15 @@ ggplot(data = filter(powertoe,
   geom_line(aes(x = ReducedDimension, y = Power, color = Test), size = 1.5) +
   facet_wrap(~ `Reduction Method`) +
   theme_bw()  +
-  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test"))
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test")) + 
+  theme(axis.text.x = element_text(size = 12),
+        axis.title.x = element_text(size = 16),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 16),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 16),
+        strip.text = element_text(size = 12))+
+  ylim(c(0, 1))
 ```
 
 
@@ -407,7 +505,15 @@ ggplot(data = filter(powerell,
                      ReducedDimension %in% c(5, 100))) +
   geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test), size = 1.5) +
   theme_bw()  +
-  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test"))
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test")) + 
+  theme(axis.text.x = element_text(size = 12),
+        axis.title.x = element_text(size = 16),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 16),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 16),
+        strip.text = element_text(size = 12))+
+  ylim(c(0, 1))
 ```
 
 ## Spiked Covariance Dimension Reduction
@@ -424,7 +530,15 @@ ggplot(data = filter(powerell,
   geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test), size = 1.5) +
   facet_grid(`Reduction Method` ~ ReducedDimension) +
   theme_bw()  +
-  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test"))
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test")) + 
+  theme(axis.text.x = element_text(size = 12),
+        axis.title.x = element_text(size = 16),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 16),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 16),
+        strip.text = element_text(size = 12))+
+  ylim(c(0, 1))
 ```
 
 ## Spiked Covariance at a Frobenius Norm of 0.7
@@ -443,7 +557,15 @@ ggplot(data = filter(powerell,
   geom_line(aes(x = ReducedDimension, y = Power, color = Test), size = 1.5) +
   facet_wrap(~ `Reduction Method`) +
   theme_bw()  +
-  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test"))
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test")) + 
+  theme(axis.text.x = element_text(size = 12),
+        axis.title.x = element_text(size = 16),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 16),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 16),
+        strip.text = element_text(size = 12))+
+  ylim(c(0, 1))
 ```
 
 
@@ -463,7 +585,15 @@ ggplot(data = filter(powertoe,
                      ReducedDimension %in% c(5, 100))) +
   geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test), size = 1.5) +
   theme_bw()  +
-  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test"))
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test")) + 
+  theme(axis.text.x = element_text(size = 12),
+        axis.title.x = element_text(size = 16),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 16),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 16),
+        strip.text = element_text(size = 12))+
+  ylim(c(0, 1))
 ```
 
 ## Toeplitz Covariance Dimension Reduction
@@ -480,10 +610,18 @@ ggplot(data = filter(powertoe,
   geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test), size = 1.5) +
   facet_grid(`Reduction Method` ~ ReducedDimension) +
   theme_bw()  +
-  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test"))
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test")) + 
+  theme(axis.text.x = element_text(size = 12),
+        axis.title.x = element_text(size = 16),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 16),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 16),
+        strip.text = element_text(size = 12))+
+  ylim(c(0, 1))
 ```
 
-## Toeplitz Covariance at a Frobenius Norm of 0.1
+## Toeplitz Covariance at a Frobenius Norm of 0.01
 
 ```{r}
 ggplot(data = filter(powertoe,
@@ -499,7 +637,15 @@ ggplot(data = filter(powertoe,
   geom_line(aes(x = ReducedDimension, y = Power, color = Test), size = 1.5) +
   facet_wrap(~ `Reduction Method`) +
   theme_bw()  +
-  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test"))
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test")) + 
+  theme(axis.text.x = element_text(size = 12),
+        axis.title.x = element_text(size = 16),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 16),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 16),
+        strip.text = element_text(size = 12))+
+  ylim(c(0, 1))
 ```
 
 
@@ -518,7 +664,15 @@ ggplot(data = filter(powerell,
                      ReducedDimension %in% c(5, 100))) +
   geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test), size = 1.5) +
   theme_bw()  +
-  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test"))
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test")) + 
+  theme(axis.text.x = element_text(size = 12),
+        axis.title.x = element_text(size = 16),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 16),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 16),
+        strip.text = element_text(size = 12))+
+  ylim(c(0, 1))
 ```
 
 ## Spiked Covariance Dimension Reduction
@@ -535,7 +689,15 @@ ggplot(data = filter(powerell,
   geom_line(aes(x = `Frobenius Norm`, y = Power, color = Test), size = 1.5) +
   facet_grid(`Reduction Method` ~ ReducedDimension) +
   theme_bw()  +
-  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test"))
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test")) + 
+  theme(axis.text.x = element_text(size = 12),
+        axis.title.x = element_text(size = 16),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 16),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 16),
+        strip.text = element_text(size = 12)) +
+  ylim(c(0, 1))
 ```
 
 ## Spiked Covariance at a Frobenius Norm of 0.9
@@ -559,8 +721,9 @@ ggplot(data = filter(powerell,
         axis.title.x = element_text(size = 16),
         axis.text.y = element_text(size = 12),
         axis.title.y = element_text(size = 16),
-        legend.text = element_text(size = 15),
-        legend.title = element_text(size = 16)) + 
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 16),
+        strip.text = element_text(size = 12)) + 
     ylim(c(0,1))
 ```
 
