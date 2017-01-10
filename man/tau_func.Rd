@@ -7,7 +7,7 @@
 tau_func(ns)
 }
 \arguments{
-\item{n}{sample size}
+\item{ns}{sample size}
 }
 \description{
 Tau for Chaipitak 2013 (helper function)
