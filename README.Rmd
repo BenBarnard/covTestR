@@ -1,6 +1,4 @@
----
-output: github_document
----
+## EqualCov
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/EqualCov)](https://cran.r-project.org/package=EqualCov)
 
