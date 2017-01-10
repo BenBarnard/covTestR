@@ -4,7 +4,6 @@
 #'
 #' @keywords internal
 #'
-#' @export
 #'
 c0_func <- function(n){
   n * ((n ^ 3) + 6 * (n ^ 2) + 21 * n + 18)
@@ -16,7 +15,6 @@ c0_func <- function(n){
 #'
 #' @keywords internal
 #'
-#' @export
 #'
 c1_func <- function(n){
   2 * n * (2 * (n ^ 2) + 6 * n + 9)
@@ -28,7 +26,6 @@ c1_func <- function(n){
 #'
 #' @keywords internal
 #'
-#' @export
 #'
 c2_func <- function(n){
   2 * n * (3 * n + 2)
@@ -40,7 +37,6 @@ c2_func <- function(n){
 #'
 #' @keywords internal
 #'
-#' @export
 #'
 c3_func <- function(n){
   n * (2 * (n ^ 2) + 5 * n + 7)
