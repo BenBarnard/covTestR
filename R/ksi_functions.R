@@ -9,7 +9,6 @@
 #'
 #' @keywords internal
 #'
-#' @export
 #'
 ksihat2i_func <- function(n, p, ahat1, ahat2, ahat3, ahat4){
   (4 / ((n - 1) ^ 2)) * (((ahat2 ^ 2) / (ahat1 ^ 4)) +
