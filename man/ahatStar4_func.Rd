@@ -13,9 +13,7 @@ ahatStar4_func(tau, p, sample_cov, ns)
 
 \item{sample_cov}{sample covariance matrix}
 
-\item{n1}{sample size for group 1}
-
-\item{n2}{sample size for group 2}
+\item{ns}{sample size for group 1}
 }
 \description{
 Estimator for expansion term in Frobenius Norm Chaipitak 2013 (helper funciton)
