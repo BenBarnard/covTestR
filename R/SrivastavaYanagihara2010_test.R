@@ -7,14 +7,14 @@
 #'
 #' @export
 #'
-#' @examples SrivastavaYanagihara2010_test(mcSamples(rep(0, 100), diag(1, 100), 10, 2), group = population)
+#' @examples SrivastavaYanagihara2010_test(iris, group = Species)
 #'
 SrivastavaYanagihara2010_test <- function(data, ...){
   UseMethod("SrivastavaYanagihara2010_test")
 }
 
 #' @export
-#'
+#' @rdname SrivastavaYanagihara2010_test
 #' @importFrom lazyeval expr_find
 #'
 SrivastavaYanagihara2010_test.data.frame <- function(x, group, ...){
@@ -24,7 +24,7 @@ SrivastavaYanagihara2010_test.data.frame <- function(x, group, ...){
 }
 
 #' @export
-#'
+#' @rdname SrivastavaYanagihara2010_test
 #' @importFrom lazyeval expr_find
 #'
 SrivastavaYanagihara2010_test.grouped_df <- function(x, ...){
@@ -34,7 +34,7 @@ SrivastavaYanagihara2010_test.grouped_df <- function(x, ...){
 }
 
 #' @export
-#'
+#' @rdname SrivastavaYanagihara2010_test
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
@@ -77,7 +77,7 @@ SrivastavaYanagihara2010_test.matrix <- function(...){
 }
 
 #' @export
-#'
+#' @rdname SrivastavaYanagihara2010_test
 SrivastavaYanagihara2010_test.default <- function(gammahat_ls, ksihat2_ls){
   gammahatbar <- Reduce(`+`, mapply(function(gammahat_ls, ksihat2_ls){gammahat_ls / ksihat2_ls},
                                     gammahat_ls, ksihat2_ls, SIMPLIFY = FALSE)) /
