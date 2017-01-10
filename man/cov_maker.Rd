@@ -7,7 +7,11 @@
 cov_maker(keepers, offs, losers)
 }
 \arguments{
-\item{losers}{}
+\item{keepers}{keepers}
+
+\item{offs}{offs}
+
+\item{losers}{losers}
 }
 \description{
 Covariance Maker
