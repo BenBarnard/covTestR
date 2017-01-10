@@ -11,7 +11,7 @@ ahat2i_func(n, p, sample_covs)
 
 \item{p}{dimension}
 
-\item{sample_cov}{sample covariance matrix}
+\item{sample_covs}{sample covariance matrix}
 }
 \description{
 Estimator for expansion term in Frobenius Norm Schott 2007 (helper funciton)
