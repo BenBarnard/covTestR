@@ -7,14 +7,14 @@
 #'
 #' @export
 #'
-#' @examples Chaipitak2013_test(mcSamples(rep(0, 100), diag(1, 100), 10, 3), group = population)
+#' @examples Chaipitak2013_test(iris, group = Species)
 #'
 Chaipitak2013_test <- function(data, ...){
   UseMethod("Chaipitak2013_test")
 }
 
 #' @export
-#'
+#' @rdname Chaipitak2013_test
 #' @importFrom lazyeval expr_find
 #'
 Chaipitak2013_test.data.frame <- function(x, group, ...){
@@ -24,7 +24,7 @@ Chaipitak2013_test.data.frame <- function(x, group, ...){
 }
 
 #' @export
-#'
+#' @rdname Chaipitak2013_test
 #' @importFrom lazyeval expr_find
 #'
 Chaipitak2013_test.grouped_df <- function(x, ...){
@@ -34,7 +34,7 @@ Chaipitak2013_test.grouped_df <- function(x, ...){
 }
 
 #' @export
-#'
+#' @rdname Chaipitak2013_test
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_replace
@@ -70,7 +70,7 @@ Chaipitak2013_test.matrix <- function(...){
 }
 
 #' @export
-#'
+#' @rdname Chaipitak2013_test
 Chaipitak2013_test.default <- function(ahat2i, deltahat2){
   comb <- combn(length(ahat2i), 2, simplify = FALSE)
   Reduce(`+`, lapply(comb, function(x){
