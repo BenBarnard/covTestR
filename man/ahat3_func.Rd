@@ -9,17 +9,13 @@ ahat3_func(A, p, ns, ahat2, ahat1)
 \arguments{
 \item{p}{dimension}
 
+\item{ns}{sample size for group 1}
+
 \item{ahat2}{see function}
 
 \item{ahat1}{see function}
 
 \item{A1}{sum of squares for group 1}
-
-\item{A2}{sum of squares for group 2}
-
-\item{n1}{sample size for group 1}
-
-\item{n2}{sample size for group 2}
 }
 \description{
 Estimator for Frobenius norm expansion term (helper function)
