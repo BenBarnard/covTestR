@@ -2,9 +2,21 @@
 % Please edit documentation in R/Srivastava2014_test.R
 \name{Srivastava2014_test}
 \alias{Srivastava2014_test}
+\alias{Srivastava2014_test.data.frame}
+\alias{Srivastava2014_test.default}
+\alias{Srivastava2014_test.grouped_df}
+\alias{Srivastava2014_test.matrix}
 \title{Test of Equality of Covariances given by Srivastava 2014}
 \usage{
 Srivastava2014_test(data, ...)
+
+\method{Srivastava2014_test}{data.frame}(x, group, ...)
+
+\method{Srivastava2014_test}{grouped_df}(x, ...)
+
+\method{Srivastava2014_test}{matrix}(...)
+
+\method{Srivastava2014_test}{default}(ns, p, ahat2, ahat2i, sample_covs)
 }
 \arguments{
 \item{data}{tidy data frame}
@@ -18,7 +30,7 @@ Test Statistic for Srivastava 2014
 Test of Equality of Covariances given by Srivastava 2014
 }
 \examples{
-Srivastava2014_test(mcSamples(c(0,0,0), diag(1, 3), 10, 3), group = population)
+Srivastava2014_test(iris, group = Species)
 
 }
 
