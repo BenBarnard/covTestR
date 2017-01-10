@@ -7,7 +7,9 @@
 lambdatilde(x, y)
 }
 \arguments{
-\item{y}{}
+\item{x}{x}
+
+\item{y}{y}
 }
 \description{
 Noise reduction lambda
