@@ -1,11 +1,8 @@
 ## EqualCov
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/EqualCov)](https://cran.r-project.org/package=EqualCov)
-
 [![Coverage Status](https://img.shields.io/codecov/c/github/BenBarnard/EqualCov/master.svg)](https://codecov.io/github/BenBarnard/EqualCov?branch=master)
-
 [![Travis-CI Build Status](https://travis-ci.org/BenBarnard/EqualCov.svg?branch=master)](https://travis-ci.org/BenBarnard/EqualCov)
-
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/BenBarnard/EqualCov?branch=master&svg=true)](https://ci.appveyor.com/project/BenBarnard/EqualCov)
 
 ```{r, echo = FALSE}
