@@ -32,6 +32,6 @@ Test Statistic for
 Test of Equality of Covariances given by Schott 2007
 }
 \examples{
-Ishii2016_test(mcSamples(rep(0, 100), diag(1, 100), 10, 3), group = population)
+Ishii2016_test(iris, group = Species)
 }
 
