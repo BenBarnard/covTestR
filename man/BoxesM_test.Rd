@@ -3,25 +3,24 @@
 \name{BoxesM_test}
 \alias{BoxesM_test}
 \alias{BoxesM_test.data.frame}
-\alias{BoxesM_test.default}
 \alias{BoxesM_test.grouped_df}
 \alias{BoxesM_test.matrix}
 \title{Test of Equality of Covariances given by Chaipitak 2013}
 \usage{
-BoxesM_test(data, ...)
+BoxesM_test(x, ...)
 
 \method{BoxesM_test}{data.frame}(x, group, ...)
 
 \method{BoxesM_test}{grouped_df}(x, ...)
 
 \method{BoxesM_test}{matrix}(...)
-
-\method{BoxesM_test}{default}(ns, n_overall, sample_covs, overall_cov)
 }
 \arguments{
-\item{data}{tidy data frame}
+\item{x}{tidy data frame}
 
 \item{...}{other}
+
+\item{group}{group}
 }
 \value{
 Test statistic for Chaipitak 2013
