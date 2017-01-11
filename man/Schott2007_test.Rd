@@ -3,25 +3,24 @@
 \name{Schott2007_test}
 \alias{Schott2007_test}
 \alias{Schott2007_test.data.frame}
-\alias{Schott2007_test.default}
 \alias{Schott2007_test.grouped_df}
 \alias{Schott2007_test.matrix}
 \title{Test of Equality of Covariances given by Schott 2007}
 \usage{
-Schott2007_test(data, ...)
+Schott2007_test(x, ...)
 
 \method{Schott2007_test}{data.frame}(x, group, ...)
 
 \method{Schott2007_test}{grouped_df}(x, ...)
 
 \method{Schott2007_test}{matrix}(...)
-
-\method{Schott2007_test}{default}(ns, p, ahat2, ahat2i, sample_covs)
 }
 \arguments{
-\item{data}{tidy data frame}
+\item{x}{tidy data frame}
 
 \item{...}{other}
+
+\item{group}{group}
 }
 \value{
 Test Statistic for Schott 2007
