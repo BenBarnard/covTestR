@@ -1,6 +1,7 @@
 #' Test of Equality of Covariances given by Srivastava and Yanagihara 2010
 #'
-#' @param data tidy data frame
+#' @param x tidy data frame
+#' @param group group
 #' @param ... other
 #'
 #' @return Test statistic for Srivastava and Yanagihara 2010
@@ -9,7 +10,7 @@
 #'
 #' @examples SrivastavaYanagihara2010_test(iris, group = Species)
 #'
-SrivastavaYanagihara2010_test <- function(data, ...){
+SrivastavaYanagihara2010_test <- function(x, ...){
   UseMethod("SrivastavaYanagihara2010_test")
 }
 
@@ -20,7 +21,8 @@ SrivastavaYanagihara2010_test <- function(data, ...){
 SrivastavaYanagihara2010_test.data.frame <- function(x, group, ...){
     dataDftoMatrix(data = x,
                    group = expr_find(group),
-                   test = expr_find(SrivastavaYanagihara2010_test.matrix))
+                   method = expr_find(SrivastavaYanagihara2010_test.matrix),
+                   .dots = lazy_dots(...))
 }
 
 #' @export
@@ -39,6 +41,7 @@ SrivastavaYanagihara2010_test.grouped_df <- function(x, ...){
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_replace
+#' @importFrom stats cov
 #'
 SrivastavaYanagihara2010_test.matrix <- function(...){
   ls <- lazy_dots(...)
@@ -73,12 +76,17 @@ SrivastavaYanagihara2010_test.matrix <- function(...){
 
   gammahat_ls <- mapply(gammahati_func, ahat2i, ahat1i, SIMPLIFY = FALSE)
 
-  SrivastavaYanagihara2010_test.default(gammahat_ls, ksihat2_ls)
+  SrivastavaYanagihara2010(gammahat_ls, ksihat2_ls)
 }
 
-#' @export
-#' @rdname SrivastavaYanagihara2010_test
-SrivastavaYanagihara2010_test.default <- function(gammahat_ls, ksihat2_ls){
+
+
+#' Hidden Test
+#'
+#' @param gammahat_ls gamma hat
+#' @param ksihat2_ls ksi hat squared
+#'
+SrivastavaYanagihara2010 <- function(gammahat_ls, ksihat2_ls){
   gammahatbar <- Reduce(`+`, mapply(function(gammahat_ls, ksihat2_ls){gammahat_ls / ksihat2_ls},
                                     gammahat_ls, ksihat2_ls, SIMPLIFY = FALSE)) /
     Reduce(`+`, lapply(ksihat2_ls, function(x){1 / x}))
