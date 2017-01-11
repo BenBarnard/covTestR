@@ -1,6 +1,7 @@
 #' Test of Equality of Covariances given by Chaipitak 2013
 #'
-#' @param data tidy data frame
+#' @param x tidy data frame
+#' @param group group
 #' @param ... other
 #'
 #' @return Test statistic for Chaipitak 2013
@@ -9,7 +10,7 @@
 #'
 #' @examples Chaipitak2013_test(iris, group = Species)
 #'
-Chaipitak2013_test <- function(data, ...){
+Chaipitak2013_test <- function(x, ...){
   UseMethod("Chaipitak2013_test")
 }
 
@@ -20,7 +21,8 @@ Chaipitak2013_test <- function(data, ...){
 Chaipitak2013_test.data.frame <- function(x, group, ...){
   dataDftoMatrix(data = x,
                  group = expr_find(group),
-                 test = expr_find(Chaipitak2013_test.matrix))
+                 method = expr_find(Chaipitak2013_test.matrix),
+                 .dots = lazy_dots(...))
 }
 
 #' @export
@@ -39,6 +41,7 @@ Chaipitak2013_test.grouped_df <- function(x, ...){
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_replace
 #' @importFrom stringr str_detect
+#' @importFrom stats cov
 #'
 Chaipitak2013_test.matrix <- function(...){
   ls <- lazy_dots(...)
@@ -66,12 +69,16 @@ Chaipitak2013_test.matrix <- function(...){
     ahatStar4 <- ahatStar4_func(tau, p[[1]], overall_cov, ns)
     deltahat2 <- deltahat2_func(ahatStar4, p[[1]], ahat2, ns)
 
-  Chaipitak2013_test.default(ahat2i, deltahat2)
+  Chaipitak2013(ahat2i, deltahat2)
 }
 
-#' @export
-#' @rdname Chaipitak2013_test
-Chaipitak2013_test.default <- function(ahat2i, deltahat2){
+
+#' Hidden Test
+#'
+#' @param ahat2i a hat squared i
+#' @param deltahat2 delta hat squared
+#'
+Chaipitak2013 <- function(ahat2i, deltahat2){
   comb <- combn(length(ahat2i), 2, simplify = FALSE)
   Reduce(`+`, lapply(comb, function(x){
     (max(sapply(ahat2i[x], function(x){x})) / min(sapply(ahat2i[x], function(x){x})) - 1) ^ 2 / deltahat2
