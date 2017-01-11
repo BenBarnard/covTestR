@@ -1,6 +1,7 @@
 #' Test of Equality of Covariances given by Chaipitak 2013
 #'
-#' @param data tidy data frame
+#' @param x tidy data frame
+#' @param group group
 #' @param ... other
 #'
 #' @return Test statistic for Chaipitak 2013
@@ -9,7 +10,7 @@
 #'
 #' @examples BoxesM_test(iris, group = Species)
 #'
-BoxesM_test <- function(data, ...){
+BoxesM_test <- function(x, ...){
   UseMethod("BoxesM_test")
 }
 
@@ -20,7 +21,8 @@ BoxesM_test <- function(data, ...){
 BoxesM_test.data.frame <- function(x, group, ...){
   dataDftoMatrix(data = x,
                  group = expr_find(group),
-                 test = expr_find(BoxesM_test.matrix))
+                 method = expr_find(BoxesM_test.matrix),
+                 .dots = lazy_dots(...))
 }
 
 #' @export
@@ -39,6 +41,7 @@ BoxesM_test.grouped_df <- function(x, ...){
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_replace
 #' @importFrom stringr str_detect
+#' @importFrom stats cov
 #'
 BoxesM_test.matrix <- function(...){
   ls <- lazy_dots(...)
@@ -57,11 +60,17 @@ BoxesM_test.matrix <- function(...){
 
   overall_cov <- overall_cov_func(A_ls, ns)
 
-  BoxesM_test.default(ns, n_overall, sample_covs, overall_cov)
+  BoxesM(ns, n_overall, sample_covs, overall_cov)
 }
 
-#' @export
-#' @rdname BoxesM_test
-BoxesM_test.default <- function(ns, n_overall, sample_covs, overall_cov){
+
+#' Hidden Test
+#'
+#' @param ns ns
+#' @param n_overall n overall
+#' @param sample_covs sample covs
+#' @param overall_cov overall cov
+#'
+BoxesM <- function(ns, n_overall, sample_covs, overall_cov){
   n_overall * log(det(overall_cov)) - Reduce(`+`, mapply(function(x, y){x * log(det(y))}, ns, sample_covs))
 }
