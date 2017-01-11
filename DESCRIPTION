@@ -15,7 +15,5 @@ Suggests: knitr,
 Depends: lazyeval,
     stringr,
     plyr,
-    reshape2,
-    MASS,
     dplyr
 VignetteBuilder: knitr
