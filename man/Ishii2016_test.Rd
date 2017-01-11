@@ -3,25 +3,22 @@
 \name{Ishii2016_test}
 \alias{Ishii2016_test}
 \alias{Ishii2016_test.data.frame}
-\alias{Ishii2016_test.default}
 \alias{Ishii2016_test.grouped_df}
 \alias{Ishii2016_test.matrix}
 \title{Test of Equality of Covariances given by Schott 2007}
 \usage{
-Ishii2016_test(data, ...)
+Ishii2016_test(x, ...)
 
 \method{Ishii2016_test}{data.frame}(x, group, ...)
 
 \method{Ishii2016_test}{grouped_df}(x, ...)
 
 \method{Ishii2016_test}{matrix}(...)
-
-\method{Ishii2016_test}{default}(lambdatildes, htilde, ki)
 }
 \arguments{
-\item{...}{other}
-
 \item{x}{data}
+
+\item{...}{other}
 
 \item{group}{gropuing variable}
 }
