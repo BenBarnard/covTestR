@@ -3,25 +3,24 @@
 \name{Srivastava2014_test}
 \alias{Srivastava2014_test}
 \alias{Srivastava2014_test.data.frame}
-\alias{Srivastava2014_test.default}
 \alias{Srivastava2014_test.grouped_df}
 \alias{Srivastava2014_test.matrix}
 \title{Test of Equality of Covariances given by Srivastava 2014}
 \usage{
-Srivastava2014_test(data, ...)
+Srivastava2014_test(x, ...)
 
 \method{Srivastava2014_test}{data.frame}(x, group, ...)
 
 \method{Srivastava2014_test}{grouped_df}(x, ...)
 
 \method{Srivastava2014_test}{matrix}(...)
-
-\method{Srivastava2014_test}{default}(ns, p, ahat2, ahat2i, sample_covs)
 }
 \arguments{
-\item{data}{tidy data frame}
+\item{x}{tidy data frame}
 
 \item{...}{other}
+
+\item{group}{group}
 }
 \value{
 Test Statistic for Srivastava 2014
