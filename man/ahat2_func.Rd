@@ -7,11 +7,11 @@
 ahat2_func(ns, overall_cov, p)
 }
 \arguments{
+\item{ns}{sample size}
+
+\item{overall_cov}{sample covariance matrix}
+
 \item{p}{dimension}
-
-\item{n}{sample size}
-
-\item{sample_cov}{sample covariance matrix}
 }
 \description{
 Estimator for expansion term in Frobenius Norm Schott 2007 (helper funciton)

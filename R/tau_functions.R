@@ -1,10 +1,9 @@
 #' Tau for Chaipitak 2013 (helper function)
 #'
-#' @param n sample size
+#' @param ns sample size
 #'
 #' @keywords internal
 #'
-#' @export
 #'
 tau_func <- function(ns){
   n <- Reduce(`+`, lapply(ns, function(x){x - 1}))

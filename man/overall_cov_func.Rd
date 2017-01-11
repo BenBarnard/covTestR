@@ -7,13 +7,9 @@
 overall_cov_func(A_ls, ns)
 }
 \arguments{
-\item{A1}{sum of squares for group 1}
+\item{A_ls}{sum of squares for group 1}
 
-\item{A2}{sum of squares for group 2}
-
-\item{n1}{sample size for group 1}
-
-\item{n2}{sample size for group 2}
+\item{ns}{sample size for group 1}
 }
 \description{
 Overall Covariance Matirx (helper function)

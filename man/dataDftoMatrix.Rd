@@ -8,6 +8,14 @@ dataDftoMatrix(data, group, method, ..., .dots)
 }
 \arguments{
 \item{data}{not a tidy dataframe}
+
+\item{group}{group}
+
+\item{method}{method}
+
+\item{...}{other options}
+
+\item{.dots}{other options}
 }
 \description{
 Turn no a Tidy data frame into data matrix (helper function)

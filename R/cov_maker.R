@@ -1,11 +1,8 @@
 #' Covariance Maker
 #'
-#' @param keepers
-#' @param offs
-#' @param losers
-#'
-#' @return
-#' @export
+#' @param keepers keepers
+#' @param offs offs
+#' @param losers losers
 #'
 #' @examples cov_maker(keepers = list(c(20, 1, rep(5, 8))),
 #'                     offs = list(.1, nrow = 10, ncol = 90),

@@ -2,9 +2,21 @@
 % Please edit documentation in R/BoxesM_test.R
 \name{BoxesM_test}
 \alias{BoxesM_test}
+\alias{BoxesM_test.data.frame}
+\alias{BoxesM_test.default}
+\alias{BoxesM_test.grouped_df}
+\alias{BoxesM_test.matrix}
 \title{Test of Equality of Covariances given by Chaipitak 2013}
 \usage{
 BoxesM_test(data, ...)
+
+\method{BoxesM_test}{data.frame}(x, group, ...)
+
+\method{BoxesM_test}{grouped_df}(x, ...)
+
+\method{BoxesM_test}{matrix}(...)
+
+\method{BoxesM_test}{default}(ns, n_overall, sample_covs, overall_cov)
 }
 \arguments{
 \item{data}{tidy data frame}
@@ -18,7 +30,7 @@ Test statistic for Chaipitak 2013
 Test of Equality of Covariances given by Chaipitak 2013
 }
 \examples{
-BoxesM_test(mcSamples(rep(0, 10), diag(1, 10), 100, 3), group = population)
+BoxesM_test(iris, group = Species)
 
 }
 

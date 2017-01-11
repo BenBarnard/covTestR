@@ -1,13 +1,10 @@
 #' Overall Covariance Matirx (helper function)
 #'
-#' @param A1 sum of squares for group 1
-#' @param A2 sum of squares for group 2
-#' @param n1 sample size for group 1
-#' @param n2 sample size for group 2
+#' @param A_ls sum of squares for group 1
+#' @param ns sample size for group 1
 #'
 #' @keywords internal
 #'
-#' @export
 #'
 overall_cov_func <- function(A_ls, ns){
   Reduce(`+`, A_ls) / Reduce(`+`, lapply(ns, function(x){x - 1}))
@@ -19,7 +16,6 @@ overall_cov_func <- function(A_ls, ns){
 #'
 #' @keywords internal
 #'
-#' @export
 #'
 A_func <- function(matrix){
   cov(matrix) * (nrow(matrix) - 1)
@@ -31,7 +27,6 @@ A_func <- function(matrix){
 #'
 #' @keywords internal
 #'
-#' @export
 #'
 Di_func <- function(matrix){
   diag(matrix %*% t(matrix))

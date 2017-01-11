@@ -7,14 +7,14 @@
 #'
 #' @export
 #'
-#' @examples BoxesM_test(mcSamples(rep(0, 10), diag(1, 10), 100, 3), group = population)
+#' @examples BoxesM_test(iris, group = Species)
 #'
 BoxesM_test <- function(data, ...){
   UseMethod("BoxesM_test")
 }
 
 #' @export
-#'
+#' @rdname BoxesM_test
 #' @importFrom lazyeval expr_find
 #'
 BoxesM_test.data.frame <- function(x, group, ...){
@@ -24,7 +24,7 @@ BoxesM_test.data.frame <- function(x, group, ...){
 }
 
 #' @export
-#'
+#' @rdname BoxesM_test
 #' @importFrom lazyeval expr_find
 #'
 BoxesM_test.grouped_df <- function(x, ...){
@@ -34,7 +34,7 @@ BoxesM_test.grouped_df <- function(x, ...){
 }
 
 #' @export
-#'
+#' @rdname BoxesM_test
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_replace
@@ -61,7 +61,7 @@ BoxesM_test.matrix <- function(...){
 }
 
 #' @export
-#'
+#' @rdname BoxesM_test
 BoxesM_test.default <- function(ns, n_overall, sample_covs, overall_cov){
   n_overall * log(det(overall_cov)) - Reduce(`+`, mapply(function(x, y){x * log(det(y))}, ns, sample_covs))
 }

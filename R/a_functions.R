@@ -2,11 +2,10 @@
 #'
 #' @param n sample size
 #' @param p dimension
-#' @param sample_cov sample covariance matrix
+#' @param sample_covs sample covariance matrix
 #'
 #' @keywords internal
 #'
-#' @export
 #'
 ahat2i_func <- function(n, p, sample_covs){
   (((n - 1) ^ 2) / (p * (n - 2) * (n + 1))) *
@@ -15,13 +14,12 @@ ahat2i_func <- function(n, p, sample_covs){
 
 #' Estimator for expansion term in Frobenius Norm Schott 2007 (helper funciton)
 #'
-#' @param n sample size
+#' @param ns sample size
 #' @param p dimension
-#' @param sample_cov sample covariance matrix
+#' @param overall_cov sample covariance matrix
 #'
 #' @keywords internal
 #'
-#' @export
 #'
 ahat2_func <- function(ns, overall_cov, p){
   nall <- Reduce(`+`, lapply(ns, function(x){x - 1}))
@@ -36,7 +34,6 @@ ahat2_func <- function(ns, overall_cov, p){
 #'
 #' @keywords internal
 #'
-#' @export
 #'
 ahat1_func <- ahat1i_func <- function(p, sample_cov){
   (1 / p) * tr(sample_cov)
@@ -48,13 +45,12 @@ ahat1_func <- ahat1i_func <- function(p, sample_cov){
 #' @param tau see function
 #' @param p dimension
 #' @param sample_cov sample covariance matrix
-#' @param n1 sample size for group 1
-#' @param n2 sample size for group 2
+#' @param ns sample size for group 1
+#'
 #'
 #'
 #' @keywords internal
 #'
-#' @export
 #'
 ahatStar4_func <- function(tau, p, sample_cov, ns){
   n <- Reduce(`+`, lapply(ns, function(x){x - 1}))
@@ -72,17 +68,14 @@ ahatStar4_func <- function(tau, p, sample_cov, ns){
 
 #' Estimator for frobenius norm expansion term Srivastava 2007
 #'
-#' @param A1 sum of squares for group 1
-#' @param A2 sum of squares for group 2
+#' @param A sum of squares for group 1
 #' @param p dimension
-#' @param n1 sample size for group 1
-#' @param n2 sample size for group 2
+#' @param ns sample size for group 1
 #' @param ahat2 see function
 #' @param ahat1 see function
 #'
 #' @keywords internal
 #'
-#' @export
 #'
 ahat4_func <- function(A, p, ns, ahat2, ahat1){
   nss <- Reduce(`+`, lapply(ns, function(x){x - 1}))
@@ -98,16 +91,13 @@ ahat4_func <- function(A, p, ns, ahat2, ahat1){
 #' Estimator for Frobenius norm expansion term (helper function)
 #'
 #' @param A1 sum of squares for group 1
-#' @param A2 sum of squares for group 2
 #' @param p dimension
-#' @param n1 sample size for group 1
-#' @param n2 sample size for group 2
+#' @param ns sample size for group 1
 #' @param ahat2 see function
 #' @param ahat1 see function
 #'
 #' @keywords internal
 #'
-#' @export
 #'
 ahat3_func <- function(A, p, ns, ahat2, ahat1){
   n <- Reduce(`+`, lapply(ns, function(x){x - 1}))
@@ -121,14 +111,12 @@ ahat3_func <- function(A, p, ns, ahat2, ahat1){
 #' Estimator for frobenius norm expansion term Srivastava 2014 (helper function)
 #'
 #' @param n sample size for groups
-#' @param sample_covs covariance matrices for groups
-#' @param see function
+#' @param p function
 #' @param A sum of squares
-#' @param overall_n overall sample size
+#' @param D overall sample size
 #'
 #' @keywords internal
 #'
-#' @export
 #'
 ahat2iSrivastava2014_func <- function(n, p, D, A){
   ((n - 2) * (n - 1) * tr(A %*% A) -
@@ -139,14 +127,11 @@ ahat2iSrivastava2014_func <- function(n, p, D, A){
 
 #' Estimator for frobenius norm expansion term Srivastava 2014 (helper function)
 #'
-#' @param ahat21 see function
-#' @param ahat22 see funciton
-#' @param n1 sample size group 1
-#' @param n2 sample size group 2
+#' @param ahat2i see function
+#' @param n sample size group 1
 #'
 #' @keywords internal
 #'
-#' @export
 #'
 ahat2Srivastava2014_func <- function(ahat2i, n){
   Reduce(`+`, mapply(function(n, ahat2i){(n - 1) * ahat2i}, n, ahat2i, SIMPLIFY = FALSE)) /

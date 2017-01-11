@@ -1,9 +1,8 @@
 #' Noise reduction lambda
 #'
-#' @param x
-#' @param y
+#' @param x x
+#' @param y y
 #'
-#' @export
 #'
 lambdatilde <- function(x, y){
   lambdaest <- sapply(1:length(x), function(z){

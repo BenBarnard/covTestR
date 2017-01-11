@@ -7,14 +7,14 @@
 #'
 #' @export
 #'
-#' @examples Srivastava2007_test(mcSamples(rep(0, 100), diag(1, 100), 10, 3), group = population)
+#' @examples Srivastava2007_test(iris, group = Species)
 #'
 Srivastava2007_test <- function(data, ...){
   UseMethod("Srivastava2007_test")
 }
 
 #' @export
-#'
+#' @rdname Srivastava2007_test
 #' @importFrom lazyeval expr_find
 #'
 Srivastava2007_test.data.frame <- function(x, group, ...){
@@ -24,7 +24,7 @@ Srivastava2007_test.data.frame <- function(x, group, ...){
 }
 
 #' @export
-#'
+#' @rdname Srivastava2007_test
 #' @importFrom lazyeval expr_find
 #'
 Srivastava2007_test.grouped_df <- function(x, ...){
@@ -34,7 +34,7 @@ Srivastava2007_test.grouped_df <- function(x, ...){
 }
 
 #' @export
-#'
+#' @rdname Srivastava2007_test
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
@@ -73,7 +73,7 @@ Srivastava2007_test.matrix <- function(...){
 }
 
 #' @export
-#'
+#' @rdname Srivastava2007_test
 Srivastava2007_test.default <- function(ahat2i, etahat2i){
   ahatbar <- Reduce(`+`, mapply(function(ahat2i, etahat2i){ahat2i / etahat2i},
                                 ahat2i, etahat2i, SIMPLIFY = FALSE)) /

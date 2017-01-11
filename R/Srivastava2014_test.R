@@ -6,14 +6,14 @@
 #' @return Test Statistic for Srivastava 2014
 #' @export
 #'
-#' @examples Srivastava2014_test(mcSamples(c(0,0,0), diag(1, 3), 10, 3), group = population)
+#' @examples Srivastava2014_test(iris, group = Species)
 #'
 Srivastava2014_test <- function(data, ...) {
   UseMethod("Srivastava2014_test")
 }
 
 #' @export
-#'
+#' @rdname Srivastava2014_test
 #' @importFrom lazyeval expr_find
 #'
 Srivastava2014_test.data.frame <- function(x, group, ...){
@@ -23,7 +23,7 @@ Srivastava2014_test.data.frame <- function(x, group, ...){
 }
 
 #' @export
-#'
+#' @rdname Srivastava2014_test
 #' @importFrom lazyeval expr_find
 #'
 Srivastava2014_test.grouped_df <- function(x, ...){
@@ -33,7 +33,7 @@ Srivastava2014_test.grouped_df <- function(x, ...){
 }
 
 #' @export
-#'
+#' @rdname Srivastava2014_test
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
@@ -68,7 +68,7 @@ Srivastava2014_test.matrix<- function(...){
 }
 
 #' @export
-#'
+#' @rdname Srivastava2014_test
 Srivastava2014_test.default <- function(ns, p, ahat2, ahat2i, sample_covs){
   comb <- combn(length(ns), 2, simplify = FALSE)
   theta <- 4 * (ahat2 ^ 2) * (Reduce(`+`, lapply(comb, function(x){

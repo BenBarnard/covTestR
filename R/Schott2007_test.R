@@ -6,14 +6,14 @@
 #' @return Test Statistic for Schott 2007
 #' @export
 #'
-#' @examples Schott2007_test(mcSamples(rep(0, 100), diag(1, 100), 10, 3), group = population)
+#' @examples Schott2007_test(iris, group = Species)
 #'
 Schott2007_test <- function(data, ...) {
   UseMethod("Schott2007_test")
 }
 
 #' @export
-#'
+#' @rdname Schott2007_test
 #' @importFrom lazyeval expr_find
 #'
 Schott2007_test.data.frame <- function(x, group, ...){
@@ -23,7 +23,7 @@ Schott2007_test.data.frame <- function(x, group, ...){
 }
 
 #' @export
-#'
+#' @rdname Schott2007_test
 #' @importFrom lazyeval expr_find
 #'
 Schott2007_test.grouped_df <- function(x, ...){
@@ -33,7 +33,7 @@ Schott2007_test.grouped_df <- function(x, ...){
 }
 
 #' @export
-#'
+#' @rdname Schott2007_test
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
@@ -67,7 +67,7 @@ Schott2007_test.matrix<- function(...){
 }
 
 #' @export
-#'
+#' @rdname Schott2007_test
 Schott2007_test.default <- function(ns, p, ahat2, ahat2i, sample_covs){
   comb <- combn(length(ns), 2, simplify = FALSE)
   theta <- 4 * (ahat2 ^ 2) * (Reduce(`+`, lapply(comb, function(x){

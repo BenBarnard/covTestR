@@ -2,9 +2,21 @@
 % Please edit documentation in R/Schott2007_test.R
 \name{Schott2007_test}
 \alias{Schott2007_test}
+\alias{Schott2007_test.data.frame}
+\alias{Schott2007_test.default}
+\alias{Schott2007_test.grouped_df}
+\alias{Schott2007_test.matrix}
 \title{Test of Equality of Covariances given by Schott 2007}
 \usage{
 Schott2007_test(data, ...)
+
+\method{Schott2007_test}{data.frame}(x, group, ...)
+
+\method{Schott2007_test}{grouped_df}(x, ...)
+
+\method{Schott2007_test}{matrix}(...)
+
+\method{Schott2007_test}{default}(ns, p, ahat2, ahat2i, sample_covs)
 }
 \arguments{
 \item{data}{tidy data frame}
@@ -18,7 +30,7 @@ Test Statistic for Schott 2007
 Test of Equality of Covariances given by Schott 2007
 }
 \examples{
-Schott2007_test(mcSamples(rep(0, 100), diag(1, 100), 10, 3), group = population)
+Schott2007_test(iris, group = Species)
 
 }
 

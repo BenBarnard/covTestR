@@ -2,9 +2,21 @@
 % Please edit documentation in R/SrivastavaYanagihara2010_test.R
 \name{SrivastavaYanagihara2010_test}
 \alias{SrivastavaYanagihara2010_test}
+\alias{SrivastavaYanagihara2010_test.data.frame}
+\alias{SrivastavaYanagihara2010_test.default}
+\alias{SrivastavaYanagihara2010_test.grouped_df}
+\alias{SrivastavaYanagihara2010_test.matrix}
 \title{Test of Equality of Covariances given by Srivastava and Yanagihara 2010}
 \usage{
 SrivastavaYanagihara2010_test(data, ...)
+
+\method{SrivastavaYanagihara2010_test}{data.frame}(x, group, ...)
+
+\method{SrivastavaYanagihara2010_test}{grouped_df}(x, ...)
+
+\method{SrivastavaYanagihara2010_test}{matrix}(...)
+
+\method{SrivastavaYanagihara2010_test}{default}(gammahat_ls, ksihat2_ls)
 }
 \arguments{
 \item{data}{tidy data frame}
@@ -18,7 +30,7 @@ Test statistic for Srivastava and Yanagihara 2010
 Test of Equality of Covariances given by Srivastava and Yanagihara 2010
 }
 \examples{
-SrivastavaYanagihara2010_test(mcSamples(rep(0, 100), diag(1, 100), 10, 2), group = population)
+SrivastavaYanagihara2010_test(iris, group = Species)
 
 }
 

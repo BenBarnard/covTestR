@@ -9,13 +9,11 @@ ahat2iSrivastava2014_func(n, p, D, A)
 \arguments{
 \item{n}{sample size for groups}
 
+\item{p}{function}
+
+\item{D}{overall sample size}
+
 \item{A}{sum of squares}
-
-\item{sample_covs}{covariance matrices for groups}
-
-\item{see}{function}
-
-\item{overall_n}{overall sample size}
 }
 \description{
 Estimator for frobenius norm expansion term Srivastava 2014 (helper function)

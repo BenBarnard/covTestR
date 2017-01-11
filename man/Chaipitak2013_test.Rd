@@ -2,9 +2,21 @@
 % Please edit documentation in R/Chaipitak2013_test.R
 \name{Chaipitak2013_test}
 \alias{Chaipitak2013_test}
+\alias{Chaipitak2013_test.data.frame}
+\alias{Chaipitak2013_test.default}
+\alias{Chaipitak2013_test.grouped_df}
+\alias{Chaipitak2013_test.matrix}
 \title{Test of Equality of Covariances given by Chaipitak 2013}
 \usage{
 Chaipitak2013_test(data, ...)
+
+\method{Chaipitak2013_test}{data.frame}(x, group, ...)
+
+\method{Chaipitak2013_test}{grouped_df}(x, ...)
+
+\method{Chaipitak2013_test}{matrix}(...)
+
+\method{Chaipitak2013_test}{default}(ahat2i, deltahat2)
 }
 \arguments{
 \item{data}{tidy data frame}
@@ -18,7 +30,7 @@ Test statistic for Chaipitak 2013
 Test of Equality of Covariances given by Chaipitak 2013
 }
 \examples{
-Chaipitak2013_test(mcSamples(rep(0, 100), diag(1, 100), 10, 3), group = population)
+Chaipitak2013_test(iris, group = Species)
 
 }
 

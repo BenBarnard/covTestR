@@ -1,12 +1,17 @@
 #' Turn no a Tidy data frame into data matrix (helper function)
 #'
 #' @param data not a tidy dataframe
+#' @param group group
+#' @param method method
+#' @param ...  other options
+#' @param .dots other options
 #'
 #' @importFrom plyr dlply
+#' @importFrom lazyeval lazy_eval
+#' @importFrom lazyeval lazy_dots
 #'
 #' @keywords internal
 #'
-#' @export
 #'
 dataDftoMatrix <- function(data, group, method, ..., .dots){
   do.call(what = paste(method),
@@ -30,7 +35,6 @@ dataDftoMatrix <- function(data, group, method, ..., .dots){
 #'
 #' @keywords internal
 #'
-#' @export
 #'
 Tidy_ <- function(data, group){
   as.matrix(select(data, -eval(group)))
@@ -42,7 +46,6 @@ Tidy_ <- function(data, group){
 #'
 #' @keywords internal
 #'
-#' @export
 #'
 tr <- function(mat){
   sum(diag(mat))

@@ -2,8 +2,6 @@
 #'
 #' @param x data
 #'
-#' @export
-#'
 #' @keywords internal
 frobenius_norm <- function(x){
   x$`Frobenius Norm` <- 0

@@ -6,9 +6,16 @@ Author: Ben Barnard [aut, cre],
     Dean Young [aut]
 Maintainer: Ben Barnard <ben_barnard@baylor.edu>
 Description: Simulations for comparing equality of covariances tests.
-License: MIT + file LICENSE
+License: GPL-2
 LazyData: TRUE
 RoxygenNote: 5.0.1
 Suggests: knitr,
-    rmarkdown
+    rmarkdown,
+    covr
+Depends: lazyeval,
+    stringr,
+    plyr,
+    reshape2,
+    MASS,
+    dplyr
 VignetteBuilder: knitr

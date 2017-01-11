@@ -7,13 +7,9 @@
 ahat2Srivastava2014_func(ahat2i, n)
 }
 \arguments{
-\item{ahat21}{see function}
+\item{ahat2i}{see function}
 
-\item{ahat22}{see funciton}
-
-\item{n1}{sample size group 1}
-
-\item{n2}{sample size group 2}
+\item{n}{sample size group 1}
 }
 \description{
 Estimator for frobenius norm expansion term Srivastava 2014 (helper function)

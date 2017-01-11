@@ -7,7 +7,6 @@
 #'
 #' @keywords internal
 #'
-#' @export
 #'
 deltahat2_func <- function(ahatstar4, p , ahat2, n){
   4 * (((2 * ahatstar4) / (p * (ahat2 ^ 2))) *
