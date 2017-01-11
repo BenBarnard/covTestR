@@ -16,37 +16,28 @@ BoxesM_test <- function(x, ...){
 
 #' @export
 #' @rdname BoxesM_test
-#' @importFrom lazyeval expr_find
-#'
+#' @importFrom dplyr select
 BoxesM_test.data.frame <- function(x, group, ...){
   dataDftoMatrix(data = x,
-                 group = expr_find(group),
-                 method = expr_find(BoxesM_test.matrix),
-                 .dots = lazy_dots(...))
+                 group = lazyeval::expr_find(group),
+                 method = lazyeval::expr_find(BoxesM_test.matrix),
+                 .dots = lazyeval::lazy_dots(...))
 }
 
 #' @export
 #' @rdname BoxesM_test
-#' @importFrom lazyeval expr_find
-#'
 BoxesM_test.grouped_df <- function(x, ...){
   dataDftoMatrix(data = x,
                  group = attributes(x)$vars[[1]],
-                 test = expr_find(BoxesM_test.matrix))
+                 test = lazyeval::expr_find(BoxesM_test.matrix))
 }
 
 #' @export
 #' @rdname BoxesM_test
-#' @importFrom lazyeval lazy_dots
-#' @importFrom lazyeval lazy_eval
-#' @importFrom stringr str_replace
-#' @importFrom stringr str_detect
-#' @importFrom stats cov
-#'
 BoxesM_test.matrix <- function(...){
-  ls <- lazy_dots(...)
-  matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
-  names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
+  ls <- lazyeval::lazy_dots(...)
+  matrix_ls <- lazyeval::lazy_eval(ls[stringr::str_detect(names(ls), "x.")])
+  names(matrix_ls) <- stringr::str_replace(names(matrix_ls), "x.", "")
 
   ns <- lapply(matrix_ls, function(matrix){
     nrow(matrix)
@@ -56,7 +47,7 @@ BoxesM_test.matrix <- function(...){
 
   n_overall <- Reduce(`+`, lapply(ns, function(x){x - 1}))
 
-  sample_covs <- lapply(matrix_ls, cov)
+  sample_covs <- lapply(matrix_ls, stats::cov)
 
   overall_cov <- overall_cov_func(A_ls, ns)
 
