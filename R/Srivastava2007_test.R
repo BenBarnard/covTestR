@@ -1,6 +1,7 @@
 #' Test of Equality of Covariances given by Srivastava 2007
 #'
-#' @param data tidy data frame
+#' @param x tidy data frame
+#' @param group group
 #' @param ... other
 #'
 #' @return Test statistic for Srivastava 2007
@@ -9,7 +10,7 @@
 #'
 #' @examples Srivastava2007_test(iris, group = Species)
 #'
-Srivastava2007_test <- function(data, ...){
+Srivastava2007_test <- function(x, ...){
   UseMethod("Srivastava2007_test")
 }
 
@@ -20,7 +21,8 @@ Srivastava2007_test <- function(data, ...){
 Srivastava2007_test.data.frame <- function(x, group, ...){
   dataDftoMatrix(data = x,
                  group = expr_find(group),
-                 test = expr_find(Srivastava2007_test.matrix))
+                 method = expr_find(Srivastava2007_test.matrix),
+                 .dots = lazy_dots(...))
 }
 
 #' @export
@@ -30,7 +32,8 @@ Srivastava2007_test.data.frame <- function(x, group, ...){
 Srivastava2007_test.grouped_df <- function(x, ...){
   dataDftoMatrix(data = x,
                  group = attributes(x)$vars[[1]],
-                 test = expr_find(Srivastava2007_test.matrix))
+                 method = expr_find(Srivastava2007_test.matrix),
+                 .dots = lazy_dots(...))
 }
 
 #' @export
@@ -39,6 +42,7 @@ Srivastava2007_test.grouped_df <- function(x, ...){
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_replace
+#' @importFrom stats cov
 #'
 Srivastava2007_test.matrix <- function(...){
   ls <- lazy_dots(...)
@@ -69,12 +73,16 @@ Srivastava2007_test.matrix <- function(...){
   etahat2i <- mapply(etahat2i_func, ns, p, ahat4, ahat2, SIMPLIFY = FALSE)
 
 
-  Srivastava2007_test.default(ahat2i, etahat2i)
+  Srivastava2007(ahat2i, etahat2i)
 }
 
-#' @export
-#' @rdname Srivastava2007_test
-Srivastava2007_test.default <- function(ahat2i, etahat2i){
+
+#' Hidden Test
+#'
+#' @param ahat2i a hat squared i
+#' @param etahat2i eta hat squared i
+#'
+Srivastava2007 <- function(ahat2i, etahat2i){
   ahatbar <- Reduce(`+`, mapply(function(ahat2i, etahat2i){ahat2i / etahat2i},
                                 ahat2i, etahat2i, SIMPLIFY = FALSE)) /
     Reduce(`+`, lapply(etahat2i, function(x){1 / x}))
