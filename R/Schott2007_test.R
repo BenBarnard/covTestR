@@ -1,6 +1,7 @@
 #' Test of Equality of Covariances given by Schott 2007
 #'
-#' @param data tidy data frame
+#' @param x tidy data frame
+#' @param group group
 #' @param ... other
 #'
 #' @return Test Statistic for Schott 2007
@@ -8,7 +9,7 @@
 #'
 #' @examples Schott2007_test(iris, group = Species)
 #'
-Schott2007_test <- function(data, ...) {
+Schott2007_test <- function(x, ...) {
   UseMethod("Schott2007_test")
 }
 
@@ -19,7 +20,8 @@ Schott2007_test <- function(data, ...) {
 Schott2007_test.data.frame <- function(x, group, ...){
   dataDftoMatrix(data = x,
                  group = expr_find(group),
-                 test = expr_find(Schott2007_test.matrix))
+                 method = expr_find(Schott2007_test.matrix),
+                 .dots = lazy_dots(...))
 }
 
 #' @export
@@ -38,6 +40,7 @@ Schott2007_test.grouped_df <- function(x, ...){
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_replace
+#' @importFrom stats cov
 #'
 Schott2007_test.matrix<- function(...){
   ls <- lazy_dots(...)
@@ -63,12 +66,19 @@ Schott2007_test.matrix<- function(...){
     ahat2 <- ahat2_func(ns, overall_cov, p[[1]])
 
 
-  Schott2007_test.default(ns, p[[1]], ahat2, ahat2i, sample_covs)
+  Schott2007(ns, p[[1]], ahat2, ahat2i, sample_covs)
 }
 
-#' @export
-#' @rdname Schott2007_test
-Schott2007_test.default <- function(ns, p, ahat2, ahat2i, sample_covs){
+#' Hidden Test
+#'
+#' @param ns ns
+#' @param p p
+#' @param ahat2 a hat squared
+#' @param ahat2i a hat squared i
+#' @param sample_covs sample covs
+#'
+#' @importFrom utils combn
+Schott2007 <- function(ns, p, ahat2, ahat2i, sample_covs){
   comb <- combn(length(ns), 2, simplify = FALSE)
   theta <- 4 * (ahat2 ^ 2) * (Reduce(`+`, lapply(comb, function(x){
     ((1 / ns[[x[1]]]) + (1 / ns[[x[2]]])) ^ 2})) +
