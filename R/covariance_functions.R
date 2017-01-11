@@ -14,6 +14,8 @@ overall_cov_func <- function(A_ls, ns){
 #'
 #' @param matrix data matrix
 #'
+#' @importFrom stats cov
+#'
 #' @keywords internal
 #'
 #'
