@@ -68,7 +68,7 @@ In this simulation I am considering high dimensional data. When I say high dimen
 - We wish to test
 
 $$H_0 : \boldsymbol{\Sigma}_1 = \ldots = \boldsymbol{\Sigma}_k.$$
-- Our sample covariance matrices, $\boldsymbol{S}_1, \ldots \boldsymbol{S}_k$, are distributed $n_i \boldsymbol{S}_i \sim W_p(\boldsymbol{\Sigma}_i, n_i)$. 
+- Our sample covariance matrices, $\boldsymbol{S}_1, \ldots \boldsymbol{S}_k$, are distributed $(n_i - 1) \boldsymbol{S}_i \sim W_p(\boldsymbol{\Sigma}_i, n_i - 1)$. 
 
       
 <div class="notes">
@@ -81,7 +81,7 @@ For testing the equality of covariance matrices let sigma be the covariance matr
 
 <br>
 
-$$M = n \log |\boldsymbol{S}| - \sum \limits^k_{i=1} n_i \log |\boldsymbol{S}_i| \xrightarrow{d} \chi^2$$
+$$M = (n - k) \log |\boldsymbol{S}| - \sum \limits^k_{i=1} (n_i - 1) \log |\boldsymbol{S}_i| \xrightarrow{d} \chi^2$$
 
 <br>
 
@@ -125,7 +125,7 @@ Schott proposed a test in 2007 based off the Frobenius norm. This is not Schott'
 
 ## Schott 2007
 
-- The $a_{ji}$ terms are consistent estimators of $\frac{tr\left( \boldsymbol{\Sigma}^j\right)}{p}$.
+- The $a_{ji}$ terms are consistent estimators of $\frac{tr\left( \boldsymbol{\Sigma}_i^j\right)}{p}$.
 
 <br>
 
@@ -251,12 +251,12 @@ The final part of the test consists of the sum of all the other non zero eigenva
 - For samples $\boldsymbol{X}_i$, let 
   $\boldsymbol{X} = \left[ \boldsymbol{X}_1 \vdots \ \ldots \ \vdots \boldsymbol{X}_i\vdots \ \ldots \ \vdots \boldsymbol{X}_k \right]^T$.
 
-- Let $\boldsymbol{M}$ represent the scatter matrix of $\boldsymbol{X}$
+- Let $\widehat{\boldsymbol{M}}$ represent the scatter matrix of $\boldsymbol{X}$
 
-- Let $\boldsymbol{M} = \boldsymbol{UDU}^T$ represent the singular value decompostion of $\boldsymbol{M}$.
+- Let $\widehat{\boldsymbol{M}} = \boldsymbol{UDU}^T$ represent the singular value decompostion of $\widehat{\boldsymbol{M}}$.
 
 - Partition $\boldsymbol{U}$ such that $\boldsymbol{U} = \left[ \boldsymbol{U}_1 \vdots \, \boldsymbol{U}_2 
-  \right]$ with $\boldsymbol{U}_1 \in \mathbb{R}^{p \times q}$, where $q = 1, 2, \dots , p$.
+  \right]$ with $\boldsymbol{U}_1 \in \mathbb{R}^{p \times q}$, where $q = 1, 2, \dots , p.$
 
 - Project $\boldsymbol{X}_i$ to $q$ dimensions by taking $\boldsymbol{X}_{Ri}^T = \boldsymbol{U}_1^T 
   \boldsymbol{X}_i^T$.
@@ -273,8 +273,8 @@ The final part of the test consists of the sum of all the other non zero eigenva
 
 - Let $\widehat{\boldsymbol{M}} = \boldsymbol{UDV}^T$ represent the singular value decompostion of $\widehat{\boldsymbol{M}}$.
 
-- Partition $\boldsymbol{U}$ such that $ \boldsymbol{U} = \left[ \boldsymbol{U}_1 \vdots, \boldsymbol{U}_2 
-  \right] $  with $\boldsymbol{U}_1 \in \mathbb{R}^{p \times q}$.
+- Partition $\boldsymbol{U}$ such that $\boldsymbol{U} = \left[ \boldsymbol{U}_1 \vdots \, \boldsymbol{U}_2 
+  \right]$ with $\boldsymbol{U}_1 \in \mathbb{R}^{p \times q}$, where $q = 1, 2, \dots , p.$
 
 - Project $\boldsymbol{X}_i$ to $q$ dimensions by taking $\boldsymbol{X}_{Ri}^T = \boldsymbol{U}_1^T 
   \boldsymbol{X}_i^T$.
@@ -326,10 +326,12 @@ The power simulation data sets generated for the simulation study have the follo
 
 $$
   \boldsymbol{\Sigma} = \begin{bmatrix}
-  1 & .5 & .25 & .125 \\
-  .5 & 1 & .5 & .25 \\
-  .25 & .5 & 1 & .5 \\
-  .125 & .25 & .5 & 1 
+  1 & .5 & .25 & .125 & \ldots & \approx 0\\
+  .5 & \ddots& \ddots & .25 & \ddots & \vdots\\
+  .25 & \ddots & \ddots& .5 & \ddots & .125\\
+  .125 & .25 & .5 & 1 & \ddots & .25 \\
+  \vdots & \ddots & \ddots & \ddots & \ddots & .5 \\
+  \approx 0 & \ldots & .125 & .25 & .5 & 1
   \end{bmatrix}.
   $$
 <div class = "notes">
@@ -489,6 +491,32 @@ ggplot(data = filter(powertoe,
   ylim(c(0, 1))
 ```
 
+## Toeplitz Covariance at a Frobenius Norm of 0.02
+
+```{r}
+ggplot(data = filter(powertoe,
+                     populations == 2,
+                     originaldimensions == 100,
+                     Samples == 15,
+                     Test %in% c("Modified Likelihood Ratio", "Chaipitak and Chongcharoen 2013", 
+"Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
+                     `Reduction Method` %in% c("Covariance Differences", "Data Scatter"),
+                     `Frobenius Norm` >= 0.02,
+                     `Frobenius Norm` <= 0.021,
+                     ReducedDimension <= 25)) +
+  geom_line(aes(x = ReducedDimension, y = Power, color = Test), size = 1.5) +
+  facet_wrap(~ `Reduction Method`) +
+  theme_bw()  +
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test")) + 
+  theme(axis.text.x = element_text(size = 12),
+        axis.title.x = element_text(size = 16),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 16),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 16),
+        strip.text = element_text(size = 12))+
+  ylim(c(0, 1))
+```
 
 ## Spiked Covariance No Dimension Reduction
 
@@ -551,8 +579,8 @@ ggplot(data = filter(powerell,
                      Test %in% c("Modified Likelihood Ratio", "Chaipitak and Chongcharoen 2013", 
 "Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
                      `Reduction Method` %in% c("Covariance Differences", "Data Scatter"),
-                     `Frobenius Norm` >= 0.75,
-                     `Frobenius Norm` <= 0.85,
+                     `Frobenius Norm` >= 0.65,
+                     `Frobenius Norm` <= 0.75,
                      ReducedDimension <= 25)) +
   geom_line(aes(x = ReducedDimension, y = Power, color = Test), size = 1.5) +
   facet_wrap(~ `Reduction Method`) +
@@ -648,7 +676,32 @@ ggplot(data = filter(powertoe,
   ylim(c(0, 1))
 ```
 
+## Toeplitz Covariance at a Frobenius Norm of 0.04
 
+```{r}
+ggplot(data = filter(powertoe,
+                     populations == 3,
+                     originaldimensions == 100,
+                     Samples == 15,
+                     Test %in% c("Modified Likelihood Ratio", "Chaipitak and Chongcharoen 2013", 
+"Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
+                     `Reduction Method` %in% c("Covariance Differences", "Data Scatter"),
+                     `Frobenius Norm` >= 0.045,
+                     `Frobenius Norm` <= 0.05,
+                     ReducedDimension <= 25)) +
+  geom_line(aes(x = ReducedDimension, y = Power, color = Test), size = 1.5) +
+  facet_wrap(~ `Reduction Method`) +
+  theme_bw()  +
+  scale_colour_manual(values = cbbPalette, guide = guide_legend(title = "Test")) + 
+  theme(axis.text.x = element_text(size = 12),
+        axis.title.x = element_text(size = 16),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 16),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 16),
+        strip.text = element_text(size = 12))+
+  ylim(c(0, 1))
+```
 
 ## Spiked Covariance No Dimension Reduction
 
@@ -700,7 +753,7 @@ ggplot(data = filter(powerell,
   ylim(c(0, 1))
 ```
 
-## Spiked Covariance at a Frobenius Norm of 0.9
+## Spiked Covariance at a Frobenius Norm of 1.9
 
 ```{r}
 ggplot(data = filter(powerell,
@@ -710,8 +763,8 @@ ggplot(data = filter(powerell,
                      Test %in% c("Modified Likelihood Ratio", "Chaipitak and Chongcharoen 2013", 
 "Ishii et al. 2016", "Schott 2007", "Srivastava et al. 2014"),
                      `Reduction Method` %in% c("Covariance Differences", "Data Scatter"),
-                     `Frobenius Norm` >= 0.95,
-                     `Frobenius Norm` <= 1.05,
+                     `Frobenius Norm` >= 1.95,
+                     `Frobenius Norm` <= 2.05,
                      ReducedDimension <= 25)) +
   geom_line(aes(x = ReducedDimension, y = Power, color = Test), size = 1.5) +
   facet_wrap(~ `Reduction Method`) +
@@ -731,7 +784,7 @@ ggplot(data = filter(powerell,
 
 ## Summary
 
-- We saw improvements in power with dimension reduction.
+- We saw some improvements in power with dimension reduction.
 
 - It appears the high dimension tests don't do that well with spiked covariance matrices and dimension reduction method doesn't seem to help that much.
 
@@ -743,20 +796,18 @@ We saw improvements in power with dimension reduction. It appears the high dimen
 
 ## Future Work
 
-- Explore some of the asymptotic properties of the tests little better.
+- Explore further some of the asymptotic properties of the tests.
 
-- Why does the Data Scatter dimension reduction method appear to do better than the covariance differences method.
+- Why does the Data Scatter dimension reduction method appear to do better than the covariance differences method?
 
-- Looking at a another nontrivial k $(k \neq 3)$ group situation.
+- Look at a another nontrivial k $(k \neq 3)$ group situation.
 
-- Look at the Wald test with dimension reduction.
+- See how shrinkage estimators perform with these tests.
 
-- Seeing how shrinkage estimators perform with these tests.
-
-- Looking at one sample high dimensional tests.
+- Look at one sample high dimensional tests.
 
 <div class = "notes">
-Explore some of the asymptotic properties of the tests little better. Why does the Data Scatter dimension reduction method appear to do better than the covariance differences method. Looking at a another nontrivial k $(k \neq 3)$ group situation. Look at the Wald test with dimension reduction. Seeing how shrinkage estimators perform with these tests. Looking at one sample high dimensional tests.
+Explore further some of the asymptotic properties of the tests. Why does the Data Scatter dimension reduction method appear to do better than the covariance differences method? Look at a another nontrivial k $(k \neq 3)$ group situation. See how shrinkage estimators perform with these tests. Looking at one sample high dimensional tests.
 </div>
 
 ## References {.smaller}
