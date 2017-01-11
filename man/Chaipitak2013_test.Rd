@@ -3,25 +3,24 @@
 \name{Chaipitak2013_test}
 \alias{Chaipitak2013_test}
 \alias{Chaipitak2013_test.data.frame}
-\alias{Chaipitak2013_test.default}
 \alias{Chaipitak2013_test.grouped_df}
 \alias{Chaipitak2013_test.matrix}
 \title{Test of Equality of Covariances given by Chaipitak 2013}
 \usage{
-Chaipitak2013_test(data, ...)
+Chaipitak2013_test(x, ...)
 
 \method{Chaipitak2013_test}{data.frame}(x, group, ...)
 
 \method{Chaipitak2013_test}{grouped_df}(x, ...)
 
 \method{Chaipitak2013_test}{matrix}(...)
-
-\method{Chaipitak2013_test}{default}(ahat2i, deltahat2)
 }
 \arguments{
-\item{data}{tidy data frame}
+\item{x}{tidy data frame}
 
 \item{...}{other}
+
+\item{group}{group}
 }
 \value{
 Test statistic for Chaipitak 2013
