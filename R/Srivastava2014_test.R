@@ -1,6 +1,7 @@
 #' Test of Equality of Covariances given by Srivastava 2014
 #'
-#' @param data tidy data frame
+#' @param x tidy data frame
+#' @param group group
 #' @param ... other
 #'
 #' @return Test Statistic for Srivastava 2014
@@ -8,7 +9,7 @@
 #'
 #' @examples Srivastava2014_test(iris, group = Species)
 #'
-Srivastava2014_test <- function(data, ...) {
+Srivastava2014_test <- function(x, ...) {
   UseMethod("Srivastava2014_test")
 }
 
@@ -19,7 +20,8 @@ Srivastava2014_test <- function(data, ...) {
 Srivastava2014_test.data.frame <- function(x, group, ...){
     dataDftoMatrix(data = x,
                    group = expr_find(group),
-                   test = expr_find(Srivastava2014_test.matrix))
+                   method = expr_find(Srivastava2014_test.matrix),
+                   .dots = lazy_dots(...))
 }
 
 #' @export
@@ -38,6 +40,7 @@ Srivastava2014_test.grouped_df <- function(x, ...){
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_replace
+#' @importFrom stats cov
 #'
 Srivastava2014_test.matrix<- function(...){
   ls <- lazy_dots(...)
@@ -64,12 +67,19 @@ Srivastava2014_test.matrix<- function(...){
 
   ahat2 <- ahat2Srivastava2014_func(ahat2i, ns)
 
-  Srivastava2014_test.default(ns, p[[1]], ahat2, ahat2i, sample_covs)
+  Srivastava2014(ns, p[[1]], ahat2, ahat2i, sample_covs)
 }
 
-#' @export
-#' @rdname Srivastava2014_test
-Srivastava2014_test.default <- function(ns, p, ahat2, ahat2i, sample_covs){
+
+#' Hidden Test
+#'
+#' @param ns ns
+#' @param p p
+#' @param ahat2 a hat squared
+#' @param ahat2i a hat squared i
+#' @param sample_covs sample covs
+#'
+Srivastava2014 <- function(ns, p, ahat2, ahat2i, sample_covs){
   comb <- combn(length(ns), 2, simplify = FALSE)
   theta <- 4 * (ahat2 ^ 2) * (Reduce(`+`, lapply(comb, function(x){
     ((1 / ns[[x[1]]]) + (1 / ns[[x[2]]])) ^ 2})) +
