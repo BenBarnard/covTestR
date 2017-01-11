@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples Ishii2016_test(iris, group = Species)
-Ishii2016_test <- function(data, ...) {
+Ishii2016_test <- function(x, ...) {
   UseMethod("Ishii2016_test")
 }
 
@@ -39,6 +39,7 @@ Ishii2016_test.grouped_df <- function(x, ...){
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_replace
+#' @importFrom stats cov
 Ishii2016_test.matrix <- function(...){
   ls <- lazy_dots(...)
   matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
@@ -70,12 +71,17 @@ Ishii2016_test.matrix <- function(...){
     tr(x) - y[[1]]
   }, dualcovs, lambdatildes, SIMPLIFY = FALSE)
 
-  Ishii2016_test.default(lambdatildes, htilde, ki)
+  Ishii2016(lambdatildes, htilde, ki)
 }
 
-#' @export
-#' @rdname Ishii2016_test
-Ishii2016_test.default <- function(lambdatildes, htilde, ki){
+#' Hidden Test
+#'
+#' @param lambdatildes lambda tildes
+#' @param htilde h tilde
+#' @param ki ki
+#'
+#' @importFrom utils combn
+Ishii2016 <- function(lambdatildes, htilde, ki){
   comb <- combn(length(ki), 2, simplify = FALSE)
 
   Reduce(`*`, lapply(comb, function(x){
