@@ -3,25 +3,24 @@
 \name{SrivastavaYanagihara2010_test}
 \alias{SrivastavaYanagihara2010_test}
 \alias{SrivastavaYanagihara2010_test.data.frame}
-\alias{SrivastavaYanagihara2010_test.default}
 \alias{SrivastavaYanagihara2010_test.grouped_df}
 \alias{SrivastavaYanagihara2010_test.matrix}
 \title{Test of Equality of Covariances given by Srivastava and Yanagihara 2010}
 \usage{
-SrivastavaYanagihara2010_test(data, ...)
+SrivastavaYanagihara2010_test(x, ...)
 
 \method{SrivastavaYanagihara2010_test}{data.frame}(x, group, ...)
 
 \method{SrivastavaYanagihara2010_test}{grouped_df}(x, ...)
 
 \method{SrivastavaYanagihara2010_test}{matrix}(...)
-
-\method{SrivastavaYanagihara2010_test}{default}(gammahat_ls, ksihat2_ls)
 }
 \arguments{
-\item{data}{tidy data frame}
+\item{x}{tidy data frame}
 
 \item{...}{other}
+
+\item{group}{group}
 }
 \value{
 Test statistic for Srivastava and Yanagihara 2010
