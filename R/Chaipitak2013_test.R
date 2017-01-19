@@ -32,7 +32,8 @@ Chaipitak2013_test.data.frame <- function(x, group, ...){
 Chaipitak2013_test.grouped_df <- function(x, ...){
   dataDftoMatrix(data = x,
                  group = attributes(x)$vars[[1]],
-                 test = expr_find(Chaipitak2013_test.matrix))
+                 method = expr_find(Chaipitak2013_test.matrix),
+                 .dots = lazy_dots(...))
 }
 
 #' @export
