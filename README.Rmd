@@ -32,5 +32,5 @@ This is a basic example which shows you how to solve a common problem:
 library(tidyverse)
 library(EqualCov)
 
-data <- iris %>% group_by(Species) %>% Chaipitak2013_test
+iris %>% group_by(Species) %>% Chaipitak2013_test
 ```
