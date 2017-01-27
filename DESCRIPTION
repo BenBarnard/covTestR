@@ -4,7 +4,7 @@ Title: Equality of Covariances for High Dimensional Data
 Version: 0.1.0
 Authors@R: c(person("Ben", "Barnard", role = c("aut", "cre"),
                      email = "ben_barnard@baylor.edu"),
-              person("Pat", "Developer", role = "aut", 
+              person("Dean", "Young", role = "aut", 
                      email = "dean_young@baylor.edu"))
 Author: Ben Barnard [aut, cre],
     Dean Young [aut]
