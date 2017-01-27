@@ -1,11 +1,18 @@
 #' Test of Equality of Covariances given by Schott 2007
 #'
-#' @param x tidy data frame
-#' @param group group
-#' @param ... other
+#' Performs 2 and k sample equality of covariance matrix test using Schott 2007
 #'
-#' @return Test Statistic for Schott 2007
+#' @param x data as data.frame, grouped_df, resample or matrix object
+#' @param group group or population variable
+#' @param ... other options passed to functions
+#'
+#' @return Test statistic of the hypothesis test
+#'
 #' @export
+#'
+#' @references Schott, J. R. (2007). A test for the equality of covariance matrices when
+#' the dimension is large relative tothe sample sizes.Computational Statistics & Data Analysis,
+#' 51(12):6535–6542.
 #'
 #' @examples Schott2007_test(iris, group = Species)
 #'
@@ -16,7 +23,7 @@ Schott2007_test <- function(x, ...) {
 #' @export
 #' @rdname Schott2007_test
 #' @importFrom lazyeval expr_find
-#'
+#' @importFrom lazyeval lazy_dots
 Schott2007_test.data.frame <- function(x, group, ...){
   dataDftoMatrix(data = x,
                  group = expr_find(group),
@@ -27,11 +34,23 @@ Schott2007_test.data.frame <- function(x, group, ...){
 #' @export
 #' @rdname Schott2007_test
 #' @importFrom lazyeval expr_find
-#'
+#' @importFrom lazyeval lazy_dots
 Schott2007_test.grouped_df <- function(x, ...){
   dataDftoMatrix(data = x,
                  group = attributes(x)$vars[[1]],
                  test = expr_find(Schott2007_test.matrix))
+}
+
+#' @export
+#' @rdname Schott2007_test
+#' @importFrom lazyeval expr_find
+#' @importFrom lazyeval lazy_dots
+Schott2007_test.resample <- function(x, ...){
+  x <- as.data.frame(x)
+  dataDftoMatrix(data = x,
+                 group = attributes(x)$vars[[1]],
+                 method = expr_find(Schott2007_test.matrix),
+                 .dots = lazy_dots(...))
 }
 
 #' @export
@@ -69,14 +88,7 @@ Schott2007_test.matrix<- function(...){
   Schott2007(ns, p[[1]], ahat2, ahat2i, sample_covs)
 }
 
-#' Hidden Test
-#'
-#' @param ns ns
-#' @param p p
-#' @param ahat2 a hat squared
-#' @param ahat2i a hat squared i
-#' @param sample_covs sample covs
-#'
+#' @keywords internal
 #' @importFrom utils combn
 Schott2007 <- function(ns, p, ahat2, ahat2i, sample_covs){
   comb <- combn(length(ns), 2, simplify = FALSE)

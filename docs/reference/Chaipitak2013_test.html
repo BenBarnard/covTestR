@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Test of Equality of Covariances given by Chaipitak 2013 — Chaipitak2013_test • EqualCov</title>
+<title>Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013 — Chaipitak2013_test • EqualCov</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -51,9 +51,6 @@
         <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -69,11 +66,11 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Test of Equality of Covariances given by Chaipitak 2013</h1>
+    <h1>Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013</h1>
     </div>
 
     
-    <p>Test of Equality of Covariances given by Chaipitak 2013</p>
+    <p>Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013</p>
     
 
     <pre><span class='fu'>Chaipitak2013_test</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -84,22 +81,34 @@
 <span class='co'># S3 method for grouped_df</span>
 <span class='fu'>Chaipitak2013_test</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
+<span class='co'># S3 method for resample</span>
+<span class='fu'>Chaipitak2013_test</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
 <span class='co'># S3 method for matrix</span>
 <span class='fu'>Chaipitak2013_test</span>(<span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>x</dt>
-      <dd>tidy data frame</dd>
+      <dd>data as data.frame, grouped_df, resample or matrix object</dd>
       <dt>...</dt>
-      <dd>other</dd>
+      <dd>other options passed to functions</dd>
       <dt>group</dt>
-      <dd>group</dd>
+      <dd>group or population variable</dd>
     </dl>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Test statistic for Chaipitak 2013</p>
+    <p>Test statistic of the hypothesis test</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>$$T_{Sc} = \sum \limits^{k}_{i &lt; j} \frac{ \left( \hat{a}_{2i_{Sc}} + \hat{a}_{2j_{Sc}} - \frac{2}{p}tr \left( S_i S_j \right) \right) ^ 2}{\theta_{Sc}}$$</p>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality
+of two covariance matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270–277.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -112,6 +121,10 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#references">References</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
@@ -121,7 +134,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Ben Barnard, Pat Developer.</p>
+  <p>Developed by Ben Barnard, Dean Young.</p>
 </div>
 
 <div class="pkgdown">

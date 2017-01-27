@@ -6,7 +6,7 @@
 \alias{Chaipitak2013_test.grouped_df}
 \alias{Chaipitak2013_test.matrix}
 \alias{Chaipitak2013_test.resample}
-\title{Test of Equality of Covariances given by Chaipitak 2013}
+\title{Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013}
 \usage{
 Chaipitak2013_test(x, ...)
 
@@ -19,17 +19,20 @@ Chaipitak2013_test(x, ...)
 \method{Chaipitak2013_test}{matrix}(...)
 }
 \arguments{
-\item{x}{data as}
+\item{x}{data as data.frame, grouped_df, resample or matrix object}
 
-\item{...}{other}
+\item{...}{other options passed to functions}
 
-\item{group}{group}
+\item{group}{group or population variable}
 }
 \value{
-Test statistic the hypothesis test
+Test statistic of the hypothesis test
 }
 \description{
 Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
+}
+\details{
+\deqn{T_{Sc} = \sum \limits^{k}_{i < j} \frac{ \left( \hat{a}_{2i_{Sc}} + \hat{a}_{2j_{Sc}} - \frac{2}{p}tr \left( S_i S_j \right) \right) ^ 2}{\theta_{Sc}}}
 }
 \examples{
 Chaipitak2013_test(iris, group = Species)

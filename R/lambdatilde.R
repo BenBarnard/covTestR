@@ -3,6 +3,8 @@
 #' @param x x
 #' @param y y
 #'
+#' @keywords internal
+#'
 #'
 lambdatilde <- function(x, y){
   lambdaest <- sapply(1:length(x), function(z){

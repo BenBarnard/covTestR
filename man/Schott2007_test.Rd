@@ -5,6 +5,7 @@
 \alias{Schott2007_test.data.frame}
 \alias{Schott2007_test.grouped_df}
 \alias{Schott2007_test.matrix}
+\alias{Schott2007_test.resample}
 \title{Test of Equality of Covariances given by Schott 2007}
 \usage{
 Schott2007_test(x, ...)
@@ -13,23 +14,30 @@ Schott2007_test(x, ...)
 
 \method{Schott2007_test}{grouped_df}(x, ...)
 
+\method{Schott2007_test}{resample}(x, ...)
+
 \method{Schott2007_test}{matrix}(...)
 }
 \arguments{
-\item{x}{tidy data frame}
+\item{x}{data as data.frame, grouped_df, resample or matrix object}
 
-\item{...}{other}
+\item{...}{other options passed to functions}
 
-\item{group}{group}
+\item{group}{group or population variable}
 }
 \value{
-Test Statistic for Schott 2007
+Test statistic of the hypothesis test
 }
 \description{
-Test of Equality of Covariances given by Schott 2007
+Performs 2 and k sample equality of covariance matrix test using Schott 2007
 }
 \examples{
 Schott2007_test(iris, group = Species)
 
+}
+\references{
+Schott, J. R. (2007). A test for the equality of covariance matrices when
+the dimension is large relative tothe sample sizes.Computational Statistics & Data Analysis,
+51(12):6535–6542.
 }
 

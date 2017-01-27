@@ -1,4 +1,4 @@
-#' Test of Equality of Covariances given by Chaipitak 2013
+#' Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013
 #'
 #' Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
 #'
@@ -6,7 +6,9 @@
 #' @param group group or population variable
 #' @param ... other options passed to functions
 #'
-#' @return Test statistic the hypothesis test
+#' @return Test statistic of the hypothesis test
+#'
+#' @details \deqn{T_{Sc} = \sum \limits^{k}_{i < j} \frac{ \left( \hat{a}_{2i_{Sc}} + \hat{a}_{2j_{Sc}} - \frac{2}{p}tr \left( S_i S_j \right) \right) ^ 2}{\theta_{Sc}}}
 #'
 #' @export
 #'

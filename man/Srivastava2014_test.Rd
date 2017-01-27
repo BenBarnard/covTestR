@@ -5,7 +5,8 @@
 \alias{Srivastava2014_test.data.frame}
 \alias{Srivastava2014_test.grouped_df}
 \alias{Srivastava2014_test.matrix}
-\title{Test of Equality of Covariances given by Srivastava 2014}
+\alias{Srivastava2014_test.resample}
+\title{Test of Equality of Covariances given by Srivastava et al. 2014}
 \usage{
 Srivastava2014_test(x, ...)
 
@@ -13,23 +14,29 @@ Srivastava2014_test(x, ...)
 
 \method{Srivastava2014_test}{grouped_df}(x, ...)
 
+\method{Srivastava2014_test}{resample}(x, ...)
+
 \method{Srivastava2014_test}{matrix}(...)
 }
 \arguments{
-\item{x}{tidy data frame}
+\item{x}{data as data.frame, grouped_df, resample or matrix object}
 
-\item{...}{other}
+\item{...}{other options passed to functions}
 
-\item{group}{group}
+\item{group}{group or population variable}
 }
 \value{
-Test Statistic for Srivastava 2014
+Test statistic of the hypothesis test
 }
 \description{
-Test of Equality of Covariances given by Srivastava 2014
+Performs 2 and k sample equality of covariance matrix test using Srivastava et al. 2014
 }
 \examples{
 Srivastava2014_test(iris, group = Species)
 
+}
+\references{
+Srivastava, M. S., Yanagihara, H., and Kubokawa, T. (2014). Tests for covariance
+matrices in high dimensionwith less sample size.Journal of Multivariate Analysis, 130:289–309.
 }
 

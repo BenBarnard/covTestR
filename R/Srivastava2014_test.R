@@ -1,11 +1,17 @@
-#' Test of Equality of Covariances given by Srivastava 2014
+#' Test of Equality of Covariances given by Srivastava et al. 2014
 #'
-#' @param x tidy data frame
-#' @param group group
-#' @param ... other
+#' Performs 2 and k sample equality of covariance matrix test using Srivastava et al. 2014
 #'
-#' @return Test Statistic for Srivastava 2014
+#' @param x data as data.frame, grouped_df, resample or matrix object
+#' @param group group or population variable
+#' @param ... other options passed to functions
+#'
+#' @return Test statistic of the hypothesis test
+#'
 #' @export
+#'
+#' @references Srivastava, M. S., Yanagihara, H., and Kubokawa, T. (2014). Tests for covariance
+#' matrices in high dimensionwith less sample size.Journal of Multivariate Analysis, 130:289–309.
 #'
 #' @examples Srivastava2014_test(iris, group = Species)
 #'
@@ -16,7 +22,7 @@ Srivastava2014_test <- function(x, ...) {
 #' @export
 #' @rdname Srivastava2014_test
 #' @importFrom lazyeval expr_find
-#'
+#' @importFrom lazyeval lazy_dots
 Srivastava2014_test.data.frame <- function(x, group, ...){
     dataDftoMatrix(data = x,
                    group = expr_find(group),
@@ -27,11 +33,23 @@ Srivastava2014_test.data.frame <- function(x, group, ...){
 #' @export
 #' @rdname Srivastava2014_test
 #' @importFrom lazyeval expr_find
-#'
+#' @importFrom lazyeval lazy_dots
 Srivastava2014_test.grouped_df <- function(x, ...){
   dataDftoMatrix(data = x,
                  group = attributes(x)$vars[[1]],
                  test = expr_find(Srivastava2014_test.matrix))
+}
+
+#' @export
+#' @rdname Srivastava2014_test
+#' @importFrom lazyeval expr_find
+#' @importFrom lazyeval lazy_dots
+Srivastava2014_test.resample <- function(x, ...){
+  x <- as.data.frame(x)
+  dataDftoMatrix(data = x,
+                 group = attributes(x)$vars[[1]],
+                 method = expr_find(Srivastava2014_test.matrix),
+                 .dots = lazy_dots(...))
 }
 
 #' @export
@@ -70,15 +88,7 @@ Srivastava2014_test.matrix<- function(...){
   Srivastava2014(ns, p[[1]], ahat2, ahat2i, sample_covs)
 }
 
-
-#' Hidden Test
-#'
-#' @param ns ns
-#' @param p p
-#' @param ahat2 a hat squared
-#' @param ahat2i a hat squared i
-#' @param sample_covs sample covs
-#'
+#' @keywords internal
 Srivastava2014 <- function(ns, p, ahat2, ahat2i, sample_covs){
   comb <- combn(length(ns), 2, simplify = FALSE)
   theta <- 4 * (ahat2 ^ 2) * (Reduce(`+`, lapply(comb, function(x){

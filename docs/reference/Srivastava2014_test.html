@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Test of Equality of Covariances given by Srivastava 2014 — Srivastava2014_test • EqualCov</title>
+<title>Test of Equality of Covariances given by Srivastava et al. 2014 — Srivastava2014_test • EqualCov</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -51,9 +51,6 @@
         <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -69,11 +66,11 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Test of Equality of Covariances given by Srivastava 2014</h1>
+    <h1>Test of Equality of Covariances given by Srivastava et al. 2014</h1>
     </div>
 
     
-    <p>Test of Equality of Covariances given by Srivastava 2014</p>
+    <p>Performs 2 and k sample equality of covariance matrix test using Srivastava et al. 2014</p>
     
 
     <pre><span class='fu'>Srivastava2014_test</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -84,22 +81,30 @@
 <span class='co'># S3 method for grouped_df</span>
 <span class='fu'>Srivastava2014_test</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
+<span class='co'># S3 method for resample</span>
+<span class='fu'>Srivastava2014_test</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
 <span class='co'># S3 method for matrix</span>
 <span class='fu'>Srivastava2014_test</span>(<span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>x</dt>
-      <dd>tidy data frame</dd>
+      <dd>data as data.frame, grouped_df, resample or matrix object</dd>
       <dt>...</dt>
-      <dd>other</dd>
+      <dd>other options passed to functions</dd>
       <dt>group</dt>
-      <dd>group</dd>
+      <dd>group or population variable</dd>
     </dl>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Test Statistic for Srivastava 2014</p>
+    <p>Test statistic of the hypothesis test</p>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Srivastava, M. S., Yanagihara, H., and Kubokawa, T. (2014). Tests for covariance
+matrices in high dimensionwith less sample size.Journal of Multivariate Analysis, 130:289–309.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -112,6 +117,8 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#references">References</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
@@ -121,7 +128,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Ben Barnard, Pat Developer.</p>
+  <p>Developed by Ben Barnard, Dean Young.</p>
 </div>
 
 <div class="pkgdown">

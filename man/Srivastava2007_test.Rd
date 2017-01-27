@@ -5,6 +5,7 @@
 \alias{Srivastava2007_test.data.frame}
 \alias{Srivastava2007_test.grouped_df}
 \alias{Srivastava2007_test.matrix}
+\alias{Srivastava2007_test.resample}
 \title{Test of Equality of Covariances given by Srivastava 2007}
 \usage{
 Srivastava2007_test(x, ...)
@@ -13,23 +14,31 @@ Srivastava2007_test(x, ...)
 
 \method{Srivastava2007_test}{grouped_df}(x, ...)
 
+\method{Srivastava2007_test}{resample}(x, ...)
+
 \method{Srivastava2007_test}{matrix}(...)
 }
 \arguments{
-\item{x}{tidy data frame}
+\item{x}{data as data.frame, grouped_df, resample or matrix object}
 
-\item{...}{other}
+\item{...}{other options passed to functions}
 
-\item{group}{group}
+\item{group}{group or population variable}
 }
 \value{
-Test statistic for Srivastava 2007
+Test statistic of the hypothesis test
 }
 \description{
-Test of Equality of Covariances given by Srivastava 2007
+Performs 2 and k sample equality of covariance matrix test using Srivastava 2007
 }
 \examples{
 Srivastava2007_test(iris, group = Species)
 
+}
+\references{
+Srivastava, M. S. (2007). Testing the equality of two covariance matrices and
+independence of two sub-vectorswith fewer observations than the dimension. InInternational
+Conference on Advances in InterdisciplinaryStistics and Combinatorics, University of North Carolina
+at Greensboro, NC, USA.
 }
 

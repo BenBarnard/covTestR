@@ -14,4 +14,5 @@ lambdatilde(x, y)
 \description{
 Noise reduction lambda
 }
+\keyword{internal}
 
