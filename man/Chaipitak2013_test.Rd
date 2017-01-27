@@ -36,7 +36,7 @@ Chaipitak2013_test(iris, group = Species)
 
 }
 \references{
-Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality
-of two covariance matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270–277.
+Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
+matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.
 }
 

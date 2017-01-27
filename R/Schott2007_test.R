@@ -19,9 +19,8 @@
 #'
 #' @export
 #'
-#' @references Schott, J. R. (2007). A test for the equality of covariance matrices when
-#' the dimension is large relative tothe sample sizes.Computational Statistics & Data Analysis,
-#' 51(12):6535–6542.
+#' @references Schott, J. (2007). A test for the equality of covariance matrices when the dimension
+#' is large relative to the sample sizes. Computational Statistics & Data Analysis, 51(12):6535-6542.
 #'
 #' @examples Schott2007_test(iris, group = Species)
 #'

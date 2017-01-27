@@ -36,7 +36,7 @@ Srivastava2014_test(iris, group = Species)
 
 }
 \references{
-Srivastava, M. S., Yanagihara, H., and Kubokawa, T. (2014). Tests for covariance
-matrices in high dimensionwith less sample size.Journal of Multivariate Analysis, 130:289–309.
+Srivastava, M., Yanagihara, H., and Kubokawa T. (2014). Tests for covariance
+matrices in high dimension with less sample size. Journal of Multivariate Analysis, 130:289-309.
 }
 
