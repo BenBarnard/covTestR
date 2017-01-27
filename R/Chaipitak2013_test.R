@@ -2,9 +2,9 @@
 #'
 #' Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
 #'
-#' @param x data as
-#' @param group group
-#' @param ... other
+#' @param x data as data.frame, grouped_df, resample or matrix object
+#' @param group group or population variable
+#' @param ... other options passed to functions
 #'
 #' @return Test statistic the hypothesis test
 #'
