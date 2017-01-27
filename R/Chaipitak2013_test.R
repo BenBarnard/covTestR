@@ -1,12 +1,17 @@
 #' Test of Equality of Covariances given by Chaipitak 2013
 #'
-#' @param x tidy data frame
+#' Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
+#'
+#' @param x data as
 #' @param group group
 #' @param ... other
 #'
-#' @return Test statistic for Chaipitak 2013
+#' @return Test statistic the hypothesis test
 #'
 #' @export
+#'
+#' @references Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality
+#' of two covariance matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270–277.
 #'
 #' @examples Chaipitak2013_test(iris, group = Species)
 #'
@@ -17,7 +22,7 @@ Chaipitak2013_test <- function(x, ...){
 #' @export
 #' @rdname Chaipitak2013_test
 #' @importFrom lazyeval expr_find
-#'
+#' @importFrom lazyeval lazy_dots
 Chaipitak2013_test.data.frame <- function(x, group, ...){
   dataDftoMatrix(data = x,
                  group = expr_find(group),
@@ -28,8 +33,20 @@ Chaipitak2013_test.data.frame <- function(x, group, ...){
 #' @export
 #' @rdname Chaipitak2013_test
 #' @importFrom lazyeval expr_find
-#'
+#' @importFrom lazyeval lazy_dots
 Chaipitak2013_test.grouped_df <- function(x, ...){
+  dataDftoMatrix(data = x,
+                 group = attributes(x)$vars[[1]],
+                 method = expr_find(Chaipitak2013_test.matrix),
+                 .dots = lazy_dots(...))
+}
+
+#' @export
+#' @rdname Chaipitak2013_test
+#' @importFrom lazyeval expr_find
+#' @importFrom lazyeval lazy_dots
+LD.resample <- function(x, ...){
+  x <- as.data.frame(x)
   dataDftoMatrix(data = x,
                  group = attributes(x)$vars[[1]],
                  method = expr_find(Chaipitak2013_test.matrix),
@@ -74,10 +91,10 @@ Chaipitak2013_test.matrix <- function(...){
 }
 
 
-#' Hidden Test
-#'
+
 #' @param ahat2i a hat squared i
 #' @param deltahat2 delta hat squared
+#' @keywords internal
 #'
 Chaipitak2013 <- function(ahat2i, deltahat2){
   comb <- combn(length(ahat2i), 2, simplify = FALSE)
