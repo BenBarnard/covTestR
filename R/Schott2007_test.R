@@ -6,8 +6,6 @@
 #' @param group group or population variable
 #' @param ... other options passed to functions
 #'
-#' @return Test statistic of the hypothesis test
-#'
 #' @details Consider the test for the equality of covariance matrices with
 #' \deqn{\text{H}_0: \boldsymbol{\Sigma}_1 = \boldsymbol{\Sigma}_2 = \ldots = \boldsymbol{\Sigma}_k}
 #' and
@@ -15,6 +13,9 @@
 #' where \eqn{\boldsymbol{\Sigma_i}} are the population covariance matrix parameters with \eqn{n_i\textbf{S}_i \sim W_k\left( \boldsymbol{\Sigma}_i, n_i \right)}
 #'
 #' \deqn{T_{Sc} = \sum \limits^{k}_{i < j} \frac{ \left( \hat{a}_{2i_{Sc}} + \hat{a}_{2j_{Sc}} - \frac{2}{p}tr \left( S_i S_j \right) \right) ^ 2}{\theta_{Sc}}}
+#'
+#'
+#' @return Test statistic of the hypothesis test
 #'
 #' @export
 #'
