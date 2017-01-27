@@ -45,7 +45,7 @@ Chaipitak2013_test.grouped_df <- function(x, ...){
 #' @rdname Chaipitak2013_test
 #' @importFrom lazyeval expr_find
 #' @importFrom lazyeval lazy_dots
-LD.resample <- function(x, ...){
+Chaipitak2013_test.resample <- function(x, ...){
   x <- as.data.frame(x)
   dataDftoMatrix(data = x,
                  group = attributes(x)$vars[[1]],
@@ -90,12 +90,7 @@ Chaipitak2013_test.matrix <- function(...){
   Chaipitak2013(ahat2i, deltahat2)
 }
 
-
-
-#' @param ahat2i a hat squared i
-#' @param deltahat2 delta hat squared
 #' @keywords internal
-#'
 Chaipitak2013 <- function(ahat2i, deltahat2){
   comb <- combn(length(ahat2i), 2, simplify = FALSE)
   Reduce(`+`, lapply(comb, function(x){
