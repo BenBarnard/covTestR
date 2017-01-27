@@ -31,4 +31,9 @@ Test of Equality of Covariances given by Schott 2007
 \examples{
 Ishii2016_test(iris, group = Species)
 }
+\references{
+Ishii, A., Yata, K., and Aoshima, M. (2016). Asymptotic properties of the first pricipal
+component and equality tests of covariance matrices in high-dimesion, low-sample-size context. Journal
+of Statistical Planning and Inference, 170:186-199.
+}
 
