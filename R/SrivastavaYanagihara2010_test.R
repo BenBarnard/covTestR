@@ -8,6 +8,9 @@
 #'
 #' @export
 #'
+#' @references Srivastava, M. and Yanagihara, H. (2010). Testing the equality of several covariance matrices with
+#' fewer observation that the dimension. Journal of Multivariate Analysis, 101(6):1319-1329.
+#'
 #' @examples SrivastavaYanagihara2010_test(iris, group = Species)
 #'
 SrivastavaYanagihara2010_test <- function(x, ...){
