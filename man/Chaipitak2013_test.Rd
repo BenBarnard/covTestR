@@ -31,9 +31,6 @@ Test statistic of the hypothesis test
 \description{
 Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
 }
-\details{
-\deqn{T_{Sc} = \sum \limits^{k}_{i < j} \frac{ \left( \hat{a}_{2i_{Sc}} + \hat{a}_{2j_{Sc}} - \frac{2}{p}tr \left( S_i S_j \right) \right) ^ 2}{\theta_{Sc}}}
-}
 \examples{
 Chaipitak2013_test(iris, group = Species)
 
@@ -42,5 +39,4 @@ Chaipitak2013_test(iris, group = Species)
 Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality
 of two covariance matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270–277.
 }
-\keyword{internal}
 

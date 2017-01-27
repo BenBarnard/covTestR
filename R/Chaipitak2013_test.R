@@ -6,46 +6,10 @@
 #' @param group group or population variable
 #' @param ... other options passed to functions
 #'
-#' @name Chaipitak2013 Test
-#' @section Usage:
-#' \preformatted{Chaipitak2013_test(x, ...)
-#'
-#' ## S3 method for class 'data.frame'
-#' Chaipitak2013_test(x, group, ...)
-#'
-#' ## S3 method for class 'grouped_df'
-#' Chaipitak2013_test(x, ...)
-#'
-#' ## S3 method for class 'resample'
-#' Chaipitak2013_test(x, ...)
-#'
-#' ## S3 method for class 'matrix'
-#' Chaipitak2013_test(...)}
-#'
 #' @return Test statistic of the hypothesis test
 #'
-#' @details \deqn{T_{Sc} = \sum \limits^{k}_{i < j} \frac{ \left( \hat{a}_{2i_{Sc}} + \hat{a}_{2j_{Sc}} - \frac{2}{p}tr \left( S_i S_j \right) \right) ^ 2}{\theta_{Sc}}}
-#'
-#' @references Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality
-#' of two covariance matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270–277.
-#'
-#' @examples Chaipitak2013_test(iris, group = Species)
-NULL
-
-#' Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013
-#'
-#' Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
-#'
-#' @param x data as data.frame, grouped_df, resample or matrix object
-#' @param group group or population variable
-#' @param ... other options passed to functions
-#'
-#' @return Test statistic of the hypothesis test
-#'
-#' @details \deqn{T_{Sc} = \sum \limits^{k}_{i < j} \frac{ \left( \hat{a}_{2i_{Sc}} + \hat{a}_{2j_{Sc}} - \frac{2}{p}tr \left( S_i S_j \right) \right) ^ 2}{\theta_{Sc}}}
 #'
 #' @export
-#' @keywords internal
 #'
 #' @references Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality
 #' of two covariance matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270–277.

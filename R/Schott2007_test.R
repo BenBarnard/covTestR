@@ -8,6 +8,14 @@
 #'
 #' @return Test statistic of the hypothesis test
 #'
+#' @details Consider the test for the equality of covariance matrices with
+#' \deqn{\text{H}_0: \boldsymbol{\Sigma}_1 = \boldsymbol{\Sigma}_2 = \ldots = \boldsymbol{\Sigma}_k}
+#' and
+#' \deqn{\text{H}_{\text{A}}: \boldsymbol{\Sigma}_1 \neq \boldsymbol{\Sigma}_2 \neq \ldots \neq \boldsymbol{\Sigma}_k,}
+#' where \eqn{\boldsymbol{\Sigma_i}} are the population covariance matrix parameters with \eqn{n_i\textbf{S}_i \sim W_k\left( \boldsymbol{\Sigma}_i, n_i \right)}
+#'
+#' \deqn{T_{Sc} = \sum \limits^{k}_{i < j} \frac{ \left( \hat{a}_{2i_{Sc}} + \hat{a}_{2j_{Sc}} - \frac{2}{p}tr \left( S_i S_j \right) \right) ^ 2}{\theta_{Sc}}}
+#'
 #' @export
 #'
 #' @references Schott, J. R. (2007). A test for the equality of covariance matrices when
