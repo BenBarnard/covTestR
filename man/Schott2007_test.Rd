@@ -36,15 +36,15 @@ Consider the test for the equality of covariance matrices with
 \deqn{\text{H}_0: \boldsymbol{\Sigma}_1 = \boldsymbol{\Sigma}_2 = \ldots = \boldsymbol{\Sigma}_k}
 and
 \deqn{\text{H}_{\text{A}}: \boldsymbol{\Sigma}_1 \neq \boldsymbol{\Sigma}_2 \neq \ldots \neq \boldsymbol{\Sigma}_k,}
-where \eqn{\boldsymbol{\Sigma_i}} are the population covariance matrix parameters with \eqn{n_i\textbf{S}_i \sim W_k\left( \boldsymbol{\Sigma}_i, n_i \right)}.
+where \eqn{\boldsymbol{\Sigma_i}} are the population covariance matrix parameters. The sample covarinance matrix estimators, \eqn{\textbf{S}_1, \textbf{S}_2, \ldots, \textbf{S}_i}, are distributed singular Wishart such that \eqn{n_i\textbf{S}_i \sim W_k\left( \boldsymbol{\Sigma}_i, n_i \right)}.
 Then,
 \deqn{T_{Sc} = \sum \limits^{k}_{i < j} \frac{ \left( \hat{a}_{2i_{Sc}} + \hat{a}_{2j_{Sc}} - \frac{2}{p}tr \left( S_i S_j \right) \right) ^ 2}{\theta_{Sc}}}
 where,
-\deqn{\hat{a}_{2i} = \frac{tr \left( \boldsymbol{V}_i^2 \right) - \frac{1}{n_i}tr \left( \boldsymbol{V}_i \right)^2}{ \left( n_i - 1 \right) \left(n_i + 2 \right)p} \xrightarrow{P} \frac{tr \left( \boldsymbol{\Sigma}_i^2 \right) }{p}}
+\deqn{\hat{a}_{2i_{Sc}} = \frac{tr \left( \boldsymbol{V}_i^2 \right) - \frac{1}{n_i}tr \left( \boldsymbol{V}_i \right)^2}{ \left( n_i - 1 \right) \left(n_i + 2 \right)p} \xrightarrow{P} \frac{tr \left( \boldsymbol{\Sigma}_i^2 \right) }{p}}
 and
-\deqn{\hat{a}_2 = \frac{tr \left( \boldsymbol{V}^2 \right) - \frac{1}{n}tr \left( \boldsymbol{V} \right)^2 }{(n - 1)(n + 2)p} \xrightarrow{P} \frac{tr \left( \boldsymbol{\Sigma}^2 \right) }{p}}.
+\deqn{\hat{a}_{2_{Sc}} = \frac{\sum \limits^k_{i = 1}(n_i -1)\hat{a}_{2i_{Sc}}}{\sum \limits^k_{i = 1}(n_i -1)}.}
 The divisor
-\deqn{\theta = 4 \hat{a}_2^2 \left( \sum \limits_{i < j}^ k \left( \frac{1}{n_i} + \frac{1}{n_j} \right) + (k - 1)(k - 2) \sum \limits_{i = 1}^k n_i^{-2} \right)}
+\deqn{\theta_{Sc} = 4 \hat{a}_{2_{Sc}}^2 \left( \sum \limits_{i < j}^ k \left( \frac{1}{n_i} + \frac{1}{n_j} \right) + (k - 1)(k - 2) \sum \limits_{i = 1}^k n_i^{-2} \right)}
 is a variance term for the numerator.
 }
 \examples{
