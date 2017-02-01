@@ -79,7 +79,42 @@ SrivastavaYanagihara2010_test.matrix <- function(...){
 
   gammahat_ls <- mapply(gammahati_func, ahat2i, ahat1i, SIMPLIFY = FALSE)
 
-  SrivastavaYanagihara2010(gammahat_ls, ksihat2_ls)
+  xmin <- names(matrix_ls[1])
+  xmax <- names(matrix_ls[length(matrix_ls)])
+  xother <- names(matrix_ls[-c(1, length(matrix_ls))])
+
+  data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
+
+  statistic <- SrivastavaYanagihara2010(gammahat_ls, ksihat2_ls)
+  names(statistic) <- "Chi Squared"
+
+  parameter <- length(matrix_ls) - 1
+  names(parameter) <- "df"
+
+  null.value <- 0
+  names(null.value) <- "difference in covariances"
+
+  p.value <- pchisq(statistic, parameter)
+
+  estimate <- sample_covs
+  names(estimate) <- paste0("covariance of ", names(matrix_ls))
+
+  estimate <- if(nrow(estimate[[1]]) > 5){
+    NULL
+  }else{
+    estimate
+  }
+
+  obj <- list(statistic = statistic,
+              parameter = parameter,
+              p.value = p.value,
+              estimate = estimate,
+              null.value = null.value,
+              alternative = "two.sided",
+              method = "Srivastava and Yanagihara 2010 Equality of Covariance Test",
+              data.name = data.name)
+  class(obj) <- "htest"
+  obj
 }
 
 

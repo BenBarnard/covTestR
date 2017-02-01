@@ -88,7 +88,42 @@ Chaipitak2013_test.matrix <- function(...){
     ahatStar4 <- ahatStar4_func(tau, p[[1]], overall_cov, ns)
     deltahat2 <- deltahat2_func(ahatStar4, p[[1]], ahat2, ns)
 
-  Chaipitak2013(ahat2i, deltahat2)
+  xmin <- names(matrix_ls[1])
+  xmax <- names(matrix_ls[length(matrix_ls)])
+  xother <- names(matrix_ls[-c(1, length(matrix_ls))])
+
+  data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
+
+  statistic <- Chaipitak2013(ahat2i, deltahat2)
+  names(statistic) <- "Chi Squared"
+
+  parameter <- length(matrix_ls) - 1
+  names(parameter) <- "df"
+
+  null.value <- 0
+  names(null.value) <- "difference in covariances"
+
+  p.value <- pchisq(statistic, parameter)
+
+  estimate <- sample_covs
+  names(estimate) <- paste0("covariance of ", names(matrix_ls))
+
+  estimate <- if(nrow(estimate[[1]]) > 5){
+    NULL
+  }else{
+    estimate
+  }
+
+  obj <- list(statistic = statistic,
+              parameter = parameter,
+              p.value = p.value,
+              estimate = estimate,
+              null.value = null.value,
+              alternative = "two.sided",
+              method = "Chaipitak and Chongchareon 2013 Equality of Covariance Test",
+              data.name = data.name)
+  class(obj) <- "htest"
+  obj
 }
 
 #' @keywords internal

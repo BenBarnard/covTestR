@@ -80,7 +80,6 @@ Schott2007_test.matrix<- function(...){
   matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
   names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
 
-
     ns <- lapply(matrix_ls, function(matrix){
       nrow(matrix)
     })
@@ -98,8 +97,42 @@ Schott2007_test.matrix<- function(...){
     ahat2i <- mapply(ahat2i_func, ns, p, sample_covs, SIMPLIFY = FALSE)
     ahat2 <- ahat2_func(ns, overall_cov, p[[1]])
 
+    xmin <- names(matrix_ls[1])
+    xmax <- names(matrix_ls[length(matrix_ls)])
+    xother <- names(matrix_ls[-c(1, length(matrix_ls))])
 
-  Schott2007(ns, p[[1]], ahat2, ahat2i, sample_covs)
+  data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
+
+  statistic <- Schott2007(ns, p[[1]], ahat2, ahat2i, sample_covs)
+  names(statistic) <- "Chi Squared"
+
+  parameter <- 1
+  names(parameter) <- "df"
+
+  null.value <- 0
+  names(null.value) <- "difference in covariances"
+
+  p.value <- pchisq(statistic, parameter)
+
+  estimate <- sample_covs
+  names(estimate) <- paste0("covariance of ", names(matrix_ls))
+
+  estimate <- if(nrow(estimate[[1]]) > 5){
+    NULL
+  }else{
+    estimate
+  }
+
+  obj <- list(statistic = statistic,
+              parameter = parameter,
+              p.value = p.value,
+              estimate = estimate,
+              null.value = null.value,
+              alternative = "two.sided",
+              method = "Schott 2007 Equality of Covariance Test",
+              data.name = data.name)
+  class(obj) <- "htest"
+  obj
 }
 
 #' @keywords internal
