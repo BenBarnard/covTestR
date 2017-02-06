@@ -45,6 +45,7 @@ SrivastavaYanagihara2010_test.grouped_df <- function(x, ...){
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_replace
 #' @importFrom stats cov
+#' @importFrom stats pchisq
 #'
 SrivastavaYanagihara2010_test.matrix <- function(...){
   ls <- lazy_dots(...)
@@ -117,13 +118,7 @@ SrivastavaYanagihara2010_test.matrix <- function(...){
   obj
 }
 
-
-
-#' Hidden Test
-#'
-#' @param gammahat_ls gamma hat
-#' @param ksihat2_ls ksi hat squared
-#'
+#' @keywords internal
 SrivastavaYanagihara2010 <- function(gammahat_ls, ksihat2_ls){
   gammahatbar <- Reduce(`+`, mapply(function(gammahat_ls, ksihat2_ls){gammahat_ls / ksihat2_ls},
                                     gammahat_ls, ksihat2_ls, SIMPLIFY = FALSE)) /
