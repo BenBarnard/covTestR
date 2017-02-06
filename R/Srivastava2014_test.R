@@ -74,6 +74,7 @@ Srivastava2014_test.resample <- function(x, ...){
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_replace
 #' @importFrom stats cov
+#' @importFrom stats pchisq
 #'
 Srivastava2014_test.matrix<- function(...){
   ls <- lazy_dots(...)
