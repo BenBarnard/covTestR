@@ -61,6 +61,7 @@ Chaipitak2013_test.resample <- function(x, ...){
 #' @importFrom stringr str_replace
 #' @importFrom stringr str_detect
 #' @importFrom stats cov
+#' @importFrom stats pchisq
 #'
 Chaipitak2013_test.matrix <- function(...){
   ls <- lazy_dots(...)
