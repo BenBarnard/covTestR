@@ -5,7 +5,8 @@
 \alias{Srivastava2014_test.data.frame}
 \alias{Srivastava2014_test.grouped_df}
 \alias{Srivastava2014_test.matrix}
-\title{Test of Equality of Covariances given by Srivastava 2014}
+\alias{Srivastava2014_test.resample}
+\title{Test of Equality of Covariances given by Srivastava et al. 2014}
 \usage{
 Srivastava2014_test(x, ...)
 
@@ -13,23 +14,45 @@ Srivastava2014_test(x, ...)
 
 \method{Srivastava2014_test}{grouped_df}(x, ...)
 
+\method{Srivastava2014_test}{resample}(x, ...)
+
 \method{Srivastava2014_test}{matrix}(...)
 }
 \arguments{
-\item{x}{tidy data frame}
+\item{x}{data as data.frame, grouped_df, resample or matrix object}
 
-\item{...}{other}
+\item{...}{other options passed to functions}
 
-\item{group}{group}
+\item{group}{group or population variable}
 }
 \value{
-Test Statistic for Srivastava 2014
+Test statistic of the hypothesis test
 }
 \description{
-Test of Equality of Covariances given by Srivastava 2014
+Performs 2 and k sample equality of covariance matrix test using Srivastava et al. 2014
+}
+\details{
+Consider the test for the equality of covariance matrices with
+\deqn{\text{H}_0: \boldsymbol{\Sigma}_1 = \boldsymbol{\Sigma}_2 = \ldots = \boldsymbol{\Sigma}_k}
+and
+\deqn{\text{H}_{\text{A}}: \boldsymbol{\Sigma}_1 \neq \boldsymbol{\Sigma}_2 \neq \ldots \neq \boldsymbol{\Sigma}_k,}
+where \eqn{\boldsymbol{\Sigma_i}} are the population covariance matrix parameters. The sample covarinance matrix estimators, \eqn{\textbf{S}_1, \textbf{S}_2, \ldots, \textbf{S}_i}, are distributed singular Wishart such that \eqn{n_i\textbf{S}_i \sim W_k\left( \boldsymbol{\Sigma}_i, n_i \right)}.
+Then,
+\deqn{T_{Sr2014} = \sum \limits^{k}_{i < j} \frac{ \left( \hat{a}_{2i_{Sr}} + \hat{a}_{2j_{Sr}} - \frac{2}{p}tr \left( S_i S_j \right) \right) ^ 2}{\theta_{Sr}}}
+where,
+\deqn{\hat{a}_{2i_{Sr}} = \frac{ \left(n_i -2 \right) \left( n_i -1 \right) tr \left( \boldsymbol{V}_i^2 \right) - n \left( n - k \right) tr \left( \boldsymbol{D}^2_i \right) + tr \left( \boldsymbol{V}_i \right)^2 }{pn_i \left( n_i -1 \right) \left( n_i -2 \right) \left( n_i -3 \right) }}
+and
+\deqn{\hat{a}_{2_{Sr}} = \frac{\sum \limits^k_{i = 1}(n_i -1)\hat{a}_{2i_{Sr}}}{\sum \limits^k_{i = 1}(n_i -1)}.}
+The divisor
+\deqn{\theta_{Sr} = 4 \hat{a}_{2_{Sr}}^2 \left( \sum \limits_{i < j}^ k \left( \frac{1}{n_i} + \frac{1}{n_j} \right) + (k - 1)(k - 2) \sum \limits_{i = 1}^k n_i^{-2} \right)}
+is a variance term for the numerator.
 }
 \examples{
 Srivastava2014_test(iris, group = Species)
 
+}
+\references{
+Srivastava, M., Yanagihara, H., and Kubokawa T. (2014). Tests for covariance
+matrices in high dimension with less sample size. Journal of Multivariate Analysis, 130:289-309.
 }
 

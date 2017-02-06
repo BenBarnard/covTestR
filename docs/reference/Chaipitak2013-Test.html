@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Estimator for eta squared Srivastave 2007 (helper function) — etahat2i_func • EqualCov</title>
+<title>Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013 — Chaipitak2013 Test • EqualCov</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -49,28 +49,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-<<<<<<< HEAD
-  <a href="http://www.bearstatistics.com">@ bearstatistics.com</a>
-=======
   <a href="../reference/index.html">Reference</a>
->>>>>>> 11e02de2acac643762276037febcbe5ff02e7758
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-<<<<<<< HEAD
-        <li>
-  <a href="../reference/index.html">Reference</a>
-</li>
-<li>
-  <a href="https://github.com/benbarnard/equalcov">
-    <span class="fa fa-github"></span>
-     
-  </a>
-</li>
-=======
         
->>>>>>> 11e02de2acac643762276037febcbe5ff02e7758
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -82,34 +66,69 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Estimator for eta squared Srivastave 2007 (helper function)</h1>
+    <h1>Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013</h1>
     </div>
 
     
-    <p>Estimator for eta squared Srivastave 2007 (helper function)</p>
+    <p>Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013</p>
     
 
-    <pre><span class='fu'>etahat2i_func</span>(<span class='no'>n</span>, <span class='no'>p</span>, <span class='no'>ahat4</span>, <span class='no'>ahat2</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
-      <dt>n</dt>
-      <dd>sample size</dd>
-      <dt>p</dt>
-      <dd>dimension</dd>
-      <dt>ahat4</dt>
-      <dd>see function</dd>
-      <dt>ahat2</dt>
-      <dd>see function</dd>
+      <dt>x</dt>
+      <dd>data as data.frame, grouped_df, resample or matrix object</dd>
+      <dt>group</dt>
+      <dd>group or population variable</dd>
+      <dt>...</dt>
+      <dd>other options passed to functions</dd>
     </dl>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>Test statistic of the hypothesis test</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>$$T_{Sc} = \sum \limits^{k}_{i &lt; j} \frac{ \left( \hat{a}_{2i_{Sc}} + \hat{a}_{2j_{Sc}} - \frac{2}{p}tr \left( S_i S_j \right) \right) ^ 2}{\theta_{Sc}}$$</p>
+    
+    <h2 class="hasAnchor" id="usage"><a class="anchor" href="#usage"></a>Usage</h2>
+
+    <p></p>
+    <p><pre>Chaipitak2013_test(x, ...)</p>
+    <p>## S3 method for class &#39;data.frame&#39;
+Chaipitak2013_test(x, group, ...)</p>
+    <p>## S3 method for class &#39;grouped_df&#39;
+Chaipitak2013_test(x, ...)</p>
+    <p>## S3 method for class &#39;resample&#39;
+Chaipitak2013_test(x, ...)</p>
+    <p>## S3 method for class &#39;matrix&#39;
+Chaipitak2013_test(...)</pre></p>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality
+of two covariance matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270–277.</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='Chaipitak2013_test.html'>Chaipitak2013_test</a></span>(<span class='no'>iris</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>Species</span>)</div><div class='output co'>#&gt; [1] 164.406</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#usage">Usage</a></li>
+
+      <li><a href="#references">References</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

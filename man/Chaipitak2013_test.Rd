@@ -5,7 +5,8 @@
 \alias{Chaipitak2013_test.data.frame}
 \alias{Chaipitak2013_test.grouped_df}
 \alias{Chaipitak2013_test.matrix}
-\title{Test of Equality of Covariances given by Chaipitak 2013}
+\alias{Chaipitak2013_test.resample}
+\title{Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013}
 \usage{
 Chaipitak2013_test(x, ...)
 
@@ -13,23 +14,29 @@ Chaipitak2013_test(x, ...)
 
 \method{Chaipitak2013_test}{grouped_df}(x, ...)
 
+\method{Chaipitak2013_test}{resample}(x, ...)
+
 \method{Chaipitak2013_test}{matrix}(...)
 }
 \arguments{
-\item{x}{tidy data frame}
+\item{x}{data as data.frame, grouped_df, resample or matrix object}
 
-\item{...}{other}
+\item{...}{other options passed to functions}
 
-\item{group}{group}
+\item{group}{group or population variable}
 }
 \value{
-Test statistic for Chaipitak 2013
+Test statistic of the hypothesis test
 }
 \description{
-Test of Equality of Covariances given by Chaipitak 2013
+Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
 }
 \examples{
 Chaipitak2013_test(iris, group = Species)
 
+}
+\references{
+Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
+matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.
 }
 

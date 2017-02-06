@@ -5,6 +5,7 @@
 \alias{Schott2007_test.data.frame}
 \alias{Schott2007_test.grouped_df}
 \alias{Schott2007_test.matrix}
+\alias{Schott2007_test.resample}
 \title{Test of Equality of Covariances given by Schott 2007}
 \usage{
 Schott2007_test(x, ...)
@@ -13,23 +14,45 @@ Schott2007_test(x, ...)
 
 \method{Schott2007_test}{grouped_df}(x, ...)
 
+\method{Schott2007_test}{resample}(x, ...)
+
 \method{Schott2007_test}{matrix}(...)
 }
 \arguments{
-\item{x}{tidy data frame}
+\item{x}{data as data.frame, grouped_df, resample or matrix object}
 
-\item{...}{other}
+\item{...}{other options passed to functions}
 
-\item{group}{group}
+\item{group}{group or population variable}
 }
 \value{
-Test Statistic for Schott 2007
+Test statistic of the hypothesis test
 }
 \description{
-Test of Equality of Covariances given by Schott 2007
+Performs 2 and k sample equality of covariance matrix test using Schott 2007
+}
+\details{
+Consider the test for the equality of covariance matrices with
+\deqn{\text{H}_0: \boldsymbol{\Sigma}_1 = \boldsymbol{\Sigma}_2 = \ldots = \boldsymbol{\Sigma}_k}
+and
+\deqn{\text{H}_{\text{A}}: \boldsymbol{\Sigma}_1 \neq \boldsymbol{\Sigma}_2 \neq \ldots \neq \boldsymbol{\Sigma}_k,}
+where \eqn{\boldsymbol{\Sigma_i}} are the population covariance matrix parameters. The sample covarinance matrix estimators, \eqn{\textbf{S}_1, \textbf{S}_2, \ldots, \textbf{S}_i}, are distributed singular Wishart such that \eqn{n_i\textbf{S}_i \sim W_k\left( \boldsymbol{\Sigma}_i, n_i \right)}.
+Then,
+\deqn{T_{Sc} = \sum \limits^{k}_{i < j} \frac{ \left( \hat{a}_{2i_{Sc}} + \hat{a}_{2j_{Sc}} - \frac{2}{p}tr \left( S_i S_j \right) \right) ^ 2}{\theta_{Sc}}}
+where,
+\deqn{\hat{a}_{2i_{Sc}} = \frac{tr \left( \boldsymbol{V}_i^2 \right) - \frac{1}{n_i}tr \left( \boldsymbol{V}_i \right)^2}{ \left( n_i - 1 \right) \left(n_i + 2 \right)p} \xrightarrow{P} \frac{tr \left( \boldsymbol{\Sigma}_i^2 \right) }{p}}
+and
+\deqn{\hat{a}_{2_{Sc}} = \frac{\sum \limits^k_{i = 1}(n_i -1)\hat{a}_{2i_{Sc}}}{\sum \limits^k_{i = 1}(n_i -1)}.}
+The divisor
+\deqn{\theta_{Sc} = 4 \hat{a}_{2_{Sc}}^2 \left( \sum \limits_{i < j}^ k \left( \frac{1}{n_i} + \frac{1}{n_j} \right) + (k - 1)(k - 2) \sum \limits_{i = 1}^k n_i^{-2} \right)}
+is a variance term for the numerator.
 }
 \examples{
 Schott2007_test(iris, group = Species)
 
+}
+\references{
+Schott, J. (2007). A test for the equality of covariance matrices when the dimension
+is large relative to the sample sizes. Computational Statistics & Data Analysis, 51(12):6535-6542.
 }
 

@@ -1,12 +1,19 @@
 #' Test of Equality of Covariances given by Srivastava 2007
 #'
-#' @param x tidy data frame
-#' @param group group
-#' @param ... other
+#' Performs 2 and k sample equality of covariance matrix test using Srivastava 2007
 #'
-#' @return Test statistic for Srivastava 2007
+#' @param x data as data.frame, grouped_df, resample or matrix object
+#' @param group group or population variable
+#' @param ... other options passed to functions
+#'
+#' @return Test statistic of the hypothesis test
 #'
 #' @export
+#'
+#' @references Srivastava, M. S. (2007). Testing the equality of two covariance matrices and
+#' independence of two sub-vectorswith fewer observations than the dimension. InInternational
+#' Conference on Advances in InterdisciplinaryStistics and Combinatorics, University of North Carolina
+#' at Greensboro, NC, USA.
 #'
 #' @examples Srivastava2007_test(iris, group = Species)
 #'
@@ -28,8 +35,20 @@ Srivastava2007_test.data.frame <- function(x, group, ...){
 #' @export
 #' @rdname Srivastava2007_test
 #' @importFrom lazyeval expr_find
-#'
+#' @importFrom lazyeval lazy_dots
 Srivastava2007_test.grouped_df <- function(x, ...){
+  dataDftoMatrix(data = x,
+                 group = attributes(x)$vars[[1]],
+                 method = expr_find(Srivastava2007_test.matrix),
+                 .dots = lazy_dots(...))
+}
+
+#' @export
+#' @rdname Srivastava2007_test
+#' @importFrom lazyeval expr_find
+#' @importFrom lazyeval lazy_dots
+Srivastava2007_test.resample <- function(x, ...){
+  x <- as.data.frame(x)
   dataDftoMatrix(data = x,
                  group = attributes(x)$vars[[1]],
                  method = expr_find(Srivastava2007_test.matrix),
@@ -72,16 +91,47 @@ Srivastava2007_test.matrix <- function(...){
 
   etahat2i <- mapply(etahat2i_func, ns, p, ahat4, ahat2, SIMPLIFY = FALSE)
 
+  xmin <- names(matrix_ls[1])
+  xmax <- names(matrix_ls[length(matrix_ls)])
+  xother <- names(matrix_ls[-c(1, length(matrix_ls))])
 
-  Srivastava2007(ahat2i, etahat2i)
+  data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
+
+  statistic <- Srivastava2007(ahat2i, etahat2i)
+  names(statistic) <- "Chi Squared"
+
+  parameter <- length(matrix_ls) - 1
+  names(parameter) <- "df"
+
+  null.value <- 0
+  names(null.value) <- "difference in covariances"
+
+  p.value <- pchisq(statistic, parameter)
+
+  estimate <- sample_covs
+  names(estimate) <- paste0("covariance of ", names(matrix_ls))
+
+  estimate <- if(nrow(estimate[[1]]) > 5){
+    NULL
+  }else{
+    estimate
+  }
+
+  obj <- list(statistic = statistic,
+              parameter = parameter,
+              p.value = p.value,
+              estimate = estimate,
+              null.value = null.value,
+              alternative = "two.sided",
+              method = "Srivastava 2007 Equality of Covariance Test",
+              data.name = data.name)
+  class(obj) <- "htest"
+  obj
 }
 
 
-#' Hidden Test
-#'
-#' @param ahat2i a hat squared i
-#' @param etahat2i eta hat squared i
-#'
+
+#' @keywords internal
 Srivastava2007 <- function(ahat2i, etahat2i){
   ahatbar <- Reduce(`+`, mapply(function(ahat2i, etahat2i){ahat2i / etahat2i},
                                 ahat2i, etahat2i, SIMPLIFY = FALSE)) /

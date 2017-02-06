@@ -1,12 +1,18 @@
-#' Test of Equality of Covariances given by Chaipitak 2013
+#' Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013
 #'
-#' @param x tidy data frame
-#' @param group group
-#' @param ... other
+#' Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
 #'
-#' @return Test statistic for Chaipitak 2013
+#' @param x data as data.frame, grouped_df, resample or matrix object
+#' @param group group or population variable
+#' @param ... other options passed to functions
+#'
+#' @return Test statistic of the hypothesis test
+#'
 #'
 #' @export
+#'
+#' @references Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
+#' matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.
 #'
 #' @examples Chaipitak2013_test(iris, group = Species)
 #'
@@ -17,7 +23,7 @@ Chaipitak2013_test <- function(x, ...){
 #' @export
 #' @rdname Chaipitak2013_test
 #' @importFrom lazyeval expr_find
-#'
+#' @importFrom lazyeval lazy_dots
 Chaipitak2013_test.data.frame <- function(x, group, ...){
   dataDftoMatrix(data = x,
                  group = expr_find(group),
@@ -28,11 +34,24 @@ Chaipitak2013_test.data.frame <- function(x, group, ...){
 #' @export
 #' @rdname Chaipitak2013_test
 #' @importFrom lazyeval expr_find
-#'
+#' @importFrom lazyeval lazy_dots
 Chaipitak2013_test.grouped_df <- function(x, ...){
   dataDftoMatrix(data = x,
                  group = attributes(x)$vars[[1]],
-                 test = expr_find(Chaipitak2013_test.matrix))
+                 method = expr_find(Chaipitak2013_test.matrix),
+                 .dots = lazy_dots(...))
+}
+
+#' @export
+#' @rdname Chaipitak2013_test
+#' @importFrom lazyeval expr_find
+#' @importFrom lazyeval lazy_dots
+Chaipitak2013_test.resample <- function(x, ...){
+  x <- as.data.frame(x)
+  dataDftoMatrix(data = x,
+                 group = attributes(x)$vars[[1]],
+                 method = expr_find(Chaipitak2013_test.matrix),
+                 .dots = lazy_dots(...))
 }
 
 #' @export
@@ -69,15 +88,45 @@ Chaipitak2013_test.matrix <- function(...){
     ahatStar4 <- ahatStar4_func(tau, p[[1]], overall_cov, ns)
     deltahat2 <- deltahat2_func(ahatStar4, p[[1]], ahat2, ns)
 
-  Chaipitak2013(ahat2i, deltahat2)
+  xmin <- names(matrix_ls[1])
+  xmax <- names(matrix_ls[length(matrix_ls)])
+  xother <- names(matrix_ls[-c(1, length(matrix_ls))])
+
+  data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
+
+  statistic <- Chaipitak2013(ahat2i, deltahat2)
+  names(statistic) <- "Chi Squared"
+
+  parameter <- length(matrix_ls) - 1
+  names(parameter) <- "df"
+
+  null.value <- 0
+  names(null.value) <- "difference in covariances"
+
+  p.value <- pchisq(statistic, parameter)
+
+  estimate <- sample_covs
+  names(estimate) <- paste0("covariance of ", names(matrix_ls))
+
+  estimate <- if(nrow(estimate[[1]]) > 5){
+    NULL
+  }else{
+    estimate
+  }
+
+  obj <- list(statistic = statistic,
+              parameter = parameter,
+              p.value = p.value,
+              estimate = estimate,
+              null.value = null.value,
+              alternative = "two.sided",
+              method = "Chaipitak and Chongchareon 2013 Equality of Covariance Test",
+              data.name = data.name)
+  class(obj) <- "htest"
+  obj
 }
 
-
-#' Hidden Test
-#'
-#' @param ahat2i a hat squared i
-#' @param deltahat2 delta hat squared
-#'
+#' @keywords internal
 Chaipitak2013 <- function(ahat2i, deltahat2){
   comb <- combn(length(ahat2i), 2, simplify = FALSE)
   Reduce(`+`, lapply(comb, function(x){
