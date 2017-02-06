@@ -15,4 +15,3 @@ Tidy_(data, group)
 not tidy helper
 }
 \keyword{internal}
-

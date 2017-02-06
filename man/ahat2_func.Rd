@@ -17,4 +17,3 @@ ahat2_func(ns, overall_cov, p)
 Estimator for expansion term in Frobenius Norm Schott 2007 (helper funciton)
 }
 \keyword{internal}
-

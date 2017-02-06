@@ -13,4 +13,3 @@ tau_func(ns)
 Tau for Chaipitak 2013 (helper function)
 }
 \keyword{internal}
-

@@ -16,4 +16,3 @@ Ishii2016(lambdatildes, htilde, ki)
 \description{
 Hidden Test
 }
-

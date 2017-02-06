@@ -13,4 +13,3 @@ tr(mat)
 Trace of Matrix
 }
 \keyword{internal}
-

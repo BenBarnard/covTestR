@@ -15,4 +15,3 @@ ahat2Srivastava2014_func(ahat2i, n)
 Estimator for frobenius norm expansion term Srivastava 2014 (helper function)
 }
 \keyword{internal}
-

@@ -14,4 +14,3 @@ SrivastavaYanagihara2010(gammahat_ls, ksihat2_ls)
 \description{
 Hidden Test
 }
-
