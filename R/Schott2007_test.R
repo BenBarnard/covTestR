@@ -74,6 +74,7 @@ Schott2007_test.resample <- function(x, ...){
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_replace
 #' @importFrom stats cov
+#' @importFrom stats pchisq
 #'
 Schott2007_test.matrix<- function(...){
   ls <- lazy_dots(...)
