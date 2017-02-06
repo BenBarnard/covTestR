@@ -4,8 +4,8 @@
 \alias{Schott2007_test}
 \alias{Schott2007_test.data.frame}
 \alias{Schott2007_test.grouped_df}
-\alias{Schott2007_test.resample}
 \alias{Schott2007_test.matrix}
+\alias{Schott2007_test.resample}
 \title{Test of Equality of Covariances given by Schott 2007}
 \usage{
 Schott2007_test(x, ...)
@@ -55,3 +55,4 @@ Schott2007_test(iris, group = Species)
 Schott, J. (2007). A test for the equality of covariance matrices when the dimension
 is large relative to the sample sizes. Computational Statistics & Data Analysis, 51(12):6535-6542.
 }
+

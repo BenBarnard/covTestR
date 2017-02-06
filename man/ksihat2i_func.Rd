@@ -23,3 +23,4 @@ ksihat2i_func(n, p, ahat1, ahat2, ahat3, ahat4)
 Estimator for Ksi Srivastava and Yanagihara 2010 (helper function)
 }
 \keyword{internal}
+

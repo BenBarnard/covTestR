@@ -8,11 +8,13 @@ Maintainer: Ben Barnard <ben_barnard@baylor.edu>
 Description: Simulations for comparing equality of covariances tests.
 License: GPL-2
 LazyData: TRUE
-RoxygenNote: 6.0.0
-Suggests: knitr,
+RoxygenNote: 5.0.1
+Suggests:
+    knitr,
     rmarkdown,
     covr
-Depends: lazyeval,
+Depends:
+    lazyeval,
     stringr,
     plyr,
     dplyr

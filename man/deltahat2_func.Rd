@@ -19,3 +19,4 @@ deltahat2_func(ahatstar4, p, ahat2, n)
 delta hat squared for Chaiptak 2013 (helper function)
 }
 \keyword{internal}
+

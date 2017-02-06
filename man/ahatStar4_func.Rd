@@ -19,3 +19,4 @@ ahatStar4_func(tau, p, sample_cov, ns)
 Estimator for expansion term in Frobenius Norm Chaipitak 2013 (helper funciton)
 }
 \keyword{internal}
+

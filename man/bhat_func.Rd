@@ -15,3 +15,4 @@ bhat_func(ahat21, ahat22)
 b hat used in method introduced by Chaipitak 2013 (helper function)
 }
 \keyword{internal}
+

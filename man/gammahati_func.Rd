@@ -15,3 +15,4 @@ gammahati_func(ahat2i, ahat1i)
 Estimator for Gamma Srivastava and Yanagihara 2010 (helper function)
 }
 \keyword{internal}
+

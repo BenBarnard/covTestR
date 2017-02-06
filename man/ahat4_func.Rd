@@ -21,3 +21,4 @@ ahat4_func(A, p, ns, ahat2, ahat1)
 Estimator for frobenius norm expansion term Srivastava 2007
 }
 \keyword{internal}
+

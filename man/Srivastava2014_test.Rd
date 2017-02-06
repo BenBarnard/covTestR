@@ -4,8 +4,8 @@
 \alias{Srivastava2014_test}
 \alias{Srivastava2014_test.data.frame}
 \alias{Srivastava2014_test.grouped_df}
-\alias{Srivastava2014_test.resample}
 \alias{Srivastava2014_test.matrix}
+\alias{Srivastava2014_test.resample}
 \title{Test of Equality of Covariances given by Srivastava et al. 2014}
 \usage{
 Srivastava2014_test(x, ...)
@@ -55,3 +55,4 @@ Srivastava2014_test(iris, group = Species)
 Srivastava, M., Yanagihara, H., and Kubokawa T. (2014). Tests for covariance
 matrices in high dimension with less sample size. Journal of Multivariate Analysis, 130:289-309.
 }
+

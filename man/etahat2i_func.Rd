@@ -19,3 +19,4 @@ etahat2i_func(n, p, ahat4, ahat2)
 Estimator for eta squared Srivastave 2007 (helper function)
 }
 \keyword{internal}
+
