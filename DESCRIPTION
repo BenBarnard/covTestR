@@ -2,8 +2,8 @@ Package: EqualCov
 Type: Package
 Title: Equality of Covariances for High Dimensional Data
 Version: 0.1.0
-Author: Ben Barnard [aut, cre],
-    Dean Young [aut]
+Authors@R: c(person("Ben", "Barnard", email = "ben_barnard@baylor.edu", role = c("aut", "cre")),
+  person("Dean", "Young", email = "dean_young@baylor.edu", role = c("aut")))
 Maintainer: Ben Barnard <ben_barnard@baylor.edu>
 Description: Simulations for comparing equality of covariances tests.
 License: GPL-2

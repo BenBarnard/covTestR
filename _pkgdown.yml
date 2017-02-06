@@ -1,0 +1,12 @@
+navbar:
+  title: EqualCov
+  type: default
+  right:
+  - text: "Reference"
+    href: reference/index.html
+  - icon: fa-github
+    href: https://github.com/benbarnard/equalcov
+  left:
+  - text: "@ bearstatistics.com"
+    href: http://www.bearstatistics.com
+
