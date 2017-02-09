@@ -10,4 +10,3 @@ past(xmin, ..., xmax)
 Paste Wrapper
 }
 \keyword{internal}
-

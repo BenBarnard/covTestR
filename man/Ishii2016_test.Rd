@@ -16,11 +16,11 @@ Ishii2016_test(x, ...)
 \method{Ishii2016_test}{matrix}(...)
 }
 \arguments{
-\item{x}{data}
+\item{x}{data as data.frame, grouped_df, resample or matrix object}
 
-\item{...}{other}
+\item{...}{other options passed to functions}
 
-\item{group}{gropuing variable}
+\item{group}{group or population variable}
 }
 \value{
 Test Statistic for
@@ -36,4 +36,3 @@ Ishii, A., Yata, K., and Aoshima, M. (2016). Asymptotic properties of the first 
 component and equality tests of covariance matrices in high-dimesion, low-sample-size context. Journal
 of Statistical Planning and Inference, 170:186-199.
 }
-

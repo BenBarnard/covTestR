@@ -4,8 +4,8 @@
 \alias{Srivastava2007_test}
 \alias{Srivastava2007_test.data.frame}
 \alias{Srivastava2007_test.grouped_df}
-\alias{Srivastava2007_test.matrix}
 \alias{Srivastava2007_test.resample}
+\alias{Srivastava2007_test.matrix}
 \title{Test of Equality of Covariances given by Srivastava 2007}
 \usage{
 Srivastava2007_test(x, ...)
@@ -41,4 +41,3 @@ independence of two sub-vectorswith fewer observations than the dimension. InInt
 Conference on Advances in InterdisciplinaryStistics and Combinatorics, University of North Carolina
 at Greensboro, NC, USA.
 }
-

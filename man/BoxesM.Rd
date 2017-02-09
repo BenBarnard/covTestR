@@ -18,4 +18,3 @@ BoxesM(ns, n_overall, sample_covs, overall_cov)
 \description{
 Hidden Test
 }
-

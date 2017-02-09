@@ -16,11 +16,11 @@ SrivastavaYanagihara2010_test(x, ...)
 \method{SrivastavaYanagihara2010_test}{matrix}(...)
 }
 \arguments{
-\item{x}{tidy data frame}
+\item{x}{data as data.frame, grouped_df, resample or matrix object}
 
-\item{...}{other}
+\item{...}{other options passed to functions}
 
-\item{group}{group}
+\item{group}{group or population variable}
 }
 \value{
 Test statistic for Srivastava and Yanagihara 2010
@@ -36,4 +36,3 @@ SrivastavaYanagihara2010_test(iris, group = Species)
 Srivastava, M. and Yanagihara, H. (2010). Testing the equality of several covariance matrices with
 fewer observation that the dimension. Journal of Multivariate Analysis, 101(6):1319-1329.
 }
-

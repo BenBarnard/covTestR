@@ -16,11 +16,11 @@ BoxesM_test(x, ...)
 \method{BoxesM_test}{matrix}(...)
 }
 \arguments{
-\item{x}{tidy data frame}
+\item{x}{data as data.frame, grouped_df, resample or matrix object}
 
-\item{...}{other}
+\item{...}{other options passed to functions}
 
-\item{group}{group}
+\item{group}{group or population variable}
 }
 \value{
 Test statistic for Chaipitak 2013
@@ -32,4 +32,3 @@ Test of Equality of Covariances given by Chaipitak 2013
 BoxesM_test(iris, group = Species)
 
 }
-

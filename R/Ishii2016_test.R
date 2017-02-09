@@ -1,8 +1,6 @@
 #' Test of Equality of Covariances given by Schott 2007
 #'
-#' @param x data
-#' @param group gropuing variable
-#' @param ... other
+#' @inheritParams Chaipitak2013_test
 #'
 #' @references Ishii, A., Yata, K., and Aoshima, M. (2016). Asymptotic properties of the first pricipal
 #' component and equality tests of covariance matrices in high-dimesion, low-sample-size context. Journal

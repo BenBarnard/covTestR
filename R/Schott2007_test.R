@@ -2,9 +2,7 @@
 #'
 #' Performs 2 and k sample equality of covariance matrix test using Schott 2007
 #'
-#' @param x data as data.frame, grouped_df, resample or matrix object
-#' @param group group or population variable
-#' @param ... other options passed to functions
+#' @inheritParams Chaipitak2013_test
 #'
 #' @details Consider the test for the equality of covariance matrices with
 #' \deqn{\text{H}_0: \boldsymbol{\Sigma}_1 = \boldsymbol{\Sigma}_2 = \ldots = \boldsymbol{\Sigma}_k}

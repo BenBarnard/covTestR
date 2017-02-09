@@ -4,8 +4,8 @@
 \alias{Chaipitak2013_test}
 \alias{Chaipitak2013_test.data.frame}
 \alias{Chaipitak2013_test.grouped_df}
-\alias{Chaipitak2013_test.matrix}
 \alias{Chaipitak2013_test.resample}
+\alias{Chaipitak2013_test.matrix}
 \title{Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013}
 \usage{
 Chaipitak2013_test(x, ...)
@@ -39,4 +39,3 @@ Chaipitak2013_test(iris, group = Species)
 Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
 matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.
 }
-

@@ -21,4 +21,3 @@ ahat3_func(A, p, ns, ahat2, ahat1)
 Estimator for Frobenius norm expansion term (helper function)
 }
 \keyword{internal}
-

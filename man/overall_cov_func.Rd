@@ -15,4 +15,3 @@ overall_cov_func(A_ls, ns)
 Overall Covariance Matirx (helper function)
 }
 \keyword{internal}
-

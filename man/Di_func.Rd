@@ -13,4 +13,3 @@ Di_func(matrix)
 D diagonal matrix for Srivastava 2014 (helper funciton)
 }
 \keyword{internal}
-

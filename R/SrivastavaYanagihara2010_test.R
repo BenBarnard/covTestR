@@ -1,8 +1,6 @@
 #' Test of Equality of Covariances given by Srivastava and Yanagihara 2010
 #'
-#' @param x tidy data frame
-#' @param group group
-#' @param ... other
+#' @inheritParams Chaipitak2013_test
 #'
 #' @return Test statistic for Srivastava and Yanagihara 2010
 #'

@@ -1,8 +1,6 @@
 #' Test of Equality of Covariances given by Chaipitak 2013
 #'
-#' @param x tidy data frame
-#' @param group group
-#' @param ... other
+#' @inheritParams Chaipitak2013_test
 #'
 #' @return Test statistic for Chaipitak 2013
 #'

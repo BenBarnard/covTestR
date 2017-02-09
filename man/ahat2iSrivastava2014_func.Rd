@@ -19,4 +19,3 @@ ahat2iSrivastava2014_func(n, p, D, A)
 Estimator for frobenius norm expansion term Srivastava 2014 (helper function)
 }
 \keyword{internal}
-

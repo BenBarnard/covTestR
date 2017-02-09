@@ -13,4 +13,3 @@ c2_func(n)
 Sample size expansion term Srivastava 2007 (helper function)
 }
 \keyword{internal}
-
