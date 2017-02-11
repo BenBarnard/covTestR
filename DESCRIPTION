@@ -13,7 +13,7 @@ Suggests:
     knitr,
     rmarkdown,
     covr
-Depends:
+Imports:
     lazyeval,
     stringr,
     plyr,
