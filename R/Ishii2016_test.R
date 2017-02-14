@@ -8,7 +8,7 @@
 #'
 #' @return Test Statistic for
 #' @export
-#'
+#' @keywords internal
 #' @examples Ishii2016_test(iris, group = Species)
 Ishii2016_test <- function(x, ...) {
   UseMethod("Ishii2016_test")
@@ -76,12 +76,7 @@ Ishii2016_test.matrix <- function(...){
   Ishii2016(lambdatildes, htilde, ki)
 }
 
-#' Hidden Test
-#'
-#' @param lambdatildes lambda tildes
-#' @param htilde h tilde
-#' @param ki ki
-#'
+#' @keywords internal
 #' @importFrom utils combn
 Ishii2016 <- function(lambdatildes, htilde, ki){
   comb <- combn(length(ki), 2, simplify = FALSE)

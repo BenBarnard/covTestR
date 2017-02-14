@@ -33,7 +33,19 @@ SrivastavaYanagihara2010_test.data.frame <- function(x, group, ...){
 SrivastavaYanagihara2010_test.grouped_df <- function(x, ...){
   dataDftoMatrix(data = x,
                  group = attributes(x)$vars[[1]],
-                 test = expr_find(SrivastavaYanagihara2010_test.matrix))
+                 test = expr_find(SrivastavaYanagihara2010_test.matrix),
+                 .dots = lazy_dots(...))
+}
+
+#' @export
+#' @rdname SrivastavaYanagihara2010_test
+#' @importFrom lazyeval expr_find
+#' @importFrom lazyeval lazy_dots
+SrivastavaYanagihara2010_test.resample <- function(x, ...){
+  dataDftoMatrix(data = as.data.frame(x),
+                 group = attributes(x)$vars[[1]],
+                 method = expr_find(SrivastavaYanagihara2010_test.matrix),
+                 .dots = lazy_dots(...))
 }
 
 #' @export

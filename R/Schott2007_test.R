@@ -50,7 +50,8 @@ Schott2007_test.data.frame <- function(x, group, ...){
 Schott2007_test.grouped_df <- function(x, ...){
   dataDftoMatrix(data = x,
                  group = attributes(x)$vars[[1]],
-                 test = expr_find(Schott2007_test.matrix))
+                 test = expr_find(Schott2007_test.matrix),
+                 .dots = lazy_dots(...))
 }
 
 #' @export
@@ -58,8 +59,7 @@ Schott2007_test.grouped_df <- function(x, ...){
 #' @importFrom lazyeval expr_find
 #' @importFrom lazyeval lazy_dots
 Schott2007_test.resample <- function(x, ...){
-  x <- as.data.frame(x)
-  dataDftoMatrix(data = x,
+  dataDftoMatrix(data = as.data.frame(x),
                  group = attributes(x)$vars[[1]],
                  method = expr_find(Schott2007_test.matrix),
                  .dots = lazy_dots(...))

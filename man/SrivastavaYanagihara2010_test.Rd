@@ -4,6 +4,7 @@
 \alias{SrivastavaYanagihara2010_test}
 \alias{SrivastavaYanagihara2010_test.data.frame}
 \alias{SrivastavaYanagihara2010_test.grouped_df}
+\alias{SrivastavaYanagihara2010_test.resample}
 \alias{SrivastavaYanagihara2010_test.matrix}
 \title{Test of Equality of Covariances given by Srivastava and Yanagihara 2010}
 \usage{
@@ -12,6 +13,8 @@ SrivastavaYanagihara2010_test(x, ...)
 \method{SrivastavaYanagihara2010_test}{data.frame}(x, group, ...)
 
 \method{SrivastavaYanagihara2010_test}{grouped_df}(x, ...)
+
+\method{SrivastavaYanagihara2010_test}{resample}(x, ...)
 
 \method{SrivastavaYanagihara2010_test}{matrix}(...)
 }

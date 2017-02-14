@@ -47,8 +47,7 @@ Chaipitak2013_test.grouped_df <- function(x, ...){
 #' @importFrom lazyeval expr_find
 #' @importFrom lazyeval lazy_dots
 Chaipitak2013_test.resample <- function(x, ...){
-  x <- as.data.frame(x)
-  dataDftoMatrix(data = x,
+  dataDftoMatrix(data = as.data.frame(x),
                  group = attributes(x)$vars[[1]],
                  method = expr_find(Chaipitak2013_test.matrix),
                  .dots = lazy_dots(...))
