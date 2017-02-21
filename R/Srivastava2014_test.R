@@ -95,7 +95,7 @@ Srivastava2014_test.matrix<- function(...){
 
   D_ls <- lapply(matrix_ls, Di_func)
 
-  ahat2i <- mapply(ahat2iSrivastava2014_func, ns, p, D_ls, A_ls, SIMPLIFY = FALSE)
+  ahat2i <- mapply(ahat2iSrivastava2014_func, n = ns, p = p, D = D_ls, A = A_ls, MoreArgs = list(ns = ns), SIMPLIFY = FALSE)
 
   ahat2 <- ahat2Srivastava2014_func(ahat2i, ns)
 
@@ -114,7 +114,7 @@ Srivastava2014_test.matrix<- function(...){
   null.value <- 0
   names(null.value) <- "difference in covariances"
 
-  p.value <- pchisq(statistic, parameter)
+  p.value <- 1 - pchisq(statistic, parameter)
 
   estimate <- sample_covs
   names(estimate) <- paste0("covariance of ", names(matrix_ls))

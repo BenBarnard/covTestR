@@ -4,7 +4,7 @@
 \alias{ahat2iSrivastava2014_func}
 \title{Estimator for frobenius norm expansion term Srivastava 2014 (helper function)}
 \usage{
-ahat2iSrivastava2014_func(n, p, D, A)
+ahat2iSrivastava2014_func(n, p, D, A, ns)
 }
 \arguments{
 \item{n}{sample size for groups}

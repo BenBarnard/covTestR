@@ -31,5 +31,5 @@ A_func <- function(matrix){
 #'
 #'
 Di_func <- function(matrix){
-  diag(matrix %*% t(matrix))
+  diag(diag(matrix %*% t(matrix)))
 }

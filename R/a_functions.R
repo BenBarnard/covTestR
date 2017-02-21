@@ -118,9 +118,11 @@ ahat3_func <- function(A, p, ns, ahat2, ahat1){
 #' @keywords internal
 #'
 #'
-ahat2iSrivastava2014_func <- function(n, p, D, A){
+ahat2iSrivastava2014_func <- function(n, p, D, A, ns){
+  n_overall <- Reduce(sum, lapply(ns, function(x){nrow(x)}))
+  n_overall_1 <- Reduce(sum, lapply(ns, function(x){nrow(x) - 1}))
   ((n - 2) * (n - 1) * tr(A %*% A) -
-     n * (n - 1) * tr(D %*% D) +
+      n_overall * n_overall_1 * tr(D %*% D) +
      tr(A) ^ 2) /
     (p * n * (n - 1) * (n - 2) * (n - 3))
 }

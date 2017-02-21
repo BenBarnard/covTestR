@@ -103,7 +103,7 @@ Chaipitak2013_test.matrix <- function(...){
   null.value <- 0
   names(null.value) <- "difference in covariances"
 
-  p.value <- pchisq(statistic, parameter)
+  p.value <- 1 - pchisq(statistic, parameter)
 
   estimate <- sample_covs
   names(estimate) <- paste0("covariance of ", names(matrix_ls))
