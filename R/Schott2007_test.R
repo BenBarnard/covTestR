@@ -50,7 +50,7 @@ Schott2007_test.data.frame <- function(x, group, ...){
 Schott2007_test.grouped_df <- function(x, ...){
   dataDftoMatrix(data = x,
                  group = attributes(x)$vars[[1]],
-                 test = expr_find(Schott2007_test.matrix),
+                 method = expr_find(Schott2007_test.matrix),
                  .dots = lazy_dots(...))
 }
 

@@ -50,7 +50,7 @@ Srivastava2014_test.data.frame <- function(x, group, ...){
 Srivastava2014_test.grouped_df <- function(x, ...){
   dataDftoMatrix(data = x,
                  group = attributes(x)$vars[[1]],
-                 test = expr_find(Srivastava2014_test.matrix),
+                 method = expr_find(Srivastava2014_test.matrix),
                  .dots = lazy_dots(...))
 }
 

@@ -14,6 +14,9 @@
 #' @importFrom MASS mvrnorm
 #' @importFrom reshape2 melt
 #'
+#' @keywords internal
+#' @export
+#'
 #'
 mcSamples <- function(meanVec, covMat, samples, pops, ..., matrix = FALSE){
   pop_list <- pop_lists(meanVec, covMat, samples, pops)
@@ -38,6 +41,7 @@ mcSamples <- function(meanVec, covMat, samples, pops, ..., matrix = FALSE){
 #' @importFrom plyr llply
 #' @importFrom stats setNames
 #'
+#' @export
 #' @keywords internal
 #'
 pop_lists <- function(meanVec, covMat, samples, pops){

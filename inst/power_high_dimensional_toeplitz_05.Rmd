@@ -1,0 +1,94 @@
+---
+title: "Power High Dimensional Toeplitz 0.5"
+author: "Ben Barnard"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(plyr)
+library(dplyr)
+library(EqualCov)
+library(covEst)
+library(MASS)
+library(purrr)
+```
+
+## Parameters
+
+```{r criticalParameters}
+if(!("critical_data.RData" %in% list.files())){
+  mu_vec <- rep(0, 100)
+  populations <- 3
+  cov_matrix <- toeplitz(0.5 ^ seq(0, (100 - 1)))
+}
+```
+
+## Critical Data Simulation
+
+```{r criticalData}  
+if(!("critical_data.RData" %in% list.files())){
+  params <- setNames(replicate(populations, 
+                               list(mu_vec = mu_vec, 
+                                    cov_matrix = cov_matrix,
+                                    n = 100), 
+                               simplify = FALSE),
+                     1:populations)
+  
+  critical_data <- replicate(
+    n = 10, 
+    expr = group_by(ldply(params, 
+      function(x){
+        mvrnorm(
+          n = x$n,
+          mu = x$mu_vec, 
+          Sigma = x$cov_matrix)
+      }, .id = "population"
+    ), population), simplify = FALSE
+  )
+  
+  save(critical_data, file = "critical_data.RData")
+}else{
+  load(file = "critical_data.RData")
+}
+```
+
+## Critical Test Simulation
+
+```{r criticalSims}
+if(!("critical_sims.RData" %in% list.files())){
+critical_tests <- function(x){
+  sequence <- expand.grid(samples = seq(from = 2, to = 2, by = 1), 
+                          dimensions = seq(from = 2, to = 2, by = 1))
+  apply(X = sequence, MARGIN = 1, FUN = function(sequence){
+    sequence <- as.data.frame(t(sequence))
+    data.frame(Test = c("Chaipitak and Chongchareon 2013", "Schott 2007", "Srivastava 2007", "Srivastava et al. 2014", "Srivastava and Yanagihara 2010", "Chaipitak and Chongchareon 2013", "Schott 2007", "Srivastava 2007", "Srivastava et al. 2014", "Srivastava and Yanagihara 2010"), 
+               Populations = c(rep(2, 5), rep(3, 5)), 
+               Samples = sequence$samples, 
+               Dimensions = sequence$dimensions, 
+               Statistic = c(Chaipitak2013_test(filter(x, !(population == 3)))$statistic, Schott2007_test(filter(x, !(population == 3)))$statistic, Srivastava2007_test(filter(x, !(population == 3)))$statistic, Srivastava2014_test(filter(x, !(population == 3)))$statistic, SrivastavaYanagihara2010_test(filter(x, !(population == 3)))$statistic, Chaipitak2013_test(x)$statistic, Schott2007_test(x)$statistic, Srivastava2007_test(x)$statistic, Srivastava2014_test(x)$statistic, SrivastavaYanagihara2010_test(x)$statistic))
+  })
+}
+
+critical_sims <- Reduce(bind_rows, map(critical_data, critical_tests))
+save(critical_sims, file = "critical_sims.RData")
+}else{
+  load(file = "critical_sims.RData")
+}
+```
+
+## Critical Values
+
+```{r criticalValues}
+if(!("critical_values.RData" %in% list.files())){
+  critical_values <- summarise(group_by(critical_sims, Test, Populations, Samples, Dimensions), `Critical Value` = quantile(Statistic, probs = .95))
+save(critical_values, file = "critical_values.RData")
+}else{
+  load(file = "critical_values.RData")
+}
+```
+
+
+
+
+
