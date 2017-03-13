@@ -33,7 +33,7 @@ if(!("critical_data.RData" %in% list.files())){
 ```{r criticalData}  
 if(!("critical_data.RData" %in% list.files())){
   critical_data <- replicate(
-    n = 100000, 
+    n = 10, 
     expr = group_by(ldply(params, 
       function(x){
         mvrnorm(
@@ -59,6 +59,9 @@ critical_tests <- function(x){
                           dimensions = seq(from = 2, to = 100, by = 1))
   apply(X = sequence, MARGIN = 1, FUN = function(sequence){
     sequence <- as.data.frame(t(sequence))
+    x <- ddply(.data = x, .variables = .(population), .fun = function(dfs, sequence){
+      dfs[1:sequence$samples, 1:sequence$dimensions + 1]
+    }, sequence = sequence)
     data.frame(Test = c("Chaipitak and Chongchareon 2013", "Schott 2007", "Srivastava 2007", "Srivastava et al. 2014", "Srivastava and Yanagihara 2010", "Chaipitak and Chongchareon 2013", "Schott 2007", "Srivastava 2007", "Srivastava et al. 2014", "Srivastava and Yanagihara 2010"), 
                Populations = c(rep(2, 5), rep(3, 5)), 
                Samples = sequence$samples, 
@@ -132,6 +135,9 @@ if(!("power_sims.RData" %in% list.files())){
                             dimensions = seq(from = 2, to = 100, by = 1))
     ls <- apply(X = sequence, MARGIN = 1, FUN = function(sequence){
       sequence <- as.data.frame(t(sequence))
+      data_ls <- ddply(.data = data_ls, .variables = .(population), .fun = function(dfs, sequence){
+        dfs[1:sequence$samples, 1:sequence$dimensions + 1]
+      }, sequence = sequence)
       pops <- filter(data_ls, !(difference %in% c("1", "1.99")))
       original <- filter(data_ls, difference %in% c("1", "1.99"))
       Reduce(bind_rows, lapply(unique(pops$difference), function(diff){
