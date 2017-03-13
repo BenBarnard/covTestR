@@ -14,13 +14,17 @@ library(MASS)
 library(purrr)
 ```
 
-## Parameters
+## Critical Parameters
 
 ```{r criticalParameters}
 if(!("critical_data.RData" %in% list.files())){
-  mu_vec <- rep(0, 100)
   populations <- 3
-  cov_matrix <- toeplitz(0.5 ^ seq(0, (100 - 1)))
+  params <- setNames(replicate(populations, 
+                               list(mu_vec = rep(0, 100), 
+                                    cov_matrix = toeplitz(0.5 ^ seq(0, (100 - 1))),
+                                    n = 100), 
+                               simplify = FALSE),
+                     1:populations)
 }
 ```
 
@@ -28,15 +32,8 @@ if(!("critical_data.RData" %in% list.files())){
 
 ```{r criticalData}  
 if(!("critical_data.RData" %in% list.files())){
-  params <- setNames(replicate(populations, 
-                               list(mu_vec = mu_vec, 
-                                    cov_matrix = cov_matrix,
-                                    n = 100), 
-                               simplify = FALSE),
-                     1:populations)
-  
   critical_data <- replicate(
-    n = 10, 
+    n = 100000, 
     expr = group_by(ldply(params, 
       function(x){
         mvrnorm(
@@ -58,8 +55,8 @@ if(!("critical_data.RData" %in% list.files())){
 ```{r criticalSims}
 if(!("critical_sims.RData" %in% list.files())){
 critical_tests <- function(x){
-  sequence <- expand.grid(samples = seq(from = 2, to = 2, by = 1), 
-                          dimensions = seq(from = 2, to = 2, by = 1))
+  sequence <- expand.grid(samples = seq(from = 2, to = 100, by = 1), 
+                          dimensions = seq(from = 2, to = 100, by = 1))
   apply(X = sequence, MARGIN = 1, FUN = function(sequence){
     sequence <- as.data.frame(t(sequence))
     data.frame(Test = c("Chaipitak and Chongchareon 2013", "Schott 2007", "Srivastava 2007", "Srivastava et al. 2014", "Srivastava and Yanagihara 2010", "Chaipitak and Chongchareon 2013", "Schott 2007", "Srivastava 2007", "Srivastava et al. 2014", "Srivastava and Yanagihara 2010"), 
@@ -88,6 +85,114 @@ save(critical_values, file = "critical_values.RData")
 }
 ```
 
+## Power Parameters
+
+```{r criticalParameters}
+if(!("power_data.RData" %in% list.files())){
+  populations <- 3
+
+  power_params <- setNames(lapply(c(seq(from = 1, to = 2.5, by = 0.05), 1), function(difference){
+    list(mu_vec = rep(0, 100), 
+         cov_matrix = toeplitz(0.5 ^ seq(0, (100 - 1))) * difference, 
+         n = 100)
+  }), c(seq(from = 1, to = 2.5, by = 0.1), 1.99))
+}
+
+
+```
+
+## Power Data Simulation
+
+```{r criticalData}  
+if(!("power_data.RData" %in% list.files())){
+  power_data <- replicate(
+                        n = 1000, 
+                        expr = group_by(ldply(power_params, 
+                                              function(x){
+                                                mvrnorm(
+                                                  n = x$n,
+                                                  mu = x$mu_vec, 
+                                                  Sigma = x$cov_matrix)
+                                              }, .id = "difference"
+                        ), difference), simplify = FALSE
+  )
+  
+  save(power_data, file = "power_data.RData")
+}else{
+  load(file = "power_data.RData")
+}
+```
+
+## Power Test Simulation
+
+```{r criticalSims}
+if(!("power_sims.RData" %in% list.files())){
+  power_tests <- function(data_ls){
+    sequence <- expand.grid(samples = seq(from = 2, to = 100, by = 1), 
+                            dimensions = seq(from = 2, to = 100, by = 1))
+    ls <- apply(X = sequence, MARGIN = 1, FUN = function(sequence){
+      sequence <- as.data.frame(t(sequence))
+      pops <- filter(data_ls, !(difference %in% c("1", "1.99")))
+      original <- filter(data_ls, difference %in% c("1", "1.99"))
+      Reduce(bind_rows, lapply(unique(pops$difference), function(diff){
+        twopop <- bind_rows(filter(pops, difference == diff), filter(original, difference == "1"))
+        threepop <- bind_rows(filter(pops, difference == diff), original)
+        
+        data.frame(Test = c("Chaipitak and Chongchareon 2013", 
+                                              "Schott 2007", 
+                                              "Srivastava 2007", 
+                                              "Srivastava et al. 2014",
+                                              "Srivastava and Yanagihara 2010"), 
+                                     Populations = c(2, 3), 
+                                     Samples = sequence$samples, 
+                                     Dimensions = sequence$dimensions, 
+                                     Difference = diff,
+                                     Statistic = c(Chaipitak2013_test(twopop)$statistic,
+                                                   Chaipitak2013_test(threepop)$statistic,
+                                                   Schott2007_test(twopop)$statistic,
+                                                   Schott2007_test(threepop)$statistic,
+                                                   Srivastava2007_test(twopop)$statistic,
+                                                   Srivastava2007_test(threepop)$statistic, 
+                                                   Srivastava2014_test(twopop)$statistic,
+                                                   Srivastava2014_test(threepop)$statistic,
+                                                   SrivastavaYanagihara2010_test(twopop)$statistic,
+                                                   SrivastavaYanagihara2010_test(threepop)$statistic))
+      }))
+    })
+    ls
+  }
+
+power_sims <- Reduce(bind_rows, map(power_data, power_tests))
+save(power_sims, file = "power_sims.RData")
+}else{
+  load(file = "power_sims.RData")
+}
+```
+
+## Power Values
+
+```{r criticalValues}
+if(!("power_values.RData" %in% list.files())){
+  power_values <- ddply(.data = power_sims, .variables = .(Test, Populations, Samples, Dimensions, Difference), .fun = function(power, critical){
+    criticalValue <- filter(critical, 
+                            Populations == unique(power$Populations),
+                            Samples == unique(power$Samples),
+                            Dimensions == unique(power$Dimensions),
+                            Test == unique(power$Test))
+    power <- mutate(power, Power = ifelse(Statistic >= criticalValue$`Critical Value`, 1, 0))
+    data.frame(Test = unique(power$Test),
+               Difference = unique(power$Difference),
+               Populations = unique(power$Populations),
+               Samples = unique(power$Samples),
+               Dimensions = unique(power$Dimensions),
+               Power = mean(power$Power))
+  }, critical = critical_values)
+  
+save(power_values, file = "power_values.RData")
+}else{
+  load(file = "power_values.RData")
+}
+```
 
 
 
