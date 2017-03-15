@@ -76,8 +76,28 @@
   <span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
 }
 devtools::<span class="kw">install_github</span>(<span class="st">"benbarnard/EqualCov"</span>)</code></pre></div>
-<pre><code>## Skipping install of 'EqualCov' from a github remote, the SHA1 (cf366b44) has not changed since last install.
-##   Use `force = TRUE` to force installation</code></pre>
+<pre><code>## Downloading GitHub repo benbarnard/EqualCov@master
+## from URL https://api.github.com/repos/benbarnard/EqualCov/zipball/master</code></pre>
+<pre><code>## Installing EqualCov</code></pre>
+<pre><code>## '/Library/Frameworks/R.framework/Resources/bin/R' CMD INSTALL '/private/var/folders/n6/5741n1910r3gxzbh_1p3ql3w0000gn/T/RtmpSvnFLK/devtools94953415a77/BenBarnard-EqualCov-0fb2e03' 
+## Error in namespaceExport(ns, exports) : 
+##   undefined exports: mcSamples, pop_lists
+## Error: loading failed
+## Execution halted</code></pre>
+<pre><code>## Installation failed: NULL : Command failed:
+##  '/Library/Frameworks/R.framework/Resources/bin/R' CMD INSTALL '/private/var/folders/n6/5741n1910r3gxzbh_1p3ql3w0000gn/T/RtmpSvnFLK/devtools94953415a77/BenBarnard-EqualCov-0fb2e03'  
+##  * installing to library ‘/Library/Frameworks/R.framework/Versions/3.3/Resources/library’
+## * installing *source* package ‘EqualCov’ ...
+## ** R
+## ** inst
+## ** preparing package for lazy loading
+## ** help
+## *** installing help indices
+## ** building package indices
+## ** testing if installed package can be loaded
+## ERROR: loading failed
+## * removing ‘/Library/Frameworks/R.framework/Versions/3.3/Resources/library/EqualCov’
+## * restoring previous ‘/Library/Frameworks/R.framework/Versions/3.3/Resources/library/EqualCov’</code></pre>
 <p>If you encounter a clear bug, please file a minimal reproducible example on github.</p>
 </div>
 <div id="example" class="section level2">
@@ -92,7 +112,7 @@ iris %&gt;%<span class="st"> </span><span class="kw">group_by</span>(Species) %&
 ##  Chaipitak and Chongchareon 2013 Equality of Covariance Test
 ## 
 ## data:  setosa, versicolor and virginica
-## Chi Squared = 164.41, df = 2, p-value = 1
+## Chi Squared = 164.41, df = 2, p-value &lt; 2.2e-16
 ## alternative hypothesis: true difference in covariances is not equal to 0
 ## sample estimates:
 ## $`covariance of setosa`
