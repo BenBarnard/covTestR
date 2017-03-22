@@ -1,17 +1,16 @@
 crit_data(type = "toeplitz ",
-          dimensions = c(100, 50),
-          samples = c(10, 15, 20),
-          difference = seq(0, 2, .1),
+          dimensions = c(200, 150, 100, 50),
+          samples = c(5, 10, 15, 20),
+          difference = seq(1, 2.5, .1),
           populations = 2,
           replications = 1000,
-          reductionMethods = c("DataConcatScatter",
-                               "SConcat", "SDiff"),
-          directory = "~/Documents/R/Dissertation/data/100_5")
+          reductionMethods = c(),
+          directory = "~/Documents/R/Dissertation/data/simtoe200")
 
 crit_data3(type = "toeplitz ",
            dimensions = c(100, 50),
            samples = c(10, 15, 20),
-           difference = seq(0, 2, .1),
+           difference = seq(1, 2.5, .1),
            populations = 3,
            replications = 1000,
            reductionMethods = c("DataConcatScatter",
