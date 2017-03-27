@@ -5,7 +5,7 @@
 \alias{Schott2007_test.data.frame}
 \alias{Schott2007_test.grouped_df}
 \alias{Schott2007_test.resample}
-\alias{Schott2007_test.matrix}
+\alias{Schott2007_test.list}
 \title{Test of Equality of Covariances given by Schott 2007}
 \usage{
 Schott2007_test(x, ...)
@@ -16,7 +16,7 @@ Schott2007_test(x, ...)
 
 \method{Schott2007_test}{resample}(x, ...)
 
-\method{Schott2007_test}{matrix}(...)
+\method{Schott2007_test}{list}(x, ...)
 }
 \arguments{
 \item{x}{data as data.frame, grouped_df, resample or matrix object}
