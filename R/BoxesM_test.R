@@ -18,7 +18,7 @@ BoxesM_test <- function(x, ...){
 BoxesM_test.data.frame <- function(x, group, ...){
   dataDftoMatrix(data = x,
                  group = lazyeval::expr_find(group),
-                 method = lazyeval::expr_find(BoxesM_test.matrix),
+                 method = lazyeval::expr_find(BoxesM_test.list),
                  .dots = lazyeval::lazy_dots(...))
 }
 
@@ -27,27 +27,49 @@ BoxesM_test.data.frame <- function(x, group, ...){
 BoxesM_test.grouped_df <- function(x, ...){
   dataDftoMatrix(data = x,
                  group = attributes(x)$vars[[1]],
-                 test = lazyeval::expr_find(BoxesM_test.matrix))
+                 test = lazyeval::expr_find(BoxesM_test.list))
 }
 
 #' @export
 #' @rdname BoxesM_test
-BoxesM_test.matrix <- function(...){
-  ls <- lazyeval::lazy_dots(...)
-  matrix_ls <- lazyeval::lazy_eval(ls[stringr::str_detect(names(ls), "x.")])
-  names(matrix_ls) <- stringr::str_replace(names(matrix_ls), "x.", "")
+BoxesM_test.list <- function(x, ...){
 
-  ns <- lapply(matrix_ls, function(matrix){
-    nrow(matrix)
-  })
+  ls <- lazy_dots(...)
+  matrix_ls <- x
 
-  A_ls <- lapply(matrix_ls, A_func)
+  if(!("covariance" %in% class(x[[1]])) & ("matrix" %in% class(x[[1]]))){
+    ns <- lapply(matrix_ls, function(matrix){
+      nrow(matrix)
+    })
 
-  n_overall <- Reduce(`+`, lapply(ns, function(x){x - 1}))
+    p <- lapply(matrix_ls, function(matrix){
+      ncol(matrix)
+    })
 
-  sample_covs <- lapply(matrix_ls, stats::cov)
+    A_ls <- lapply(matrix_ls, A_func)
+
+    sample_covs <- lapply(matrix_ls, cov)
+  }
+
+  if("covariance" %in% class(x[[1]])){
+    ns <- lapply(matrix_ls, function(matrix){
+      attributes(matrix)$n
+    })
+
+    p <- lapply(matrix_ls, function(matrix){
+      ncol(matrix)
+    })
+
+    sample_covs <- matrix_ls
+
+    A_ls <- mapply(function(sample_covs, ns){
+      sample_covs * (ns - 1)
+    }, sample_covs = sample_covs, ns = ns, SIMPLIFY = FALSE)
+  }
 
   overall_cov <- overall_cov_func(A_ls, ns)
+
+  n_overall <- Reduce(`+`, lapply(ns, function(x){x - 1}))
 
   BoxesM(ns, n_overall, sample_covs, overall_cov)
 }
