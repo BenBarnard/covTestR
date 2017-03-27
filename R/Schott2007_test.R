@@ -39,7 +39,7 @@ Schott2007_test <- function(x, ...) {
 Schott2007_test.data.frame <- function(x, group, ...){
   dataDftoMatrix(data = x,
                  group = expr_find(group),
-                 method = expr_find(Schott2007_test.matrix),
+                 method = expr_find(Schott2007_test.list),
                  .dots = lazy_dots(...))
 }
 
@@ -50,7 +50,7 @@ Schott2007_test.data.frame <- function(x, group, ...){
 Schott2007_test.grouped_df <- function(x, ...){
   dataDftoMatrix(data = x,
                  group = attributes(x)$vars[[1]],
-                 method = expr_find(Schott2007_test.matrix),
+                 method = expr_find(Schott2007_test.list),
                  .dots = lazy_dots(...))
 }
 
@@ -61,7 +61,7 @@ Schott2007_test.grouped_df <- function(x, ...){
 Schott2007_test.resample <- function(x, ...){
   dataDftoMatrix(data = as.data.frame(x),
                  group = attributes(x)$vars[[1]],
-                 method = expr_find(Schott2007_test.matrix),
+                 method = expr_find(Schott2007_test.list),
                  .dots = lazy_dots(...))
 }
 
@@ -74,11 +74,12 @@ Schott2007_test.resample <- function(x, ...){
 #' @importFrom stats cov
 #' @importFrom stats pchisq
 #'
-Schott2007_test.matrix<- function(...){
-  ls <- lazy_dots(...)
-  matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
-  names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
+Schott2007_test.list <- function(x, ...){
 
+  ls <- lazy_dots(...)
+  matrix_ls <- x
+
+  if(!("covariance" %in% class(x[[1]])) & ("matrix" %in% class(x[[1]]))){
     ns <- lapply(matrix_ls, function(matrix){
       nrow(matrix)
     })
@@ -90,6 +91,23 @@ Schott2007_test.matrix<- function(...){
     A_ls <- lapply(matrix_ls, A_func)
 
     sample_covs <- lapply(matrix_ls, cov)
+  }
+
+  if("covariance" %in% class(x[[1]])){
+    ns <- lapply(matrix_ls, function(matrix){
+      attributes(matrix)$n
+    })
+
+    p <- lapply(matrix_ls, function(matrix){
+      ncol(matrix)
+    })
+
+    sample_covs <- matrix_ls
+
+    A_ls <- mapply(function(sample_covs, ns){
+      sample_covs * (ns - 1)
+    }, sample_covs = sample_covs, ns = ns, SIMPLIFY = FALSE)
+  }
 
     overall_cov <- overall_cov_func(A_ls, ns)
 
