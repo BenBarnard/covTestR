@@ -20,7 +20,7 @@ Ishii2016_test <- function(x, ...) {
 Ishii2016_test.data.frame <- function(x, group, ...){
   dataDftoMatrix(data = x,
                  group = expr_find(group),
-                 method = expr_find(Ishii2016_test.matrix),
+                 method = expr_find(Ishii2016_test.list),
                  .dots = lazy_dots(...))
 
 }
@@ -31,7 +31,7 @@ Ishii2016_test.data.frame <- function(x, group, ...){
 Ishii2016_test.grouped_df <- function(x, ...){
   dataDftoMatrix(data = x,
                  group = attributes(x)$vars[[1]],
-                 method = expr_find(Ishii2016_test.matrix),
+                 method = expr_find(Ishii2016_test.list),
                  .dots = lazy_dots(...))
 }
 
@@ -42,16 +42,33 @@ Ishii2016_test.grouped_df <- function(x, ...){
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_replace
 #' @importFrom stats cov
-Ishii2016_test.matrix <- function(...){
+Ishii2016_test.list <- function(x, ...){
   ls <- lazy_dots(...)
-  matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
-  names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
+  matrix_ls <- x
+
+  if(!("covariance" %in% class(x[[1]])) & ("matrix" %in% class(x[[1]]))){
 
   covs <- lapply(matrix_ls, cov)
   dualcovs <- lapply(matrix_ls, function(x){
     n <- nrow(x)
     A_func(t(x)) / (n - 1)
   })
+  dfmat <- matrix_ls
+  }
+
+  if("covariance" %in% class(x[[1]])){
+    covs <- matrix_ls
+    dfmat <- lapply(matrix_ls, function(x){
+      n <- attributes(x)$n
+      sv <- svd(x)
+      sqdi <- diag(sqrt(sv$d))
+      sv$u %*% sqdi
+    })
+    dualcovs <- lapply(dfmat, function(x){
+      n <- nrow(x)
+      A_func(t(x)) / (n - 1)
+    })
+  }
 
   lambdahat <- lapply(covs, function(x){
     eigen(x)$values
@@ -67,7 +84,7 @@ Ishii2016_test.matrix <- function(...){
     sapply(1:min(length(x), nrow(z)), function(k){
       (((nrow(z) - 1) * x[[k]]) ^ (-1 / 2)) * (t(y) - rowMeans(t(y))) %*% t(z)[,k]
     })
-  }, lambdatildes, matrix_ls, eigdual, SIMPLIFY = FALSE)
+  }, lambdatildes, dfmat, eigdual, SIMPLIFY = FALSE)
 
   ki <- mapply(function(x,y){
     tr(x) - y[[1]]
