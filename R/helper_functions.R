@@ -15,7 +15,7 @@
 #'
 dataDftoMatrix <- function(data, group, method, ..., .dots){
   do.call(what = paste(method),
-          args = c(x = dlply(.data = data,
+          args = list(x = dlply(.data = data,
                              .variables = group,
                              .fun = Tidy_,
                              group = group),
