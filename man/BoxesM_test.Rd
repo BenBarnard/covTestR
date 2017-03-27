@@ -4,7 +4,7 @@
 \alias{BoxesM_test}
 \alias{BoxesM_test.data.frame}
 \alias{BoxesM_test.grouped_df}
-\alias{BoxesM_test.matrix}
+\alias{BoxesM_test.list}
 \title{Test of Equality of Covariances given by Chaipitak 2013}
 \usage{
 BoxesM_test(x, ...)
@@ -13,7 +13,7 @@ BoxesM_test(x, ...)
 
 \method{BoxesM_test}{grouped_df}(x, ...)
 
-\method{BoxesM_test}{matrix}(...)
+\method{BoxesM_test}{list}(x, ...)
 }
 \arguments{
 \item{x}{data as data.frame, grouped_df, resample or matrix object}
