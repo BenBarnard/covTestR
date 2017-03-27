@@ -5,7 +5,7 @@
 \alias{Chaipitak2013_test.data.frame}
 \alias{Chaipitak2013_test.grouped_df}
 \alias{Chaipitak2013_test.resample}
-\alias{Chaipitak2013_test.matrix}
+\alias{Chaipitak2013_test.list}
 \title{Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013}
 \usage{
 Chaipitak2013_test(x, ...)
@@ -16,7 +16,7 @@ Chaipitak2013_test(x, ...)
 
 \method{Chaipitak2013_test}{resample}(x, ...)
 
-\method{Chaipitak2013_test}{matrix}(...)
+\method{Chaipitak2013_test}{list}(x, ...)
 }
 \arguments{
 \item{x}{data as data.frame, grouped_df, resample or matrix object}
