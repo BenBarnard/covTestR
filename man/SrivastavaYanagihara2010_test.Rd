@@ -5,7 +5,7 @@
 \alias{SrivastavaYanagihara2010_test.data.frame}
 \alias{SrivastavaYanagihara2010_test.grouped_df}
 \alias{SrivastavaYanagihara2010_test.resample}
-\alias{SrivastavaYanagihara2010_test.matrix}
+\alias{SrivastavaYanagihara2010_test.list}
 \title{Test of Equality of Covariances given by Srivastava and Yanagihara 2010}
 \usage{
 SrivastavaYanagihara2010_test(x, ...)
@@ -16,7 +16,7 @@ SrivastavaYanagihara2010_test(x, ...)
 
 \method{SrivastavaYanagihara2010_test}{resample}(x, ...)
 
-\method{SrivastavaYanagihara2010_test}{matrix}(...)
+\method{SrivastavaYanagihara2010_test}{list}(x, ...)
 }
 \arguments{
 \item{x}{data as data.frame, grouped_df, resample or matrix object}
