@@ -4,7 +4,7 @@
 \alias{Ishii2016_test}
 \alias{Ishii2016_test.data.frame}
 \alias{Ishii2016_test.grouped_df}
-\alias{Ishii2016_test.matrix}
+\alias{Ishii2016_test.list}
 \title{Test of Equality of Covariances given by Schott 2007}
 \usage{
 Ishii2016_test(x, ...)
@@ -13,7 +13,7 @@ Ishii2016_test(x, ...)
 
 \method{Ishii2016_test}{grouped_df}(x, ...)
 
-\method{Ishii2016_test}{matrix}(...)
+\method{Ishii2016_test}{list}(x, ...)
 }
 \arguments{
 \item{x}{data as data.frame, grouped_df, resample or matrix object}
