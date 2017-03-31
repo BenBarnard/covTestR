@@ -90,15 +90,50 @@ Ishii2016_test.list <- function(x, ...){
     tr(x) - y[[1]]
   }, dualcovs, lambdatildes, SIMPLIFY = FALSE)
 
-  Ishii2016(lambdatildes, htilde, ki)
-}
+  xmin <- names(matrix_ls[1])
+  xmax <- names(matrix_ls[length(matrix_ls)])
+  xother <- names(matrix_ls[-c(1, length(matrix_ls))])
+
+  data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
+
+  statistic <- Ishii2016(lambdatildes, htilde, ki)
+  names(statistic) <- "F"
+
+  parameter <- c(length(matrix_ls), 1)
+  names(parameter) <- c("df1", "df2")
+
+  null.value <- 0
+  names(null.value) <- "difference in covariances"
+
+  p.value <- 1 - pf(statistic, df1 = parameter[1], df2 = parameter[2])
+
+  estimate <- covs
+  names(estimate) <- paste0("covariance of ", names(matrix_ls))
+
+  estimate <- if(nrow(estimate[[1]]) > 5){
+    NULL
+  }else{
+    estimate
+  }
+
+  obj <- list(statistic = statistic,
+              parameter = parameter,
+              p.value = p.value,
+              estimate = estimate,
+              null.value = null.value,
+              alternative = "two.sided",
+              method = "Ishii 2016 Equality of Covariance Test",
+              data.name = data.name)
+  class(obj) <- "htest"
+  obj
+  }
 
 #' @keywords internal
 #' @importFrom utils combn
 Ishii2016 <- function(lambdatildes, htilde, ki){
   comb <- combn(length(ki), 2, simplify = FALSE)
 
-  Reduce(`*`, lapply(comb, function(x){
+  Reduce(`+`, lapply(comb, function(x){
     (max(sapply(lambdatildes[x], function(x){x[[1]]})) / min(sapply(lambdatildes[x], function(x){x[[1]]}))) *
       max(abs(t(htilde[[x[1]]][,1]) %*% htilde[[x[2]]][,1]),
           abs(t(htilde[[x[1]]][,1]) %*% htilde[[x[2]]][,1]) ^ (-1)) *
