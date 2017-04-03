@@ -111,8 +111,12 @@ Schott2007_test.list <- function(x, ...){
 
     overall_cov <- overall_cov_func(A_ls, ns)
 
+
+
     ahat2i <- mapply(ahat2i_func, ns, p, sample_covs, SIMPLIFY = FALSE)
     ahat2 <- ahat2_func(ns, overall_cov, p[[1]])
+
+    theta <- lapply(ns, function(x){2 * ahat2 / (x - 1)})
 
     xmin <- names(matrix_ls[1])
     xmax <- names(matrix_ls[length(matrix_ls)])
@@ -120,7 +124,7 @@ Schott2007_test.list <- function(x, ...){
 
   data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
 
-  statistic <- Schott2007(ns, p[[1]], ahat2, ahat2i, sample_covs)
+  statistic <- Schott2007(p[[1]], ahat2, ahat2i, sample_covs, list(overall_cov), theta)
   names(statistic) <- "Chi Squared"
 
   parameter <- 1
@@ -154,14 +158,9 @@ Schott2007_test.list <- function(x, ...){
 
 #' @keywords internal
 #' @importFrom utils combn
-Schott2007 <- function(ns, p, ahat2, ahat2i, sample_covs){
-  comb <- combn(length(ns), 2, simplify = FALSE)
-  theta <- 4 * (ahat2 ^ 2) * (Reduce(`+`, lapply(comb, function(x){
-    ((1 / ns[[x[1]]]) + (1 / ns[[x[2]]])) ^ 2})) +
-      (length(ns) - 1) * (length(ns) - 2) * Reduce(`+`, lapply(ns, function(x){x ^ 2})))
+Schott2007 <- function(p, ahat2, ahat2i, sample_covs, overall_cov, theta){
 
-  Reduce(`+`, lapply(comb, function(x){
-    ((ahat2i[[x[1]]] + ahat2i[[x[2]]] -
-       (2 / p) * tr(sample_covs[[x[1]]] %*% sample_covs[[x[2]]])) ^ 2) / theta
-    }))
+  Reduce(`+`, mapply(function(p, ahat2i, ahat2, sample_covs, overall_cov, theta){
+    (ahat2i + ahat2 - (2 / p) * tr(sample_covs %*% overall_cov) ^ 2) / (theta ^ 2)
+    }, p, ahat2i, ahat2, sample_covs, overall_cov, theta, SIMPLIFY = FALSE))
 }

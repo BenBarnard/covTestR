@@ -104,9 +104,8 @@ Chaipitak2013_test.list <- function(x, ...){
 
     tau <- tau_func(ns)
     ahatStar4 <- ahatStar4_func(tau, p[[1]], overall_cov, ns)
-    deltahat2 <- deltahat2_func(ahatStar4, p[[1]], ahat2, ns)
-
-
+    deltahat2 <- mapply(deltahat2_func, ahatStar4, p, ahat2, ns, SIMPLIFY = FALSE)
+    b <- mapply(function(ahat2, ahat2i){ahat2i / ahat2}, ahat2, ahat2i, SIMPLIFY = FALSE)
 
   xmin <- names(matrix_ls[1])
   xmax <- names(matrix_ls[length(matrix_ls)])
@@ -114,7 +113,7 @@ Chaipitak2013_test.list <- function(x, ...){
 
   data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
 
-  statistic <- Chaipitak2013(ahat2i, deltahat2)
+  statistic <- Chaipitak2013(b, deltahat2)
   names(statistic) <- "Chi Squared"
 
   parameter <- length(matrix_ls) - 1
@@ -147,9 +146,8 @@ Chaipitak2013_test.list <- function(x, ...){
 }
 
 #' @keywords internal
-Chaipitak2013 <- function(ahat2i, deltahat2){
-  comb <- combn(length(ahat2i), 2, simplify = FALSE)
-  Reduce(`+`, lapply(comb, function(x){
-    (max(sapply(ahat2i[x], function(x){x})) / min(sapply(ahat2i[x], function(x){x})) - 1) ^ 2 / deltahat2
-  }))
+Chaipitak2013 <- function(b, deltahat2){
+  Reduce(`+`, mapply(function(b, deltahat2){
+    (b - 1) ^ 2 / deltahat2
+  }, b, deltahat2, SIMPLIFY = FALSE))
 }

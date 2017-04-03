@@ -126,13 +126,15 @@ Srivastava2014_test.list <- function(x, ...){
 
   ahat2 <- ahat2Srivastava2014_func(ahat2i, ns)
 
+  theta <- lapply(ns, function(x){2 * ahat2 / (x - 1)})
+
   xmin <- names(matrix_ls[1])
   xmax <- names(matrix_ls[length(matrix_ls)])
   xother <- names(matrix_ls[-c(1, length(matrix_ls))])
 
   data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
 
-  statistic <- Srivastava2014(ns, p[[1]], ahat2, ahat2i, sample_covs)
+  statistic <- Srivastava2014(p[[1]], ahat2, ahat2i, sample_covs, list(overall_cov), theta)
   names(statistic) <- "Chi Squared"
 
   parameter <- 1
@@ -165,14 +167,9 @@ Srivastava2014_test.list <- function(x, ...){
 }
 
 #' @keywords internal
-Srivastava2014 <- function(ns, p, ahat2, ahat2i, sample_covs){
-  comb <- combn(length(ns), 2, simplify = FALSE)
-  theta <- 4 * (ahat2 ^ 2) * (Reduce(`+`, lapply(comb, function(x){
-    ((1 / ns[[x[1]]]) + (1 / ns[[x[2]]])) ^ 2})) +
-      (length(ns) - 1) * (length(ns) - 2) * Reduce(`+`, lapply(ns, function(x){x ^ 2})))
+Srivastava2014 <-  function(p, ahat2, ahat2i, sample_covs, overall_cov, theta){
 
-  Reduce(`+`, lapply(comb, function(x){
-    ((ahat2i[[x[1]]] + ahat2i[[x[2]]] -
-        (2 / p) * tr(sample_covs[[x[1]]] %*% sample_covs[[x[2]]])) ^ 2) / theta
-  }))
+  Reduce(`+`, mapply(function(p, ahat2i, ahat2, sample_covs, overall_cov, theta){
+    (ahat2i + ahat2 - (2 / p) * tr(sample_covs %*% overall_cov) ^ 2) / (theta ^ 2)
+  }, p, ahat2i, ahat2, sample_covs, overall_cov, theta, SIMPLIFY = FALSE))
 }

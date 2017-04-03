@@ -9,9 +9,7 @@
 #'
 #'
 deltahat2_func <- function(ahatstar4, p , ahat2, n){
-  4 * (((2 * ahatstar4) / (p * (ahat2 ^ 2))) *
-         Reduce(`+`, lapply(n, function(x){1 / (x - 1)})) +
-         Reduce(`+`, lapply(n, function(x){1 / (x - 1) ^ 2})))
+  4 * ((2 * ahatstar4) / (p * (ahat2 ^ 2) * (n - 1)) + 1 / (n - 1) ^ 2)
 }
 
 
