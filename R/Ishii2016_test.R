@@ -55,7 +55,7 @@ Ishii2016_test.list <- function(x, ...){
 
   dualcovs <- lapply(matrix_ls, function(x){
     n <- nrow(x)
-    A_func(t(x)) / (n - 1)
+    t(t(x) - rowMeans(t(x))) %*% (t(x) - rowMeans(t(x))) / (n - 1)
   })
 
   dfmat <- matrix_ls
@@ -73,12 +73,14 @@ Ishii2016_test.list <- function(x, ...){
     A_ls <- lapply(dfmat, A_func)
     dualcovs <- lapply(dfmat, function(x){
       n <- nrow(x)
-      A_func(t(x)) / (n - 1)
+      t(t(x) - rowMeans(t(x))) %*% (t(x) - rowMeans(t(x))) / (n - 1)
     })
   }
   overall_dfmat <- Reduce(rbind, dfmat)
 
-  overall_dualcov <- A_func(t(overall_dfmat)) / (nrow(overall_dfmat) - length(matrix_ls))
+  overall_dualcov <- t(t(overall_dfmat) - rowMeans(t(overall_dfmat))) %*%
+    (t(overall_dfmat) - rowMeans(t(overall_dfmat))) /
+    (nrow(overall_dfmat) - length(matrix_ls))
   overall_cov <- overall_cov_func(A_ls, ns)
 
   lambdahat <- lapply(covs, function(x){
@@ -123,7 +125,7 @@ Ishii2016_test.list <- function(x, ...){
 
   data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
 
-  statistic <- Ishii2016(lambdatildes, htilde, ki, overall_lambdatilde, overall_htilde, overall_ki)
+  statistic <- Ishii2016(lambdatildes, htilde, ki, list(overall_lambdatilde), list(overall_htilde), list(overall_ki))
   names(statistic) <- "F"
 
   parameter <- c(length(matrix_ls), 1)
@@ -158,10 +160,9 @@ Ishii2016_test.list <- function(x, ...){
 #' @keywords internal
 #' @importFrom utils combn
 Ishii2016 <- function(lambdatildes, htilde, ki, overall_lambdatilde, overall_htilde, overall_ki){
-
   Reduce(`+`, mapply(function(lambdatildes, htilde, ki, overall_lambdatilde, overall_htilde, overall_ki){
-   (lambdatildes / overall_lambdatilde) *
-      (htilde %*% overall_htilde ^ -1) *
-      (ki / overall_ki)
+    abs((lambdatildes[[1]] / overall_lambdatilde[[1]]) *
+      (htilde[, 1] %*% overall_htilde[, 1] ^ -1) *
+      (ki / overall_ki) - 1)
   }, lambdatildes, htilde, ki, overall_lambdatilde, overall_htilde, overall_ki, SIMPLIFY = FALSE))
 }

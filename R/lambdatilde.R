@@ -8,6 +8,6 @@
 #'
 lambdatilde <- function(x, y){
   lambdaest <- sapply(1:length(x), function(z){
-    x[[z]] - (tr(y) - sum(x)) / (nrow(y) - 1 - z)
+    x[[z]] - (tr(y) - sum(x[1:z])) / (nrow(y) - 1 - z)
   })
 }

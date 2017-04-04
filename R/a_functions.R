@@ -123,7 +123,7 @@ ahat2iSrivastava2014_func <- function(n, p, D, A, ns){
   n_overall_1 <- Reduce(sum, lapply(ns, function(x){nrow(x) - 1}))
   ((n - 2) * (n - 1) * tr(A %*% A) -
       n_overall * n_overall_1 * tr(D %*% D) +
-     tr(A) ^ 2) /
+     tr(A %*% A)) /
     (p * n * (n - 1) * (n - 2) * (n - 3))
 }
 
