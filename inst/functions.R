@@ -6,6 +6,7 @@ library(purrr)
 
 test3 <- function(data, test, dimensions){
   data <- lapply(data, function(x){
+    browser()
     x[1:dimensions, 1:dimensions]
   })
   do.call(test, list(data))$statistic[[1]]
