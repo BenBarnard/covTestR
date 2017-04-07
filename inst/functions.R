@@ -72,7 +72,7 @@ powerdata <- function(samples, difference, covarianceMat, replicationspower){
 
 multipower <- function(dimensions, samples, differences, powerdat){
 
-
+browser()
   labels <- attributes(powerdat)$split_labels
 
   grp <- which(labels$samples == samples & labels$difference == 1.1)
