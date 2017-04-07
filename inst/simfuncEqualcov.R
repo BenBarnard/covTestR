@@ -21,8 +21,9 @@ browser()
 
 save(critical_data, file = "critical_data.RData")
 
-critical_tests <- mdply(.data = data_frame(dimensions = c(20, 40, 40, 80, 80, 80, 160, 160, 160, 160, 240, 240, 240, 240, 240),
-                                           samples = c(20, 20, 40, 20, 40, 80, 20, 40, 80, 160, 20, 40, 80, 160, 240)),
+critgrid <- filter(expand.grid(samples = samples, dimensions = dimensions), samples <= dimensions)
+
+critical_tests <- mdply(.data = critgrid,
                         .fun = multi, .progress = progress_text(char = "p"), critdat = critical_data)
 
 save(critical_tests, file = "critical_tests.RData")

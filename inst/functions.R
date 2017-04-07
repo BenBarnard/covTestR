@@ -20,8 +20,6 @@ test2 <- function(data, test, dimensions){
 
 multi <- function(dimensions, samples, critdat){
 
-  browser()
-
   critdat <- critdat[names(critdat) == samples][1]
 
   data_frame(Test = c(rep("Chaipitak", length(critdat)),
