@@ -1,8 +1,7 @@
-sim <- function(covarianceMat, replicationscrit, repilcationspower, samples, dimensions, differences, directory){
+sim <- function(covarianceMat, replicationscrit, replicationspower, samples, dimensions, differences, directory){
 
-setwd(directory)
-source(system.file("functions.R", package = "EqualCov"))
-browser()
+  source(system.file("functions.R", package = "EqualCov"))
+  browser()
   samplescrit <- setNames(samples, samples)
 
   critical_data <- llply(samplescrit,
@@ -19,37 +18,36 @@ browser()
                          replicationscrit = replicationscrit,
                          .progress = "text")
 
-save(critical_data, file = "critical_data.RData")
+  save(critical_data, file = paste0(directory, "critical_data.RData"))
 
-critgrid <- filter(expand.grid(samples = samples, dimensions = dimensions), samples <= dimensions)
+  critgrid <- filter(expand.grid(samples = samples, dimensions = dimensions), samples <= dimensions)
 
-critical_tests <- mdply(.data = critgrid,
-                        .fun = multi, .progress = progress_text(char = "p"), critdat = critical_data)
+  critical_tests <- mdply(.data = critgrid,
+                          .fun = multi, .progress = progress_text(char = "p"), critdat = critical_data)
 
-save(critical_tests, file = "critical_tests.RData")
+  save(critical_tests, file = paste0(directory, "critical_tests.RData"))
 
-critical_values <- summarize(group_by(critical_tests, dimensions, samples, Test, Populations), `Critical Value` = quantile(Value, 0.95))
+  critical_values <- summarize(group_by(critical_tests, dimensions, samples, Test, Populations), `Critical Value` = quantile(Value, 0.95))
 
-save(critical_values, file = "critical_values.RData")
+  save(critical_values, file = "critical_values.RData")
 
-power_data <- mlply(data_frame(samples = c(20, 40, 80, 160, 240, 20, 40, 80, 160, 240),
-                               difference = c(rep(1.05, 5), rep(1.1, 5))),
-                    powerdata, covarianceMat = covarianceMat, replicationspower = replicationspower, .progress = progress_text(char = "-"))
+  powerdatgrid <- expand.grid(samples = samples, difference = differences)
 
-save(power_data, file = "power_data.RData")
+  power_data <- mlply(powerdatgrid,
+                      powerdata, covarianceMat = covarianceMat, replicationspower = replicationspower, .progress = progress_text(char = "-"))
 
-power_tests <- mdply(data_frame(samples = c(20, 20, 40, 20, 40, 80, 20, 40, 80, 160, 20, 40, 80, 160, 240,
-                                            20, 20, 40, 20, 40, 80, 20, 40, 80, 160, 20, 40, 80, 160, 240),
-                                dimensions = c(20, 40, 40, 80, 80, 80, 160, 160, 160, 160, 240, 240, 240, 240, 240,
-                                               20, 40, 40, 80, 80, 80, 160, 160, 160, 160, 240, 240, 240, 240, 240),
-                                difference = c(rep(1.05, 15), rep(1.1, 15))),
-                     .fun = multipower, .progress = progress_text(char = "q"), powerdat = power_data)
+  save(power_data, file = paste0(directory, "power_data.RData"))
 
-save(power_tests, file = "power_tests.RData")
+  powertestgrid <- filter(expand.grid(samples = samples, dimensions = dimensions, difference = differences), samples <= dimensions)
 
-power_values <- ddply(.data = power_tests, .variables = .(samples, dimensions, difference, Test, Populations),
-                      .fun = powervalue, .progress = progress_text(char = "u"), critValues = critical_values)
+  power_tests <- mdply(powertestgrid,
+                       .fun = multipower, .progress = progress_text(char = "q"), powerdat = power_data)
 
-save(power_values, file = "power_values.RData")
+  save(power_tests, file = paste0(directory, "power_tests.RData"))
+
+  power_values <- ddply(.data = power_tests, .variables = .(samples, dimensions, difference, Test, Populations),
+                        .fun = powervalue, .progress = progress_text(char = "u"), critValues = critical_values)
+
+  save(power_values, file = paste0(directory, "power_values.RData"))
 
 }
