@@ -19,7 +19,7 @@ test2 <- function(data, test, dimensions){
 }
 
 multi <- function(x, dimensions, covarianceMat){
-    dat <- wishart::rWishart(
+    dat <- rWishart::rWishart(
       n = 3,
       df = x - 1,
       Sigma = covarianceMat,
@@ -59,15 +59,15 @@ powerdata <- function(dimensions, Samples, Differences, covarianceMat, replicati
 
 multipower <- function(dimensions, samples, differences, covarianceMat){
 
-  dat <- c(wishart::rWishart(n = 1,
+  dat <- c(rWishart::rWishart(n = 1,
                       df = samples - 1,
                       Sigma = covarianceMat,
                       covariance = TRUE, simplify = FALSE),
-    wishart::rWishart(n = 1,
+    rWishart::rWishart(n = 1,
                       df = samples - 1,
                       Sigma = covarianceMat * differences,
                       covariance = TRUE, simplify = FALSE),
-    wishart::rWishart(n = 1,
+    rWishart::rWishart(n = 1,
                       df = samples - 1,
                       Sigma = covarianceMat,
                       covariance = TRUE, simplify = FALSE))
