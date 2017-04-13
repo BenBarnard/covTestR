@@ -38,3 +38,5 @@ sim3 <- sim(covarianceMat = diag(1, 240),
             dimensions = c(20, 40, 80, 160, 240),
             differences = c(1.01, 1.02, 1.03, 1.04, 1.06, 1.07, 1.08, 1.09),
             directory = "E:/Ben/Box Sync/Statistics/identity/")
+
+

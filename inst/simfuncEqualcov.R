@@ -40,7 +40,6 @@ if(!("power_tests.RData" %in% files)){
   save(power_tests, file = paste0(directory, "power_tests.RData"))
 }else{
   load(paste0(directory, "power_tests.RData"))
-  browser()
 existingDifferences <- unique(power_tests$Differences)
 powertestgrid <- powertestgrid[!(powertestgrid$Differences %in% existingDifferences),]
 power_tests <- bind_rows(power_tests, mdply(powertestgrid,
