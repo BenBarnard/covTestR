@@ -144,6 +144,23 @@ Srivastava2014 <-  function(p, ahat2, ahat2i, sample_covs, overall_cov, theta){
 
 #' @export
 #' @keywords internal
-Srivastava2014_test.data.frame <- Srivastava2014_test.resample <- Srivastava2014_test.grouped_df <- helper(Srivastava2014_test)
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+#' @importFrom stats setNames
+Srivastava2014_test.data.frame <- helper(Srivastava2014_test)
+
+#' @export
+#' @keywords internal
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+#' @importFrom stats setNames
+Srivastava2014_test.grouped_df <- helper(Srivastava2014_test)
+
+#' @export
+#' @keywords internal
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+#' @importFrom stats setNames
+Srivastava2014_test.resample <- helper(Srivastava2014_test)
 
 

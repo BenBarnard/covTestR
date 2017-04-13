@@ -3,12 +3,13 @@
 #' @export
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
+#' @importFrom stats setNames
 #'
 helper <- function(method){
   func <- function(x, ...){
     groups <- attributes(x)$labels
     x <- as.data.frame(x)
-    dots <- lazy_dots(...)
+    dots <- lazyeval::lazy_dots(...)
     if(is.null(groups)){
       groupname <- names(unique(x[paste(dots$group$expr)]))
       group <- as.character(unique(x[paste(dots$group$expr)][,1]))
@@ -17,7 +18,7 @@ helper <- function(method){
       groupname <- names(groups)
     }
 
-    ls <- setNames(lapply(group, function(y){
+    ls <- stats::setNames(lapply(group, function(y){
       as.matrix(x[x[groupname] == y,][names(x) != groupname])
       }), group)
 

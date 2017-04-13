@@ -127,6 +127,23 @@ Srivastava2007 <- function(ahat2i, etahat2i){
 
 #' @export
 #' @keywords internal
-Srivastava2007_test.data.frame <- Srivastava2007_test.resample <- Srivastava2007_test.grouped_df <- helper(Srivastava2007_test)
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+#' @importFrom stats setNames
+Srivastava2007_test.data.frame <- helper(Srivastava2007_test)
+
+#' @export
+#' @keywords internal
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+#' @importFrom stats setNames
+Srivastava2007_test.resample <- helper(Srivastava2007_test)
+
+#' @export
+#' @keywords internal
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+#' @importFrom stats setNames
+Srivastava2007_test.grouped_df <- helper(Srivastava2007_test)
 
 

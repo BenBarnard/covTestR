@@ -121,5 +121,22 @@ Chaipitak2013 <- function(b, deltahat2){
 
 #' @export
 #' @keywords internal
-Chaipitak2013_test.data.frame <- Chaipitak2013_test.resample <- Chaipitak2013_test.grouped_df <- helper(Chaipitak2013_test)
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+#' @importFrom stats setNames
+Chaipitak2013_test.data.frame <- helper(Chaipitak2013_test)
+
+#' @export
+#' @keywords internal
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+#' @importFrom stats setNames
+Chaipitak2013_test.resample <- helper(Chaipitak2013_test)
+
+#' @export
+#' @keywords internal
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+#' @importFrom stats setNames
+Chaipitak2013_test.grouped_df <- helper(Chaipitak2013_test)
 

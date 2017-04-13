@@ -71,6 +71,23 @@ BoxsM <- function(ns, n_overall, sample_covs, overall_cov){
 
 #' @export
 #' @keywords internal
-BoxsM_test.data.frame <- BoxsM_test.resample <- BoxsM_test.grouped_df <- helper(BoxsM_test)
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+#' @importFrom stats setNames
+BoxsM_test.data.frame <- helper(BoxsM_test)
+
+#' @export
+#' @keywords internal
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+#' @importFrom stats setNames
+BoxsM_test.grouped_df <- helper(BoxsM_test)
+
+#' @export
+#' @keywords internal
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+#' @importFrom stats setNames
+BoxsM_test.resample <- helper(BoxsM_test)
 
 

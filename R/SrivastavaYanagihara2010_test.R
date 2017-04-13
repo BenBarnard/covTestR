@@ -127,4 +127,21 @@ SrivastavaYanagihara2010 <- function(gammahat_ls, ksihat2_ls){
 
 #' @export
 #' @keywords internal
-SrivastavaYanagihara2010_test.data.frame <- SrivastavaYanagihara2010_test.resample <- SrivastavaYanagihara2010_test.grouped_df <- helper(SrivastavaYanagihara2010_test)
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+#' @importFrom stats setNames
+SrivastavaYanagihara2010_test.data.frame <- helper(SrivastavaYanagihara2010_test)
+
+#' @export
+#' @keywords internal
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+#' @importFrom stats setNames
+SrivastavaYanagihara2010_test.resample <- helper(SrivastavaYanagihara2010_test)
+
+#' @export
+#' @keywords internal
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+#' @importFrom stats setNames
+SrivastavaYanagihara2010_test.grouped_df <- helper(SrivastavaYanagihara2010_test)

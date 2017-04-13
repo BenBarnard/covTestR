@@ -135,6 +135,23 @@ Schott2007 <- function(p, ahat2, ahat2i, sample_covs, overall_cov, theta){
 
 #' @export
 #' @keywords internal
-Schott2007_test.data.frame <- Schott2007_test.resample <- Schott2007_test.grouped_df <- helper(Schott2007_test)
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+#' @importFrom stats setNames
+Schott2007_test.data.frame <- helper(Schott2007_test)
+
+#' @export
+#' @keywords internal
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+#' @importFrom stats setNames
+Schott2007_test.resample <- helper(Schott2007_test)
+
+#' @export
+#' @keywords internal
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+#' @importFrom stats setNames
+Schott2007_test.grouped_df <- helper(Schott2007_test)
 
 

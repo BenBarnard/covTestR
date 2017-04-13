@@ -10,8 +10,6 @@ Chaipitak2013_test(x, ...)
 \item{x}{data as data.frame, grouped_df, resample or matrix object}
 
 \item{...}{other options passed to functions}
-
-\item{group}{group or population variable}
 }
 \value{
 Test statistic of the hypothesis test

@@ -18,6 +18,6 @@ Test statistic for Chaipitak 2013
 Test of Equality of Covariances given by Box's M
 }
 \examples{
-BoxesM_test(iris, group = Species)
+BoxsM_test(iris, group = Species)
 
 }
