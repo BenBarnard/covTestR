@@ -21,3 +21,4 @@ cov_maker(keepers = list(c(20, 1, rep(5, 8))),
                     offs = list(.1, nrow = 10, ncol = 90),
                     losers = list(c(1, rep(.1, 89))))
 }
+\keyword{internal}

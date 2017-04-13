@@ -2,28 +2,14 @@
 % Please edit documentation in R/SrivastavaYanagihara2010_test.R
 \name{SrivastavaYanagihara2010_test}
 \alias{SrivastavaYanagihara2010_test}
-\alias{SrivastavaYanagihara2010_test.data.frame}
-\alias{SrivastavaYanagihara2010_test.grouped_df}
-\alias{SrivastavaYanagihara2010_test.resample}
-\alias{SrivastavaYanagihara2010_test.list}
 \title{Test of Equality of Covariances given by Srivastava and Yanagihara 2010}
 \usage{
 SrivastavaYanagihara2010_test(x, ...)
-
-\method{SrivastavaYanagihara2010_test}{data.frame}(x, group, ...)
-
-\method{SrivastavaYanagihara2010_test}{grouped_df}(x, ...)
-
-\method{SrivastavaYanagihara2010_test}{resample}(x, ...)
-
-\method{SrivastavaYanagihara2010_test}{list}(x, ...)
 }
 \arguments{
 \item{x}{data as data.frame, grouped_df, resample or matrix object}
 
 \item{...}{other options passed to functions}
-
-\item{group}{group or population variable}
 }
 \value{
 Test statistic for Srivastava and Yanagihara 2010

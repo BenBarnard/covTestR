@@ -1,3 +1,4 @@
+source("R/helper_functions.R")
 #' Test of Equality of Covariances given by Srivastava et al. 2014
 #'
 #' Performs 2 and k sample equality of covariance matrix test using Srivastava et al. 2014
@@ -33,40 +34,7 @@ Srivastava2014_test <- function(x, ...) {
 }
 
 #' @export
-#' @rdname Srivastava2014_test
-#' @importFrom lazyeval expr_find
-#' @importFrom lazyeval lazy_dots
-Srivastava2014_test.data.frame <- function(x, group, ...){
-    dataDftoMatrix(data = x,
-                   group = expr_find(group),
-                   method = expr_find(Srivastava2014_test.list),
-                   .dots = lazy_dots(...))
-}
-
-#' @export
-#' @rdname Srivastava2014_test
-#' @importFrom lazyeval expr_find
-#' @importFrom lazyeval lazy_dots
-Srivastava2014_test.grouped_df <- function(x, ...){
-  dataDftoMatrix(data = x,
-                 group = attributes(x)$vars[[1]],
-                 method = expr_find(Srivastava2014_test.list),
-                 .dots = lazy_dots(...))
-}
-
-#' @export
-#' @rdname Srivastava2014_test
-#' @importFrom lazyeval expr_find
-#' @importFrom lazyeval lazy_dots
-Srivastava2014_test.resample <- function(x, ...){
-  dataDftoMatrix(data = as.data.frame(x),
-                 group = attributes(x)$vars[[1]],
-                 method = expr_find(Srivastava2014_test.list),
-                 .dots = lazy_dots(...))
-}
-
-#' @export
-#' @rdname Srivastava2014_test
+#' @keywords internal
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
@@ -173,3 +141,9 @@ Srivastava2014 <-  function(p, ahat2, ahat2i, sample_covs, overall_cov, theta){
     (ahat2i + ahat2 - (2 / p) * tr(sample_covs %*% overall_cov) ^ 2) / (theta ^ 2)
   }, p, ahat2i, ahat2, sample_covs, overall_cov, theta, SIMPLIFY = FALSE))
 }
+
+#' @export
+#' @keywords internal
+Srivastava2014_test.data.frame <- Srivastava2014_test.resample <- Srivastava2014_test.grouped_df <- helper(Srivastava2014_test)
+
+

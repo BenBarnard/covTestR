@@ -1,3 +1,4 @@
+source("R/helper_functions.R")
 #' Test of Equality of Covariances given by Schott 2007
 #'
 #' Performs 2 and k sample equality of covariance matrix test using Schott 2007
@@ -33,40 +34,7 @@ Schott2007_test <- function(x, ...) {
 }
 
 #' @export
-#' @rdname Schott2007_test
-#' @importFrom lazyeval expr_find
-#' @importFrom lazyeval lazy_dots
-Schott2007_test.data.frame <- function(x, group, ...){
-  dataDftoMatrix(data = x,
-                 group = expr_find(group),
-                 method = expr_find(Schott2007_test.list),
-                 .dots = lazy_dots(...))
-}
-
-#' @export
-#' @rdname Schott2007_test
-#' @importFrom lazyeval expr_find
-#' @importFrom lazyeval lazy_dots
-Schott2007_test.grouped_df <- function(x, ...){
-  dataDftoMatrix(data = x,
-                 group = attributes(x)$vars[[1]],
-                 method = expr_find(Schott2007_test.list),
-                 .dots = lazy_dots(...))
-}
-
-#' @export
-#' @rdname Schott2007_test
-#' @importFrom lazyeval expr_find
-#' @importFrom lazyeval lazy_dots
-Schott2007_test.resample <- function(x, ...){
-  dataDftoMatrix(data = as.data.frame(x),
-                 group = attributes(x)$vars[[1]],
-                 method = expr_find(Schott2007_test.list),
-                 .dots = lazy_dots(...))
-}
-
-#' @export
-#' @rdname Schott2007_test
+#' @keywords internal
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
@@ -164,3 +132,9 @@ Schott2007 <- function(p, ahat2, ahat2i, sample_covs, overall_cov, theta){
     (ahat2i + ahat2 - (2 / p) * tr(sample_covs %*% overall_cov) ^ 2) / (theta ^ 2)
     }, p, ahat2i, ahat2, sample_covs, overall_cov, theta, SIMPLIFY = FALSE))
 }
+
+#' @export
+#' @keywords internal
+Schott2007_test.data.frame <- Schott2007_test.resample <- Schott2007_test.grouped_df <- helper(Schott2007_test)
+
+

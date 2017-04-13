@@ -2,28 +2,14 @@
 % Please edit documentation in R/Schott2007_test.R
 \name{Schott2007_test}
 \alias{Schott2007_test}
-\alias{Schott2007_test.data.frame}
-\alias{Schott2007_test.grouped_df}
-\alias{Schott2007_test.resample}
-\alias{Schott2007_test.list}
 \title{Test of Equality of Covariances given by Schott 2007}
 \usage{
 Schott2007_test(x, ...)
-
-\method{Schott2007_test}{data.frame}(x, group, ...)
-
-\method{Schott2007_test}{grouped_df}(x, ...)
-
-\method{Schott2007_test}{resample}(x, ...)
-
-\method{Schott2007_test}{list}(x, ...)
 }
 \arguments{
 \item{x}{data as data.frame, grouped_df, resample or matrix object}
 
 \item{...}{other options passed to functions}
-
-\item{group}{group or population variable}
 }
 \value{
 Test statistic of the hypothesis test

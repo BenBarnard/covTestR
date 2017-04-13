@@ -36,11 +36,8 @@ img.icon {
 
 /* Section anchors ---------------------------------*/
 
-.hasAnchor {
-  margin-left: -30px;
-}
-
 a.anchor {
+  margin-left: -30px;
   display:inline-block;
   width: 30px;
   height: 30px;
@@ -56,12 +53,30 @@ a.anchor {
   visibility: visible;
 }
 
+@media (max-width: 767px) {
+  .hasAnchor:hover a.anchor {
+    visibility: hidden;
+  }
+}
+
+
 /* Fixes for fixed navbar --------------------------*/
 
 .contents h1, .contents h2, .contents h3, .contents h4 {
   padding-top: 60px;
   margin-top: -60px;
 }
+
+/* Static header placement on mobile devices */
+@media (max-width: 767px) {
+  .navbar-fixed-top {
+    position: absolute;
+  }
+  .navbar {
+    padding: 0;
+  }
+}
+
 
 /* Sidebar --------------------------*/
 
@@ -79,6 +94,30 @@ a.anchor {
 
 #sidebar .list-unstyled li {
   margin-bottom: 0.5em;
+}
+
+/* Reference index & topics ----------------------------------------------- */
+
+.ref-index th {font-weight: normal;}
+.ref-index h2 {font-size: 20px;}
+
+.ref-index td {vertical-align: top;}
+.ref-index .alias {width: 40%;}
+.ref-index .title {width: 60%;}
+
+.ref-index .alias {width: 40%;}
+.ref-index .title {width: 60%;}
+
+.ref-arguments th {text-align: right; padding-right: 10px;}
+.ref-arguments th, .ref-arguments td {vertical-align: top;}
+.ref-arguments .name {width: 20%;}
+.ref-arguments .desc {width: 80%;}
+
+/* Nice scrolling for wide elements --------------------------------------- */
+
+table {
+  display: block;
+  overflow: auto;
 }
 
 /* Syntax highlighting ---------------------------------------------------- */
@@ -110,4 +149,13 @@ code a {
 pre img {
   background-color: #fff;
   display: block;
+}
+
+pre {
+  word-wrap: normal;
+  word-break: normal;
+}
+
+pre a {
+  font-weight: bolder;
 }

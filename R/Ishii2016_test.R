@@ -1,3 +1,4 @@
+source("R/helper_functions.R")
 #' Test of Equality of Covariances given by Schott 2007
 #'
 #' @inheritParams Chaipitak2013_test
@@ -8,35 +9,13 @@
 #'
 #' @return Test Statistic for
 #' @export
-#' @keywords internal
 #' @examples Ishii2016_test(iris, group = Species)
 Ishii2016_test <- function(x, ...) {
   UseMethod("Ishii2016_test")
 }
 
 #' @export
-#' @rdname Ishii2016_test
-#' @importFrom lazyeval expr_find
-Ishii2016_test.data.frame <- function(x, group, ...){
-  dataDftoMatrix(data = x,
-                 group = expr_find(group),
-                 method = expr_find(Ishii2016_test.list),
-                 .dots = lazy_dots(...))
-
-}
-
-#' @export
-#' @rdname Ishii2016_test
-#' @importFrom lazyeval expr_find
-Ishii2016_test.grouped_df <- function(x, ...){
-  dataDftoMatrix(data = x,
-                 group = attributes(x)$vars[[1]],
-                 method = expr_find(Ishii2016_test.list),
-                 .dots = lazy_dots(...))
-}
-
-#' @export
-#' @rdname Ishii2016_test
+#' @keywords internal
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
@@ -166,3 +145,9 @@ Ishii2016 <- function(lambdatildes, htilde, ki, overall_lambdatilde, overall_hti
       (ki / overall_ki) - 1)
   }, lambdatildes, htilde, ki, overall_lambdatilde, overall_htilde, overall_ki, SIMPLIFY = FALSE))
 }
+
+#' @export
+#' @keywords internal
+Ishii2016_test.data.frame <- Ishii2016_test.resample <- Ishii2016_test.grouped_df <- helper(Ishii2016_test)
+
+

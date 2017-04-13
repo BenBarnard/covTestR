@@ -2,25 +2,14 @@
 % Please edit documentation in R/Ishii2016_test.R
 \name{Ishii2016_test}
 \alias{Ishii2016_test}
-\alias{Ishii2016_test.data.frame}
-\alias{Ishii2016_test.grouped_df}
-\alias{Ishii2016_test.list}
 \title{Test of Equality of Covariances given by Schott 2007}
 \usage{
 Ishii2016_test(x, ...)
-
-\method{Ishii2016_test}{data.frame}(x, group, ...)
-
-\method{Ishii2016_test}{grouped_df}(x, ...)
-
-\method{Ishii2016_test}{list}(x, ...)
 }
 \arguments{
 \item{x}{data as data.frame, grouped_df, resample or matrix object}
 
 \item{...}{other options passed to functions}
-
-\item{group}{group or population variable}
 }
 \value{
 Test Statistic for
@@ -36,4 +25,3 @@ Ishii, A., Yata, K., and Aoshima, M. (2016). Asymptotic properties of the first 
 component and equality tests of covariance matrices in high-dimesion, low-sample-size context. Journal
 of Statistical Planning and Inference, 170:186-199.
 }
-\keyword{internal}

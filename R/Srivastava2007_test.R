@@ -1,3 +1,4 @@
+source("R/helper_functions.R")
 #' Test of Equality of Covariances given by Srivastava 2007
 #'
 #' Performs 2 and k sample equality of covariance matrix test using Srivastava 2007
@@ -20,40 +21,7 @@ Srivastava2007_test <- function(x, ...){
 }
 
 #' @export
-#' @rdname Srivastava2007_test
-#' @importFrom lazyeval expr_find
-#'
-Srivastava2007_test.data.frame <- function(x, group, ...){
-  dataDftoMatrix(data = x,
-                 group = expr_find(group),
-                 method = expr_find(Srivastava2007_test.list),
-                 .dots = lazy_dots(...))
-}
-
-#' @export
-#' @rdname Srivastava2007_test
-#' @importFrom lazyeval expr_find
-#' @importFrom lazyeval lazy_dots
-Srivastava2007_test.grouped_df <- function(x, ...){
-  dataDftoMatrix(data = x,
-                 group = attributes(x)$vars[[1]],
-                 method = expr_find(Srivastava2007_test.list),
-                 .dots = lazy_dots(...))
-}
-
-#' @export
-#' @rdname Srivastava2007_test
-#' @importFrom lazyeval expr_find
-#' @importFrom lazyeval lazy_dots
-Srivastava2007_test.resample <- function(x, ...){
-  dataDftoMatrix(data = as.data.frame(x),
-                 group = attributes(x)$vars[[1]],
-                 method = expr_find(Srivastava2007_test.list),
-                 .dots = lazy_dots(...))
-}
-
-#' @export
-#' @rdname Srivastava2007_test
+#' @keywords internal
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
@@ -156,3 +124,9 @@ Srivastava2007 <- function(ahat2i, etahat2i){
     ((ahat2i - ahatbar) ^ 2) / etahat2i
   }, ahat2i, etahat2i, SIMPLIFY = FALSE))
 }
+
+#' @export
+#' @keywords internal
+Srivastava2007_test.data.frame <- Srivastava2007_test.resample <- Srivastava2007_test.grouped_df <- helper(Srivastava2007_test)
+
+

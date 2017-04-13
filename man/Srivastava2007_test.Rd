@@ -2,28 +2,14 @@
 % Please edit documentation in R/Srivastava2007_test.R
 \name{Srivastava2007_test}
 \alias{Srivastava2007_test}
-\alias{Srivastava2007_test.data.frame}
-\alias{Srivastava2007_test.grouped_df}
-\alias{Srivastava2007_test.resample}
-\alias{Srivastava2007_test.list}
 \title{Test of Equality of Covariances given by Srivastava 2007}
 \usage{
 Srivastava2007_test(x, ...)
-
-\method{Srivastava2007_test}{data.frame}(x, group, ...)
-
-\method{Srivastava2007_test}{grouped_df}(x, ...)
-
-\method{Srivastava2007_test}{resample}(x, ...)
-
-\method{Srivastava2007_test}{list}(x, ...)
 }
 \arguments{
 \item{x}{data as data.frame, grouped_df, resample or matrix object}
 
 \item{...}{other options passed to functions}
-
-\item{group}{group or population variable}
 }
 \value{
 Test statistic of the hypothesis test

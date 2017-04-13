@@ -1,9 +1,9 @@
+source("R/helper_functions.R")
 #' Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013
 #'
 #' Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
 #'
 #' @param x data as data.frame, grouped_df, resample or matrix object
-#' @param group group or population variable
 #' @param ... other options passed to functions
 #'
 #' @return Test statistic of the hypothesis test
@@ -21,40 +21,7 @@ Chaipitak2013_test <- function(x, ...){
 }
 
 #' @export
-#' @rdname Chaipitak2013_test
-#' @importFrom lazyeval expr_find
-#' @importFrom lazyeval lazy_dots
-Chaipitak2013_test.data.frame <- function(x, group, ...){
-  dataDftoMatrix(data = x,
-                 group = expr_find(group),
-                 method = expr_find(Chaipitak2013_test.list),
-                 .dots = lazy_dots(...))
-}
-
-#' @export
-#' @rdname Chaipitak2013_test
-#' @importFrom lazyeval expr_find
-#' @importFrom lazyeval lazy_dots
-Chaipitak2013_test.grouped_df <- function(x, ...){
-  dataDftoMatrix(data = x,
-                 group = attributes(x)$vars[[1]],
-                 method = expr_find(Chaipitak2013_test.list),
-                 .dots = lazy_dots(...))
-}
-
-#' @export
-#' @rdname Chaipitak2013_test
-#' @importFrom lazyeval expr_find
-#' @importFrom lazyeval lazy_dots
-Chaipitak2013_test.resample <- function(x, ...){
-  dataDftoMatrix(data = as.data.frame(x),
-                 group = attributes(x)$vars[[1]],
-                 method = expr_find(Chaipitak2013_test.list),
-                 .dots = lazy_dots(...))
-}
-
-#' @export
-#' @rdname Chaipitak2013_test
+#' @keywords internal
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_replace
@@ -151,3 +118,8 @@ Chaipitak2013 <- function(b, deltahat2){
     (b - 1) ^ 2 / deltahat2
   }, b, deltahat2, SIMPLIFY = FALSE))
 }
+
+#' @export
+#' @keywords internal
+Chaipitak2013_test.data.frame <- Chaipitak2013_test.resample <- Chaipitak2013_test.grouped_df <- helper(Chaipitak2013_test)
+

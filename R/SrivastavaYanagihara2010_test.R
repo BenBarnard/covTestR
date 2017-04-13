@@ -1,3 +1,4 @@
+source("R/helper_functions.R")
 #' Test of Equality of Covariances given by Srivastava and Yanagihara 2010
 #'
 #' @inheritParams Chaipitak2013_test
@@ -15,41 +16,10 @@ SrivastavaYanagihara2010_test <- function(x, ...){
   UseMethod("SrivastavaYanagihara2010_test")
 }
 
-#' @export
-#' @rdname SrivastavaYanagihara2010_test
-#' @importFrom lazyeval expr_find
-#'
-SrivastavaYanagihara2010_test.data.frame <- function(x, group, ...){
-    dataDftoMatrix(data = x,
-                   group = expr_find(group),
-                   method = expr_find(SrivastavaYanagihara2010_test.list),
-                   .dots = lazy_dots(...))
-}
+
 
 #' @export
-#' @rdname SrivastavaYanagihara2010_test
-#' @importFrom lazyeval expr_find
-#'
-SrivastavaYanagihara2010_test.grouped_df <- function(x, ...){
-  dataDftoMatrix(data = x,
-                 group = attributes(x)$vars[[1]],
-                 method = expr_find(SrivastavaYanagihara2010_test.list),
-                 .dots = lazy_dots(...))
-}
-
-#' @export
-#' @rdname SrivastavaYanagihara2010_test
-#' @importFrom lazyeval expr_find
-#' @importFrom lazyeval lazy_dots
-SrivastavaYanagihara2010_test.resample <- function(x, ...){
-  dataDftoMatrix(data = as.data.frame(x),
-                 group = attributes(x)$vars[[1]],
-                 method = expr_find(SrivastavaYanagihara2010_test.list),
-                 .dots = lazy_dots(...))
-}
-
-#' @export
-#' @rdname SrivastavaYanagihara2010_test
+#' @keywords internal
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
@@ -154,3 +124,7 @@ SrivastavaYanagihara2010 <- function(gammahat_ls, ksihat2_ls){
     ((gammahat_ls - gammahatbar) ^ 2) / ksihat2_ls
   }, gammahat_ls, ksihat2_ls, SIMPLIFY = FALSE))
 }
+
+#' @export
+#' @keywords internal
+SrivastavaYanagihara2010_test.data.frame <- SrivastavaYanagihara2010_test.resample <- SrivastavaYanagihara2010_test.grouped_df <- helper(SrivastavaYanagihara2010_test)

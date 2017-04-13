@@ -1,4 +1,5 @@
-#' Test of Equality of Covariances given by Chaipitak 2013
+source("R/helper_functions.R")
+#' Test of Equality of Covariances given by Box's M
 #'
 #' @inheritParams Chaipitak2013_test
 #'
@@ -6,33 +7,15 @@
 #'
 #' @export
 #'
-#' @examples BoxesM_test(iris, group = Species)
+#' @examples BoxsM_test(iris, group = Species)
 #'
-BoxesM_test <- function(x, ...){
-  UseMethod("BoxesM_test")
+BoxsM_test <- function(x, ...){
+  UseMethod("BoxsM_test")
 }
 
 #' @export
-#' @rdname BoxesM_test
-#' @importFrom dplyr select
-BoxesM_test.data.frame <- function(x, group, ...){
-  dataDftoMatrix(data = x,
-                 group = lazyeval::expr_find(group),
-                 method = lazyeval::expr_find(BoxesM_test.list),
-                 .dots = lazyeval::lazy_dots(...))
-}
-
-#' @export
-#' @rdname BoxesM_test
-BoxesM_test.grouped_df <- function(x, ...){
-  dataDftoMatrix(data = x,
-                 group = attributes(x)$vars[[1]],
-                 test = lazyeval::expr_find(BoxesM_test.list))
-}
-
-#' @export
-#' @rdname BoxesM_test
-BoxesM_test.list <- function(x, ...){
+#' @keywords internal
+BoxsM_test.list <- function(x, ...){
 
   ls <- lazy_dots(...)
   matrix_ls <- x
@@ -71,17 +54,23 @@ BoxesM_test.list <- function(x, ...){
 
   n_overall <- Reduce(`+`, lapply(ns, function(x){x - 1}))
 
-  BoxesM(ns, n_overall, sample_covs, overall_cov)
+  BoxsM(ns, n_overall, sample_covs, overall_cov)
 }
 
 
 #' Hidden Test
-#'
+#' @keywords internal
 #' @param ns ns
 #' @param n_overall n overall
 #' @param sample_covs sample covs
 #' @param overall_cov overall cov
 #'
-BoxesM <- function(ns, n_overall, sample_covs, overall_cov){
+BoxsM <- function(ns, n_overall, sample_covs, overall_cov){
   n_overall * log(det(overall_cov)) - Reduce(`+`, mapply(function(x, y){x * log(det(y))}, ns, sample_covs))
 }
+
+#' @export
+#' @keywords internal
+BoxsM_test.data.frame <- BoxsM_test.resample <- BoxsM_test.grouped_df <- helper(BoxsM_test)
+
+

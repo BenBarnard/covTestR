@@ -1,44 +1,32 @@
-#' Turn no a Tidy data frame into data matrix (helper function)
-#'
-#' @param data not a tidy dataframe
-#' @param group group
-#' @param method method
-#' @param ...  other options
-#' @param .dots other options
-#'
-#' @importFrom plyr dlply
-#' @importFrom lazyeval lazy_eval
-#' @importFrom lazyeval lazy_dots
-#'
+#' Use Method Creater for Tests
 #' @keywords internal
+#' @export
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
 #'
-#'
-dataDftoMatrix <- function(data, group, method, ..., .dots){
-  do.call(what = paste(method),
-          args = list(x = dlply(.data = data,
-                             .variables = group,
-                             .fun = Tidy_,
-                             group = group),
-                   group = group,
-                   lazy_eval(lazy_dots(...)),
-                   lazy_eval(.dots)
-          )
-  )
+helper <- function(method){
+  func <- function(x, ...){
+    groups <- attributes(x)$labels
+    x <- as.data.frame(x)
+    dots <- lazy_dots(...)
+    if(is.null(groups)){
+      groupname <- names(unique(x[paste(dots$group$expr)]))
+      group <- as.character(unique(x[paste(dots$group$expr)][,1]))
+    }else{
+      group <- as.character(groups[,1])
+      groupname <- names(groups)
+    }
+
+    ls <- setNames(lapply(group, function(y){
+      as.matrix(x[x[groupname] == y,][names(x) != groupname])
+      }), group)
+
+    do.call(what = method,
+            args = list(x = ls,
+                        .dots = dots))
+  }
 }
 
-#' not tidy helper
-#'
-#' @param data data
-#' @param group grouping variable
-#'
-#' @importFrom dplyr select
-#'
-#' @keywords internal
-#'
-#'
-Tidy_ <- function(data, group){
-  as.matrix(select(data, -eval(group)))
-}
 
 #' Trace of Matrix
 #'
