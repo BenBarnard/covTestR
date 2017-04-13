@@ -4,15 +4,21 @@
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stats setNames
+#' @importFrom dplyr as_data_frame
 #'
 helper <- function(method){
   func <- function(x, ...){
-    groups <- attributes(x)$labels
-    x <- as.data.frame(x)
+    if(is.null(attributes(x)$labels)){
+      x <- dplyr::as_data_frame(x)
+      groups <- attributes(x)$labels
+    }else{
+      groups <- attributes(x)$labels
+      x <- dplyr::as_data_frame(x)
+    }
     dots <- lazyeval::lazy_dots(...)
     if(is.null(groups)){
       groupname <- names(unique(x[paste(dots$group$expr)]))
-      group <- as.character(unique(x[paste(dots$group$expr)][,1]))
+      group <- as.character(unique(x[[paste(dots$group$expr)]]))
     }else{
       group <- as.character(groups[,1])
       groupname <- names(groups)
@@ -20,7 +26,7 @@ helper <- function(method){
 
     ls <- stats::setNames(lapply(group, function(y){
       as.matrix(x[x[groupname] == y,][names(x) != groupname])
-      }), group)
+    }), group)
 
     do.call(what = method,
             args = list(x = ls,

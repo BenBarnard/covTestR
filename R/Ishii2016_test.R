@@ -149,23 +149,14 @@ Ishii2016 <- function(lambdatildes, htilde, ki, overall_lambdatilde, overall_hti
 
 #' @export
 #' @keywords internal
-#' @importFrom lazyeval lazy_dots
-#' @importFrom lazyeval lazy_eval
-#' @importFrom stats setNames
 Ishii2016_test.data.frame <- helper(Ishii2016_test)
 
 #' @export
 #' @keywords internal
-#' @importFrom lazyeval lazy_dots
-#' @importFrom lazyeval lazy_eval
-#' @importFrom stats setNames
 Ishii2016_test.grouped_df <- helper(Ishii2016_test)
 
 #' @export
 #' @keywords internal
-#' @importFrom lazyeval lazy_dots
-#' @importFrom lazyeval lazy_eval
-#' @importFrom stats setNames
 Ishii2016_test.resample <- helper(Ishii2016_test)
 
 
