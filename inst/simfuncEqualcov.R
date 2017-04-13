@@ -40,18 +40,20 @@ if(!("power_tests.RData" %in% files)){
   save(power_tests, file = paste0(directory, "power_tests.RData"))
 }else{
   load(paste0(directory, "power_tests.RData"))
-browser()
+  browser()
+existingDifferences <- unique(power_tests$Differences)
+powertestgrid <- powertestgrid[!(powertestgrid$Differences %in% existingDifferences),]
+power_tests <- bind_rows(power_tests, mdply(powertestgrid,
+                                            .fun = powerdata,
+                                            covarianceMat = covarianceMat, replicationspower = replicationspower, dimensions = dimensions))
+save(power_tests, file = paste0(directory, "power_tests.RData"))
 }
 
-if(!("power_tests.RData" %in% files)){
+
   power_values <- ddply(.data = power_tests, .variables = .(Samples, Dimensions, Differences, Test, Populations),
                         .fun = powervalue, .progress = progress_text(char = "u"), critValues = critical_values)
 
   save(power_values, file = paste0(directory, "power_values.RData"))
-}else{
-  load(paste0(directory, "power_tests.RData"))
-  browser()
-}
 
   power_values
 }
