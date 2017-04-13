@@ -31,6 +31,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,29 +83,20 @@
     <p>Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013</p>
     
 
-    <pre><span class='fu'>Chaipitak2013_test</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for data.frame</span>
-<span class='fu'>Chaipitak2013_test</span>(<span class='no'>x</span>, <span class='no'>group</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for grouped_df</span>
-<span class='fu'>Chaipitak2013_test</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for resample</span>
-<span class='fu'>Chaipitak2013_test</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for list</span>
-<span class='fu'>Chaipitak2013_test</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+    <pre><span class='fu'>Chaipitak2013_test</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>data as data.frame, grouped_df, resample or matrix object</dd>
-      <dt>...</dt>
-      <dd>other options passed to functions</dd>
-      <dt>group</dt>
-      <dd>group or population variable</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>data as data.frame, grouped_df, resample or matrix object</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>other options passed to functions</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -120,7 +113,7 @@ matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.<
 #&gt; 	Chaipitak and Chongchareon 2013 Equality of Covariance Test
 #&gt; 
 #&gt; data:  setosa, versicolor and virginica
-#&gt; Chi Squared = 164.41, df = 2, p-value &lt; 2.2e-16
+#&gt; Chi Squared = 16.37, df = 2, p-value = 0.0002788
 #&gt; alternative hypothesis: true difference in covariances is not equal to 0
 #&gt; sample estimates:
 #&gt; $`covariance of setosa`

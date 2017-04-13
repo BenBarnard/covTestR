@@ -60,39 +60,48 @@
 <div class="contents">
 <div id="equalcov" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#equalcov" class="anchor"> </a>EqualCov</h1></div>
+<a href="#equalcov" class="anchor"></a>EqualCov</h1></div>
 
 <div id="overview" class="section level2">
 <h2 class="hasAnchor">
-<a href="#overview" class="anchor"> </a>Overview</h2>
+<a href="#overview" class="anchor"></a>Overview</h2>
 <p>EqualCov is an equality of covariance testing suite. Currently only equality of 2 and k group tests are available for high dimensional data. There are future plans for one sample tests for high dimensinal data, pretty print methods, and a wrapper function just to test.</p>
 <p>In developing EqualCov we found it useful to have it play nice with the “tidyverse.” At this point we have not thought of all the uses and combinations with these packages so if you think of something not currently implemented please file a minimal reproducible example on github.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#installation" class="anchor"> </a>Installation</h2>
+<a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install the latest development version from github with</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">if (<span class="kw">packageVersion</span>(<span class="st">"devtools"</span>) &lt;<span class="st"> </span><span class="fl">1.6</span>) {
   <span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
 }
 devtools::<span class="kw">install_github</span>(<span class="st">"benbarnard/EqualCov"</span>)</code></pre></div>
-<pre><code>## Skipping install of 'EqualCov' from a github remote, the SHA1 (c0c4b648) has not changed since last install.
+<pre><code>## Skipping install of 'EqualCov' from a github remote, the SHA1 (4affe270) has not changed since last install.
 ##   Use `force = TRUE` to force installation</code></pre>
 <p>If you encounter a clear bug, please file a minimal reproducible example on github.</p>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example" class="anchor"> </a>Example</h2>
+<a href="#example" class="anchor"></a>Example</h2>
 <p>This is a basic example which shows you how to solve a common problem:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
-<span class="kw">library</span>(EqualCov)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)</code></pre></div>
+<pre><code>## Loading tidyverse: ggplot2
+## Loading tidyverse: tibble
+## Loading tidyverse: tidyr
+## Loading tidyverse: readr
+## Loading tidyverse: purrr
+## Loading tidyverse: dplyr</code></pre>
+<pre><code>## Conflicts with tidy packages ----------------------------------------------</code></pre>
+<pre><code>## filter(): dplyr, stats
+## lag():    dplyr, stats</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(EqualCov)
 
 iris %&gt;%<span class="st"> </span><span class="kw">group_by</span>(Species) %&gt;%<span class="st"> </span>Chaipitak2013_test</code></pre></div>
 <pre><code>## 
 ##  Chaipitak and Chongchareon 2013 Equality of Covariance Test
 ## 
 ## data:  setosa, versicolor and virginica
-## Chi Squared = 164.41, df = 2, p-value &lt; 2.2e-16
+## Chi Squared = 16.37, df = 2, p-value = 0.0002788
 ## alternative hypothesis: true difference in covariances is not equal to 0
 ## sample estimates:
 ## $`covariance of setosa`
@@ -129,7 +138,6 @@ iris %&gt;%<span class="st"> </span><span class="kw">group_by</span>(Species) %&
 <a href="http://benbarnard.bearstatistics.com">Ben Barnard</a> <br><small class="roles"> Author, maintainer </small> </li>
 <li>Dean Young <br><small class="roles"> Author </small> </li>
 </ul>
-<html><body>
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://cran.r-project.org/package=EqualCov"><img src="http://www.r-pkg.org/badges/version/EqualCov" alt="CRAN_Status_Badge"></a></li>
@@ -137,7 +145,6 @@ iris %&gt;%<span class="st"> </span><span class="kw">group_by</span>(Species) %&
 <li><a href="https://travis-ci.org/BenBarnard/EqualCov"><img src="https://travis-ci.org/BenBarnard/EqualCov.svg?branch=master" alt="Travis-CI Build Status"></a></li>
 <li><a href="https://ci.appveyor.com/project/BenBarnard/EqualCov"><img src="https://ci.appveyor.com/api/projects/status/github/BenBarnard/EqualCov?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
 </ul>
-</body></html>
 </div>
 
 </div>
