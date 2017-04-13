@@ -5,8 +5,8 @@ sim1 <- sim(covarianceMat = toeplitz(0.5 ^ seq(0, (240 - 1))),
             replicationspower = 1000,
             samples = c(20, 40, 80, 160, 240),
             dimensions = c(20, 40, 80, 160, 240),
-            differences = c(1.05, 1.1),
-            directory = "/Users/ben_barnard/Dropbox/toeplitz_05")
+            differences = c(1.01, 1.02, 1.03, 1.04, 1.06, 1.07, 1.08, 1.09),
+            directory = "/Users/ben_barnard/Box Sync/Statistics/toeplitz_05/")
 
 
 delta0 <- matrix(0, 240, 240)
