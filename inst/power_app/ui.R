@@ -5,7 +5,7 @@ shinyUI(fluidPage(
     sidebarPanel(
       fileInput('file1', 'Choose File'),
       selectInput('pops', 'Populations', c(2, 3), selectize=FALSE),
-      selectInput('xaxis', 'X Axis', c("Difference", "Samples", "Dimensions"), selectize=FALSE),
+      selectInput('xaxis', 'X Axis', c("Differences", "Samples", "Dimensions"), selectize=FALSE),
       uiOutput("plotoptions1"),
       uiOutput("plotoptions2")
     ),

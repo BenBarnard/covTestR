@@ -12,8 +12,8 @@ shinyServer(function(input, output, session){
       file.rename(inFile$datapath,
                   paste0(inFile$datapath, ".RData"))
       load(paste0(inFile$datapath, ".RData"))
-      if(is.factor(power_values$Difference)){
-        power_values <- mutate(power_values, Difference = as.numeric(as.character(Difference)))
+      if(is.factor(power_values$Differences)){
+        power_values <- mutate(power_values, Differences = as.numeric(as.character(Differences)))
       }
       power_values
     }
@@ -33,7 +33,7 @@ shinyServer(function(input, output, session){
      if (is.null(tests())){
        return(NULL)
      }else{
-       df <- unique(select(dataInput(), Difference))
+       df <- unique(select(dataInput(), Differences))
        df
      }
    })
@@ -70,7 +70,7 @@ shinyServer(function(input, output, session){
    output$plotoptions1 <- renderUI({
      if(!(is.null(dimensions()))){
        switch(input$xaxis,
-              "Difference" = sliderInput("dynamic1", "Samples", min = min(samples()),
+              "Differences" = sliderInput("dynamic1", "Samples", min = min(samples()),
                                          max = max(samples()), value = max(samples()),
                                          step = 5),
               "Samples" = sliderInput("dynamic1", "Dimensions", min = min(dimensions()),
@@ -85,7 +85,7 @@ shinyServer(function(input, output, session){
    output$plotoptions2 <- renderUI({
      if(!(is.null(dimensions()))){
        switch(input$xaxis,
-              "Difference" = sliderInput("dynamic2", "Dimensions", min = min(dimensions()),
+              "Differences" = sliderInput("dynamic2", "Dimensions", min = min(dimensions()),
                                          max = max(dimensions()), value = max(dimensions()),
                                          step = 5),
               "Samples" = sliderInput("dynamic2", "Differences", min = min(differences()),
@@ -102,19 +102,19 @@ shinyServer(function(input, output, session){
      if(is.null(input$dynamic2)){
        return()
      }else{
-       if(input$xaxis == "Difference"){
+       if(input$xaxis == "Differences"){
          df <- select(filter(dataInput(),
                              Samples == input$dynamic1,
                              Dimensions == input$dynamic2,
                              Populations == input$pops),
-                      Power, Test, Difference)
+                      Power, Test, Differences)
          plot <- ggplot(data = df) +
-           geom_line(aes(x = Difference, y = Power, color = Test))
+           geom_line(aes(x = Differences, y = Power, color = Test))
        }
        if(input$xaxis == "Samples"){
          df <- select(filter(dataInput(),
                              Dimensions == input$dynamic1,
-                             Difference == input$dynamic2,
+                             Differences == input$dynamic2,
                              Populations == input$pops),
                       Power, Test, Samples)
          plot <- ggplot(data = df) +
@@ -122,7 +122,7 @@ shinyServer(function(input, output, session){
        }
        if(input$xaxis == "Dimensions"){
          df <- select(filter(dataInput(),
-                             Difference == input$dynamic1,
+                             Differences == input$dynamic1,
                              Samples == input$dynamic2,
                              Populations == input$pops),
                       Power, Test, Dimensions)
