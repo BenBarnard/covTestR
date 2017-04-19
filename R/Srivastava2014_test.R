@@ -9,20 +9,6 @@ source("R/helper_functions.R")
 #'
 #' @export
 #'
-#' @details Consider the test for the equality of covariance matrices with
-#' \deqn{\text{H}_0: \boldsymbol{\Sigma}_1 = \boldsymbol{\Sigma}_2 = \ldots = \boldsymbol{\Sigma}_k}
-#' and
-#' \deqn{\text{H}_{\text{A}}: \boldsymbol{\Sigma}_1 \neq \boldsymbol{\Sigma}_2 \neq \ldots \neq \boldsymbol{\Sigma}_k,}
-#' where \eqn{\boldsymbol{\Sigma_i}} are the population covariance matrix parameters. The sample covarinance matrix estimators, \eqn{\textbf{S}_1, \textbf{S}_2, \ldots, \textbf{S}_i}, are distributed singular Wishart such that \eqn{n_i\textbf{S}_i \sim W_k\left( \boldsymbol{\Sigma}_i, n_i \right)}.
-#' Then,
-#' \deqn{T_{Sr2014} = \sum \limits^{k}_{i < j} \frac{ \left( \hat{a}_{2i_{Sr}} + \hat{a}_{2j_{Sr}} - \frac{2}{p}tr \left( S_i S_j \right) \right) ^ 2}{\theta_{Sr}}}
-#' where,
-#' \deqn{\hat{a}_{2i_{Sr}} = \frac{ \left(n_i -2 \right) \left( n_i -1 \right) tr \left( \boldsymbol{V}_i^2 \right) - n \left( n - k \right) tr \left( \boldsymbol{D}^2_i \right) + tr \left( \boldsymbol{V}_i \right)^2 }{pn_i \left( n_i -1 \right) \left( n_i -2 \right) \left( n_i -3 \right) }}
-#' and
-#' \deqn{\hat{a}_{2_{Sr}} = \frac{\sum \limits^k_{i = 1}(n_i -1)\hat{a}_{2i_{Sr}}}{\sum \limits^k_{i = 1}(n_i -1)}.}
-#' The divisor
-#' \deqn{\theta_{Sr} = 4 \hat{a}_{2_{Sr}}^2 \left( \sum \limits_{i < j}^ k \left( \frac{1}{n_i} + \frac{1}{n_j} \right) + (k - 1)(k - 2) \sum \limits_{i = 1}^k n_i^{-2} \right)}
-#' is a variance term for the numerator.
 #'
 #' @references Srivastava, M., Yanagihara, H., and Kubokawa T. (2014). Tests for covariance
 #' matrices in high dimension with less sample size. Journal of Multivariate Analysis, 130:289-309.
