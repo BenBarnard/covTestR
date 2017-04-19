@@ -34,6 +34,24 @@ helper <- function(method){
   }
 }
 
+#' Use Method Creater for Tests
+#' @keywords internal
+#' @export
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+#' @importFrom stats setNames
+#' @importFrom dplyr as_data_frame
+#'
+helperOne <- function(method){
+  func <- function(x, ...){
+    ls <- as.matrix(x)
+    dots <- lazyeval::lazy_dots(...)
+    do.call(what = method,
+            args = list(x = ls,
+                        .dots = dots))
+  }
+}
+
 
 #' Trace of Matrix
 #'
