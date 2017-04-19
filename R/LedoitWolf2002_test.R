@@ -4,7 +4,6 @@ source("R/helper_functions.R")
 #' Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
 #'
 #' @param x data as data.frame, grouped_df, resample or matrix object
-#' @param covMat Covariance Matrix
 #' @param ... other options passed to functions
 #'
 #' @return Test statistic of the hypothesis test
@@ -15,7 +14,7 @@ source("R/helper_functions.R")
 #' @references Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
 #' matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.
 #'
-#' @examples LedoitWolf2002W_test(iris[1:50, 1:3])
+#' @examples LedoitWolf2002_test(iris[1:50, 1:3])
 #'
 LedoitWolf2002_test <- function(x, ...){
   UseMethod("LedoitWolf2002_test")
@@ -61,11 +60,11 @@ LedoitWolf2002_test.covariance <- function(x, covMat = "Identity", ...){
 #' @importFrom stats cov
 #' @importFrom stats pchisq
 #'
-LedoitWolf2002_test.matrix <- function(x, covMat = "Identity", ...){
+LedoitWolf2002_test.matrix <- function(x, ...){
   p <- ncol(x)
   n <- nrow(x)
   S <- cov(x)
-if(covMat == "Identity"){covMat <- diag(1, p)}
+if(!(exists("covMat"))){covMat <- diag(1, p)}
 
   statistic <- LedoitWolf2002(n, p, S, covMat)
   names(statistic) <- "Chi Squared"

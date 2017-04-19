@@ -10,8 +10,6 @@ LedoitWolf2002_test(x, ...)
 \item{x}{data as data.frame, grouped_df, resample or matrix object}
 
 \item{...}{other options passed to functions}
-
-\item{covMat}{Covariance Matrix}
 }
 \value{
 Test statistic of the hypothesis test
@@ -20,7 +18,7 @@ Test statistic of the hypothesis test
 Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
 }
 \examples{
-LedoitWolf2002W_test(iris[1:50, 1:3])
+LedoitWolf2002_test(iris[1:50, 1:3])
 
 }
 \references{
