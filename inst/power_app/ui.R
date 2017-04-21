@@ -10,6 +10,7 @@ shinyUI(fluidPage(
       uiOutput("plotoptions2")
     ),
     mainPanel(
+      h1("Power Curves"),
       plotOutput(outputId = "plot", height = "300px")
     )
   )

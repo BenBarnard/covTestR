@@ -78,7 +78,7 @@ shinyServer(function(input, output, session){
                                       step = 5),
               "Dimensions" = sliderInput("dynamic1", "Differences", min = min(differences()),
                                          max = max(differences()), value = max(differences()),
-                                         step = 0.1))
+                                         step = 0.01))
      }
    })
 
@@ -90,7 +90,7 @@ shinyServer(function(input, output, session){
                                          step = 5),
               "Samples" = sliderInput("dynamic2", "Differences", min = min(differences()),
                                       max = max(differences()), value = max(differences()),
-                                      step = 0.1),
+                                      step = 0.01),
               "Dimensions" = sliderInput("dynamic2", "Samples", min = min(samples()),
                                          max = max(samples()), value = max(samples()),
                                          step = 5))
@@ -109,7 +109,8 @@ shinyServer(function(input, output, session){
                              Populations == input$pops),
                       Power, Test, Differences)
          plot <- ggplot(data = df) +
-           geom_line(aes(x = Differences, y = Power, color = Test))
+           geom_line(aes(x = Differences, y = Power, color = Test)) +
+           theme_bw()
        }
        if(input$xaxis == "Samples"){
          df <- select(filter(dataInput(),
@@ -118,7 +119,8 @@ shinyServer(function(input, output, session){
                              Populations == input$pops),
                       Power, Test, Samples)
          plot <- ggplot(data = df) +
-           geom_line(aes(x = Samples, y = Power, color = Test))
+           geom_line(aes(x = Samples, y = Power, color = Test)) +
+           theme_bw()
        }
        if(input$xaxis == "Dimensions"){
          df <- select(filter(dataInput(),
@@ -127,7 +129,8 @@ shinyServer(function(input, output, session){
                              Populations == input$pops),
                       Power, Test, Dimensions)
          plot <- ggplot(data = df) +
-           geom_line(aes(x = Dimensions, y = Power, color = Test))
+           geom_line(aes(x = Dimensions, y = Power, color = Test)) +
+           theme_bw()
        }
      }
      plot
