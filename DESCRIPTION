@@ -17,6 +17,7 @@ Imports:
     lazyeval,
     stringr,
     plyr,
-    dplyr
+    dplyr,
+    shiny
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
