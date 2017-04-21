@@ -27,7 +27,7 @@ LedoitWolf2002_test <- function(x, ...){
 #'
 LedoitWolf2002_test.covariance <- function(x, covMat = "Identity", ...){
   p <- ncol(x)
-  n <- attributes(x)$n
+  n <- attributes(x)$df + 1
   S <- x
   if(covMat == "Identity"){covMat <- diag(1, p)}
 

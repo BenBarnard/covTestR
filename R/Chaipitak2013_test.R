@@ -50,7 +50,7 @@ Chaipitak2013_test.list <- function(x, ...){
 
   if("covariance" %in% class(x[[1]])){
     ns <- lapply(matrix_ls, function(matrix){
-      attributes(matrix)$n
+      attributes(matrix)$df + 1
     })
 
     p <- lapply(matrix_ls, function(matrix){

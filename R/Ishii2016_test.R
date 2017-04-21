@@ -43,9 +43,9 @@ Ishii2016_test.list <- function(x, ...){
 
   if("covariance" %in% class(x[[1]])){
     covs <- matrix_ls
-    ns <- lapply(matrix_ls, function(x){attributes(x)$n})
+    ns <- lapply(matrix_ls, function(x){attributes(x)$df + 1})
     dfmat <- lapply(matrix_ls, function(x){
-      n <- attributes(x)$n
+      n <- attributes(x)$df + 1
       sv <- svd(x)
       sqdi <- diag(sqrt(sv$d))
       sv$u %*% sqdi
