@@ -4,7 +4,17 @@ Ei_func <- function(x){
 }
 
 sumD2_func <- function(x){
-
+n <- nrow(x)
+df <- expand.grid(k = seq(1, n),
+                  r = seq(1, n),
+                  kt = seq(1, n),
+                  rt = seq(1, n))
+df <- df[!(df$k == df$kt |
+             df$k == df$r |
+             df$k == df$rt |
+             df$r == df$rt |
+             df$r == df$kt |
+             df$kt == df$rt),]
 }
 
 pn_func <- function(x, y = NULL){
