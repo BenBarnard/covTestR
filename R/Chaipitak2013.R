@@ -1,4 +1,3 @@
-source("R/helper_functions.R")
 #' Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013
 #'
 #' Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
@@ -8,6 +7,12 @@ source("R/helper_functions.R")
 #'
 #' @return Test statistic of the hypothesis test
 #'
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+#' @importFrom stringr str_replace
+#' @importFrom stringr str_detect
+#' @importFrom stats cov
+#' @importFrom stats pchisq
 #'
 #' @export
 #'
@@ -16,20 +21,7 @@ source("R/helper_functions.R")
 #'
 #' @examples Chaipitak2013_test(iris, group = Species)
 #'
-Chaipitak2013_test <- function(x, ...){
-  UseMethod("Chaipitak2013_test")
-}
-
-#' @export
-#' @keywords internal
-#' @importFrom lazyeval lazy_dots
-#' @importFrom lazyeval lazy_eval
-#' @importFrom stringr str_replace
-#' @importFrom stringr str_detect
-#' @importFrom stats cov
-#' @importFrom stats pchisq
-#'
-Chaipitak2013_test.list <- function(x, ...){
+Chaipitak2013 <- function(x, ...){
 
   ls <- lazy_dots(...)
   matrix_ls <- x
@@ -80,7 +72,10 @@ Chaipitak2013_test.list <- function(x, ...){
 
   data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
 
-  statistic <- Chaipitak2013(b, deltahat2)
+  statistic <- Reduce(`+`, mapply(function(b, deltahat2){
+    (b - 1) ^ 2 / deltahat2
+  }, b, deltahat2, SIMPLIFY = FALSE))
+
   names(statistic) <- "Chi Squared"
 
   parameter <- length(matrix_ls) - 1
@@ -111,23 +106,3 @@ Chaipitak2013_test.list <- function(x, ...){
   class(obj) <- "htest"
   obj
 }
-
-#' @keywords internal
-Chaipitak2013 <- function(b, deltahat2){
-  Reduce(`+`, mapply(function(b, deltahat2){
-    (b - 1) ^ 2 / deltahat2
-  }, b, deltahat2, SIMPLIFY = FALSE))
-}
-
-#' @export
-#' @keywords internal
-Chaipitak2013_test.data.frame <- helper(Chaipitak2013_test)
-
-#' @export
-#' @keywords internal
-Chaipitak2013_test.resample <- helper(Chaipitak2013_test)
-
-#' @export
-#' @keywords internal
-Chaipitak2013_test.grouped_df <- helper(Chaipitak2013_test)
-
