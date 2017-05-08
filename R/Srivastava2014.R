@@ -1,26 +1,12 @@
-source("R/helper_functions.R")
 #' Test of Equality of Covariances given by Srivastava et al. 2014
 #'
 #' Performs 2 and k sample equality of covariance matrix test using Srivastava et al. 2014
 #'
-#' @inheritParams Chaipitak2013_test
+#' @inheritParams Chaipitak2013
 #'
 #' @return Test statistic of the hypothesis test
 #'
 #' @export
-#'
-#'
-#' @references Srivastava, M., Yanagihara, H., and Kubokawa T. (2014). Tests for covariance
-#' matrices in high dimension with less sample size. Journal of Multivariate Analysis, 130:289-309.
-#'
-#' @examples Srivastava2014_test(iris, group = Species)
-#'
-Srivastava2014_test <- function(x, ...) {
-  UseMethod("Srivastava2014_test")
-}
-
-#' @export
-#' @keywords internal
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
@@ -28,7 +14,12 @@ Srivastava2014_test <- function(x, ...) {
 #' @importFrom stats cov
 #' @importFrom stats pchisq
 #'
-Srivastava2014_test.list <- function(x, ...){
+#' @references Srivastava, M., Yanagihara, H., and Kubokawa T. (2014). Tests for covariance
+#' matrices in high dimension with less sample size. Journal of Multivariate Analysis, 130:289-309.
+#'
+#' @examples Srivastava2014(iris, group = Species)
+#'
+Srivastava2014 <- function(x, ...){
 
   ls <- lazy_dots(...)
   matrix_ls <- x
@@ -88,7 +79,10 @@ Srivastava2014_test.list <- function(x, ...){
 
   data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
 
-  statistic <- Srivastava2014(p[[1]], ahat2, ahat2i, sample_covs, list(overall_cov), theta)
+  statistic <- Reduce(`+`, mapply(function(p, ahat2i, ahat2, sample_covs, overall_cov, theta){
+    ((ahat2i + ahat2 - (2 / p) * tr(sample_covs %*% overall_cov)) ^ 2) / (theta ^ 2)
+  }, p[[1]], ahat2i, ahat2, sample_covs, list(overall_cov), theta, SIMPLIFY = FALSE))
+
   names(statistic) <- "Chi Squared"
 
   parameter <- 1
@@ -119,23 +113,3 @@ Srivastava2014_test.list <- function(x, ...){
   class(obj) <- "htest"
   obj
 }
-
-#' @keywords internal
-Srivastava2014 <-  function(p, ahat2, ahat2i, sample_covs, overall_cov, theta){
-
-  Reduce(`+`, mapply(function(p, ahat2i, ahat2, sample_covs, overall_cov, theta){
-    (ahat2i + ahat2 - (2 / p) * tr(sample_covs %*% overall_cov) ^ 2) / (theta ^ 2)
-  }, p, ahat2i, ahat2, sample_covs, overall_cov, theta, SIMPLIFY = FALSE))
-}
-
-#' @export
-#' @keywords internal
-Srivastava2014_test.data.frame <- helper(Srivastava2014_test)
-
-#' @export
-#' @keywords internal
-Srivastava2014_test.resample <- helper(Srivastava2014_test)
-
-#' @export
-#' @keywords internal
-Srivastava2014_test.grouped_df <- helper(Srivastava2014_test)

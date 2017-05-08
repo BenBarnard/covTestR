@@ -57,12 +57,12 @@ NullthreeTests <- ldply(mvndata, function(list){
    data.frame(SampleSize = nrow(list$Zero1), dimension = ncol(list$Zero1),
               Test = c("Chaipitak", "Schott", "Srivastava 2007", "Srivastava 2010",
                        "Srivastava 2014", "Ishii"),
-              Statistic = c(Chaipitak2013_test(list(list$Zero1, list$Zero2, list$Zero3))$statistic,
-                            Schott2007_test(list(list$Zero1, list$Zero2, list$Zero3))$statistic,
-                            Srivastava2007_test(list(list$Zero1, list$Zero2, list$Zero3))$statistic,
-                            SrivastavaYanagihara2010_test(list(list$Zero1, list$Zero2, list$Zero3))$statistic,
-                            Srivastava2014_test(list(list$Zero1, list$Zero2, list$Zero3))$statistic,
-                            Ishii2016_test(list(list$Zero1, list$Zero2, list$Zero3))$statistic))
+              Statistic = c(Chaipitak2013(list(list$Zero1, list$Zero2, list$Zero3))$statistic,
+                            Schott2007(list(list$Zero1, list$Zero2, list$Zero3))$statistic,
+                            Srivastava2007(list(list$Zero1, list$Zero2, list$Zero3))$statistic,
+                            SrivastavaYanagihara2010(list(list$Zero1, list$Zero2, list$Zero3))$statistic,
+                            Srivastava2014(list(list$Zero1, list$Zero2, list$Zero3))$statistic,
+                            Ishii2016(list(list$Zero1, list$Zero2, list$Zero3))$statistic))
   })
 })
 
@@ -71,12 +71,8 @@ save(NullthreeTests, file = "E:/Ben/Box Sync/Statistics/Srivastava2010Sim/Nullth
 pushover(message = "NullthreeTests",
          title = "Hey")
 
-cvsthree <- ddply(NullthreeTests, .(SampleSize, dimension, Test), .fun = function(x){
-  data.frame(SampleSize = unique(x$SampleSize),
-             dimension = unique(x$dimension),
-             Test = unique(x$Test),
-             CriticalValue = quantile(x$Statistic, 0.95))
-})
+cvsthree <- summarize(group_by(NullthreeTests, SampleSize, dimension, Test),
+                      CriticalValue = quantile(Statistic, 0.95))
 
 save(cvsthree, file = "E:/Ben/Box Sync/Statistics/Srivastava2010Sim/cvsthree.RData")
 
@@ -88,12 +84,12 @@ Powervaluesthreetests <- ldply(mvndata, function(list){
     data.frame(SampleSize = nrow(list$Zero1), dimension = ncol(list$Zero1),
                Test = c("Chaipitak", "Schott", "Srivastava 2007", "Srivastava 2010",
                         "Srivastava 2014", "Ishii"),
-               Statistic = c(Chaipitak2013_test(list(list$Zero1, list$One, list$Two))$statistic,
-                             Schott2007_test(list(list$Zero1, list$One, list$Two))$statistic,
-                             Srivastava2007_test(list(list$Zero1, list$One, list$Two))$statistic,
-                             SrivastavaYanagihara2010_test(list(list$Zero1, list$One, list$Two))$statistic,
-                             Srivastava2014_test(list(list$Zero1, list$One, list$Two))$statistic,
-                             Ishii2016_test(list(list$Zero1, list$One, list$Two))$statistic))
+               Statistic = c(Chaipitak2013(list(list$Zero1, list$One, list$Two))$statistic,
+                             Schott2007(list(list$Zero1, list$One, list$Two))$statistic,
+                             Srivastava2007(list(list$Zero1, list$One, list$Two))$statistic,
+                             SrivastavaYanagihara2010(list(list$Zero1, list$One, list$Two))$statistic,
+                             Srivastava2014(list(list$Zero1, list$One, list$Two))$statistic,
+                             Ishii2016(list(list$Zero1, list$One, list$Two))$statistic))
   })
 })
 
@@ -102,14 +98,17 @@ save(Powervaluesthreetests, file = "E:/Ben/Box Sync/Statistics/Srivastava2010Sim
 pushover(message = "Powervaluesthreetests",
          title = "Hey")
 
-powerscoresthreetests <- mutate(full_join(cvsthree, Powervaluesthreetests), Significant = (Statistic <= CriticalValue))
+powerscoresthreetests <- mutate(full_join(cvsthree, Powervaluesthreetests),
+                                Significant = (Statistic > CriticalValue))
 
 save(powerscoresthreetests, file = "E:/Ben/Box Sync/Statistics/Srivastava2010Sim/powerscoresthreetests.RData")
 
 pushover(message = "powerscoresthreetests",
          title = "Hey")
 
-powerthreetest <- summarise(group_by(powerscoresthreetests, SampleSize, dimension, Test), Power = mean(Significant))
+powerthreetest <- summarise(group_by(powerscoresthreetests,
+                                     SampleSize, dimension, Test),
+                            Power = mean(Significant))
 
 save(powerthreetest, file = "E:/Ben/Box Sync/Statistics/Srivastava2010Sim/powerthreetest.RData")
 
@@ -121,12 +120,12 @@ NulltwoTests <- ldply(mvndata, function(list){
     data.frame(SampleSize = nrow(list$Zero1), dimension = ncol(list$Zero1),
                Test = c("Chaipitak", "Schott", "Srivastava 2007", "Srivastava 2010",
                         "Srivastava 2014", "Ishii"),
-               Statistic = c(Chaipitak2013_test(list(list$Zero1, list$Zero2))$statistic,
-                             Schott2007_test(list(list$Zero1, list$Zero2))$statistic,
-                             Srivastava2007_test(list(list$Zero1, list$Zero2))$statistic,
-                             SrivastavaYanagihara2010_test(list(list$Zero1, list$Zero2))$statistic,
-                             Srivastava2014_test(list(list$Zero1, list$Zero2))$statistic,
-                             Ishii2016_test(list(list$Zero1, list$Zero2))$statistic))
+               Statistic = c(Chaipitak2013(list(list$Zero1, list$Zero2))$statistic,
+                             Schott2007(list(list$Zero1, list$Zero2))$statistic,
+                             Srivastava2007(list(list$Zero1, list$Zero2))$statistic,
+                             SrivastavaYanagihara2010(list(list$Zero1, list$Zero2))$statistic,
+                             Srivastava2014(list(list$Zero1, list$Zero2))$statistic,
+                             Ishii2016(list(list$Zero1, list$Zero2))$statistic))
   })
 })
 
@@ -135,12 +134,8 @@ save(NulltwoTests, file = "E:/Ben/Box Sync/Statistics/Srivastava2010Sim/NulltwoT
 pushover(message = "NulltwoTests",
          title = "Hey")
 
-cvstwo <- ddply(NulltwoTests, .(SampleSize, dimension, Test), .fun = function(x){
-  data.frame(SampleSize = unique(x$SampleSize),
-             dimension = unique(x$dimension),
-             Test = unique(x$Test),
-             CriticalValue = quantile(x$Statistic, 0.95))
-})
+cvstwo <- summarize(group_by(NulltwoTests, SampleSize, dimension, Test),
+                      CriticalValue = quantile(Statistic, 0.95))
 
 save(cvstwo, file = "E:/Ben/Box Sync/Statistics/Srivastava2010Sim/cvstwo.RData")
 
@@ -152,12 +147,12 @@ Powervaluestwotests <- ldply(mvndata, function(list){
     data.frame(SampleSize = nrow(list$Zero1), dimension = ncol(list$Zero1),
                Test = c("Chaipitak", "Schott", "Srivastava 2007", "Srivastava 2010",
                         "Srivastava 2014", "Ishii"),
-               Statistic = c(Chaipitak2013_test(list(list$Zero1, list$One))$statistic,
-                             Schott2007_test(list(list$Zero1, list$One))$statistic,
-                             Srivastava2007_test(list(list$Zero1, list$One))$statistic,
-                             SrivastavaYanagihara2010_test(list(list$Zero1, list$One))$statistic,
-                             Srivastava2014_test(list(list$Zero1, list$One))$statistic,
-                             Ishii2016_test(list(list$Zero1, list$One))$statistic))
+               Statistic = c(Chaipitak2013(list(list$Zero1, list$One))$statistic,
+                             Schott2007(list(list$Zero1, list$One))$statistic,
+                             Srivastava2007(list(list$Zero1, list$One))$statistic,
+                             SrivastavaYanagihara2010(list(list$Zero1, list$One))$statistic,
+                             Srivastava2014(list(list$Zero1, list$One))$statistic,
+                             Ishii2016(list(list$Zero1, list$One))$statistic))
   })
 })
 
@@ -166,14 +161,17 @@ save(Powervaluestwotests, file = "E:/Ben/Box Sync/Statistics/Srivastava2010Sim/P
 pushover(message = "Powervaluestwotests",
          title = "Hey")
 
-powerscorestwotests <- mutate(full_join(cvstwo, Powervaluestwotests), Significant = (Statistic <= CriticalValue))
+powerscorestwotests <- mutate(full_join(cvstwo, Powervaluestwotests),
+                              Significant = (Statistic > CriticalValue))
 
 save(powerscorestwotests, file = "E:/Ben/Box Sync/Statistics/Srivastava2010Sim/powerscorestwotests.RData")
 
 pushover(message = "powerscorestwotests",
          title = "Hey")
 
-powertwotest <- summarise(group_by(powerscorestwotests, SampleSize, dimension, Test), Power = mean(Significant))
+powertwotest <- summarise(group_by(powerscorestwotests,
+                                   SampleSize, dimension, Test),
+                          Power = mean(Significant))
 
 save(powertwotest, file = "E:/Ben/Box Sync/Statistics/Srivastava2010Sim/powertwotest.RData")
 

@@ -1,7 +1,6 @@
-source("R/helper_functions.R")
 #' Test of Equality of Covariances given by Box's M
 #'
-#' @inheritParams Chaipitak2013_test
+#' @inheritParams Chaipitak2013
 #'
 #' @return Test statistic for Chaipitak 2013
 #'
@@ -9,14 +8,7 @@ source("R/helper_functions.R")
 #'
 #' @examples BoxsM_test(iris, group = Species)
 #'
-BoxsM_test <- function(x, ...){
-  UseMethod("BoxsM_test")
-}
-
-#' @export
-#' @keywords internal
-BoxsM_test.list <- function(x, ...){
-
+BoxesM_test <- function(x, ...){
   ls <- lazy_dots(...)
   matrix_ls <- x
 
@@ -54,30 +46,6 @@ BoxsM_test.list <- function(x, ...){
 
   n_overall <- Reduce(`+`, lapply(ns, function(x){x - 1}))
 
-  BoxsM(ns, n_overall, sample_covs, overall_cov)
+  statistic <- n_overall * log(det(overall_cov)) - Reduce(`+`, mapply(function(x, y){x * log(det(y))}, ns, sample_covs))
 }
-
-
-#' Hidden Test
-#' @keywords internal
-#' @param ns ns
-#' @param n_overall n overall
-#' @param sample_covs sample covs
-#' @param overall_cov overall cov
-#'
-BoxsM <- function(ns, n_overall, sample_covs, overall_cov){
-  n_overall * log(det(overall_cov)) - Reduce(`+`, mapply(function(x, y){x * log(det(y))}, ns, sample_covs))
-}
-
-#' @export
-#' @keywords internal
-BoxsM_test.data.frame <- helper(BoxsM_test)
-
-#' @export
-#' @keywords internal
-BoxsM_test.grouped_df <- helper(BoxsM_test)
-
-#' @export
-#' @keywords internal
-BoxsM_test.resample <- helper(BoxsM_test)
 

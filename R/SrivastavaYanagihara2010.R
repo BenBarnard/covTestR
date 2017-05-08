@@ -1,25 +1,11 @@
 source("R/helper_functions.R")
 #' Test of Equality of Covariances given by Srivastava and Yanagihara 2010
 #'
-#' @inheritParams Chaipitak2013_test
+#' @inheritParams Chaipitak2013
 #'
 #' @return Test statistic for Srivastava and Yanagihara 2010
 #'
 #' @export
-#'
-#' @references Srivastava, M. and Yanagihara, H. (2010). Testing the equality of several covariance matrices with
-#' fewer observation that the dimension. Journal of Multivariate Analysis, 101(6):1319-1329.
-#'
-#' @examples SrivastavaYanagihara2010_test(iris, group = Species)
-#'
-SrivastavaYanagihara2010_test <- function(x, ...){
-  UseMethod("SrivastavaYanagihara2010_test")
-}
-
-
-
-#' @export
-#' @keywords internal
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
@@ -27,7 +13,13 @@ SrivastavaYanagihara2010_test <- function(x, ...){
 #' @importFrom stats cov
 #' @importFrom stats pchisq
 #'
-SrivastavaYanagihara2010_test.list <- function(x, ...){
+#' @references Srivastava, M. and Yanagihara, H. (2010). Testing the equality of several covariance matrices with
+#' fewer observation that the dimension. Journal of Multivariate Analysis, 101(6):1319-1329.
+#'
+#' @examples SrivastavaYanagihara2010(iris, group = Species)
+#'
+SrivastavaYanagihara2010 <- function(x, ...){
+
   ls <- lazy_dots(...)
   matrix_ls <- x
 
@@ -64,6 +56,7 @@ SrivastavaYanagihara2010_test.list <- function(x, ...){
   overall_cov <- overall_cov_func(A_ls, ns)
 
   ahat2 <- ahat2_func(ns, overall_cov, p[[1]])
+
   ahat1 <- ahat1_func(p[[1]], overall_cov)
 
   ahat2i <- mapply(ahat2i_func, ns, p, sample_covs, SIMPLIFY = FALSE)
@@ -71,9 +64,11 @@ SrivastavaYanagihara2010_test.list <- function(x, ...){
   ahat1i <- lapply(sample_covs, function(x){ahat1i_func(p[[1]], x)})
 
   ahat3 <- ahat3_func(A_ls, p[[1]], ns, ahat2, ahat1)
+
   ahat4 <- ahat4_func(A_ls, p[[1]], ns, ahat2, ahat1)
 
-  ksihat2_ls <- mapply(ksihat2i_func, ns, p, ahat1, ahat2, ahat3, ahat4, SIMPLIFY = FALSE)
+  ksihat2_ls <- mapply(ksihat2i_func, ns, p, ahat1, ahat2,
+                       ahat3, ahat4, SIMPLIFY = FALSE)
 
   gammahat_ls <- mapply(gammahati_func, ahat2i, ahat1i, SIMPLIFY = FALSE)
 
@@ -83,7 +78,16 @@ SrivastavaYanagihara2010_test.list <- function(x, ...){
 
   data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
 
-  statistic <- SrivastavaYanagihara2010(gammahat_ls, ksihat2_ls)
+  gammahatbar <- Reduce(`+`, mapply(
+    function(gammahat_ls, ksihat2_ls){
+      gammahat_ls / ksihat2_ls
+    }, gammahat_ls, ksihat2_ls, SIMPLIFY = FALSE)) /
+    Reduce(`+`, lapply(ksihat2_ls, function(x){1 / x}))
+
+  statistic <- Reduce(`+`, mapply(function(gammahat_ls, ksihat2_ls){
+    ((gammahat_ls - gammahatbar) ^ 2) / ksihat2_ls
+  }, gammahat_ls, ksihat2_ls, SIMPLIFY = FALSE))
+
   names(statistic) <- "Chi Squared"
 
   parameter <- length(matrix_ls) - 1
@@ -114,26 +118,3 @@ SrivastavaYanagihara2010_test.list <- function(x, ...){
   class(obj) <- "htest"
   obj
 }
-
-#' @keywords internal
-SrivastavaYanagihara2010 <- function(gammahat_ls, ksihat2_ls){
-  gammahatbar <- Reduce(`+`, mapply(function(gammahat_ls, ksihat2_ls){gammahat_ls / ksihat2_ls},
-                                    gammahat_ls, ksihat2_ls, SIMPLIFY = FALSE)) /
-    Reduce(`+`, lapply(ksihat2_ls, function(x){1 / x}))
-  Reduce(`+`, mapply(function(gammahat_ls, ksihat2_ls){
-    ((gammahat_ls - gammahatbar) ^ 2) / ksihat2_ls
-  }, gammahat_ls, ksihat2_ls, SIMPLIFY = FALSE))
-}
-
-#' @export
-#' @keywords internal
-SrivastavaYanagihara2010_test.data.frame <- helper(SrivastavaYanagihara2010_test)
-
-#' @export
-#' @keywords internal
-SrivastavaYanagihara2010_test.resample <- helper(SrivastavaYanagihara2010_test)
-
-#' @export
-#' @keywords internal
-SrivastavaYanagihara2010_test.grouped_df <- helper(SrivastavaYanagihara2010_test)
-

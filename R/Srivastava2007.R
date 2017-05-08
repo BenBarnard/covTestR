@@ -1,27 +1,13 @@
-source("R/helper_functions.R")
 #' Test of Equality of Covariances given by Srivastava 2007
 #'
 #' Performs 2 and k sample equality of covariance matrix test using Srivastava 2007
 #'
-#' @inheritParams Chaipitak2013_test
+#' @inheritParams Chaipitak2013
 #'
 #' @return Test statistic of the hypothesis test
 #'
 #' @export
 #'
-#' @references Srivastava, M. S. (2007). Testing the equality of two covariance matrices and
-#' independence of two sub-vectors with fewer observations than the dimension. InInternational
-#' Conference on Advances in InterdisciplinaryStistics and Combinatorics, University of North Carolina
-#' at Greensboro, NC, USA.
-#'
-#' @examples Srivastava2007_test(iris, group = Species)
-#'
-Srivastava2007_test <- function(x, ...){
-  UseMethod("Srivastava2007_test")
-}
-
-#' @export
-#' @keywords internal
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
@@ -29,7 +15,14 @@ Srivastava2007_test <- function(x, ...){
 #' @importFrom stats cov
 #' @importFrom stats pchisq
 #'
-Srivastava2007_test.list <- function(x, ...){
+#' @references Srivastava, M. S. (2007). Testing the equality of two covariance matrices and
+#' independence of two sub-vectors with fewer observations than the dimension. InInternational
+#' Conference on Advances in InterdisciplinaryStistics and Combinatorics, University of North Carolina
+#' at Greensboro, NC, USA.
+#'
+#' @examples Srivastava2007(iris, group = Species)
+#'
+Srivastava2007 <- function(x, ...){
 
   ls <- lazy_dots(...)
   matrix_ls <- x
@@ -81,7 +74,14 @@ Srivastava2007_test.list <- function(x, ...){
 
   data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
 
-  statistic <- Srivastava2007(ahat2i, etahat2i)
+  ahatbar <- Reduce(`+`, mapply(function(ahat2i, etahat2i){ahat2i / etahat2i},
+                                ahat2i, etahat2i, SIMPLIFY = FALSE)) /
+    Reduce(`+`, lapply(etahat2i, function(x){1 / x}))
+
+  statistic <- Reduce(`+`, mapply(function(ahat2i, etahat2i){
+    ((ahat2i - ahatbar) ^ 2) / etahat2i
+  }, ahat2i, etahat2i, SIMPLIFY = FALSE))
+
   names(statistic) <- "Chi Squared"
 
   parameter <- length(matrix_ls) - 1
@@ -112,28 +112,3 @@ Srivastava2007_test.list <- function(x, ...){
   class(obj) <- "htest"
   obj
 }
-
-
-
-#' @keywords internal
-Srivastava2007 <- function(ahat2i, etahat2i){
-  ahatbar <- Reduce(`+`, mapply(function(ahat2i, etahat2i){ahat2i / etahat2i},
-                                ahat2i, etahat2i, SIMPLIFY = FALSE)) /
-    Reduce(`+`, lapply(etahat2i, function(x){1 / x}))
-  Reduce(`+`, mapply(function(ahat2i, etahat2i){
-    ((ahat2i - ahatbar) ^ 2) / etahat2i
-  }, ahat2i, etahat2i, SIMPLIFY = FALSE))
-}
-
-#' @export
-#' @keywords internal
-Srivastava2007_test.data.frame <- helper(Srivastava2007_test)
-
-#' @export
-#' @keywords internal
-Srivastava2007_test.resample <- helper(Srivastava2007_test)
-
-#' @export
-#' @keywords internal
-Srivastava2007_test.grouped_df <- helper(Srivastava2007_test)
-

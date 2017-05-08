@@ -1,25 +1,12 @@
-source("R/helper_functions.R")
 #' Test of Equality of Covariances given by Schott 2007
 #'
 #' Performs 2 and k sample equality of covariance matrix test using Schott 2007
 #'
-#' @inheritParams Chaipitak2013_test
+#' @inheritParams Chaipitak2013
 #'
 #' @return Test statistic of the hypothesis test
 #'
 #' @export
-#'
-#' @references Schott, J. (2007). A test for the equality of covariance matrices when the dimension
-#' is large relative to the sample sizes. Computational Statistics & Data Analysis, 51(12):6535-6542.
-#'
-#' @examples Schott2007_test(iris, group = Species)
-#'
-Schott2007_test <- function(x, ...) {
-  UseMethod("Schott2007_test")
-}
-
-#' @export
-#' @keywords internal
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stringr str_detect
@@ -27,7 +14,12 @@ Schott2007_test <- function(x, ...) {
 #' @importFrom stats cov
 #' @importFrom stats pchisq
 #'
-Schott2007_test.list <- function(x, ...){
+#' @references Schott, J. (2007). A test for the equality of covariance matrices when the dimension
+#' is large relative to the sample sizes. Computational Statistics & Data Analysis, 51(12):6535-6542.
+#'
+#' @examples Schott2007(iris, group = Species)
+#'
+Schott2007 <- function(x, ...) {
 
   ls <- lazy_dots(...)
   matrix_ls <- x
@@ -64,8 +56,6 @@ Schott2007_test.list <- function(x, ...){
 
     overall_cov <- overall_cov_func(A_ls, ns)
 
-
-
     ahat2i <- mapply(ahat2i_func, ns, p, sample_covs, SIMPLIFY = FALSE)
     ahat2 <- ahat2_func(ns, overall_cov, p[[1]])
 
@@ -77,7 +67,13 @@ Schott2007_test.list <- function(x, ...){
 
   data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
 
-  statistic <- Schott2007(p[[1]], ahat2, ahat2i, sample_covs, list(overall_cov), theta)
+  statistic <- Reduce(`+`, mapply(function(p, ahat2i, ahat2,
+                                           sample_covs, overall_cov, theta){
+
+    ((ahat2i + ahat2 - (2 / p) * tr(sample_covs %*% overall_cov)) ^ 2) /
+      (theta ^ 2)
+  }, p[[1]], ahat2i, ahat2, sample_covs, list(overall_cov), theta, SIMPLIFY = FALSE))
+
   names(statistic) <- "Chi Squared"
 
   parameter <- 1
@@ -108,25 +104,4 @@ Schott2007_test.list <- function(x, ...){
   class(obj) <- "htest"
   obj
 }
-
-#' @keywords internal
-#' @importFrom utils combn
-Schott2007 <- function(p, ahat2, ahat2i, sample_covs, overall_cov, theta){
-
-  Reduce(`+`, mapply(function(p, ahat2i, ahat2, sample_covs, overall_cov, theta){
-    (ahat2i + ahat2 - (2 / p) * tr(sample_covs %*% overall_cov) ^ 2) / (theta ^ 2)
-    }, p, ahat2i, ahat2, sample_covs, overall_cov, theta, SIMPLIFY = FALSE))
-}
-
-#' @export
-#' @keywords internal
-Schott2007_test.data.frame <- helper(Schott2007_test)
-
-#' @export
-#' @keywords internal
-Schott2007_test.grouped_df <- helper(Schott2007_test)
-
-#' @export
-#' @keywords internal
-Schott2007_test.resample <- helper(Schott2007_test)
 
