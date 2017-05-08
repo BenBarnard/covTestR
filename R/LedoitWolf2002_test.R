@@ -16,8 +16,8 @@ source("R/helper_functions.R")
 #'
 #' @examples LedoitWolf2002_test(iris[1:50, 1:3])
 #'
-LedoitWolf2002_test <- function(x, ...){
-  UseMethod("LedoitWolf2002_test")
+LedoitWolf2002 <- function(x, ...){
+  UseMethod("LedoitWolf2002")
 }
 
 #' @export
@@ -25,13 +25,13 @@ LedoitWolf2002_test <- function(x, ...){
 #' @importFrom stats cov
 #' @importFrom stats pchisq
 #'
-LedoitWolf2002_test.covariance <- function(x, covMat = "Identity", ...){
+LedoitWolf2002.covariance <- function(x, Sigma, ...){
   p <- ncol(x)
   n <- attributes(x)$df + 1
   S <- x
-  if(covMat == "Identity"){covMat <- diag(1, p)}
 
-  statistic <- LedoitWolf2002(n, p, S, covMat)
+
+  statistic <- LedoitWolf2002_(n, p, S, Sigma)
   names(statistic) <- "Chi Squared"
 
   parameter <- p * (p + 1) / 2
@@ -60,13 +60,12 @@ LedoitWolf2002_test.covariance <- function(x, covMat = "Identity", ...){
 #' @importFrom stats cov
 #' @importFrom stats pchisq
 #'
-LedoitWolf2002_test.matrix <- function(x, ...){
+LedoitWolf2002.matrix <- function(x, Sigma, ...){
   p <- ncol(x)
   n <- nrow(x)
   S <- cov(x)
-if(!(exists("covMat"))){covMat <- diag(1, p)}
 
-  statistic <- LedoitWolf2002(n, p, S, covMat)
+  statistic <- LedoitWolf2002_(n, p, S, Sigma)
   names(statistic) <- "Chi Squared"
 
   parameter <- p * (p + 1) / 2
@@ -91,18 +90,10 @@ if(!(exists("covMat"))){covMat <- diag(1, p)}
 }
 
 #' @keywords internal
-LedoitWolf2002 <- function(n, p, S, covMat){
-  inv <- solve(covMat)
-  mid <- (S - covMat) %*% inv
+LedoitWolf2002_ <- function(n, p, S, Sigma){
+  inv <- solve(Sigma)
+  mid <- (S - Sigma) %*% inv
   n * p * (tr(mid %*% mid) / p -
     (p / n) * ((tr(S) / p) ^ 2) +
     (p / n)) / 2
 }
-
-#' @export
-#' @keywords internal
-LedoitWolf2002_test.data.frame <- helperOne(LedoitWolf2002_test)
-
-#' @export
-#' @keywords internal
-LedoitWolf2002_test.resample <- helperOne(LedoitWolf2002_test)
