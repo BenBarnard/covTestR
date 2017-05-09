@@ -11,7 +11,9 @@ SampleSize <- c(10, 20, 40, 60)
 replications <- 1000
 grid <- expand.grid(dimensions = dimensions, SampleSize = SampleSize, Sigmaj = c("Zero", "One", "Two"))
 
-Sigmaj <- toeplitz(0.5 ^ seq(0, (max(dimensions) - 1)))
+Sigmaj <- list("Zero" = .99 * diag(1, 200) + 0.01 * rep(1, 200) %*% t(rep(1, 200)),
+               "One" = .95 * diag(1, 200) + 0.05 * rep(1, 200) %*% t(rep(1, 200)),
+               "Two" = .99 * diag(1, 200) + 0.01 * rep(1, 200) %*% t(rep(1, 200)))
 
 mvndata <- mapply(function(SampleSize, Sig, Sigmaj, dimensions, replications){
   df <- replicate(replications,
@@ -37,10 +39,11 @@ pushover(message = "mvndata",
 NullthreeTests <- ldply(mvndata, function(list){
   ldply(list, function(list){
     data.frame(SampleSize = nrow(list$Zero1), dimension = ncol(list$Zero1),
-               Test = c("Chaipitak", "Schott", "Srivastava 2007", "Srivastava 2010",
+               Test = c("Chaipitak", "Schott", "Schott Sample Cov", "Srivastava 2007", "Srivastava 2010",
                         "Srivastava 2014", "Ishii"),
                Statistic = c(Chaipitak2013(list(list$Zero1, list$Zero2, list$Zero3))$statistic,
                              Schott2007(list(list$Zero1, list$Zero2, list$Zero3))$statistic,
+                             Schott2007sample(list(list$Zero1, list$Zero2, list$Zero3))$statistic,
                              Srivastava2007(list(list$Zero1, list$Zero2, list$Zero3))$statistic,
                              SrivastavaYanagihara2010(list(list$Zero1, list$Zero2, list$Zero3))$statistic,
                              Srivastava2014(list(list$Zero1, list$Zero2, list$Zero3))$statistic,
@@ -64,10 +67,11 @@ pushover(message = "cvsthree",
 Powervaluesthreetests <- ldply(mvndata, function(list){
   ldply(list, function(list){
     data.frame(SampleSize = nrow(list$Zero1), dimension = ncol(list$Zero1),
-               Test = c("Chaipitak", "Schott", "Srivastava 2007", "Srivastava 2010",
+               Test = c("Chaipitak", "Schott", "Schott Sample Cov", "Srivastava 2007", "Srivastava 2010",
                         "Srivastava 2014", "Ishii"),
                Statistic = c(Chaipitak2013(list(list$Zero1, list$One, list$Two))$statistic,
                              Schott2007(list(list$Zero1, list$One, list$Two))$statistic,
+                             Schott2007sample(list(list$Zero1, list$One, list$Two))$statistic,
                              Srivastava2007(list(list$Zero1, list$One, list$Two))$statistic,
                              SrivastavaYanagihara2010(list(list$Zero1, list$One, list$Two))$statistic,
                              Srivastava2014(list(list$Zero1, list$One, list$Two))$statistic,
@@ -100,10 +104,11 @@ pushover(message = "powerthreetest",
 NulltwoTests <- ldply(mvndata, function(list){
   ldply(list, function(list){
     data.frame(SampleSize = nrow(list$Zero1), dimension = ncol(list$Zero1),
-               Test = c("Chaipitak", "Schott", "Srivastava 2007", "Srivastava 2010",
+               Test = c("Chaipitak", "Schott", "Schott Sample Cov", "Srivastava 2007", "Srivastava 2010",
                         "Srivastava 2014", "Ishii"),
                Statistic = c(Chaipitak2013(list(list$Zero1, list$Zero2))$statistic,
                              Schott2007(list(list$Zero1, list$Zero2))$statistic,
+                             Schott2007sample(list(list$Zero1, list$Zero2))$statistic,
                              Srivastava2007(list(list$Zero1, list$Zero2))$statistic,
                              SrivastavaYanagihara2010(list(list$Zero1, list$Zero2))$statistic,
                              Srivastava2014(list(list$Zero1, list$Zero2))$statistic,
@@ -127,10 +132,11 @@ pushover(message = "cvstwo",
 Powervaluestwotests <- ldply(mvndata, function(list){
   ldply(list, function(list){
     data.frame(SampleSize = nrow(list$Zero1), dimension = ncol(list$Zero1),
-               Test = c("Chaipitak", "Schott", "Srivastava 2007", "Srivastava 2010",
+               Test = c("Chaipitak", "Schott", "Schott Sample Cov", "Srivastava 2007", "Srivastava 2010",
                         "Srivastava 2014", "Ishii"),
                Statistic = c(Chaipitak2013(list(list$Zero1, list$One))$statistic,
                              Schott2007(list(list$Zero1, list$One))$statistic,
+                             Schott2007sample(list(list$Zero1, list$One))$statistic,
                              Srivastava2007(list(list$Zero1, list$One))$statistic,
                              SrivastavaYanagihara2010(list(list$Zero1, list$One))$statistic,
                              Srivastava2014(list(list$Zero1, list$One))$statistic,
