@@ -70,7 +70,7 @@ Schott2007sample <- function(x, ...) {
   statistic <- Reduce(`+`, mapply(function(p, ahat2i, ahat2,
                                            sample_covs, overall_cov, theta){
 
-    ((tr(sample_covs - overall_cov) ^ 2) /
+    (tr((sample_covs - overall_cov) %*% (sample_covs - overall_cov)) /
       (theta)) ^ 2
   }, p[[1]], ahat2i, ahat2, sample_covs, list(overall_cov), theta, SIMPLIFY = FALSE))
 
