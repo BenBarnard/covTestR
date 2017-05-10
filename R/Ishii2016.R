@@ -86,7 +86,8 @@ Ishii2016 <- function(x, ...) {
 
   overall_htilde <- sapply(1:min(length(overall_lambdatilde), nrow(overall_eigdual)), function(k){
 
-    (((nrow(overall_eigdual) - 1) * overall_lambdatilde[[k]]) ^ (-1 / 2)) * (t(overall_dfmat) - rowMeans(t(overall_dfmat))) %*% t(overall_eigdual)[,k]
+    (((nrow(overall_eigdual) - 1) * overall_lambdatilde[[k]]) ^ (-1 / 2)) *
+      (t(overall_dfmat) - rowMeans(t(overall_dfmat))) %*% t(overall_eigdual)[,k]
   })
 
   ki <- mapply(function(x,y){

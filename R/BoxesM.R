@@ -6,9 +6,9 @@
 #'
 #' @export
 #'
-#' @examples BoxsM_test(iris, group = Species)
+#' @examples BoxsM(iris, group = Species)
 #'
-BoxesM_test <- function(x, ...){
+BoxesM <- function(x, ...){
   ls <- lazy_dots(...)
   matrix_ls <- x
 
@@ -46,6 +46,10 @@ BoxesM_test <- function(x, ...){
 
   n_overall <- Reduce(`+`, lapply(ns, function(x){x - 1}))
 
-  statistic <- n_overall * log(det(overall_cov)) - Reduce(`+`, mapply(function(x, y){x * log(det(y))}, ns, sample_covs))
+  statistic <- n_overall *
+    log(det(overall_cov)) -
+    Reduce(`+`, mapply(function(x, y){x * log(det(y))}, ns, sample_covs))
+  out <- list(statistic = statistic)
+  out
 }
 
