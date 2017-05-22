@@ -19,7 +19,8 @@ Imports:
     plyr,
     dplyr,
     shiny,
-    Rcpp
+    Rcpp,
+    RcppArmadillo
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 LinkingTo: Rcpp, RcppArmadillo
