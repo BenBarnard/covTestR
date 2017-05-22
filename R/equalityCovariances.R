@@ -27,7 +27,7 @@
 #' @export
 #'
 #' @examples equalityCovariances(iris, group = Species)
-equalityCovariances <- function(x, ..., covTest = BoxesM_test){
+equalityCovariances <- function(x, ..., covTest = BoxesM){
   UseMethod("equalityCovariances")
 }
 
@@ -37,7 +37,7 @@ equalityCovariances <- function(x, ..., covTest = BoxesM_test){
 #' @importFrom stats setNames
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
-equalityCovariances.data.frame <- function(x, ..., covTest = BoxesM_test){
+equalityCovariances.data.frame <- function(x, ..., covTest = BoxesM){
   dots <- lazy_dots(...)
   groupname <- names(unique(x[paste(dots$group$expr)]))
   group <- as.character(unique(x[[paste(dots$group$expr)]]))
@@ -55,7 +55,7 @@ equalityCovariances.data.frame <- function(x, ..., covTest = BoxesM_test){
 #' @importFrom stats setNames
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
-equalityCovariances.grouped_df <- function(x, ..., covTest = BoxesM_test){
+equalityCovariances.grouped_df <- function(x, ..., covTest = BoxesM){
   groups <- attributes(x)$labels
   x <- as_data_frame(x)
   group <- as.character(groups[,1])
@@ -76,7 +76,7 @@ equalityCovariances.grouped_df <- function(x, ..., covTest = BoxesM_test){
 #' @importFrom stats setNames
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
-equalityCovariances.resample <- function(x, ..., covTest = BoxesM_test){
+equalityCovariances.resample <- function(x, ..., covTest = BoxesM){
   x <- as_data_frame(x)
   groups <- attributes(x)$labels
   group <- as.character(groups[,1])

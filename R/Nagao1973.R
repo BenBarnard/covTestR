@@ -1,4 +1,3 @@
-source("R/helper_functions.R")
 #' Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013
 #'
 #' Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
@@ -14,10 +13,10 @@ source("R/helper_functions.R")
 #' @references Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
 #' matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.
 #'
-#' @examples LedoitWolf2002_test(iris[1:50, 1:3])
+#' @examples Nagao1973(iris[1:50, 1:3])
 #'
-LedoitWolf2002 <- function(x, ...){
-  UseMethod("LedoitWolf2002")
+Nagao1973 <- function(x, Sigma = "identity", ...){
+  UseMethod("Nagao1973")
 }
 
 #' @export
@@ -25,13 +24,22 @@ LedoitWolf2002 <- function(x, ...){
 #' @importFrom stats cov
 #' @importFrom stats pchisq
 #'
-LedoitWolf2002.covariance <- function(x, Sigma, ...){
+Nagao1973.covariance <- function(x, Sigma = "identity", ...){
   p <- ncol(x)
   n <- attributes(x)$df + 1
   S <- x
 
+  if(Sigma == "identity"){
+    S_ <- x
+  }else{
+    svCov <- svd(x)
+    sv <- svd(Sigma)
+    x_ <- svCov$u %*% diag(sqrt(svCov$d)) %*%
+      solve(sv$u %*% diag(sqrt(sv$d)))
+    S_ <- t(x_) %*% x_
+  }
 
-  statistic <- LedoitWolf2002_(n, p, S, Sigma)
+  statistic <- Nagao1973_(n, p, S_)
   names(statistic) <- "Chi Squared"
 
   parameter <- p * (p + 1) / 2
@@ -43,6 +51,11 @@ LedoitWolf2002.covariance <- function(x, Sigma, ...){
   p.value <- 1 - pchisq(statistic, parameter)
 
   estimate <- S
+  estimate <- if(nrow(estimate) > 5){
+    NULL
+  }else{
+    estimate
+  }
 
   obj <- list(statistic = statistic,
               parameter = parameter,
@@ -60,12 +73,21 @@ LedoitWolf2002.covariance <- function(x, Sigma, ...){
 #' @importFrom stats cov
 #' @importFrom stats pchisq
 #'
-LedoitWolf2002.matrix <- function(x, Sigma, ...){
+Nagao1973.matrix <- function(x, Sigma = "identity", ...){
   p <- ncol(x)
   n <- nrow(x)
   S <- cov(x)
 
-  statistic <- LedoitWolf2002_(n, p, S, Sigma)
+  if(Sigma == "identity"){
+    S_ <- S
+  }else{
+    sv <- svd(Sigma)
+    svDf <- svd(S)
+    x_ <- svDf$u %*% diag(sqrt(sv$d)) %*% solve(sv$u %*% diag(sqrt(sv$d)))
+    S_ <- t(x_) %*% x_
+  }
+
+  statistic <- Nagao1973_(n, p, S_)
   names(statistic) <- "Chi Squared"
 
   parameter <- p * (p + 1) / 2
@@ -77,6 +99,11 @@ LedoitWolf2002.matrix <- function(x, Sigma, ...){
   p.value <- 1 - pchisq(statistic, parameter)
 
   estimate <- S
+  estimate <- if(nrow(estimate) > 5){
+    NULL
+  }else{
+    estimate
+  }
 
   obj <- list(statistic = statistic,
               parameter = parameter,
@@ -84,16 +111,13 @@ LedoitWolf2002.matrix <- function(x, Sigma, ...){
               estimate = estimate,
               null.value = null.value,
               alternative = "two.sided",
-              method = "Ledoit and Wolf 2002 Test of Covariance Structure")
+              method = "Nagao 1973 Test of Covariance Structure")
   class(obj) <- "htest"
   obj
 }
 
 #' @keywords internal
-LedoitWolf2002_ <- function(n, p, S, Sigma){
-  inv <- solve(Sigma)
-  mid <- (S - Sigma) %*% inv
-  n * p * (tr(mid %*% mid) / p -
-    (p / n) * ((tr(S) / p) ^ 2) +
-    (p / n)) / 2
+Nagao1973_ <- function(n, p, S_){
+  mid <- S_ - diag(1, p)
+  n * p * (tr(mid %*% mid) / p) / 2
 }
