@@ -51,7 +51,7 @@ NullTests <- ldply(mvndata, function(ls, SampleSize, dimensions){
       t(projection %*% t(x))
     })
 
-    proj <- cov(t(projection))
+    proj <- cov(projection)
 
     if(reduction <= SampleSize){
       df <- data.frame(SampleSize = SampleSize, originaldimension = originaldimension,
@@ -115,7 +115,7 @@ powerValueTests <- ldply(mvndata, function(ls, SampleSize, dimensions){
       t(projection %*% t(x))
     })
 
-    proj <- cov(t(projection))
+    proj <- cov(projection)
 
     if(reduction <= SampleSize){
       df <- data.frame(SampleSize = SampleSize, originaldimension = originaldimension,
@@ -155,7 +155,7 @@ powertest <- summarise(group_by(powerscorestests,
                                      SampleSize, originaldimension, reduction, Test),
                             Power = mean(Significant))
 
-save(powerthreetest, file = "E:/Ben/Box Sync/Statistics/OneSampleSimDimReduce/powertest.RData")
+save(powertest, file = "E:/Ben/Box Sync/Statistics/OneSampleSimDimReduce/powertest.RData")
 
 pushover(message = "powertest",
          title = "Hey")
