@@ -51,7 +51,7 @@ NullTests <- ldply(mvndata, function(ls, SampleSize, dimensions){
       t(projection %*% t(x))
     })
 
-    proj <- cov(projection)
+    proj <- projection %*% t(projection)
 
     if(reduction <= SampleSize){
       df <- data.frame(SampleSize = SampleSize, originaldimension = originaldimension,
@@ -115,7 +115,7 @@ powerValueTests <- ldply(mvndata, function(ls, SampleSize, dimensions){
       t(projection %*% t(x))
     })
 
-    proj <- cov(projection)
+    proj <- projection %*% t(projection)
 
     if(reduction <= SampleSize){
       df <- data.frame(SampleSize = SampleSize, originaldimension = originaldimension,
