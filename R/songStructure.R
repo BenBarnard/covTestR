@@ -14,9 +14,10 @@ songStructure <- function(x, Sigma){
 
 #' @export
 #' @keywords internal
-songStructure.covariance <- function(x, Sigma){
+songStructure.covariance <- function(x){
   svdlist <- svd(x)
-  weights <- apply(svdlist$u, 2, songHelper, Num = (sampleCov - Sigma) %*% (sampleCov - Sigma), Dem = Sigma)
+  di <- diag(1, nrow(sampleCov))
+  weights <- apply(svdlist$u, 2, songHelper, Num = (sampleCov - di) %*% (sampleCov - di))
   ordering <- order(weights, decreasing = TRUE)
   d <- weights[ordering]
   u <- svdlist$u[, ordering]
@@ -25,10 +26,11 @@ songStructure.covariance <- function(x, Sigma){
 
 #' @export
 #' @keywords internal
-songStructure.matrix <- function(x, Sigma){
+songStructure.matrix <- function(x){
   sampleCov <- cov(x)
   svdlist <- svd(sampleCov)
-  weights <- apply(svdlist$u, 2, songHelper, Num = (sampleCov - Sigma) %*% (sampleCov - Sigma), Dem = Sigma)
+  di <- diag(1, nrow(sampleCov))
+  weights <- apply(svdlist$u, 2, songStructureHelper, Num = (sampleCov - di) %*% (sampleCov - di))
   ordering <- order(weights, decreasing = TRUE)
   d <- weights[ordering]
   u <- svdlist$u[, ordering]
@@ -37,6 +39,6 @@ songStructure.matrix <- function(x, Sigma){
 
 #' @export
 #' @keywords internal
-songHelper <- function(ai, Num, Dem){
-  (t(ai) %*% Num %*% ai) / (t(ai) %*% Dem %*% ai)
+songStructureHelper <- function(ai, Num){
+  t(ai) %*% Num %*% ai
 }

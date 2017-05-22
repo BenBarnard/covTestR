@@ -29,7 +29,7 @@ Chen2010.covariance <- function(x, Sigma = "identity", ...){
   n <- attributes(x)$df + 1
   S <- x
 
-  if(Sigma == "identity"){
+  if(Sigma[[1]] == "identity"){
     svCov <- svd(x)
     x_ <- svCov$u %*% diag(sqrt(svCov$d))
   }else{
@@ -79,7 +79,7 @@ Chen2010.matrix <- function(x, Sigma = "identity", ...){
   n <- nrow(x)
   S <- cov(x)
 
-  if(Sigma == "identity"){
+  if(Sigma[[1]] == "identity"){
     x_ <- x
   }else{
     sv <- svd(Sigma)

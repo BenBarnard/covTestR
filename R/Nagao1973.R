@@ -29,7 +29,7 @@ Nagao1973.covariance <- function(x, Sigma = "identity", ...){
   n <- attributes(x)$df + 1
   S <- x
 
-  if(Sigma == "identity"){
+  if(Sigma[[1]] == "identity"){
     S_ <- x
   }else{
     svCov <- svd(x)
@@ -78,7 +78,7 @@ Nagao1973.matrix <- function(x, Sigma = "identity", ...){
   n <- nrow(x)
   S <- cov(x)
 
-  if(Sigma == "identity"){
+  if(Sigma[[1]] == "identity"){
     S_ <- S
   }else{
     sv <- svd(Sigma)
