@@ -33,3 +33,7 @@ quadra <- function(x) {
     .Call('EqualCov_quadra', PACKAGE = 'EqualCov', x)
 }
 
+Chaipitak2013_ <- function(x) {
+    .Call('EqualCov_Chaipitak2013_', PACKAGE = 'EqualCov', x)
+}
+

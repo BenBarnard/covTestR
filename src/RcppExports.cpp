@@ -94,20 +94,14 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-
-static const R_CallMethodDef CallEntries[] = {
-    {"EqualCov_c3", (DL_FUNC) &EqualCov_c3, 1},
-    {"EqualCov_c2", (DL_FUNC) &EqualCov_c2, 1},
-    {"EqualCov_c1", (DL_FUNC) &EqualCov_c1, 1},
-    {"EqualCov_bilinearquad", (DL_FUNC) &EqualCov_bilinearquad, 1},
-    {"EqualCov_bilinearsquare", (DL_FUNC) &EqualCov_bilinearsquare, 1},
-    {"EqualCov_bilinearcube", (DL_FUNC) &EqualCov_bilinearcube, 1},
-    {"EqualCov_bilinearoff", (DL_FUNC) &EqualCov_bilinearoff, 1},
-    {"EqualCov_quadra", (DL_FUNC) &EqualCov_quadra, 1},
-    {NULL, NULL, 0}
-};
-
-RcppExport void R_init_EqualCov(DllInfo *dll) {
-    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
-    R_useDynamicSymbols(dll, FALSE);
+// Chaipitak2013_
+List Chaipitak2013_(List x);
+RcppExport SEXP EqualCov_Chaipitak2013_(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(Chaipitak2013_(x));
+    return rcpp_result_gen;
+END_RCPP
 }
