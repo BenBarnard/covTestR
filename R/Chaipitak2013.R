@@ -89,16 +89,10 @@ Chaipitak2013 <- function(x, ...){
   estimate <- sample_covs
   names(estimate) <- paste0("covariance of ", names(matrix_ls))
 
-  estimate <- if(nrow(estimate[[1]]) > 5){
-    NULL
-  }else{
-    estimate
-  }
-
   obj <- list(statistic = statistic,
               parameter = parameter,
               p.value = p.value,
-              estimate = estimate,
+              estimate = NULL,
               null.value = null.value,
               alternative = "two.sided",
               method = "Chaipitak and Chongchareon 2013 Equality of Covariance Test",

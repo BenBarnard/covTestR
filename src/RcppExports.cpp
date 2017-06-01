@@ -94,3 +94,14 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// Chaipitak2013_
+List Chaipitak2013_(List x);
+RcppExport SEXP EqualCov_Chaipitak2013_(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(Chaipitak2013_(x));
+    return rcpp_result_gen;
+END_RCPP
+}
