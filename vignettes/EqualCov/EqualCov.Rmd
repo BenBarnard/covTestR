@@ -6,26 +6,28 @@ bibliography: [EqualCov.bib]
 biblio-style: apalike
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+## An Introduction to High-dimensional Equality of Covariance Matrix Testing
+### Introduction
+### Two Sample Methods
+#### Schott 2007
+#### Srivastava 2007
+#### Srivastava 2010
+#### Srivastava 2014
+#### Chaipitak 2015
+#### Ishii 2016
+#### Rosen 2017
+### K Sample Methods 
+#### Schott 2007
+#### Srivastava 2007
+#### Srivastava 2010
+#### Rosen 2017
+### Generalization to k Samples
+#### Srivastava 2014
+#### Chaipitak 2015
+### Monte Carlo Simulation Setup
+### Monte Carlo Simulations
+### Results
+### Discussion
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Two Population High-dimensional Equality of Covariance Matrix Testing with Linear Dimension Reduction
+### Introduction
