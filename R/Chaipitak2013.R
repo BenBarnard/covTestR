@@ -27,17 +27,7 @@ Chaipitak2013 <- function(x, ...){
   matrix_ls <- x
 
   if(!("covariance" %in% class(x[[1]])) & ("matrix" %in% class(x[[1]]))){
-  ns <- lapply(matrix_ls, function(matrix){
-    nrow(matrix)
-  })
-
-  p <- lapply(matrix_ls, function(matrix){
-    ncol(matrix)
-  })
-
-  A_ls <- lapply(matrix_ls, A_func)
-
-  sample_covs <- lapply(matrix_ls, cov)
+    statistic <- Chaipitak2013Stat(matrix_ls)
   }
 
   if("covariance" %in% class(x[[1]])){
@@ -54,7 +44,7 @@ Chaipitak2013 <- function(x, ...){
     A_ls <- mapply(function(sample_covs, ns){
       sample_covs * (ns - 1)
     }, sample_covs = sample_covs, ns = ns, SIMPLIFY = FALSE)
-  }
+
 
   overall_cov <- overall_cov_func(A_ls, ns)
 
@@ -66,15 +56,19 @@ Chaipitak2013 <- function(x, ...){
     deltahat2 <- mapply(deltahat2_func, ahatStar4, p, ahat2, ns, SIMPLIFY = FALSE)
     b <- mapply(function(ahat2, ahat2i){ahat2i / ahat2}, ahat2, ahat2i, SIMPLIFY = FALSE)
 
+    statistic <- Reduce(`+`, mapply(function(b, deltahat2){
+      (b - 1) ^ 2 / deltahat2
+    }, b, deltahat2, SIMPLIFY = FALSE))
+
+  }
+
   xmin <- names(matrix_ls[1])
   xmax <- names(matrix_ls[length(matrix_ls)])
   xother <- names(matrix_ls[-c(1, length(matrix_ls))])
 
   data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
 
-  statistic <- Reduce(`+`, mapply(function(b, deltahat2){
-    (b - 1) ^ 2 / deltahat2
-  }, b, deltahat2, SIMPLIFY = FALSE))
+
 
   names(statistic) <- "Chi Squared"
 
@@ -85,9 +79,6 @@ Chaipitak2013 <- function(x, ...){
   names(null.value) <- "difference in covariances"
 
   p.value <- 1 - pchisq(statistic, parameter)
-
-  estimate <- sample_covs
-  names(estimate) <- paste0("covariance of ", names(matrix_ls))
 
   obj <- list(statistic = statistic,
               parameter = parameter,

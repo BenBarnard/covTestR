@@ -24,17 +24,7 @@ SrivastavaYanagihara2010 <- function(x, ...){
   matrix_ls <- x
 
   if(!("covariance" %in% class(x[[1]])) & ("matrix" %in% class(x[[1]]))){
-  ns <- lapply(matrix_ls, function(matrix){
-    nrow(matrix)
-  })
-
-  p <- lapply(matrix_ls, function(matrix){
-    ncol(matrix)
-  })
-
-  A_ls <- lapply(matrix_ls, A_func)
-
-  sample_covs <- lapply(matrix_ls, cov)
+  statistic <- SrivastavaYanagihara2010Stat(matrix_ls)
   }
 
   if("covariance" %in% class(x[[1]])){
@@ -51,7 +41,7 @@ SrivastavaYanagihara2010 <- function(x, ...){
     A_ls <- mapply(function(sample_covs, ns){
       sample_covs * (ns - 1)
     }, sample_covs = sample_covs, ns = ns, SIMPLIFY = FALSE)
-  }
+
 
   overall_cov <- overall_cov_func(A_ls, ns)
 
@@ -72,12 +62,6 @@ SrivastavaYanagihara2010 <- function(x, ...){
 
   gammahat_ls <- mapply(gammahati_func, ahat2i, ahat1i, SIMPLIFY = FALSE)
 
-  xmin <- names(matrix_ls[1])
-  xmax <- names(matrix_ls[length(matrix_ls)])
-  xother <- names(matrix_ls[-c(1, length(matrix_ls))])
-
-  data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
-
   gammahatbar <- Reduce(`+`, mapply(
     function(gammahat_ls, ksihat2_ls){
       gammahat_ls / ksihat2_ls
@@ -87,6 +71,13 @@ SrivastavaYanagihara2010 <- function(x, ...){
   statistic <- Reduce(`+`, mapply(function(gammahat_ls, ksihat2_ls){
     ((gammahat_ls - gammahatbar) ^ 2) / ksihat2_ls
   }, gammahat_ls, ksihat2_ls, SIMPLIFY = FALSE))
+
+}
+  xmin <- names(matrix_ls[1])
+  xmax <- names(matrix_ls[length(matrix_ls)])
+  xother <- names(matrix_ls[-c(1, length(matrix_ls))])
+
+  data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
 
   names(statistic) <- "Chi Squared"
 
@@ -98,19 +89,10 @@ SrivastavaYanagihara2010 <- function(x, ...){
 
   p.value <- 1 - pchisq(statistic, parameter)
 
-  estimate <- sample_covs
-  names(estimate) <- paste0("covariance of ", names(matrix_ls))
-
-  estimate <- if(nrow(estimate[[1]]) > 5){
-    NULL
-  }else{
-    estimate
-  }
-
   obj <- list(statistic = statistic,
               parameter = parameter,
               p.value = p.value,
-              estimate = estimate,
+              estimate = NULL,
               null.value = null.value,
               alternative = "two.sided",
               method = "Srivastava and Yanagihara 2010 Equality of Covariance Test",

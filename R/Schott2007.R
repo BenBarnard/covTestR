@@ -25,17 +25,7 @@ Schott2007 <- function(x, ...) {
   matrix_ls <- x
 
   if(!("covariance" %in% class(x[[1]])) & ("matrix" %in% class(x[[1]]))){
-    ns <- lapply(matrix_ls, function(matrix){
-      nrow(matrix)
-    })
-
-    p <- lapply(matrix_ls, function(matrix){
-      ncol(matrix)
-    })
-
-    A_ls <- lapply(matrix_ls, A_func)
-
-    sample_covs <- lapply(matrix_ls, cov)
+   statistic <- Schott2007Stat(matrix_ls)
   }
 
   if("covariance" %in% class(x[[1]])){
@@ -52,7 +42,7 @@ Schott2007 <- function(x, ...) {
     A_ls <- mapply(function(sample_covs, ns){
       sample_covs * (ns - 1)
     }, sample_covs = sample_covs, ns = ns, SIMPLIFY = FALSE)
-  }
+
 
     overall_cov <- overall_cov_func(A_ls, ns)
 
@@ -61,18 +51,19 @@ Schott2007 <- function(x, ...) {
 
     theta <- lapply(ns, function(x){2 * ahat2 / (x - 1)})
 
-    xmin <- names(matrix_ls[1])
-    xmax <- names(matrix_ls[length(matrix_ls)])
-    xother <- names(matrix_ls[-c(1, length(matrix_ls))])
-
-  data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
-
   statistic <- Reduce(`+`, mapply(function(p, ahat2i, ahat2,
                                            sample_covs, overall_cov, theta){
 
     ((ahat2i + ahat2 - (2 / p) * tr(sample_covs %*% overall_cov)) ^ 2) /
       (theta ^ 2)
   }, p[[1]], ahat2i, ahat2, sample_covs, list(overall_cov), theta, SIMPLIFY = FALSE))
+  }
+
+  xmin <- names(matrix_ls[1])
+  xmax <- names(matrix_ls[length(matrix_ls)])
+  xother <- names(matrix_ls[-c(1, length(matrix_ls))])
+
+  data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
 
   names(statistic) <- "Chi Squared"
 
@@ -84,19 +75,10 @@ Schott2007 <- function(x, ...) {
 
   p.value <- 1 - pchisq(statistic, parameter)
 
-  estimate <- sample_covs
-  names(estimate) <- paste0("covariance of ", names(matrix_ls))
-
-  estimate <- if(nrow(estimate[[1]]) > 5){
-    NULL
-  }else{
-    estimate
-  }
-
   obj <- list(statistic = statistic,
               parameter = parameter,
               p.value = p.value,
-              estimate = estimate,
+              estimate = NULL,
               null.value = null.value,
               alternative = "two.sided",
               method = "Schott 2007 Equality of Covariance Test",

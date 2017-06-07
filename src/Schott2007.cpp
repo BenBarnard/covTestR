@@ -13,10 +13,11 @@ using namespace arma;
 //
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::export]]
-double Chaipitak2013Stat(List x) {
+double Schott2007Stat(List x) {
   int len = x.length();
   arma::vec a2i(len);
   arma::mat pmat = x[1];
+  List samplecov(len);
   double p = pmat.n_cols;
   double ntot = 0;
   arma::mat Apool(p, p);
@@ -33,6 +34,7 @@ double Chaipitak2013Stat(List x) {
     J.fill(1);
     arma::mat A = mats.t() * (diag - J / ns) * mats;
     arma::mat covar = A / (ns - 1);
+    samplecov[i] = covar;
     p = ps;
     a2i[i] = (pow(ns - 1, 2) / (ps * (ns - 2) * (ns + 1))) *
       (trace(covar * covar) - pow(ns - 1, -1) * pow(trace(covar), 2));
@@ -48,27 +50,19 @@ double Chaipitak2013Stat(List x) {
     (trace(overallcov * overallcov) - (1 / ntot) *
     trace(overallcov) * trace(overallcov));
 
-  double f = - 4 / ntot;
-  double c = - (2 * pow(ntot, 2) + 3 * ntot - 6) / (ntot * (pow(ntot, 2) + ntot + 2));
-  double d =  (2 * (5 * ntot + 6)) / (ntot * (pow(ntot, 2) + ntot + 2));
-  double e = - (5 * ntot + 6) / (pow(ntot, 2) * (pow(ntot, 2) + ntot + 2));
+  double theta = 0;
 
-  double tau = (pow(ntot, 5) * (pow(ntot, 2) + ntot + 2)) /
-    ((ntot + 1) * (ntot + 2) * (ntot + 4) * (ntot + 6) * (ntot - 1) *
-    (ntot - 2) * (ntot - 3));
-
-  double a4star = (tau / p) *
-    (trace(overallcov * overallcov * overallcov * overallcov) +
-    f * trace(overallcov * overallcov * overallcov) * trace(overallcov) +
-    c * pow(trace(overallcov * overallcov), 2) +
-    d * trace(overallcov * overallcov) * pow(trace(overallcov), 2) +
-    e * pow(trace(overallcov), 4));
-
-  double delta2 = 4 * ((2 * a4star * ninv) / (pow(a2, 2) * p) + ninv2);
+  for(int i = 0; i < len; ++i){
+    arma::mat mats = x[i];
+    int ns = mats.n_rows;
+  theta += 2 * a2 * pow(ns - 1, -1);
+  }
 
   double stat = 0;
   for(int i = 0; i < len; ++i){
-    stat += pow(a2i[i] / a2 - 1, 2) / delta2;
+    arma::mat sampcov = samplecov[i];
+    stat += pow(a2i[i] + a2 - (2 / p) * trace(sampcov * overallcov), 2) /
+      pow(theta, 2);
   }
 
   return stat;

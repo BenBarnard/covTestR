@@ -27,7 +27,7 @@
 #' @export
 #'
 #' @examples structureCovariances(iris, group = Species)
-equalityCovariances <- function(x, Sigma, ..., covTest = BoxesM_test){
+structureCovariances <- function(x, Sigma, ..., covTest = BoxesM_test){
   UseMethod("equalityCovariances")
 }
 

@@ -24,17 +24,7 @@ Ishii2016 <- function(x, ...) {
 
   if(!("covariance" %in% class(x[[1]])) & ("matrix" %in% class(x[[1]]))){
 
-  covs <- lapply(matrix_ls, cov)
-  A_ls <- lapply(matrix_ls, A_func)
-
-  ns <- lapply(matrix_ls, nrow)
-
-  dualcovs <- lapply(matrix_ls, function(x){
-    n <- nrow(x)
-    t(t(x) - rowMeans(t(x))) %*% (t(x) - rowMeans(t(x))) / (n - 1)
-  })
-
-  dfmat <- matrix_ls
+  statistic <- Ishii2016Stat(matrix_ls)
   }
 
   if("covariance" %in% class(x[[1]])){
@@ -51,7 +41,7 @@ Ishii2016 <- function(x, ...) {
       n <- nrow(x)
       t(t(x) - rowMeans(t(x))) %*% (t(x) - rowMeans(t(x))) / (n - 1)
     })
-  }
+
   overall_dfmat <- Reduce(rbind, dfmat)
 
   overall_dualcov <- t(t(overall_dfmat) - rowMeans(t(overall_dfmat))) %*%
@@ -96,12 +86,6 @@ Ishii2016 <- function(x, ...) {
 
   overall_ki <- tr(overall_dualcov) - overall_lambdatilde[[1]]
 
-  xmin <- names(matrix_ls[1])
-  xmax <- names(matrix_ls[length(matrix_ls)])
-  xother <- names(matrix_ls[-c(1, length(matrix_ls))])
-
-  data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
-
   statistic <- Reduce(`+`, mapply(function(lambdatildes, htilde, ki,
                                            overall_lambdatilde, overall_htilde,
                                            overall_ki){
@@ -110,6 +94,13 @@ Ishii2016 <- function(x, ...) {
           (ki / overall_ki) - 1)
   }, lambdatildes, htilde, ki, list(overall_lambdatilde), list(overall_htilde),
   list(overall_ki), SIMPLIFY = FALSE))
+}
+
+  xmin <- names(matrix_ls[1])
+  xmax <- names(matrix_ls[length(matrix_ls)])
+  xother <- names(matrix_ls[-c(1, length(matrix_ls))])
+
+  data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
 
   names(statistic) <- "F"
 
@@ -121,19 +112,11 @@ Ishii2016 <- function(x, ...) {
 
   p.value <- 1 - pf(statistic, df1 = parameter[1], df2 = parameter[2])
 
-  estimate <- covs
-  names(estimate) <- paste0("covariance of ", names(matrix_ls))
-
-  estimate <- if(nrow(estimate[[1]]) > 5){
-    NULL
-  }else{
-    estimate
-  }
 
   obj <- list(statistic = statistic,
               parameter = parameter,
               p.value = p.value,
-              estimate = estimate,
+              estimate = NULL,
               null.value = null.value,
               alternative = "two.sided",
               method = "Ishii 2016 Equality of Covariance Test",

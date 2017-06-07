@@ -28,17 +28,7 @@ Srivastava2007 <- function(x, ...){
   matrix_ls <- x
 
   if(!("covariance" %in% class(x[[1]])) & ("matrix" %in% class(x[[1]]))){
-    ns <- lapply(matrix_ls, function(matrix){
-      nrow(matrix)
-    })
-
-    p <- lapply(matrix_ls, function(matrix){
-      ncol(matrix)
-    })
-
-    A_ls <- lapply(matrix_ls, A_func)
-
-    sample_covs <- lapply(matrix_ls, cov)
+    statistic <- Srivastava2007Stat(matrix_ls)
   }
 
   if("covariance" %in% class(x[[1]])){
@@ -55,7 +45,7 @@ Srivastava2007 <- function(x, ...){
     A_ls <- mapply(function(sample_covs, ns){
       sample_covs * (ns - 1)
     }, sample_covs = sample_covs, ns = ns, SIMPLIFY = FALSE)
-  }
+
 
   overall_cov <- overall_cov_func(A_ls, ns)
 
@@ -68,12 +58,6 @@ Srivastava2007 <- function(x, ...){
 
   etahat2i <- mapply(etahat2i_func, ns, p, ahat4, ahat2, SIMPLIFY = FALSE)
 
-  xmin <- names(matrix_ls[1])
-  xmax <- names(matrix_ls[length(matrix_ls)])
-  xother <- names(matrix_ls[-c(1, length(matrix_ls))])
-
-  data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
-
   ahatbar <- Reduce(`+`, mapply(function(ahat2i, etahat2i){ahat2i / etahat2i},
                                 ahat2i, etahat2i, SIMPLIFY = FALSE)) /
     Reduce(`+`, lapply(etahat2i, function(x){1 / x}))
@@ -81,6 +65,14 @@ Srivastava2007 <- function(x, ...){
   statistic <- Reduce(`+`, mapply(function(ahat2i, etahat2i){
     ((ahat2i - ahatbar) ^ 2) / etahat2i
   }, ahat2i, etahat2i, SIMPLIFY = FALSE))
+
+  }
+
+  xmin <- names(matrix_ls[1])
+  xmax <- names(matrix_ls[length(matrix_ls)])
+  xother <- names(matrix_ls[-c(1, length(matrix_ls))])
+
+  data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
 
   names(statistic) <- "Chi Squared"
 
@@ -92,19 +84,11 @@ Srivastava2007 <- function(x, ...){
 
   p.value <- 1 - pchisq(statistic, parameter)
 
-  estimate <- sample_covs
-  names(estimate) <- paste0("covariance of ", names(matrix_ls))
-
-  estimate <- if(nrow(estimate[[1]]) > 5){
-    NULL
-  }else{
-    estimate
-  }
 
   obj <- list(statistic = statistic,
               parameter = parameter,
               p.value = p.value,
-              estimate = estimate,
+              estimate = NULL,
               null.value = null.value,
               alternative = "two.sided",
               method = "Srivastava 2007 Equality of Covariance Test",

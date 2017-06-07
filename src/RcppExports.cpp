@@ -6,6 +6,72 @@
 
 using namespace Rcpp;
 
+// Chaipitak2013Stat
+double Chaipitak2013Stat(List x);
+RcppExport SEXP EqualCov_Chaipitak2013Stat(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(Chaipitak2013Stat(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// Ishii2016Stat
+double Ishii2016Stat(List x);
+RcppExport SEXP EqualCov_Ishii2016Stat(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(Ishii2016Stat(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// Schott2007Stat
+double Schott2007Stat(List x);
+RcppExport SEXP EqualCov_Schott2007Stat(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(Schott2007Stat(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// Srivastava2007Stat
+double Srivastava2007Stat(List x);
+RcppExport SEXP EqualCov_Srivastava2007Stat(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(Srivastava2007Stat(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// Srivastava2014Stat
+double Srivastava2014Stat(List x);
+RcppExport SEXP EqualCov_Srivastava2014Stat(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(Srivastava2014Stat(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// SrivastavaYanagihara2010Stat
+double SrivastavaYanagihara2010Stat(List x);
+RcppExport SEXP EqualCov_SrivastavaYanagihara2010Stat(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(SrivastavaYanagihara2010Stat(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 // c3
 double c3(arma::mat x);
 RcppExport SEXP EqualCov_c3(SEXP xSEXP) {
@@ -94,14 +160,26 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// Chaipitak2013_
-List Chaipitak2013_(List x);
-RcppExport SEXP EqualCov_Chaipitak2013_(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< List >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(Chaipitak2013_(x));
-    return rcpp_result_gen;
-END_RCPP
+
+static const R_CallMethodDef CallEntries[] = {
+    {"EqualCov_Chaipitak2013Stat", (DL_FUNC) &EqualCov_Chaipitak2013Stat, 1},
+    {"EqualCov_Ishii2016Stat", (DL_FUNC) &EqualCov_Ishii2016Stat, 1},
+    {"EqualCov_Schott2007Stat", (DL_FUNC) &EqualCov_Schott2007Stat, 1},
+    {"EqualCov_Srivastava2007Stat", (DL_FUNC) &EqualCov_Srivastava2007Stat, 1},
+    {"EqualCov_Srivastava2014Stat", (DL_FUNC) &EqualCov_Srivastava2014Stat, 1},
+    {"EqualCov_SrivastavaYanagihara2010Stat", (DL_FUNC) &EqualCov_SrivastavaYanagihara2010Stat, 1},
+    {"EqualCov_c3", (DL_FUNC) &EqualCov_c3, 1},
+    {"EqualCov_c2", (DL_FUNC) &EqualCov_c2, 1},
+    {"EqualCov_c1", (DL_FUNC) &EqualCov_c1, 1},
+    {"EqualCov_bilinearquad", (DL_FUNC) &EqualCov_bilinearquad, 1},
+    {"EqualCov_bilinearsquare", (DL_FUNC) &EqualCov_bilinearsquare, 1},
+    {"EqualCov_bilinearcube", (DL_FUNC) &EqualCov_bilinearcube, 1},
+    {"EqualCov_bilinearoff", (DL_FUNC) &EqualCov_bilinearoff, 1},
+    {"EqualCov_quadra", (DL_FUNC) &EqualCov_quadra, 1},
+    {NULL, NULL, 0}
+};
+
+RcppExport void R_init_EqualCov(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
 }
