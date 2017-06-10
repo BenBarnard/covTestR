@@ -1,4 +1,3 @@
-source("R/helper_functions.R")
 #' Test of Equality of Covariances given by Schott 2007
 #'
 #' @inheritParams Chaipitak2013
@@ -22,79 +21,7 @@ Ishii2016 <- function(x, ...) {
   ls <- lazy_dots(...)
   matrix_ls <- x
 
-  if(!("covariance" %in% class(x[[1]])) & ("matrix" %in% class(x[[1]]))){
-
   statistic <- Ishii2016Stat(matrix_ls)
-  }
-
-  if("covariance" %in% class(x[[1]])){
-    covs <- matrix_ls
-    ns <- lapply(matrix_ls, function(x){attributes(x)$df + 1})
-    dfmat <- lapply(matrix_ls, function(x){
-      n <- attributes(x)$df + 1
-      sv <- svd(x)
-      sqdi <- diag(sqrt(sv$d))
-      sv$u %*% sqdi
-    })
-    A_ls <- lapply(dfmat, A_func)
-    dualcovs <- lapply(dfmat, function(x){
-      n <- nrow(x)
-      t(t(x) - rowMeans(t(x))) %*% (t(x) - rowMeans(t(x))) / (n - 1)
-    })
-
-  overall_dfmat <- Reduce(rbind, dfmat)
-
-  overall_dualcov <- t(t(overall_dfmat) - rowMeans(t(overall_dfmat))) %*%
-    (t(overall_dfmat) - rowMeans(t(overall_dfmat))) /
-    (nrow(overall_dfmat) - length(matrix_ls))
-  overall_cov <- overall_cov_func(A_ls, ns)
-
-  lambdahat <- lapply(covs, function(x){
-    eigen(x)$values
-  })
-
-  overall_lambdahat <- eigen(overall_cov)$values
-
-  lambdatildes <- mapply(lambdatilde, lambdahat, dualcovs, SIMPLIFY = FALSE)
-
-  overall_lambdatilde <- lambdatilde(overall_lambdahat, overall_dualcov)
-
-  eigdual <- lapply(dualcovs, function(x){
-    eigen(x)$vectors
-  })
-
-  overall_eigdual <- eigen(overall_dualcov)$vectors
-
-
-
-  htilde <- mapply(function(x, y, z){
-    sapply(1:min(length(x), nrow(z)), function(k){
-
-      (((nrow(z) - 1) * x[[k]]) ^ (-1 / 2)) * (t(y) - rowMeans(t(y))) %*% t(z)[,k]
-    })
-  }, lambdatildes, dfmat, eigdual, SIMPLIFY = FALSE)
-
-  overall_htilde <- sapply(1:min(length(overall_lambdatilde), nrow(overall_eigdual)), function(k){
-
-    (((nrow(overall_eigdual) - 1) * overall_lambdatilde[[k]]) ^ (-1 / 2)) *
-      (t(overall_dfmat) - rowMeans(t(overall_dfmat))) %*% t(overall_eigdual)[,k]
-  })
-
-  ki <- mapply(function(x,y){
-    tr(x) - y[[1]]
-  }, dualcovs, lambdatildes, SIMPLIFY = FALSE)
-
-  overall_ki <- tr(overall_dualcov) - overall_lambdatilde[[1]]
-
-  statistic <- Reduce(`+`, mapply(function(lambdatildes, htilde, ki,
-                                           overall_lambdatilde, overall_htilde,
-                                           overall_ki){
-    abs((lambdatildes[[1]] / overall_lambdatilde[[1]]) *
-          (htilde[, 1] %*% overall_htilde[, 1] ^ -1) *
-          (ki / overall_ki) - 1)
-  }, lambdatildes, htilde, ki, list(overall_lambdatilde), list(overall_htilde),
-  list(overall_ki), SIMPLIFY = FALSE))
-}
 
   xmin <- names(matrix_ls[1])
   xmax <- names(matrix_ls[length(matrix_ls)])

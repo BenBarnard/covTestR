@@ -1,4 +1,4 @@
-' Structure of Covariances
+#' Structure of Covariances
 #'
 #' @param x data
 #' @param ... other options passed to covTest method

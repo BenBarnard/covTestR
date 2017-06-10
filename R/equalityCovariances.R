@@ -60,14 +60,12 @@ equalityCovariances.grouped_df <- function(x, ..., covTest = BoxesM){
   x <- as_data_frame(x)
   group <- as.character(groups[,1])
   groupname <- names(groups)
-  ls <- setNames(lapply(group, function(y){
+  x <- setNames(lapply(group, function(y){
     as.matrix(x[x[groupname] == y,][names(x) != groupname])
   }), group)
   dots <- lazy_dots(...)
-  lapply(ls, function(x){
-    mat <- do.call(covTest, c(x = list(x), lazy_eval(dots)))
-    mat
-  })
+  mat <- do.call(covTest, c(x = list(x), lazy_eval(dots)))
+  mat
 }
 
 #' @export
@@ -89,4 +87,17 @@ equalityCovariances.resample <- function(x, ..., covTest = BoxesM){
     mat <- do.call(covTest, c(x = list(x), lazy_eval(dots)))
     mat
   })
+}
+
+#' @export
+#' @keywords internal
+#' @importFrom dplyr as_data_frame
+#' @importFrom stats setNames
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+equalityCovariances.list <- function(x, ..., covTest = BoxesM){
+  ls <- lazy_dots(...)
+  matrix_ls <- x
+    mat <- do.call(covTest, c(x = matrix_ls, lazy_eval(dots)))
+    mat
 }

@@ -6,6 +6,28 @@
 
 using namespace Rcpp;
 
+// Ahmad2017Stat
+double Ahmad2017Stat(List x);
+RcppExport SEXP EqualCov_Ahmad2017Stat(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(Ahmad2017Stat(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// BoxesMStat
+double BoxesMStat(List x);
+RcppExport SEXP EqualCov_BoxesMStat(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(BoxesMStat(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 // Chaipitak2013Stat
 double Chaipitak2013Stat(List x);
 RcppExport SEXP EqualCov_Chaipitak2013Stat(SEXP xSEXP) {
@@ -25,6 +47,17 @@ BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< List >::type x(xSEXP);
     rcpp_result_gen = Rcpp::wrap(Ishii2016Stat(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// Schott2001Stat
+double Schott2001Stat(List x);
+RcppExport SEXP EqualCov_Schott2001Stat(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(Schott2001Stat(x));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -162,8 +195,11 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"EqualCov_Ahmad2017Stat", (DL_FUNC) &EqualCov_Ahmad2017Stat, 1},
+    {"EqualCov_BoxesMStat", (DL_FUNC) &EqualCov_BoxesMStat, 1},
     {"EqualCov_Chaipitak2013Stat", (DL_FUNC) &EqualCov_Chaipitak2013Stat, 1},
     {"EqualCov_Ishii2016Stat", (DL_FUNC) &EqualCov_Ishii2016Stat, 1},
+    {"EqualCov_Schott2001Stat", (DL_FUNC) &EqualCov_Schott2001Stat, 1},
     {"EqualCov_Schott2007Stat", (DL_FUNC) &EqualCov_Schott2007Stat, 1},
     {"EqualCov_Srivastava2007Stat", (DL_FUNC) &EqualCov_Srivastava2007Stat, 1},
     {"EqualCov_Srivastava2014Stat", (DL_FUNC) &EqualCov_Srivastava2014Stat, 1},

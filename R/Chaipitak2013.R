@@ -26,41 +26,7 @@ Chaipitak2013 <- function(x, ...){
   ls <- lazy_dots(...)
   matrix_ls <- x
 
-  if(!("covariance" %in% class(x[[1]])) & ("matrix" %in% class(x[[1]]))){
-    statistic <- Chaipitak2013Stat(matrix_ls)
-  }
-
-  if("covariance" %in% class(x[[1]])){
-    ns <- lapply(matrix_ls, function(matrix){
-      attributes(matrix)$df + 1
-    })
-
-    p <- lapply(matrix_ls, function(matrix){
-      ncol(matrix)
-    })
-
-    sample_covs <- matrix_ls
-
-    A_ls <- mapply(function(sample_covs, ns){
-      sample_covs * (ns - 1)
-    }, sample_covs = sample_covs, ns = ns, SIMPLIFY = FALSE)
-
-
-  overall_cov <- overall_cov_func(A_ls, ns)
-
-  ahat2i <- mapply(ahat2i_func, ns, p, sample_covs, SIMPLIFY = FALSE)
-  ahat2 <- ahat2_func(ns, overall_cov, p[[1]])
-
-    tau <- tau_func(ns)
-    ahatStar4 <- ahatStar4_func(tau, p[[1]], overall_cov, ns)
-    deltahat2 <- mapply(deltahat2_func, ahatStar4, p, ahat2, ns, SIMPLIFY = FALSE)
-    b <- mapply(function(ahat2, ahat2i){ahat2i / ahat2}, ahat2, ahat2i, SIMPLIFY = FALSE)
-
-    statistic <- Reduce(`+`, mapply(function(b, deltahat2){
-      (b - 1) ^ 2 / deltahat2
-    }, b, deltahat2, SIMPLIFY = FALSE))
-
-  }
+  statistic <- Chaipitak2013Stat(matrix_ls)
 
   xmin <- names(matrix_ls[1])
   xmax <- names(matrix_ls[length(matrix_ls)])

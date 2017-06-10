@@ -55,16 +55,16 @@ double Ishii2016Stat(List x) {
     }
 
     arma::mat d = scaleddf * scaleddf.t();
-    arma::mat D = d * pow(ns - 1, -1);
+    arma::mat D = d * pow(ns[i] - 1, -1);
     di[i] = d;
     Di[i] = D;
 
     arma::vec lamb;
     arma::mat eigdual;
-    eig_sym(lamb, eigdual, covar);
+    eig_sym(lamb, eigdual, D);
 
     double lambtilde = lamb[1] - (trace(D) - lamb[1]) * pow(nsi - 2, -1);
-    arma::vec htilde = pow((nsi - 1) * lambtilde, -1 / 2) * scaleddf * eigdual.col(1);
+    arma::vec htilde = pow((nsi - 1) * lambtilde, -1 / 2) * scaleddf.t() * eigdual.col(1);
     double kii = trace(D) - lambtilde;
 
     ki[i] = kii;
@@ -76,23 +76,24 @@ double Ishii2016Stat(List x) {
     ntot += ns[i] - 1;
     Apool += A;
     dpool += d;
+
   }
 
   arma::mat overallcov = Apool / ntot;
   arma::mat overallD = dpool / ntot;
   arma::vec overallLambda;
   arma::mat overalleigendual;
-  eig_sym(overallLambda, overalleigendual, overallcov);
+  eig_sym(overallLambda, overalleigendual, overallD);
   double k = trace(overallD) - overallLambda[1];
 
   double stat = 0;
   for(int i = 0; i < len; ++i){
     double lambda = lambdaTilde[i];
     arma::vec eigenTilde = eigendualTilde[i];
-    double h = arma::as_scalar(eigenTilde.t() * overalleigendual[1]);
+    double h = arma::as_scalar(eigenTilde.t() * overalleigendual.col(1));
     double kii = ki[i];
-    stat += abs(lambda * pow(overallLambda[1], -1) *
-      h * kii * pow(k, -1) - 1);
+    stat += pow(lambda * pow(overallLambda[1], -1) *
+      h * kii * pow(k, -1), 2);
   }
 
   return stat;

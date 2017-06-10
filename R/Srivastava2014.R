@@ -24,47 +24,7 @@ Srivastava2014 <- function(x, ...){
   ls <- lazy_dots(...)
   matrix_ls <- x
 
-  if(!("covariance" %in% class(x[[1]])) & ("matrix" %in% class(x[[1]]))){
-    statistic <- Srivastava2014Stat(matrix_ls)
-  }
-
-  if("covariance" %in% class(x[[1]])){
-    ns <- lapply(matrix_ls, function(matrix){
-      attributes(matrix)$df + 1
-    })
-
-    p <- lapply(matrix_ls, function(matrix){
-      ncol(matrix)
-    })
-
-    sample_covs <- matrix_ls
-
-    A_ls <- mapply(function(sample_covs, ns){
-      sample_covs * (ns - 1)
-    }, sample_covs = sample_covs, ns = ns, SIMPLIFY = FALSE)
-
-    dfmat <- lapply(matrix_ls, function(x){
-      n <- attributes(x)$n
-      sv <- svd(x)
-      sqdi <- diag(sqrt(sv$d))
-      sv$u %*% sqdi
-    })
-
-
-  overall_cov <- overall_cov_func(A_ls, ns)
-
-  D_ls <- lapply(dfmat, Di_func)
-
-  ahat2i <- mapply(ahat2iSrivastava2014_func, n = ns, p = p, D = D_ls, A = A_ls, MoreArgs = list(ns = ns), SIMPLIFY = FALSE)
-
-  ahat2 <- ahat2Srivastava2014_func(ahat2i, ns)
-
-  theta <- lapply(ns, function(x){2 * ahat2 / (x - 1)})
-
-  statistic <- Reduce(`+`, mapply(function(p, ahat2i, ahat2, sample_covs, overall_cov, theta){
-    ((ahat2i + ahat2 - (2 / p) * tr(sample_covs %*% overall_cov)) ^ 2) / (theta ^ 2)
-  }, p[[1]], ahat2i, ahat2, sample_covs, list(overall_cov), theta, SIMPLIFY = FALSE))
-  }
+  statistic <- Srivastava2014Stat(matrix_ls)
 
   xmin <- names(matrix_ls[1])
   xmax <- names(matrix_ls[length(matrix_ls)])

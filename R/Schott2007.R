@@ -24,40 +24,7 @@ Schott2007 <- function(x, ...) {
   ls <- lazy_dots(...)
   matrix_ls <- x
 
-  if(!("covariance" %in% class(x[[1]])) & ("matrix" %in% class(x[[1]]))){
-   statistic <- Schott2007Stat(matrix_ls)
-  }
-
-  if("covariance" %in% class(x[[1]])){
-    ns <- lapply(matrix_ls, function(matrix){
-      attributes(matrix)$df + 1
-    })
-
-    p <- lapply(matrix_ls, function(matrix){
-      ncol(matrix)
-    })
-
-    sample_covs <- matrix_ls
-
-    A_ls <- mapply(function(sample_covs, ns){
-      sample_covs * (ns - 1)
-    }, sample_covs = sample_covs, ns = ns, SIMPLIFY = FALSE)
-
-
-    overall_cov <- overall_cov_func(A_ls, ns)
-
-    ahat2i <- mapply(ahat2i_func, ns, p, sample_covs, SIMPLIFY = FALSE)
-    ahat2 <- ahat2_func(ns, overall_cov, p[[1]])
-
-    theta <- lapply(ns, function(x){2 * ahat2 / (x - 1)})
-
-  statistic <- Reduce(`+`, mapply(function(p, ahat2i, ahat2,
-                                           sample_covs, overall_cov, theta){
-
-    ((ahat2i + ahat2 - (2 / p) * tr(sample_covs %*% overall_cov)) ^ 2) /
-      (theta ^ 2)
-  }, p[[1]], ahat2i, ahat2, sample_covs, list(overall_cov), theta, SIMPLIFY = FALSE))
-  }
+  statistic <- Schott2007Stat(matrix_ls)
 
   xmin <- names(matrix_ls[1])
   xmax <- names(matrix_ls[length(matrix_ls)])
