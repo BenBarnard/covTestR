@@ -7,7 +7,7 @@
 using namespace Rcpp;
 
 // Ahmad2017Stat
-arma::mat Ahmad2017Stat(List x);
+double Ahmad2017Stat(List x);
 RcppExport SEXP EqualCov_Ahmad2017Stat(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;

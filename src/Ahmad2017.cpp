@@ -13,7 +13,7 @@ using namespace arma;
 //
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::export]]
-arma::mat Ahmad2017Stat(List x) {
+double Ahmad2017Stat(List x) {
   int len = x.length();
   arma::vec Eis(len);
   arma::mat Eijs(len, len);
@@ -34,6 +34,7 @@ arma::mat Ahmad2017Stat(List x) {
     arma::mat A = mats.t() * (diag - J / ns) * mats;
     ntot += ns - 1;
     Apool += A;
+    ni[i] = ns;
 
     for(int k = 0; k < ns; ++k){
       double e = 0;
@@ -64,7 +65,7 @@ arma::mat Ahmad2017Stat(List x) {
       double Eij = 0;
       for(int k = 0; k < nis; ++k){
         for(int r = 0; r < nis; ++r){
-          for(int l = 0; l < njs; ++l)
+          for(int l = 0; l < njs; ++l) {
             for(int s = 0; s < njs; ++s){
               double e = 0;
               if (k == r | l == s) {
@@ -74,13 +75,14 @@ arma::mat Ahmad2017Stat(List x) {
               }
               Eij += e;
             }
+          }
         }
       }
 
       Eijs(i, j) = Eij * pow(4 * nis * (nis - 1) * njs * (njs - 1), -1);
     }
   }
-/*
+
   arma::mat pooledcov = Apool / ntot;
 
   double doublesum = 0;
@@ -128,6 +130,6 @@ arma::mat Ahmad2017Stat(List x) {
   double stat = a * ((len - 1) * singlesum - 2 * doublesum) *
     pow(trace(pooledcov * pooledcov), -1) *
     pow(var2, -0.5);
-*/
-  return Eijs;
+
+  return var2;
 }
