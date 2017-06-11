@@ -44,9 +44,9 @@ double Ahmad2017Stat(List x) {
               e = 0;
             } else {
               arma::mat x = mats.t();
-              e = as_scalar((x.col(k) - x.col(r)).t() * (x.col(kp) - x.col(rp)) * (x.col(k) - x.col(r)).t() * (x.col(kp) - x.col(rp)) +
-                (x.col(k) - x.col(kp)).t() * (x.col(rp) - x.col(rp)) * (x.col(k) - x.col(kp)).t() * (x.col(r) - x.col(rp)) +
-                (x.col(k) - x.col(rp)).t() * (x.col(kp) - x.col(r)) * (x.col(k) - x.col(rp)).t() * (x.col(kp) - x.col(r)));
+              e = as_scalar(pow((x.col(k) - x.col(r)).t() * (x.col(kp) - x.col(rp)), 2) +
+                pow((x.col(k) - x.col(kp)).t() * (x.col(rp) - x.col(rp)), 2) +
+                pow((x.col(k) - x.col(rp)).t() * (x.col(kp) - x.col(r)), 2));
             }
             E += e;
           }
@@ -74,8 +74,7 @@ double Ahmad2017Stat(List x) {
               if (k == r | l == s) {
                 e = 0;
               } else {
-                e = as_scalar((xi.col(k) - xi.col(r)).t() * (xj.col(l) - xj.col(s)) *
-                  (xi.col(k) - xi.col(r)).t() * (xj.col(l) - xj.col(s)));
+                e = as_scalar(pow((xi.col(k) - xi.col(r)).t() * (xj.col(l) - xj.col(s))));
               }
               Eij += e;
             }
