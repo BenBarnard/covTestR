@@ -51,6 +51,8 @@ double Ahmad2017Stat(List x) {
       }
 
     Eis[i] = 24 * E * pow(ns * (ns - 1) * (ns - 2) * (ns - 3), -1);
+
+
   }
 
 
@@ -99,15 +101,15 @@ double Ahmad2017Stat(List x) {
   double a = 0;
 
   for(int i = 0; i < len; ++i){
-    for(int j = 0; j + 1 < len; ++j){
+    for(int j = i + 1; j < len; ++j){
       double nsi = ni[i];
       double nsj = ni[j];
       double Eij = Eijs(i, j);
-        double dem = 0;
-        for(int k = i; k < j + 1; ++k){
-      dem += nsi * (nsi - 1) * nsj * (nsj - 1);
-        }
-        double asub = nsi * (nsi - 1) * nsj * (nsj - 1) * Eij * pow(dem, - 1);
+      double dem = 0;
+      for(int k = i; k < j + 1; ++k){
+        dem += nsi * (nsi - 1) * nsj * (nsj - 1);
+      }
+      double asub = nsi * (nsi - 1) * nsj * (nsj - 1) * Eij * pow(dem, - 1);
 
       a += asub;
     }
@@ -131,5 +133,5 @@ double Ahmad2017Stat(List x) {
     pow(trace(pooledcov * pooledcov), -1) *
     pow(var2, -0.5);
 
-  return var2;
+  return a;
 }

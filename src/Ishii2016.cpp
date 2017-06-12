@@ -15,7 +15,7 @@ using namespace arma;
 // [[Rcpp::export]]
 double Ishii2016Stat(List x) {
   int len = x.length();
-  arma::mat pmat = x[1];
+  arma::mat pmat = x[0];
   List samplecov(len);
   double p = pmat.n_cols;
   double n = pmat.n_rows;
@@ -63,8 +63,8 @@ double Ishii2016Stat(List x) {
     arma::mat eigdual;
     eig_sym(lamb, eigdual, D);
 
-    double lambtilde = lamb[1] - (trace(D) - lamb[1]) * pow(nsi - 2, -1);
-    arma::vec htilde = pow((nsi - 1) * lambtilde, -1 / 2) * scaleddf.t() * eigdual.col(1);
+    double lambtilde = lamb[0] - (trace(D) - lamb[0]) * pow(nsi - 2, -1);
+    arma::vec htilde = pow((nsi - 1) * lambtilde, -1 / 2) * scaleddf.t() * eigdual.col(0);
     double kii = trace(D) - lambtilde;
 
     ki[i] = kii;
@@ -84,15 +84,15 @@ double Ishii2016Stat(List x) {
   arma::vec overallLambda;
   arma::mat overalleigendual;
   eig_sym(overallLambda, overalleigendual, overallD);
-  double k = trace(overallD) - overallLambda[1];
+  double k = trace(overallD) - overallLambda[0];
 
   double stat = 0;
   for(int i = 0; i < len; ++i){
     double lambda = lambdaTilde[i];
     arma::vec eigenTilde = eigendualTilde[i];
-    double h = arma::as_scalar(eigenTilde.t() * overalleigendual.col(1));
+    double h = arma::as_scalar(eigenTilde.t() * overalleigendual.col(0));
     double kii = ki[i];
-    stat += pow(lambda * pow(overallLambda[1], -1) *
+    stat += pow(lambda * pow(overallLambda[0], -1) *
       h * kii * pow(k, -1), 2);
   }
 
