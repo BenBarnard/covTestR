@@ -49,8 +49,8 @@ double Srivastava2014Stat(List x) {
     }
     arma::mat d = scaleddf * scaleddf.t();
     arma::mat D(ps, ps);
-    for(int i = 0; i < ps; ++i){
-      D(i, i) = d(i, i);
+    for(int k = 0; k < ps; ++k){
+      D(k, k) = d(k, k);
     }
     Di[i] = D;
     ntot += ns[i] - 1;
