@@ -44,7 +44,7 @@ double Srivastava2014Stat(List x) {
     p = ps;
     arma::mat scaled = mats.t() * j / 50;
     arma::mat scaleddf(ns[i], ns[i]);
-    for(int i = 0; i < ps; ++i){
+    for(int i = 0; i < ns[i]; ++i){
       scaleddf.col(i) = mats.col(i) - scaled(i);
     }
     arma::mat d = scaleddf * scaleddf.t();
