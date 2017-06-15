@@ -8,7 +8,7 @@ set_pushover_app(token = "azrd3hwrwgh2gs6igbvb8yy4mftoi7")
 
 dimensions <- c(20, 40, 80, 160)
 SampleSize <- c(5, 10, 20, 40)
-replications <- 1000
+replications <- 1
 grid <- expand.grid(dimensions = dimensions, SampleSize = SampleSize, Sigmaj = c("Zero", "One", "Two"))
 
 

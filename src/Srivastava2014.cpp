@@ -20,7 +20,6 @@ double Srivastava2014Stat(List x) {
   List samplecov(len);
   double p = pmat.n_cols;
   double ntot = 0;
-  arma::mat Apool(p, p);
   double ninv = 0;
   double ninv2 = 0;
   arma::vec ns(len);
@@ -31,35 +30,33 @@ double Srivastava2014Stat(List x) {
     arma::mat mats = x[i];
     ns[i] = mats.n_rows;
     int ps = mats.n_cols;
-    arma::mat diag(ns[i], ns[i]);
-    diag.eye(ns[i], ns[i]);
-    arma::mat J(ns[i], ns[i]);
-    J.fill(1);
-    arma::vec j(ns[i]);
-    j.fill(1);
-    arma::mat A = mats.t() * (diag - J / ns[i]) * mats;
-    Ai[i] = A;
-    arma::mat covar = A / (ns[i] - 1);
+    arma::mat covar = cov(mats);
     samplecov[i] = covar;
+
+    Ai[i] = covar * (ns[i] - 1);
+
     p = ps;
-    arma::mat scaled = mats.t() * j / 50;
+
+    arma::rowvec scaled = mean(mats);
     arma::mat scaleddf(ns[i], ns[i]);
-    for(int i = 0; i < ns[i]; ++i){
-      scaleddf.col(i) = mats.col(i) - scaled(i);
+
+    for(int k = 0; k < ns[i]; ++k){
+      scaleddf.col(k) = mats.col(k) - scaled(k);
     }
+
     arma::mat d = scaleddf * scaleddf.t();
-    arma::mat D(ps, ps);
-    for(int k = 0; k < ps; ++k){
+    arma::mat D(ns[i], ns[i]);
+
+    for(int k = 0; k < ns[i]; ++k){
       D(k, k) = d(k, k);
     }
+
     Di[i] = D;
     ntot += ns[i] - 1;
-    Apool += A;
-    ninv += pow(ns[i] - 1, -1);
-    ninv2 += 1 / pow(ns[i] - 1, 2);
-  }
 
-  arma::mat overallcov = Apool / ntot;
+    ninv += pow(ns[i] - 1, -1);
+    ninv2 += pow(ns[i] - 1, -2);
+  }
 
  for(int i = 0; i < len; ++i){
    arma::mat Ais = Ai[i];
@@ -76,7 +73,7 @@ double Srivastava2014Stat(List x) {
    a2num += ns[i] * a2i[i];
  }
 
- double a2 = a2num / ntot;
+ double a2 = a2num * pow(ntot, -1);
 
   double theta = 0;
 
@@ -86,11 +83,15 @@ double Srivastava2014Stat(List x) {
   theta += 2 * a2 * pow(ns - 1, -1);
   }
 
+arma::vec trcov(len);
   double stat = 0;
   for(int i = 0; i < len; ++i){
-    arma::mat sampcov = samplecov[i];
-    stat += pow(a2i[i] + a2 - (2 / p) * trace(sampcov * overallcov), 2) /
-      pow(theta, 2);
+    arma::mat sampcovi = samplecov[i];
+    for(int j = i + 1; j < len; ++j){
+      arma::mat sampcovj = samplecov[j];
+    stat += pow(a2i[i] + a2i[j] - (2 * pow(p, -1)) * trace(sampcovi * sampcovj), 2) *
+      pow(theta, -2);
+    }
   }
 
   return stat;

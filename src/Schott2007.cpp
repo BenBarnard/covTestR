@@ -23,32 +23,30 @@ double Schott2007Stat(List x) {
   arma::mat Apool(p, p);
   double ninv = 0;
   double ninv2 = 0;
+  arma::vec ns(len);
 
  for(int i = 0; i < len; ++i){
     arma::mat mats = x[i];
-    int ns = mats.n_rows;
+    ns[i] = mats.n_rows;
     int ps = mats.n_cols;
-    arma::mat diag(ns, ns);
-    diag.eye(ns, ns);
-    arma::mat J(ns, ns);
-    J.fill(1);
-    arma::mat A = mats.t() * (diag - J / ns) * mats;
-    arma::mat covar = A / (ns - 1);
+
+    arma::mat covar = cov(mats);
     samplecov[i] = covar;
     p = ps;
-    a2i[i] = (pow(ns - 1, 2) / (ps * (ns - 2) * (ns + 1))) *
-      (trace(covar * covar) - pow(ns - 1, -1) * pow(trace(covar), 2));
+    a2i[i] = (pow(ns[i] - 1, 2) / (ps * (ns[i] - 2) * (ns[i] + 1))) *
+      (trace(covar * covar) - pow(ns[i] - 1, -1) * pow(trace(covar), 2));
 
-    ntot += ns - 1;
-    Apool += A;
-    ninv += pow(ns - 1, -1);
-    ninv2 += 1 / pow(ns - 1, 2);
+    ntot += ns[i] - 1;
+    ninv += pow(ns[i] - 1, -1);
+    ninv2 += pow(ns[i] - 1, -2);
   }
 
-  arma::mat overallcov = Apool / ntot;
-  double a2 = ((ntot * ntot) / (p * (ntot - 1) * (ntot + 2))) *
-    (trace(overallcov * overallcov) - (1 / ntot) *
-    trace(overallcov) * trace(overallcov));
+ double a2num = 0;
+ for(int i = 0; i < len; ++i){
+   a2num += ns[i] * a2i[i];
+ }
+
+ double a2 = a2num * pow(ntot, -1);
 
   double theta = 0;
 
@@ -60,9 +58,12 @@ double Schott2007Stat(List x) {
 
   double stat = 0;
   for(int i = 0; i < len; ++i){
-    arma::mat sampcov = samplecov[i];
-    stat += pow(a2i[i] + a2 - (2 / p) * trace(sampcov * overallcov), 2) /
+    arma::mat sampcovi = samplecov[i];
+    for(int j = i + 1; j < len; ++j){
+      arma::mat sampcovj = samplecov[j];
+    stat += pow(a2i[i] + a2i[j] - (2 / p) * trace(sampcovi * sampcovj), 2) /
       pow(theta, 2);
+    }
   }
 
   return stat;
