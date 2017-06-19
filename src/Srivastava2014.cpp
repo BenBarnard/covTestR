@@ -38,7 +38,7 @@ double Srivastava2014Stat(List x) {
     p = ps;
 
     arma::rowvec scaled = mean(mats);
-    arma::mat scaleddf(ns[i], ns[i]);
+    arma::mat scaleddf(ns[i], p);
 
     for(int k = 0; k < ps; ++k){
       scaleddf.col(k) = mats.col(k) - scaled(k);
@@ -46,9 +46,10 @@ double Srivastava2014Stat(List x) {
 
     arma::mat d = scaleddf * scaleddf.t();
     arma::mat D(ns[i], ns[i]);
+    D.fill(0);
 
-    for(int k = 0; k < ns[i]; ++k){
-      D(k, k) = d(k, k);
+    for(int z = 0; z < ns[i]; ++z){
+      D(z, z) = d(z, z);
     }
 
     Di[i] = D;
@@ -75,13 +76,7 @@ double Srivastava2014Stat(List x) {
 
  double a2 = a2num * pow(ntot, -1);
 
-  double theta = 0;
-
-  for(int i = 0; i < len; ++i){
-    arma::mat mats = x[i];
-    int ns = mats.n_rows;
-  theta += 2 * a2 * pow(ns - 1, -1);
-  }
+ double theta = 2 * a2 * ninv;
 
 arma::vec trcov(len);
   double stat = 0;

@@ -23,7 +23,6 @@ Srivastava2014 <- function(x, ...){
 
   ls <- lazy_dots(...)
   matrix_ls <- x
-  browser()
   statistic <- Srivastava2014Stat(matrix_ls)
 
   xmin <- names(matrix_ls[1])
