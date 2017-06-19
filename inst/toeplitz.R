@@ -6,162 +6,124 @@ library(pushoverr)
 set_pushover_user(user = "ufmfa6vc9s2fc2eh6phop9ej5ebxum")
 set_pushover_app(token = "azrd3hwrwgh2gs6igbvb8yy4mftoi7")
 
-dimensions <- c(20, 40, 60, 100, 200)
-SampleSize <- c(10, 20, 40, 60)
-replications <- 1000
-grid <- expand.grid(dimensions = dimensions, SampleSize = SampleSize, Sigmaj = c("Zero", "One", "Two"))
+dimensions <- c(20, 40, 80, 160)
+SampleSize <- c(5, 10, 20, 40)
+maxdimensions <- max(dimensions)
+maxSampleSize <- max(SampleSize)
+replications <- 1
+gridcomb <- expand.grid(Samples = SampleSize, dims = dimensions)
 
-Sigmaj <- list("Zero" = .99 * diag(1, 200) + 0.01 * rep(1, 200) %*% t(rep(1, 200)),
-               "One" = .95 * diag(1, 200) + 0.05 * rep(1, 200) %*% t(rep(1, 200)),
-               "Two" = .99 * diag(1, 200) + 0.01 * rep(1, 200) %*% t(rep(1, 200)))
+Sigmaj <- list("Zero" = .99 * diag(1, maxdimensions) + 0.01 * rep(1, maxdimensions) %*% t(rep(1, maxdimensions)),
+               "One" = .95 * diag(1, maxdimensions) + 0.05 * rep(1, maxdimensions) %*% t(rep(1, maxdimensions)),
+               "Two" = .99 * diag(1, maxdimensions) + 0.01 * rep(1, maxdimensions) %*% t(rep(1, maxdimensions)))
 
-mvndata <- mapply(function(SampleSize, Sig, Sigmaj, dimensions, replications){
-  df <- replicate(replications,
-                  list("Zero1" = mvrnorm(n = SampleSize, mu = rep(0, dimensions),
-                                         Sigma = Sigmaj[names(Sigmaj) == "Zero"][[1]][1:dimensions, 1:dimensions]),
-                       "Zero2" = mvrnorm(n = SampleSize, mu = rep(0, dimensions),
-                                         Sigma = Sigmaj[names(Sigmaj) == "Zero"][[1]][1:dimensions, 1:dimensions]),
-                       "Zero3" = mvrnorm(n = SampleSize, mu = rep(0, dimensions),
-                                         Sigma = Sigmaj[names(Sigmaj) == "Zero"][[1]][1:dimensions, 1:dimensions]),
-                       "One" = mvrnorm(n = SampleSize, mu = rep(0, dimensions),
-                                       Sigma = Sigmaj[names(Sigmaj) == "One"][[1]][1:dimensions, 1:dimensions]),
-                       "Two" = mvrnorm(n = SampleSize, mu = rep(0, dimensions),
-                                       Sigma = Sigmaj[names(Sigmaj) == "Two"][[1]][1:dimensions, 1:dimensions])),
-                  simplify = FALSE)
-}, SampleSize = grid$SampleSize, dimensions = grid$dimensions, Sig = grid$Sig,
-MoreArgs = list(Sigmaj = Sigmaj, replications = replications), SIMPLIFY = FALSE)
+save(Sigmaj, file = "E:/Ben/Box Sync/Statistics/Toeplitz/Sigmaj.RData")
 
-save(mvndata, file = "E:/Ben/Box Sync/Statistics/toeplitz/mvndata.RData")
+mvndata <- replicate(replications,
+                     list("Zero1" = mvrnorm(n = maxSampleSize, mu = rep(0, maxdimensions),
+                                            Sigma = Sigmaj[names(Sigmaj) == "Zero"][[1]][1:maxdimensions, 1:maxdimensions]),
+                          "Zero2" = mvrnorm(n = maxSampleSize, mu = rep(0, maxdimensions),
+                                            Sigma = Sigmaj[names(Sigmaj) == "Zero"][[1]][1:maxdimensions, 1:maxdimensions]),
+                          "Zero3" = mvrnorm(n = maxSampleSize, mu = rep(0, maxdimensions),
+                                            Sigma = Sigmaj[names(Sigmaj) == "Zero"][[1]][1:maxdimensions, 1:maxdimensions]),
+                          "One" = mvrnorm(n = maxSampleSize, mu = rep(0, maxdimensions),
+                                          Sigma = Sigmaj[names(Sigmaj) == "One"][[1]][1:maxdimensions, 1:maxdimensions]),
+                          "Two" = mvrnorm(n = maxSampleSize, mu = rep(0, maxdimensions),
+                                          Sigma = Sigmaj[names(Sigmaj) == "Two"][[1]][1:maxdimensions, 1:maxdimensions])),
+                     simplify = FALSE)
+
+save(mvndata, file = "E:/Ben/Box Sync/Statistics/Toeplitz/mvndata.RData")
 
 pushover(message = "mvndata",
          title = "Hey")
 
-NullthreeTests <- ldply(mvndata, function(list){
-  ldply(list, function(list){
-    data.frame(SampleSize = nrow(list$Zero1), dimension = ncol(list$Zero1),
-               Test = c("Chaipitak", "Schott", "Schott Sample Cov", "Srivastava 2007", "Srivastava 2010",
-                        "Srivastava 2014", "Ishii"),
-               Statistic = c(Chaipitak2013(list(list$Zero1, list$Zero2, list$Zero3))$statistic,
-                             Schott2007(list(list$Zero1, list$Zero2, list$Zero3))$statistic,
-                             Schott2007sample(list(list$Zero1, list$Zero2, list$Zero3))$statistic,
-                             Srivastava2007(list(list$Zero1, list$Zero2, list$Zero3))$statistic,
-                             SrivastavaYanagihara2010(list(list$Zero1, list$Zero2, list$Zero3))$statistic,
-                             Srivastava2014(list(list$Zero1, list$Zero2, list$Zero3))$statistic,
-                             Ishii2016(list(list$Zero1, list$Zero2, list$Zero3))$statistic))
-  })
-})
+NullTests <- ldply(Map(function(dataMV){
+  ldply(mapply(function(Samples, dims, df){
+    listData <- list(df$Zero1[1:Samples, 1:dims], df$Zero2[1:Samples, 1:dims], df$Zero3[1:Samples, 1:dims])
 
-save(NullthreeTests, file = "E:/Ben/Box Sync/Statistics/toeplitz/NullthreeTests.RData")
+    dfTest <- data.frame(SampleSize = Samples, dimension = dims,
+                         Test = c("Chaipitak", "Schott", "Srivastava 2007", "Srivastava 2010",
+                                  "Srivastava 2014", "Ishii", "Ahmad", "Chaipitak", "Schott",
+                                  "Srivastava 2007", "Srivastava 2010", "Srivastava 2014",
+                                  "Ishii", "Ahmad"),
+                         Pops = c(rep("Three", 7), rep("Two", 7)),
+                         Statistic = c(EqualCov:::Chaipitak2013Stat(listData),
+                                       EqualCov:::Schott2007Stat(listData),
+                                       EqualCov:::Srivastava2007Stat(listData),
+                                       EqualCov:::SrivastavaYanagihara2010Stat(listData),
+                                       EqualCov:::Srivastava2014Stat(listData),
+                                       EqualCov:::Ishii2016Stat(listData),
+                                       abs(EqualCov:::Ahmad2017Stat(listData)),
+                                       EqualCov:::Chaipitak2013Stat(listData[-3]),
+                                       EqualCov:::Schott2007Stat(listData[-3]),
+                                       EqualCov:::Srivastava2007Stat(listData[-3]),
+                                       EqualCov:::SrivastavaYanagihara2010Stat(listData[-3]),
+                                       EqualCov:::Srivastava2014Stat(listData[-3]),
+                                       EqualCov:::Ishii2016Stat(listData[-3]),
+                                       abs(EqualCov:::Ahmad2017Stat(listData[-3]))))
+    dfTest
+  }, Samples = gridcomb$Samples, dims = gridcomb$dims, MoreArgs = list(df = dataMV), SIMPLIFY = FALSE))
+}, mvndata))
 
-pushover(message = "NullthreeTests",
+save(NullTests, file = "E:/Ben/Box Sync/Statistics/Toeplitz/NullTests.RData")
+
+pushover(message = "NullTests",
          title = "Hey")
 
-cvsthree <- summarize(group_by(NullthreeTests, SampleSize, dimension, Test),
-                      CriticalValue = quantile(Statistic, 0.95))
+cvs <- summarize(group_by(NullTests, SampleSize, dimension, Test, Pops),
+                 CriticalValue = quantile(Statistic, 0.95))
 
-save(cvsthree, file = "E:/Ben/Box Sync/Statistics/toeplitz/cvsthree.RData")
+save(cvs, file = "E:/Ben/Box Sync/Statistics/Toeplitz/cvs.RData")
 
-pushover(message = "cvsthree",
+pushover(message = "cvs",
          title = "Hey")
 
-Powervaluesthreetests <- ldply(mvndata, function(list){
-  ldply(list, function(list){
-    data.frame(SampleSize = nrow(list$Zero1), dimension = ncol(list$Zero1),
-               Test = c("Chaipitak", "Schott", "Schott Sample Cov", "Srivastava 2007", "Srivastava 2010",
-                        "Srivastava 2014", "Ishii"),
-               Statistic = c(Chaipitak2013(list(list$Zero1, list$One, list$Two))$statistic,
-                             Schott2007(list(list$Zero1, list$One, list$Two))$statistic,
-                             Schott2007sample(list(list$Zero1, list$One, list$Two))$statistic,
-                             Srivastava2007(list(list$Zero1, list$One, list$Two))$statistic,
-                             SrivastavaYanagihara2010(list(list$Zero1, list$One, list$Two))$statistic,
-                             Srivastava2014(list(list$Zero1, list$One, list$Two))$statistic,
-                             Ishii2016(list(list$Zero1, list$One, list$Two))$statistic))
-  })
-})
+PowerTests <- ldply(Map(function(dataMV){
+  ldply(mapply(function(Samples, dims, df){
+    listData <- list(df$Zero1[1:Samples, 1:dims], df$One[1:Samples, 1:dims], df$Two[1:Samples, 1:dims])
 
-save(Powervaluesthreetests, file = "E:/Ben/Box Sync/Statistics/toeplitz/Powervaluesthreetests.RData")
+    dfTest <- data.frame(SampleSize = Samples, dimension = dims,
+                         Test = c("Chaipitak", "Schott", "Srivastava 2007", "Srivastava 2010",
+                                  "Srivastava 2014", "Ishii", "Ahmad", "Chaipitak", "Schott",
+                                  "Srivastava 2007", "Srivastava 2010", "Srivastava 2014",
+                                  "Ishii", "Ahmad"),
+                         Pops = c(rep("Three", 7), rep("Two", 7)),
+                         Statistic = c(EqualCov:::Chaipitak2013Stat(listData),
+                                       EqualCov:::Schott2007Stat(listData),
+                                       EqualCov:::Srivastava2007Stat(listData),
+                                       EqualCov:::SrivastavaYanagihara2010Stat(listData),
+                                       EqualCov:::Srivastava2014Stat(listData),
+                                       EqualCov:::Ishii2016Stat(listData),
+                                       abs(EqualCov:::Ahmad2017Stat(listData)),
+                                       EqualCov:::Chaipitak2013Stat(listData[-3]),
+                                       EqualCov:::Schott2007Stat(listData[-3]),
+                                       EqualCov:::Srivastava2007Stat(listData[-3]),
+                                       EqualCov:::SrivastavaYanagihara2010Stat(listData[-3]),
+                                       EqualCov:::Srivastava2014Stat(listData[-3]),
+                                       EqualCov:::Ishii2016Stat(listData[-3]),
+                                       abs(EqualCov:::Ahmad2017Stat(listData[-3]))))
+    dfTest
+  }, Samples = gridcomb$Samples, dims = gridcomb$dims, MoreArgs = list(df = dataMV), SIMPLIFY = FALSE))
+}, mvndata))
 
-pushover(message = "Powervaluesthreetests",
+save(PowerTests, file = "E:/Ben/Box Sync/Statistics/Toeplitz/PowerTests.RData")
+
+pushover(message = "PowerTests",
          title = "Hey")
 
-powerscoresthreetests <- mutate(full_join(cvsthree, Powervaluesthreetests),
-                                Significant = (Statistic > CriticalValue))
+powerscorestests <- mutate(full_join(cvs, PowerTests),
+                           Significant = (Statistic > CriticalValue))
 
-save(powerscoresthreetests, file = "E:/Ben/Box Sync/Statistics/toeplitz/powerscoresthreetests.RData")
+save(powerscorestests, file = "E:/Ben/Box Sync/Statistics/Toeplitz/powerscorestests.RData")
 
-pushover(message = "powerscoresthreetests",
+pushover(message = "powerscorestests",
          title = "Hey")
 
-powerthreetest <- summarise(group_by(powerscoresthreetests,
-                                     SampleSize, dimension, Test),
-                            Power = mean(Significant))
+power <- summarise(group_by(powerscorestests,
+                            SampleSize, dimension, Pops, Test),
+                   Power = mean(Significant))
 
-save(powerthreetest, file = "E:/Ben/Box Sync/Statistics/toeplitz/powerthreetest.RData")
+save(power, file = "E:/Ben/Box Sync/Statistics/Toeplitz/power.RData")
 
-pushover(message = "powerthreetest",
-         title = "Hey")
-
-NulltwoTests <- ldply(mvndata, function(list){
-  ldply(list, function(list){
-    data.frame(SampleSize = nrow(list$Zero1), dimension = ncol(list$Zero1),
-               Test = c("Chaipitak", "Schott", "Schott Sample Cov", "Srivastava 2007", "Srivastava 2010",
-                        "Srivastava 2014", "Ishii"),
-               Statistic = c(Chaipitak2013(list(list$Zero1, list$Zero2))$statistic,
-                             Schott2007(list(list$Zero1, list$Zero2))$statistic,
-                             Schott2007sample(list(list$Zero1, list$Zero2))$statistic,
-                             Srivastava2007(list(list$Zero1, list$Zero2))$statistic,
-                             SrivastavaYanagihara2010(list(list$Zero1, list$Zero2))$statistic,
-                             Srivastava2014(list(list$Zero1, list$Zero2))$statistic,
-                             Ishii2016(list(list$Zero1, list$Zero2))$statistic))
-  })
-})
-
-save(NulltwoTests, file = "E:/Ben/Box Sync/Statistics/toeplitz/NulltwoTests.RData")
-
-pushover(message = "NulltwoTests",
-         title = "Hey")
-
-cvstwo <- summarize(group_by(NulltwoTests, SampleSize, dimension, Test),
-                    CriticalValue = quantile(Statistic, 0.95))
-
-save(cvstwo, file = "E:/Ben/Box Sync/Statistics/toeplitz/cvstwo.RData")
-
-pushover(message = "cvstwo",
-         title = "Hey")
-
-Powervaluestwotests <- ldply(mvndata, function(list){
-  ldply(list, function(list){
-    data.frame(SampleSize = nrow(list$Zero1), dimension = ncol(list$Zero1),
-               Test = c("Chaipitak", "Schott", "Schott Sample Cov", "Srivastava 2007", "Srivastava 2010",
-                        "Srivastava 2014", "Ishii"),
-               Statistic = c(Chaipitak2013(list(list$Zero1, list$One))$statistic,
-                             Schott2007(list(list$Zero1, list$One))$statistic,
-                             Schott2007sample(list(list$Zero1, list$One))$statistic,
-                             Srivastava2007(list(list$Zero1, list$One))$statistic,
-                             SrivastavaYanagihara2010(list(list$Zero1, list$One))$statistic,
-                             Srivastava2014(list(list$Zero1, list$One))$statistic,
-                             Ishii2016(list(list$Zero1, list$One))$statistic))
-  })
-})
-
-save(Powervaluestwotests, file = "E:/Ben/Box Sync/Statistics/toeplitz/Powervaluestwotests.RData")
-
-pushover(message = "Powervaluestwotests",
-         title = "Hey")
-
-powerscorestwotests <- mutate(full_join(cvstwo, Powervaluestwotests),
-                              Significant = (Statistic > CriticalValue))
-
-save(powerscorestwotests, file = "E:/Ben/Box Sync/Statistics/toeplitz/powerscorestwotests.RData")
-
-pushover(message = "powerscorestwotests",
-         title = "Hey")
-
-powertwotest <- summarise(group_by(powerscorestwotests,
-                                   SampleSize, dimension, Test),
-                          Power = mean(Significant))
-
-save(powertwotest, file = "E:/Ben/Box Sync/Statistics/toeplitz/powertwotest.RData")
-
-pushover(message = "Your Sim is Finished",
+pushover(message = "power",
          title = "Hey")
