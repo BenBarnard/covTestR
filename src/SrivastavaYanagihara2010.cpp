@@ -21,6 +21,7 @@ double SrivastavaYanagihara2010Stat(List x) {
   double p = pmat.n_cols;
   double ntot = 0;
   arma::mat Apool(p, p);
+  Apool.fill(0);
   double ninv = 0;
   double ninv2 = 0;
   arma::vec ns(len);
@@ -31,6 +32,7 @@ double SrivastavaYanagihara2010Stat(List x) {
     ns[i] = mats.n_rows;
     int ps = mats.n_cols;
     arma::mat diag(ns[i], ns[i]);
+    diag.fill(0);
     diag.eye(ns[i], ns[i]);
     arma::mat J(ns[i], ns[i]);
     J.fill(1);

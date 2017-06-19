@@ -20,6 +20,7 @@ double Ishii2016Stat(List x) {
   double p = pmat.n_cols;
   double ntot = 0;
   arma::mat Apool(p, p);
+  Apool.fill(0);
   arma::vec ns(len);
   List Ai(len);
   List lambda(len);
@@ -32,6 +33,7 @@ double Ishii2016Stat(List x) {
     ns[i] = nsi;
     int ps = mats.n_cols;
     arma::mat diag(ns[i], ns[i]);
+    diag.fill(0);
     diag.eye(ns[i], ns[i]);
     arma::mat J(ns[i], ns[i]);
     J.fill(1);

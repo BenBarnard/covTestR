@@ -19,6 +19,7 @@ double Ahmad2017Stat(List x) {
   arma::mat pmat = x[0];
   double p = pmat.n_cols;
   arma::mat Apool(p, p);
+  Apool.fill(0);
   double Ei = 0;
   double Eij = 0;
   double ninv = 0;
@@ -28,6 +29,7 @@ double Ahmad2017Stat(List x) {
     arma::mat mati = x[i];
     double ni = mati.n_rows;
     arma::mat diag(ni, ni);
+    diag.fill(0);
     diag.eye(ni, ni);
     arma::mat J(ni, ni);
     J.fill(1);
