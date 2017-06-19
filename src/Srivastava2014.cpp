@@ -40,7 +40,7 @@ double Srivastava2014Stat(List x) {
     arma::rowvec scaled = mean(mats);
     arma::mat scaleddf(ns[i], ns[i]);
 
-    for(int k = 0; k < ns[i]; ++k){
+    for(int k = 0; k < ps; ++k){
       scaleddf.col(k) = mats.col(k) - scaled(k);
     }
 
