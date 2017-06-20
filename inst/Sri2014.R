@@ -13,11 +13,26 @@ maxSampleSize <- max(SampleSize)
 replications <- 1
 gridcomb <- expand.grid(Samples = SampleSize, dims = dimensions)
 
-Sigmaj <- list("Zero" = .99 * diag(1, maxdimensions) + 0.01 * rep(1, maxdimensions) %*% t(rep(1, maxdimensions)),
-               "One" = .95 * diag(1, maxdimensions) + 0.05 * rep(1, maxdimensions) %*% t(rep(1, maxdimensions)),
-               "Two" = .99 * diag(1, maxdimensions) + 0.01 * rep(1, maxdimensions) %*% t(rep(1, maxdimensions)))
+sigma <- diag(1 + (-1) ^ (seq(1, maxdimensions) + 1) * runif(maxdimensions, 0, 1))
+rhomat1 <- rhomat3 <- matrix(0, nrow = maxdimensions, ncol = maxdimensions)
 
-save(Sigmaj, file = "E:/Ben/Box Sync/Statistics/Toeplitz/Sigmaj.RData")
+for(i in 1:maxdimensions){
+  for(j in 1:maxdimensions){
+    rhomat1[i, j] <- 0.1 ^ (abs(i - j) ^ (1 / 10))
+  }
+}
+
+for(i in 1:maxdimensions){
+  for(j in 1:maxdimensions){
+    rhomat3[i, j] <- 0.3 ^ (abs(i - j) ^ (1 / 10))
+  }
+}
+
+Sigmaj <- list("Zero" = sigma %*% rhomat1 %*% sigma,
+               "One" = sigma %*% rhomat3 %*% sigma,
+               "Two" = sigma %*% rhomat1 %*% sigma)
+
+save(Sigmaj, file = "E:/Ben/Box Sync/Statistics/Sri2014/Sigmaj.RData")
 
 mvndata <- replicate(replications,
                      list("Zero1" = mvrnorm(n = maxSampleSize, mu = rep(0, maxdimensions),
@@ -32,7 +47,7 @@ mvndata <- replicate(replications,
                                           Sigma = Sigmaj[names(Sigmaj) == "Two"][[1]][1:maxdimensions, 1:maxdimensions])),
                      simplify = FALSE)
 
-save(mvndata, file = "E:/Ben/Box Sync/Statistics/Toeplitz/mvndata.RData")
+save(mvndata, file = "E:/Ben/Box Sync/Statistics/Sri2014/mvndata.RData")
 
 pushover(message = "mvndata",
          title = "Hey")
@@ -65,7 +80,7 @@ NullTests <- ldply(Map(function(dataMV){
   }, Samples = gridcomb$Samples, dims = gridcomb$dims, MoreArgs = list(df = dataMV), SIMPLIFY = FALSE))
 }, mvndata))
 
-save(NullTests, file = "E:/Ben/Box Sync/Statistics/Toeplitz/NullTests.RData")
+save(NullTests, file = "E:/Ben/Box Sync/Statistics/Sri2014/NullTests.RData")
 
 pushover(message = "NullTests",
          title = "Hey")
@@ -73,7 +88,7 @@ pushover(message = "NullTests",
 cvs <- summarize(group_by(NullTests, SampleSize, dimension, Test, Pops),
                  CriticalValue = quantile(Statistic, 0.95))
 
-save(cvs, file = "E:/Ben/Box Sync/Statistics/Toeplitz/cvs.RData")
+save(cvs, file = "E:/Ben/Box Sync/Statistics/Sri2014/cvs.RData")
 
 pushover(message = "cvs",
          title = "Hey")
@@ -106,7 +121,7 @@ PowerTests <- ldply(Map(function(dataMV){
   }, Samples = gridcomb$Samples, dims = gridcomb$dims, MoreArgs = list(df = dataMV), SIMPLIFY = FALSE))
 }, mvndata))
 
-save(PowerTests, file = "E:/Ben/Box Sync/Statistics/Toeplitz/PowerTests.RData")
+save(PowerTests, file = "E:/Ben/Box Sync/Statistics/Sri2014/PowerTests.RData")
 
 pushover(message = "PowerTests",
          title = "Hey")
@@ -114,7 +129,7 @@ pushover(message = "PowerTests",
 powerscorestests <- mutate(full_join(cvs, PowerTests),
                            Significant = (Statistic > CriticalValue))
 
-save(powerscorestests, file = "E:/Ben/Box Sync/Statistics/Toeplitz/powerscorestests.RData")
+save(powerscorestests, file = "E:/Ben/Box Sync/Statistics/Sri2014/powerscorestests.RData")
 
 pushover(message = "powerscorestests",
          title = "Hey")
@@ -123,7 +138,7 @@ power <- summarise(group_by(powerscorestests,
                             SampleSize, dimension, Pops, Test),
                    Power = mean(Significant))
 
-save(power, file = "E:/Ben/Box Sync/Statistics/Toeplitz/power.RData")
+save(power, file = "E:/Ben/Box Sync/Statistics/Sri2014/power.RData")
 
 pushover(message = "power",
          title = "Hey")
