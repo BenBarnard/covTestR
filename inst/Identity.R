@@ -17,7 +17,7 @@ Sigmaj <- list("Zero" = diag(rep(1, maxdimensions)),
                "One" = diag(rep(1.5, maxdimensions)),
                "Two" = diag(rep(1, maxdimensions)))
 
-save(Sigmaj, file = "E:/Ben/Box Sync/Statistics/Sri2014/Sigmaj.RData")
+save(Sigmaj, file = "E:/Ben/Box Sync/Statistics/Identity/Sigmaj.RData")
 
 mvndata <- replicate(replications,
                      list("Zero1" = mvrnorm(n = maxSampleSize, mu = rep(0, maxdimensions),
@@ -32,7 +32,7 @@ mvndata <- replicate(replications,
                                           Sigma = Sigmaj[names(Sigmaj) == "Two"][[1]][1:maxdimensions, 1:maxdimensions])),
                      simplify = FALSE)
 
-save(mvndata, file = "E:/Ben/Box Sync/Statistics/Sri2014/mvndata.RData")
+save(mvndata, file = "E:/Ben/Box Sync/Statistics/Identity/mvndata.RData")
 
 pushover(message = "mvndata",
          title = "Hey")
@@ -65,7 +65,7 @@ NullTests <- ldply(Map(function(dataMV){
   }, Samples = gridcomb$Samples, dims = gridcomb$dims, MoreArgs = list(df = dataMV), SIMPLIFY = FALSE))
 }, mvndata))
 
-save(NullTests, file = "E:/Ben/Box Sync/Statistics/Sri2014/NullTests.RData")
+save(NullTests, file = "E:/Ben/Box Sync/Statistics/Identity/NullTests.RData")
 
 pushover(message = "NullTests",
          title = "Hey")
@@ -73,7 +73,7 @@ pushover(message = "NullTests",
 cvs <- summarize(group_by(NullTests, SampleSize, dimension, Test, Pops),
                  CriticalValue = quantile(Statistic, 0.95))
 
-save(cvs, file = "E:/Ben/Box Sync/Statistics/Sri2014/cvs.RData")
+save(cvs, file = "E:/Ben/Box Sync/Statistics/Identity/cvs.RData")
 
 pushover(message = "cvs",
          title = "Hey")
@@ -106,7 +106,7 @@ PowerTests <- ldply(Map(function(dataMV){
   }, Samples = gridcomb$Samples, dims = gridcomb$dims, MoreArgs = list(df = dataMV), SIMPLIFY = FALSE))
 }, mvndata))
 
-save(PowerTests, file = "E:/Ben/Box Sync/Statistics/Sri2014/PowerTests.RData")
+save(PowerTests, file = "E:/Ben/Box Sync/Statistics/Identity/PowerTests.RData")
 
 pushover(message = "PowerTests",
          title = "Hey")
@@ -114,7 +114,7 @@ pushover(message = "PowerTests",
 powerscorestests <- mutate(full_join(cvs, PowerTests),
                            Significant = (Statistic > CriticalValue))
 
-save(powerscorestests, file = "E:/Ben/Box Sync/Statistics/Sri2014/powerscorestests.RData")
+save(powerscorestests, file = "E:/Ben/Box Sync/Statistics/Identity/powerscorestests.RData")
 
 pushover(message = "powerscorestests",
          title = "Hey")
@@ -123,7 +123,7 @@ power <- summarise(group_by(powerscorestests,
                             SampleSize, dimension, Pops, Test),
                    Power = mean(Significant))
 
-save(power, file = "E:/Ben/Box Sync/Statistics/Sri2014/power.RData")
+save(power, file = "E:/Ben/Box Sync/Statistics/Identity/power.RData")
 
 pushover(message = "power",
          title = "Hey")
