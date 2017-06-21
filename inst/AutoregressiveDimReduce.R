@@ -9,7 +9,7 @@ set_pushover_app(token = "azrd3hwrwgh2gs6igbvb8yy4mftoi7")
 dimensions <- 20
 SampleSize <- 10
 
-load(mvndata, file = "E:/Ben/Box Sync/Statistics/Autoregressive/mvndata.RData")
+load(file = "E:/Ben/Box Sync/Statistics/Autoregressive/mvndata.RData")
 
 NullTests <- ldply(mvndata, function(ls, SampleSize, dimensions){
   ls <- lapply(ls, function(x){
