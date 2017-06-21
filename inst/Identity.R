@@ -10,7 +10,7 @@ dimensions <- c(20, 40, 80, 160)
 SampleSize <- c(5, 10, 20, 40)
 maxdimensions <- max(dimensions)
 maxSampleSize <- max(SampleSize)
-replications <- 1
+replications <- 1000
 gridcomb <- expand.grid(Samples = SampleSize, dims = dimensions)
 
 Sigmaj <- list("Zero" = diag(rep(1, maxdimensions)),

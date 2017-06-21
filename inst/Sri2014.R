@@ -10,7 +10,7 @@ dimensions <- c(20, 40, 80, 160)
 SampleSize <- c(5, 10, 20, 40)
 maxdimensions <- max(dimensions)
 maxSampleSize <- max(SampleSize)
-replications <- 1
+replications <- 1000
 gridcomb <- expand.grid(Samples = SampleSize, dims = dimensions)
 
 sigma <- diag(1 + (-1) ^ (seq(1, maxdimensions) + 1) * runif(maxdimensions, 0, 1))
