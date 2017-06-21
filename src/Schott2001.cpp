@@ -20,6 +20,7 @@ double Schott2001Stat(List x) {
   double p = pmat.n_cols;
   double ntot = 0;
   arma::mat Apool(p, p);
+  Apool.fill(0);
   arma::vec ns(len);
 
  for(int i = 0; i < len; ++i){
@@ -27,6 +28,7 @@ double Schott2001Stat(List x) {
     int nsi = mats.n_rows;
     int ps = mats.n_cols;
     arma::mat diag(nsi, nsi);
+    diag.fill(0);
     diag.eye(nsi, nsi);
     arma::mat J(nsi, nsi);
     J.fill(1);
