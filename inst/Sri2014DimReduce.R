@@ -24,6 +24,8 @@ NullTests <- ldply(mvndata, function(ls, SampleSize, dimensions){
     lt <- ls
     projection2 <- t(redMat2[,1:reduction])
     projection3 <- t(redMat3[,1:reduction])
+    SampleSize <- SampleSize
+    originaldimension <- dimensions
 
     if(reduction == originaldimension){
       lsmat <- list(lt$Zero1, lt$Zero2, lt$Zero3)
@@ -130,6 +132,8 @@ Powervaluestests <- ldply(mvndata, function(ls, SampleSize, dimensions){
     lt <- ls
     projection2 <- t(redMat2[,1:reduction])
     projection3 <- t(redMat3[,1:reduction])
+    SampleSize <- SampleSize
+    originaldimension <- dimensions
 
     if(reduction == originaldimension){
       lsmat <- list(lt$Zero1, lt$Zero2, lt$Zero3)
