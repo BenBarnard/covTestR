@@ -13,7 +13,8 @@ load(file = "E:/Ben/Box Sync/Statistics/Autoregressive/mvndata.RData")
 
 NullTests <- ldply(mvndata, function(ls, SampleSize, dimensions){
   ls <- lapply(ls, function(x){
-    x[SampleSize, dimensions]
+    browser()
+    x[1:SampleSize, 1:dimensions]
   })[1:3]
   covs <- lapply(ls, cov)
   diffs <- lapply(covs, function(x){x - covs[[1]]})[-1]
@@ -121,7 +122,7 @@ pushover(message = "cvs",
 
 Powervaluestests <- ldply(mvndata, function(ls, SampleSize, dimensions){
   ls <- lapply(ls, function(x){
-    x[SampleSize, dimensions]
+    x[1:SampleSize, 1:dimensions]
   })[c(1, 4, 5)]
   covs <- lapply(ls, cov)
   diffs <- lapply(covs, function(x){x - covs[[1]]})[-1]
