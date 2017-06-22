@@ -6,12 +6,14 @@ library(pushoverr)
 set_pushover_user(user = "ufmfa6vc9s2fc2eh6phop9ej5ebxum")
 set_pushover_app(token = "azrd3hwrwgh2gs6igbvb8yy4mftoi7")
 
-dimensions <- 20
-SampleSize <- 10
+dimensions <- c(20, 40, 80, 160)
+SampleSize <- c(5, 10, 20, 40)
+gridcomb <- expand.grid(Samples = SampleSize, dims = dimensions)
 
 load(file = "E:/Ben/Box Sync/Statistics/Unstructured/mvndata.RData")
 
-NullTests <- ldply(mvndata, function(ls, SampleSize, dimensions){
+NullTests <- ldply(mapply(function(SampleSize, dimensions, df){
+  ldply(mvndata, function(ls, SampleSize, dimensions){
   ls <- lapply(ls, function(x){
     x[1:SampleSize, 1:dimensions]
   })[1:3]
@@ -108,6 +110,7 @@ NullTests <- ldply(mvndata, function(ls, SampleSize, dimensions){
 
   }, ls = ls, redMat2 = redMat2, redMat3 = redMat3, SampleSize = SampleSize, dimensions = dimensions)
 }, SampleSize = SampleSize, dimensions = dimensions)
+}, SampleSize = gridcomb$Samples, dimensions = gridcomb$dims, MoreArgs = list(df = mvndata), SIMPLIFY = FALSE))
 
 save(NullTests, file = "E:/Ben/Box Sync/Statistics/Unstructured/DimReduce/NullTests.RData")
 
@@ -122,7 +125,8 @@ save(cvs, file = "E:/Ben/Box Sync/Statistics/Unstructured/DimReduce/cvs.RData")
 pushover(message = "cvs",
          title = "Hey")
 
-Powervaluestests <- ldply(mvndata, function(ls, SampleSize, dimensions){
+Powervaluestests <- ldply(mapply(function(SampleSize, dimensions, df){
+  ldply(mvndata, function(ls, SampleSize, dimensions){
   ls <- lapply(ls, function(x){
     x[1:SampleSize, 1:dimensions]
   })[c(1, 4, 5)]
@@ -221,6 +225,7 @@ Powervaluestests <- ldply(mvndata, function(ls, SampleSize, dimensions){
 
   }, ls = ls, redMat2 = redMat2, redMat3 = redMat3, SampleSize = SampleSize, dimensions = dimensions)
 }, SampleSize = SampleSize, dimensions = dimensions)
+}, SampleSize = gridcomb$Samples, dimensions = gridcomb$dims, MoreArgs = list(df = mvndata), SIMPLIFY = FALSE))
 
 save(Powervaluestests, file = "E:/Ben/Box Sync/Statistics/Unstructured/DimReduce/Powervaluestests.RData")
 
