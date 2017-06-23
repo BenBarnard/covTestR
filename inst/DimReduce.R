@@ -25,8 +25,8 @@ NullTests <- ldply(mapply(function(SampleSize, dimensions, df){
   diffs <- lapply(covs, function(x){x - covs[[1]]})[-1]
   redMat2 <- svd(Reduce(cbind, diffs[-3]))$u
   redMat3 <- svd(Reduce(cbind, diffs))$u
-  #redMat2 <- songEquality(ls)$u
-  #redMat3 <- songEquality(ls[-3])$u
+  #redMat3 <- songEquality(ls)$u
+  #redMat2 <- songEquality(ls[-3])$u
 
   ldply(c(1:SampleSize, dimensions), function(reduction, ls, redMat2, redMat3, SampleSize, dimensions){
     lt <- ls
@@ -140,8 +140,8 @@ Powervaluestests <- ldply(mapply(function(SampleSize, dimensions, df){
   diffs <- lapply(covs, function(x){x - covs[[1]]})[-1]
   redMat2 <- svd(Reduce(cbind, diffs[-3]))$u
   redMat3 <- svd(Reduce(cbind, diffs))$u
-  #redMat2 <- songEquality(ls)$u
-  #redMat3 <- songEquality(ls[-3])$u
+  #redMat3 <- songEquality(ls)$u
+  #redMat2 <- songEquality(ls[-3])$u
 
   ldply(c(1:SampleSize, dimensions), function(reduction, ls, redMat2, redMat3, SampleSize, dimensions){
     lt <- ls
