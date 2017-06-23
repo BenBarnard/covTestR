@@ -7,12 +7,12 @@ set_pushover_user(user = "ufmfa6vc9s2fc2eh6phop9ej5ebxum")
 set_pushover_app(token = "azrd3hwrwgh2gs6igbvb8yy4mftoi7")
 
 dimensions <- c(20, 40, 80, 160)
-SampleSize <- c(5, 10, 20, 40)
+SampleSize <- c(20)
 gridcomb <- filter(expand.grid(Samples = SampleSize,
                                dims = dimensions),
-                   dims >= Samples)
+                   dims > Samples)
 
-load(file = "E:/Ben/Box Sync/Statistics/Unstructured/mvndata.RData")
+load(file = "E:/Ben/Box Sync/Statistics/CompoundSymmetry/mvndata.RData")
 
 NullTests <- ldply(mapply(function(SampleSize, dimensions, df){
   ldply(mvndata, function(ls, SampleSize, dimensions){
@@ -119,7 +119,7 @@ save(NullTests, file = "E:/Ben/Box Sync/Statistics/CompoundSymmetry/DimReduce/Nu
 pushover(message = "NullTests",
          title = "Hey")
 
-cvsthree <- summarize(group_by(NullTests, SampleSize, originaldimension, reduction, Test),
+cvs <- summarize(group_by(NullTests, SampleSize, Pops, originaldimension, reduction, Test),
                       CriticalValue = quantile(Statistic, 0.95))
 
 save(cvs, file = "E:/Ben/Box Sync/Statistics/CompoundSymmetry/DimReduce/cvs.RData")
@@ -243,10 +243,10 @@ pushover(message = "powerscorestests",
          title = "Hey")
 
 power <- summarise(group_by(powerscorestests,
-                                     SampleSize, originaldimension, reduction, Test),
+                                     SampleSize, originaldimension, Pops, reduction, Test),
                             Power = mean(Significant))
 
-save(powerthreetest, file = "E:/Ben/Box Sync/Statistics/CompoundSymmetry/DimReduce/power.RData")
+save(power, file = "E:/Ben/Box Sync/Statistics/CompoundSymmetry/DimReduce/power.RData")
 
 pushover(message = "power",
          title = "Hey")
