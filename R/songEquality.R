@@ -17,7 +17,7 @@ songEquality.list <- function(x){
   sampleCov <- lapply(x, cov)
   covDiffs <- Reduce(cbind, lapply(sampleCov, function(x){x - sampleCov[[1]]})[-1])
   svdlist <- svd(covDiffs)
-  scatters <- lapply(x, A_func)
+  scatters <- mapply(`*`, sampleCov, lapply(ns, function(x){x - 1}))
   ns <- lapply(x, nrow)
   pooled <- overall_cov_func(scatters, ns)
   sumDiff <- Reduce(`+`, lapply(sampleCov, function(x){
