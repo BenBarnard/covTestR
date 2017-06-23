@@ -8,7 +8,9 @@ set_pushover_app(token = "azrd3hwrwgh2gs6igbvb8yy4mftoi7")
 
 dimensions <- c(20, 40, 80, 160)
 SampleSize <- c(5, 10, 20, 40)
-gridcomb <- expand.grid(Samples = SampleSize, dims = dimensions)
+gridcomb <- filter(expand.grid(Samples = SampleSize,
+                               dims = dimensions),
+                   dims >= Samples)
 
 load(file = "E:/Ben/Box Sync/Statistics/Unstructured/mvndata.RData")
 
