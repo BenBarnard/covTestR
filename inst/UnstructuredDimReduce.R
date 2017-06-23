@@ -137,6 +137,7 @@ Powervaluestests <- ldply(mapply(function(SampleSize, dimensions, df){
 
   ldply(c(1:SampleSize, dimensions), function(reduction, ls, redMat2, redMat3, SampleSize, dimensions){
     lt <- ls
+    browser()
     projection2 <- t(redMat2[,1:reduction])
     projection3 <- t(redMat3[,1:reduction])
     SampleSize <- SampleSize
