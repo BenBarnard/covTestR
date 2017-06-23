@@ -17,13 +17,12 @@ songEquality.list <- function(x){
   sampleCov <- lapply(x, cov)
   covDiffs <- Reduce(cbind, lapply(sampleCov, function(x){x - sampleCov[[1]]})[-1])
   svdlist <- svd(covDiffs)
-  scatters <- mapply(`*`, sampleCov, lapply(ns, function(x){x - 1}))
   ns <- lapply(x, nrow)
-  pooled <- overall_cov_func(scatters, ns)
+  scatters <- mapply(`*`, sampleCov, lapply(ns, function(x){x - 1}), SIMPLIFY = FALSE)
+  pooled <- Reduce(`+`, scatters) / Reduce(`+`, lapply(ns, function(x){x - 1}))
   sumDiff <- Reduce(`+`, lapply(sampleCov, function(x){
     (x - pooled) %*% (x - pooled)
   }))
-
   weights <- apply(svdlist$u, 2, songHelper, Num = sumDiff, Dem = pooled)
   ordering <- order(weights, decreasing = TRUE)
   d <- weights[ordering]
