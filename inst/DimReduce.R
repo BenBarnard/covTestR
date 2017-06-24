@@ -23,7 +23,7 @@ NullTests <- ldply(mapply(function(SampleSize, dimensions, df){
   })[1:3]
   covs <- lapply(ls, cov)
   #diffs <- lapply(covs, function(x){x - covs[[1]]})[-1]
-  scatters <- mapply(`*`, sampleCov, lapply(ls, function(x){nrow(x) - 1}), SIMPLIFY = FALSE)
+  scatters <- mapply(`*`, covs, lapply(ls, function(x){nrow(x) - 1}), SIMPLIFY = FALSE)
   pooled <- Reduce(`+`, scatters) / Reduce(`+`, lapply(ls, function(x){nrow(x) - 1}))
   diffs <- lapply(covs, function(x){x - pooled})
   #redMat2 <- svd(covs[[1]])$u
@@ -139,7 +139,7 @@ Powervaluestests <- ldply(mapply(function(SampleSize, dimensions, df){
   })[c(1, 4, 5)]
   covs <- lapply(ls, cov)
   #diffs <- lapply(covs, function(x){x - covs[[1]]})[-1]
-  scatters <- mapply(`*`, sampleCov, lapply(ls, function(x){nrow(x) - 1}), SIMPLIFY = FALSE)
+  scatters <- mapply(`*`, covs, lapply(ls, function(x){nrow(x) - 1}), SIMPLIFY = FALSE)
   pooled <- Reduce(`+`, scatters) / Reduce(`+`, lapply(ls, function(x){nrow(x) - 1}))
   diffs <- lapply(covs, function(x){x - pooled})
   #redMat2 <- svd(covs[[1]])$u
