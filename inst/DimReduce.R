@@ -121,7 +121,7 @@ save(NullTests, file = paste0("E:/Ben/Box Sync/Statistics/", Structure, "/DimRed
 pushover(message = "NullTests",
          title = "Hey")
 
-cvs <- summarize(group_by(NullTests, SampleSize, originaldimension, reduction, Test),
+cvs <- summarize(group_by(NullTests, SampleSize, originaldimension, Pops, reduction, Test),
                       CriticalValue = quantile(Statistic, 0.95))
 
 save(cvs, file = paste0("E:/Ben/Box Sync/Statistics/", Structure, "/DimReduce/cvs.RData"))
@@ -245,7 +245,7 @@ pushover(message = "powerscorestests",
          title = "Hey")
 
 power <- summarise(group_by(powerscorestests,
-                                     SampleSize, originaldimension, reduction, Test),
+                                     SampleSize, originaldimension, Pops, reduction, Test),
                             Power = mean(Significant))
 
 save(power, file = paste0("E:/Ben/Box Sync/Statistics/", Structure, "/DimReduce/power.RData"))
