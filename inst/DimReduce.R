@@ -22,11 +22,14 @@ NullTests <- ldply(mapply(function(SampleSize, dimensions, df){
     x[1:SampleSize, 1:dimensions]
   })[1:3]
   covs <- lapply(ls, cov)
-  diffs <- lapply(covs, function(x){x - covs[[1]]})[-1]
-  redMat2 <- svd(covs[[1]])$u
-  redMat3 <- svd(covs[[1]])$u
-  #redMat2 <- svd(Reduce(cbind, diffs[-3]))$u
-  #redMat3 <- svd(Reduce(cbind, diffs))$u
+  #diffs <- lapply(covs, function(x){x - covs[[1]]})[-1]
+  scatters <- mapply(`*`, sampleCov, lapply(ls, function(x){nrow(x) - 1}), SIMPLIFY = FALSE)
+  pooled <- Reduce(`+`, scatters) / Reduce(`+`, lapply(ls, function(x){nrow(x) - 1}))
+  diffs <- lapply(covs, function(x){x - pooled})
+  #redMat2 <- svd(covs[[1]])$u
+  #redMat3 <- svd(covs[[1]])$u
+  redMat2 <- svd(Reduce(cbind, diffs[-3]))$u
+  redMat3 <- svd(Reduce(cbind, diffs))$u
   #redMat3 <- songEquality(ls)$u
   #redMat2 <- songEquality(ls[-3])$u
 
@@ -40,7 +43,7 @@ NullTests <- ldply(mapply(function(SampleSize, dimensions, df){
     if(reduction == originaldimension){
       lsmat <- list(lt$Zero1, lt$Zero2, lt$Zero3)
       df <- data.frame(SampleSize = SampleSize, originaldimension = originaldimension,
-                       reduction = reduction, Pops = c(rep("Two", 6), rep("Three", 6)),
+                       reduction = reduction, Pops = c(rep("Three", 6), rep("Two", 6)),
                        Test = c("Chaipitak", "Ahmad", "Schott", "Srivastava 2007", "Srivastava 2010",
                                 "Srivastava 2014", "Chaipitak", "Ahmad", "Schott", "Srivastava 2007",
                                 "Srivastava 2010", "Srivastava 2014"),
@@ -70,7 +73,7 @@ NullTests <- ldply(mapply(function(SampleSize, dimensions, df){
 
     if(reduction < SampleSize){
       df <- data.frame(SampleSize = SampleSize, originaldimension = originaldimension,
-                       reduction = reduction, Pops = c(rep("Two", 6), rep("Three", 6)),
+                       reduction = reduction, Pops = c(rep("Three", 6), rep("Two", 6)),
                        Test = c("Chaipitak", "Ahmad", "Schott", "Srivastava 2007",
                                 "Srivastava 2010", "Srivastava 2014", "Chaipitak",
                                 "Ahmad", "Schott", "Srivastava 2007", "Srivastava 2010", "Srivastava 2014"),
@@ -91,7 +94,7 @@ NullTests <- ldply(mapply(function(SampleSize, dimensions, df){
 
     if(reduction == SampleSize){
       df <- data.frame(SampleSize = SampleSize, originaldimension = originaldimension,
-                       reduction = reduction, Pops = c(rep("Two", 6), rep("Three", 6)),
+                       reduction = reduction, Pops = c(rep("Three", 6), rep("Two", 6)),
                        Test = c("Chaipitak", "Ahmad", "Schott", "Srivastava 2007", "Srivastava 2010",
                                 "Srivastava 2014", "Chaipitak", "Ahmad", "Schott", "Srivastava 2007",
                                 "Srivastava 2010", "Srivastava 2014"),
@@ -135,11 +138,14 @@ Powervaluestests <- ldply(mapply(function(SampleSize, dimensions, df){
     x[1:SampleSize, 1:dimensions]
   })[c(1, 4, 5)]
   covs <- lapply(ls, cov)
-  diffs <- lapply(covs, function(x){x - covs[[1]]})[-1]
-  redMat2 <- svd(covs[[1]])$u
-  redMat3 <- svd(covs[[1]])$u
-  #redMat2 <- svd(Reduce(cbind, diffs[-3]))$u
-  #redMat3 <- svd(Reduce(cbind, diffs))$u
+  #diffs <- lapply(covs, function(x){x - covs[[1]]})[-1]
+  scatters <- mapply(`*`, sampleCov, lapply(ls, function(x){nrow(x) - 1}), SIMPLIFY = FALSE)
+  pooled <- Reduce(`+`, scatters) / Reduce(`+`, lapply(ls, function(x){nrow(x) - 1}))
+  diffs <- lapply(covs, function(x){x - pooled})
+  #redMat2 <- svd(covs[[1]])$u
+  #redMat3 <- svd(covs[[1]])$u
+  redMat2 <- svd(Reduce(cbind, diffs[-3]))$u
+  redMat3 <- svd(Reduce(cbind, diffs))$u
   #redMat3 <- songEquality(ls)$u
   #redMat2 <- songEquality(ls[-3])$u
 
@@ -153,7 +159,7 @@ Powervaluestests <- ldply(mapply(function(SampleSize, dimensions, df){
     if(reduction == originaldimension){
       lsmat <- list(lt$Zero1, lt$One, lt$Two)
       df <- data.frame(SampleSize = SampleSize, originaldimension = originaldimension,
-                       reduction = reduction, Pops = c(rep("Two", 6), rep("Three", 6)),
+                       reduction = reduction, Pops = c(rep("Three", 6), rep("Two", 6)),
                        Test = c("Chaipitak", "Ahmad", "Schott", "Srivastava 2007", "Srivastava 2010",
                                 "Srivastava 2014", "Chaipitak", "Ahmad", "Schott", "Srivastava 2007",
                                 "Srivastava 2010", "Srivastava 2014"),
@@ -184,7 +190,7 @@ Powervaluestests <- ldply(mapply(function(SampleSize, dimensions, df){
     if(reduction < SampleSize){
 
       df <- data.frame(SampleSize = SampleSize, originaldimension = originaldimension,
-                       reduction = reduction, Pops = c(rep("Two", 6), rep("Three", 6)),
+                       reduction = reduction, Pops = c(rep("Three", 6), rep("Two", 6)),
                        Test = c("Chaipitak", "Ahmad", "Schott", "Srivastava 2007",
                                 "Srivastava 2010", "Srivastava 2014", "Chaipitak",
                                 "Ahmad", "Schott", "Srivastava 2007", "Srivastava 2010", "Srivastava 2014"),
@@ -206,7 +212,7 @@ Powervaluestests <- ldply(mapply(function(SampleSize, dimensions, df){
     if(reduction == SampleSize){
 
       df <- data.frame(SampleSize = SampleSize, originaldimension = originaldimension,
-                       reduction = reduction, Pops = c(rep("Two", 6), rep("Three", 6)),
+                       reduction = reduction, Pops = c(rep("Three", 6), rep("Two", 6)),
                        Test = c("Chaipitak", "Ahmad", "Schott", "Srivastava 2007", "Srivastava 2010",
                                 "Srivastava 2014", "Chaipitak", "Ahmad", "Schott", "Srivastava 2007",
                                 "Srivastava 2010", "Srivastava 2014"),
