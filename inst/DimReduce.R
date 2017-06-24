@@ -6,8 +6,8 @@ library(pushoverr)
 set_pushover_user(user = "ufmfa6vc9s2fc2eh6phop9ej5ebxum")
 set_pushover_app(token = "azrd3hwrwgh2gs6igbvb8yy4mftoi7")
 
-dimensions <- c(20, 40, 80, 160)
-SampleSize <- c(5)
+dimensions <- c(200)
+SampleSize <- c(10)
 gridcomb <- filter(expand.grid(Samples = SampleSize,
                                dims = dimensions),
                    dims >= Samples)
@@ -23,8 +23,8 @@ NullTests <- ldply(mapply(function(SampleSize, dimensions, df){
   })[1:3]
   covs <- lapply(ls, cov)
   diffs <- lapply(covs, function(x){x - covs[[1]]})[-1]
-  redMat2 <- svd(ls[[1]])$u
-  redMat3 <- svd(ls[[1]])$u
+  redMat2 <- svd(covs[[1]])$u
+  redMat3 <- svd(covs[[1]])$u
   #redMat2 <- svd(Reduce(cbind, diffs[-3]))$u
   #redMat3 <- svd(Reduce(cbind, diffs))$u
   #redMat3 <- songEquality(ls)$u
@@ -136,12 +136,12 @@ Powervaluestests <- ldply(mapply(function(SampleSize, dimensions, df){
   })[c(1, 4, 5)]
   covs <- lapply(ls, cov)
   diffs <- lapply(covs, function(x){x - covs[[1]]})[-1]
-  redMat2 <- svd(ls[[1]])$u
-  redMat3 <- svd(ls[[1]])$u
+  redMat2 <- svd(covs[[1]])$u
+  redMat3 <- svd(covs[[1]])$u
   #redMat2 <- svd(Reduce(cbind, diffs[-3]))$u
   #redMat3 <- svd(Reduce(cbind, diffs))$u
-  redMat3 <- songEquality(ls)$u
-  redMat2 <- songEquality(ls[-3])$u
+  #redMat3 <- songEquality(ls)$u
+  #redMat2 <- songEquality(ls[-3])$u
 
   ldply(c(1:SampleSize, dimensions), function(reduction, ls, redMat2, redMat3, SampleSize, dimensions){
     lt <- ls
