@@ -1,3 +1,9 @@
+library(MASS)
+library(pushoverr)
+set_pushover_user(user = "ufmfa6vc9s2fc2eh6phop9ej5ebxum")
+set_pushover_app(token = "azrd3hwrwgh2gs6igbvb8yy4mftoi7")
+
+
 ## Autoregressive
 
 maxdimensions <- 1000
@@ -38,6 +44,8 @@ mvndata <- replicate(replications,
 
 save(mvndata, file = "E:/Ben/Box Sync/Statistics/Dissertation/mvnData/Autoregressive/mvndata.RData")
 
+pushover(message = "Autoregressive",
+         title = "dataSim")
 
 ## Compound Symmetry
 
@@ -46,6 +54,24 @@ Sigmaj <- list("Zero" = .99 * diag(1, maxdimensions) + 0.01 * rep(1, maxdimensio
                "Two" = .99 * diag(1, maxdimensions) + 0.01 * rep(1, maxdimensions) %*% t(rep(1, maxdimensions)))
 
 save(Sigmaj, file = "E:/Ben/Box Sync/Statistics/Dissertation/mvnData/CompoundSymmetry/Sigmaj.RData")
+
+mvndata <- replicate(replications,
+                     list("Zero1" = mvrnorm(n = maxSampleSize, mu = rep(0, maxdimensions),
+                                            Sigma = Sigmaj[names(Sigmaj) == "Zero"][[1]][1:maxdimensions, 1:maxdimensions]),
+                          "Zero2" = mvrnorm(n = maxSampleSize, mu = rep(0, maxdimensions),
+                                            Sigma = Sigmaj[names(Sigmaj) == "Zero"][[1]][1:maxdimensions, 1:maxdimensions]),
+                          "Zero3" = mvrnorm(n = maxSampleSize, mu = rep(0, maxdimensions),
+                                            Sigma = Sigmaj[names(Sigmaj) == "Zero"][[1]][1:maxdimensions, 1:maxdimensions]),
+                          "One" = mvrnorm(n = maxSampleSize, mu = rep(0, maxdimensions),
+                                          Sigma = Sigmaj[names(Sigmaj) == "One"][[1]][1:maxdimensions, 1:maxdimensions]),
+                          "Two" = mvrnorm(n = maxSampleSize, mu = rep(0, maxdimensions),
+                                          Sigma = Sigmaj[names(Sigmaj) == "Two"][[1]][1:maxdimensions, 1:maxdimensions])),
+                     simplify = FALSE)
+
+save(mvndata, file = "E:/Ben/Box Sync/Statistics/Dissertation/mvnData/CompoundSymmetry/mvndata.RData")
+
+pushover(message = "Compound Symmetry",
+         title = "dataSim")
 
 
 ## Identity
@@ -68,6 +94,11 @@ mvndata <- replicate(replications,
                      simplify = FALSE)
 
 save(mvndata, file = "E:/Ben/Box Sync/Statistics/Dissertation/mvnData/Identity/mvndata.RData")
+
+pushover(message = "Identity",
+         title = "dataSim")
+
+
 
 ## Sri2014
 
@@ -107,6 +138,10 @@ mvndata <- replicate(replications,
 
 save(mvndata, file = "E:/Ben/Box Sync/Statistics/Dissertation/mvnData/Sri2014/mvndata.RData")
 
+pushover(message = "Sri2014",
+         title = "dataSim")
+
+
 
 ## Unstructured
 
@@ -143,3 +178,6 @@ mvndata <- replicate(replications,
                      simplify = FALSE)
 
 save(mvndata, file = "E:/Ben/Box Sync/Statistics/Dissertation/mvnData/Unstructured/mvndata.RData")
+
+pushover(message = "Unstructured",
+         title = "dataSim")
