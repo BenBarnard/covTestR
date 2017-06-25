@@ -8,44 +8,10 @@ set_pushover_app(token = "azrd3hwrwgh2gs6igbvb8yy4mftoi7")
 
 dimensions <- c(20, 40, 80, 160)
 SampleSize <- c(5, 10, 20, 40)
-maxdimensions <- max(dimensions)
-maxSampleSize <- max(SampleSize)
-replications <- 1000
+
 gridcomb <- expand.grid(Samples = SampleSize, dims = dimensions)
 
-sigma1 <- sigma3 <- matrix(0, nrow = maxdimensions, ncol = maxdimensions)
-for(i in 1:maxdimensions){
-  for(j in 1:maxdimensions){
-    sigma1[i, j] <- 0.1 ^ (abs(i - j))
-    }
-}
 
-for(i in 1:maxdimensions){
-  for(j in 1:maxdimensions){
-    sigma3[i, j] <- 0.3 ^ (abs(i - j))
-  }
-}
-
-Sigmaj <- list("Zero" = sigma1,
-               "One" = sigma3,
-               "Two" = sigma1)
-
-save(Sigmaj, file = "E:/Ben/Box Sync/Statistics/Autoregressive/Sigmaj.RData")
-
-mvndata <- replicate(replications,
-                     list("Zero1" = mvrnorm(n = maxSampleSize, mu = rep(0, maxdimensions),
-                                            Sigma = Sigmaj[names(Sigmaj) == "Zero"][[1]][1:maxdimensions, 1:maxdimensions]),
-                          "Zero2" = mvrnorm(n = maxSampleSize, mu = rep(0, maxdimensions),
-                                            Sigma = Sigmaj[names(Sigmaj) == "Zero"][[1]][1:maxdimensions, 1:maxdimensions]),
-                          "Zero3" = mvrnorm(n = maxSampleSize, mu = rep(0, maxdimensions),
-                                            Sigma = Sigmaj[names(Sigmaj) == "Zero"][[1]][1:maxdimensions, 1:maxdimensions]),
-                          "One" = mvrnorm(n = maxSampleSize, mu = rep(0, maxdimensions),
-                                          Sigma = Sigmaj[names(Sigmaj) == "One"][[1]][1:maxdimensions, 1:maxdimensions]),
-                          "Two" = mvrnorm(n = maxSampleSize, mu = rep(0, maxdimensions),
-                                          Sigma = Sigmaj[names(Sigmaj) == "Two"][[1]][1:maxdimensions, 1:maxdimensions])),
-                     simplify = FALSE)
-
-save(mvndata, file = "E:/Ben/Box Sync/Statistics/Autoregressive/mvndata.RData")
 
 pushover(message = "mvndata",
          title = "Hey")
