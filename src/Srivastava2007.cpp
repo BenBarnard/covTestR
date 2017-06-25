@@ -22,58 +22,59 @@ double Srivastava2007Stat(List x) {
   double ntot = 0;
   arma::mat Apool(p, p);
   Apool.fill(0);
-  double ninv = 0;
-  double ninv2 = 0;
   arma::vec ns(len);
 
  for(int i = 0; i < len; ++i){
     arma::mat mats = x[i];
-    ns[i] = mats.n_rows;
+    int n = mats.n_rows;
+    ns[i] = n;
     int ps = mats.n_cols;
-    arma::mat diag(ns[i], ns[i]);
-    diag.fill(0);
-    diag.eye(ns[i], ns[i]);
-    arma::mat J(ns[i], ns[i]);
-    J.fill(1);
-    arma::mat A = mats.t() * (diag - J / ns[i]) * mats;
-    arma::mat covar = A / (ns[i] - 1);
+    arma::mat covar = cov(mats);
     samplecov[i] = covar;
-    p = ps;
-    a2i[i] = (pow(ns[i] - 1, 2) / (ps * (ns[i] - 2) * (ns[i] + 1))) *
-      (trace(covar * covar) - pow(ns[i] - 1, -1) * pow(trace(covar), 2));
 
-    ntot += ns[i] - 1;
-    Apool += A;
-    ninv += pow(ns[i] - 1, -1);
-    ninv2 += 1 / pow(ns[i] - 1, 2);
+
+    a2i[i] = pow(n - 1, 2) *
+      pow(ps * (n - 2) * (n + 1), -1)*
+      (trace(covar * covar) - pow(n - 1, -1) * pow(trace(covar), 2));
+
+    ntot += n - 1;
+    Apool += covar * (n - 1);
   }
 
-  arma::mat overallcov = Apool / ntot;
-  double a2 = ((ntot * ntot) / (p * (ntot - 1) * (ntot + 2))) *
-    (trace(overallcov * overallcov) - (1 / ntot) *
-    trace(overallcov) * trace(overallcov));
+ arma::mat pooledCov = Apool / ntot;
+ double a2 = pow(ntot, 2) *
+   pow(p * (ntot - 1) * (ntot + 2), -1) *
+   (trace(pooledCov * pooledCov) - pow(ntot, -1) *
+   pow(trace(pooledCov), 2));
 
-  double a1 = trace(overallcov) / p;
-  double a4 = pow(ntot * (pow(ntot, 3) + 6 * pow(ntot, 2) + 21 * ntot + 18), -1) *
-    (trace(Apool * Apool * Apool * Apool) / p -
-                  p * (2 * ntot * (2 * pow(ntot, 2) + 6 * ntot + 9)) * a1 -
-                  pow(p, 2) * (2 * ntot * (3 * ntot + 2)) * pow(a1, 2) * a2 -
-                  p * (ntot * (2 * pow(ntot, 2) + 5 * ntot + 7)) * pow(a2, 2) -
-                  ntot * pow(p, 3) * pow(a1, 4));
+  double a1 = trace(pooledCov) * pow(p, -1);
+
+  double c0 = pow(ntot, 4) + 6 * pow(ntot, 3) + 21 * pow(ntot, 2) + 18 * ntot;
+  double c1 = 4 * pow(ntot, 3) + 12 * pow(ntot, 2) + 18 * ntot;
+  double c2 = 6 * pow(ntot, 2) + 4 * ntot;
+  double c3 = 2 * pow(ntot, 3) + 5 * pow(ntot, 2) + 7 * ntot;
+
+  double a4 = pow(c0, -1) *
+    (pow(p, -1) * trace(Apool * Apool * Apool * Apool) -
+    p * c1 * a1 -
+    pow(p, 2) * c2 * pow(a1, 2) * a2 -
+    p * c3 * pow(a2, 2) -
+    ntot * pow(p, 3) * pow(a1, 4));
 
  arma::vec eta2i(len);
- double abar = 0;
  double abarnum = 0;
  double abardem = 0;
 
-
  for(int i = 0; i < len; ++i){
    eta2i[i] = 4 * pow(ns[i] - 1, -2) * pow(a2, 2) *
-     (1 + 2 * (ns[i] - 1) * a4 * pow(p * pow(a2, 2), -1));
+     (1 + 2 * (ns[i] - 1) * a4 *
+     pow(p * pow(a2, 2), -1));
+
    abarnum += a2i[i] * pow(eta2i[i], -1);
    abardem += pow(eta2i[i], -1);
  }
- abar = abarnum / abardem;
+
+ double abar = abarnum / abardem;
 
   double stat = 0;
   for(int i = 0; i < len; ++i){

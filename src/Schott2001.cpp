@@ -27,21 +27,15 @@ double Schott2001Stat(List x) {
     arma::mat mats = x[i];
     int nsi = mats.n_rows;
     int ps = mats.n_cols;
-    arma::mat diag(nsi, nsi);
-    diag.fill(0);
-    diag.eye(nsi, nsi);
-    arma::mat J(nsi, nsi);
-    J.fill(1);
-    arma::mat A = mats.t() * (diag - J / nsi) * mats;
-    arma::mat covar = A / (nsi - 1);
+    arma::mat covar = cov(mats);
     samplecov[i] = covar;
     p = ps;
     ntot += nsi - 1;
     ns[i] = nsi;
-    Apool += A;
+    Apool += covar * (nsi - 1);
   }
 
-  arma::mat overallcov = Apool / ntot;
+  arma::mat pooledCov = Apool / ntot;
 
 
   double doublesum = 0;
@@ -49,12 +43,12 @@ double Schott2001Stat(List x) {
   for(int i = 0; i < len; ++i){
     double ni = ns[i] - 1;
     arma::mat Si = samplecov[i];
-    singlesum += ni * pow(ntot, -1) * trace(Si * inv(overallcov) * Si * inv(overallcov));
+    singlesum += ni * pow(ntot, -1) * trace(Si * inv(pooledCov) * Si * inv(pooledCov));
     for(int j = 0; j < len; ++j){
       double nj = ns[j] - 1;
       arma::mat Sj = samplecov[j];
       doublesum += ni * nj * pow(ntot, -2) *
-        trace(Si * inv(overallcov) * Sj * inv(overallcov));
+        trace(Si * inv(pooledCov) * Sj * inv(pooledCov));
     }
   }
 

@@ -36,7 +36,7 @@ double Schott2007Stat(List x) {
       pow(ps * (ns - 2) * (ns + 1), -1)*
       (trace(covar * covar) - pow(ns - 1, -1) * pow(trace(covar), 2));
 
-    Apool += covar * ns;
+    Apool += covar * (ns - 1);
     ntot += ns - 1;
     ninv += pow(ns - 1, -1);
   }
@@ -104,7 +104,7 @@ double Schott2007pooledStat(List x) {
       pow(ps * (ns - 2) * (ns + 1), -1)*
       (trace(covar * covar) - pow(ns - 1, -1) * pow(trace(covar), 2));
 
-    Apool += covar * ns;
+    Apool += covar * (ns - 1);
     ntot += ns - 1;
     ninv += pow(ns - 1, -1);
   }

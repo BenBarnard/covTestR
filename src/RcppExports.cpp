@@ -28,6 +28,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// Chaipitak2013poolStat
+double Chaipitak2013poolStat(List x);
+RcppExport SEXP EqualCov_Chaipitak2013poolStat(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(Chaipitak2013poolStat(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 // Chaipitak2013Stat
 double Chaipitak2013Stat(List x);
 RcppExport SEXP EqualCov_Chaipitak2013Stat(SEXP xSEXP) {
@@ -72,6 +83,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// Schott2007pooledStat
+double Schott2007pooledStat(List x);
+RcppExport SEXP EqualCov_Schott2007pooledStat(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(Schott2007pooledStat(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 // Srivastava2007Stat
 double Srivastava2007Stat(List x);
 RcppExport SEXP EqualCov_Srivastava2007Stat(SEXP xSEXP) {
@@ -91,6 +113,17 @@ BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< List >::type x(xSEXP);
     rcpp_result_gen = Rcpp::wrap(Srivastava2014Stat(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// Srivastava2014poolStat
+double Srivastava2014poolStat(List x);
+RcppExport SEXP EqualCov_Srivastava2014poolStat(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(Srivastava2014poolStat(x));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -197,12 +230,15 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"EqualCov_Ahmad2017Stat", (DL_FUNC) &EqualCov_Ahmad2017Stat, 1},
     {"EqualCov_BoxesMStat", (DL_FUNC) &EqualCov_BoxesMStat, 1},
+    {"EqualCov_Chaipitak2013poolStat", (DL_FUNC) &EqualCov_Chaipitak2013poolStat, 1},
     {"EqualCov_Chaipitak2013Stat", (DL_FUNC) &EqualCov_Chaipitak2013Stat, 1},
     {"EqualCov_Ishii2016Stat", (DL_FUNC) &EqualCov_Ishii2016Stat, 1},
     {"EqualCov_Schott2001Stat", (DL_FUNC) &EqualCov_Schott2001Stat, 1},
     {"EqualCov_Schott2007Stat", (DL_FUNC) &EqualCov_Schott2007Stat, 1},
+    {"EqualCov_Schott2007pooledStat", (DL_FUNC) &EqualCov_Schott2007pooledStat, 1},
     {"EqualCov_Srivastava2007Stat", (DL_FUNC) &EqualCov_Srivastava2007Stat, 1},
     {"EqualCov_Srivastava2014Stat", (DL_FUNC) &EqualCov_Srivastava2014Stat, 1},
+    {"EqualCov_Srivastava2014poolStat", (DL_FUNC) &EqualCov_Srivastava2014poolStat, 1},
     {"EqualCov_SrivastavaYanagihara2010Stat", (DL_FUNC) &EqualCov_SrivastavaYanagihara2010Stat, 1},
     {"EqualCov_c3", (DL_FUNC) &EqualCov_c3, 1},
     {"EqualCov_c2", (DL_FUNC) &EqualCov_c2, 1},

@@ -29,14 +29,14 @@ double Chaipitak2013poolStat(List x) {
     int ns = mats.n_rows;
     int ps = mats.n_cols;
     arma::mat covar = cov(mats);
-    arma::mat A = covar * ns;
+
 
     a2i[i] = pow(ns - 1, 2) *
       pow(ps * (ns - 2) * (ns + 1), -1)*
       (trace(covar * covar) - pow(ns - 1, -1) * pow(trace(covar), 2));
 
     ntot += ns - 1;
-    Apool += A;
+    Apool += covar * (ns - 1);
     ninv += pow(ns - 1, -1);
     ninv2 += pow(ns - 1, -2);
   }
@@ -100,14 +100,13 @@ double Chaipitak2013Stat(List x) {
     int ns = mats.n_rows;
     int ps = mats.n_cols;
     arma::mat covar = cov(mats);
-    arma::mat A = covar * ns;
 
     a2i[i] = pow(ns - 1, 2) *
       pow(ps * (ns - 2) * (ns + 1), -1)*
       (trace(covar * covar) - pow(ns - 1, -1) * pow(trace(covar), 2));
 
     ntot += ns - 1;
-    Apool += A;
+    Apool += covar * (ns - 1);
     ninv += pow(ns - 1, -1);
     ninv2 += pow(ns - 1, -2);
   }

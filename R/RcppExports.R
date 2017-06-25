@@ -9,6 +9,10 @@ BoxesMStat <- function(x) {
     .Call('EqualCov_BoxesMStat', PACKAGE = 'EqualCov', x)
 }
 
+Chaipitak2013poolStat <- function(x) {
+    .Call('EqualCov_Chaipitak2013poolStat', PACKAGE = 'EqualCov', x)
+}
+
 Chaipitak2013Stat <- function(x) {
     .Call('EqualCov_Chaipitak2013Stat', PACKAGE = 'EqualCov', x)
 }
@@ -25,12 +29,20 @@ Schott2007Stat <- function(x) {
     .Call('EqualCov_Schott2007Stat', PACKAGE = 'EqualCov', x)
 }
 
+Schott2007pooledStat <- function(x) {
+    .Call('EqualCov_Schott2007pooledStat', PACKAGE = 'EqualCov', x)
+}
+
 Srivastava2007Stat <- function(x) {
     .Call('EqualCov_Srivastava2007Stat', PACKAGE = 'EqualCov', x)
 }
 
 Srivastava2014Stat <- function(x) {
     .Call('EqualCov_Srivastava2014Stat', PACKAGE = 'EqualCov', x)
+}
+
+Srivastava2014poolStat <- function(x) {
+    .Call('EqualCov_Srivastava2014poolStat', PACKAGE = 'EqualCov', x)
 }
 
 SrivastavaYanagihara2010Stat <- function(x) {

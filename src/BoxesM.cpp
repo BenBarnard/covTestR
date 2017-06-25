@@ -27,21 +27,15 @@ double BoxesMStat(List x) {
     arma::mat mats = x[i];
     int nsi = mats.n_rows;
     int ps = mats.n_cols;
-    arma::mat diag(nsi, nsi);
-    diag.fill(0);
-    diag.eye(nsi, nsi);
-    arma::mat J(nsi, nsi);
-    J.fill(1);
-    arma::mat A = mats.t() * (diag - J / nsi) * mats;
-    arma::mat covar = A / (nsi - 1);
+    arma::mat covar = cov(mats);
     samplecov[i] = covar;
     p = ps;
     ntot += nsi - 1;
     ns[i] = nsi;
-    Apool += A;
+    Apool += covar * (nsi - 1);
   }
 
-  arma::mat overallcov = Apool / ntot;
+  arma::mat pooledCov = Apool / ntot;
 
   double stat = 0;
   for(int i = 0; i < len; ++i){
@@ -50,6 +44,6 @@ double BoxesMStat(List x) {
     stat += n * log(det(sampcov));
   }
 
-  return ntot * log(det(overallcov)) - stat;
+  return ntot * log(det(pooledCov)) - stat;
 }
 

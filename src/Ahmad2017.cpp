@@ -28,14 +28,9 @@ double Ahmad2017Stat(List x) {
   for(int i = 0; i < len; ++i){
     arma::mat mati = x[i];
     double ni = mati.n_rows;
-    arma::mat diag(ni, ni);
-    diag.fill(0);
-    diag.eye(ni, ni);
-    arma::mat J(ni, ni);
-    J.fill(1);
-    arma::mat A = mati.t() * (diag - J / ni) * mati;
+    arma::mat covar = cov(mati);
     ntot += ni - 1;
-    Apool += A;
+    Apool += covar * (ni - 1);
     double E = 0;
 
     for(int k = 0; k < ni; ++k){
@@ -75,9 +70,9 @@ double Ahmad2017Stat(List x) {
     }
   }
 
-  arma::mat pooledcov = Apool / ntot;
+  arma::mat pooledCov = Apool / ntot;
 
-  double stat = (len - 1) * Ei - 2 * Eij * pow(4 * (pow(len - 1, 2) * ninv + nijinv), -0.5) * trace(pooledcov * pooledcov);
+  double stat = (len - 1) * Ei - 2 * Eij * pow(4 * (pow(len - 1, 2) * ninv + nijinv), -0.5) * pow(trace(pooledCov * pooledCov), -1);
 
   return stat;
 }
