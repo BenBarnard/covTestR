@@ -7,36 +7,40 @@ library(pushoverr)
 set_pushover_user(user = "ufmfa6vc9s2fc2eh6phop9ej5ebxum")
 set_pushover_app(token = "azrd3hwrwgh2gs6igbvb8yy4mftoi7")
 
-dimensions <- c(200)
-SampleSize <- c(10)
+dimensions <- 20
+SampleSize <- 10
 gridcomb <- filter(expand.grid(Samples = SampleSize,
                                dims = dimensions),
                    dims > Samples)
 reductionMethod <- sdiff
 
+if(!(dir.exists(paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/", dimensions, " ", SampleSize, "/")))){
+  dir.create(paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/", dimensions, " ", SampleSize, "/"))
+}
+
 Structure <- "Sri2014"
 
 load(file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/mvnData/", Structure, "/mvndata.RData"))
 
-statistics <- ldply(mapply(function(SampleSize, dimensions, df, reductionMethod){
-  ldply(mvndata, function(ls, SampleSize, dimensions, reductionMethod){
+statistics <- ldply(mvndata, function(ls, SampleSize, dimensions, reductionMethod){
 
-    nullList <- list(ls$Zero1[1:Samp, 1:Dim],
-                     ls$Zero2[1:Samp, 1:Dim],
-                     ls$Zero3[1:Samp, 1:Dim])
+    nullList <- list(ls$Zero1[1:SampleSize, 1:dimensions],
+                     ls$Zero2[1:SampleSize, 1:dimensions],
+                     ls$Zero3[1:SampleSize, 1:dimensions])
 
-    powerList <- list(ls$Zero1[1:Samp, 1:Dim],
-                      ls$One[1:Samp, 1:Dim],
-                      ls$Two[1:Samp, 1:Dim])
+    powerList <- list(ls$Zero1[1:SampleSize, 1:dimensions],
+                      ls$One[1:SampleSize, 1:dimensions],
+                      ls$Two[1:SampleSize, 1:dimensions])
 
-    nullredmat2 <- do.call(reductionMethod, nullList[-3])
-    powerredmat2 <- do.call(reductionMethod, nullList[-3])
-    nullredmat3 <- do.call(reductionMethod, powerList)
-    powerredmat3 <- do.call(reductionMethod, powerList)
+    nullMat2 <- do.call(reductionMethod, list(nullList[-3]))
+    powerMat2 <- do.call(reductionMethod, list(nullList[-3]))
+    nullMat3 <- do.call(reductionMethod, list(powerList))
+    powerMat3 <- do.call(reductionMethod, list(powerList))
 
-  ldply(c(1:SampleSize, dimensions), function(reduction, ls, nullredMat2, nullredMat3,
+  ldply(c(1:SampleSize, dimensions), function(reduction, nullList, powerList, nullredMat2, nullredMat3,
                                               powerredMat2, powerredMat3, SampleSize, dimensions){
-    lt <- ls
+
+
     nullprojection2 <- t(nullredMat2[,1:reduction])
     nullprojection3 <- t(nullredMat3[,1:reduction])
     powerprojection2 <- t(powerredMat2[,1:reduction])
@@ -46,10 +50,10 @@ statistics <- ldply(mapply(function(SampleSize, dimensions, df, reductionMethod)
     SampleSize <- SampleSize
     originaldimension <- dimensions
 
-    nullList2 <- ls[1:2]
-    powerList2 <- ls[c(1, 4)]
-    nullList3 <- ls[1:3]
-    powerList3 <- ls[c(1, 4, 5)]
+    nullList2 <- nullList[-3]
+    powerList2 <- powerList[-3]
+    nullList3 <- nullList
+    powerList3 <- powerList
 
     if(reduction > originaldimension){
       nullList2 <- lapply(nullList2, function(x){
@@ -115,16 +119,14 @@ statistics <- ldply(mapply(function(SampleSize, dimensions, df, reductionMethod)
                                                  EqualCov:::Ishii2016Stat(powerList2),
                                                  abs(EqualCov:::Ahmad2017Stat(powerList2))))
 
-    df
+    dfTest
 
-  }, ls = ls, nullredMat2 = nullredMat2, nullredMat3 = nullredMat3,
-  powerredMat2 = powerredMat2, powerredMat3 = powerredMat3,
+  }, nullList = nullList, powerList = powerList, nullredMat2 = nullMat2, nullredMat3 = nullMat3,
+  powerredMat2 = powerMat2, powerredMat3 = powerMat3,
   SampleSize = SampleSize, dimensions = dimensions)
 }, SampleSize = SampleSize, dimensions = dimensions, reductionMethod = reductionMethod)
-}, SampleSize = gridcomb$Samples, dimensions = gridcomb$dims,
-MoreArgs = list(df = mvndata, reductionMethod = reductionMethod), SIMPLIFY = FALSE))
 
-save(statistics, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/statistics.RData"))
+save(statistics, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/", dimensions, " ", SampleSize, "/statistics.RData"))
 
 pushover(message = "statistics",
          title = Structure)
@@ -132,7 +134,7 @@ pushover(message = "statistics",
 cvs <- summarize(group_by(statistics, SampleSize, originaldimension, Pops, reduction, Test),
                       CriticalValue = quantile(`Null Statistic`, 0.95))
 
-save(cvs, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/cvs.RData"))
+save(cvs, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/", dimensions, " ", SampleSize, "/cvs.RData"))
 
 pushover(message = "cvs",
          title = Structure)
@@ -141,7 +143,7 @@ pushover(message = "cvs",
 powerscorestests <- mutate(full_join(cvs, statistics),
                                 Significant = (Statistic > CriticalValue))
 
-save(powerscorestests, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/powerscorestests.RData"))
+save(powerscorestests, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/", dimensions, " ", SampleSize, "/powerscorestests.RData"))
 
 pushover(message = "powerscorestests",
          title = Structure)
@@ -150,7 +152,7 @@ power <- summarise(group_by(powerscorestests,
                                      SampleSize, originaldimension, Pops, reduction, Test),
                             Power = mean(Significant))
 
-save(power, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/power.RData"))
+save(power, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/", dimensions, " ", SampleSize, "/power.RData"))
 
 pushover(message = "power",
          title = Structure)
