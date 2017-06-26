@@ -1,3 +1,4 @@
+source("E:/Ben/EqualCov/inst/reductionFunctions.R")
 library(MASS)
 library(plyr)
 library(EqualCov)
@@ -11,244 +12,139 @@ SampleSize <- c(10)
 gridcomb <- filter(expand.grid(Samples = SampleSize,
                                dims = dimensions),
                    dims > Samples)
+reductionMethod <- sdiff
 
 Structure <- "Sri2014"
 
 load(file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/mvnData/", Structure, "/mvndata.RData"))
 
-NullTests <- ldply(mapply(function(SampleSize, dimensions, df){
-  ldply(mvndata, function(ls, SampleSize, dimensions){
-  ls <- lapply(ls, function(x){
-    x[1:SampleSize, 1:dimensions]
-  })[1:3]
-  covs <- lapply(ls, cov)
-  #diffs <- lapply(covs, function(x){x - covs[[1]]})[-1]
-  # scatters <- mapply(`*`, covs, lapply(ls, function(x){nrow(x) - 1}), SIMPLIFY = FALSE)
-  # pooled <- Reduce(`+`, scatters) / Reduce(`+`, lapply(ls, function(x){nrow(x) - 1}))
-  # diffs <- lapply(covs, function(x){x - pooled})
-  redMat2 <- svd(covs[[1]])$u
-  redMat3 <- svd(covs[[1]])$u
-  # redMat2 <- svd(Reduce(cbind, diffs[-3]))$u
-  # redMat3 <- svd(Reduce(cbind, diffs))$u
-  #redMat3 <- songEquality(ls)$u
-  #redMat2 <- songEquality(ls[-3])$u
+statistics <- ldply(mapply(function(SampleSize, dimensions, df, reductionMethod){
+  ldply(mvndata, function(ls, SampleSize, dimensions, reductionMethod){
 
-  ldply(c(1:SampleSize, dimensions), function(reduction, ls, redMat2, redMat3, SampleSize, dimensions){
+    nullList <- list(datadf$Zero1[1:Samp, 1:Dim],
+                     datadf$Zero2[1:Samp, 1:Dim],
+                     datadf$Zero3[1:Samp, 1:Dim])
+
+    powerList <- list(datadf$Zero1[1:Samp, 1:Dim],
+                      datadf$One[1:Samp, 1:Dim],
+                      datadf$Two[1:Samp, 1:Dim])
+
+    nullredmat2 <- do.call(reductionMethod, nullList[-3])
+    powerredmat2 <- do.call(reductionMethod, nullList[-3])
+    nullredmat3 <- do.call(reductionMethod, powerList)
+    powerredmat3 <- do.call(reductionMethod, powerList)
+
+  ldply(c(1:SampleSize, dimensions), function(reduction, ls, nullredMat2, nullredMat3,
+                                              powerredMat2, powerredMat3, SampleSize, dimensions){
     lt <- ls
-    projection2 <- t(redMat2[,1:reduction])
-    projection3 <- t(redMat3[,1:reduction])
+    nullprojection2 <- t(nullredMat2[,1:reduction])
+    nullprojection3 <- t(nullredMat3[,1:reduction])
+    powerprojection2 <- t(powerredMat2[,1:reduction])
+    powerprojection3 <- t(powerredMat3[,1:reduction])
+
+
     SampleSize <- SampleSize
     originaldimension <- dimensions
 
-    if(reduction == originaldimension){
-      lsmat <- list(lt$Zero1, lt$Zero2, lt$Zero3)
-      df <- data.frame(SampleSize = SampleSize, originaldimension = originaldimension,
-                       reduction = reduction, Pops = c(rep("Three", 6), rep("Two", 6)),
-                       Test = c("Chaipitak", "Ahmad", "Schott", "Srivastava 2007", "Srivastava 2010",
-                                "Srivastava 2014", "Chaipitak", "Ahmad", "Schott", "Srivastava 2007",
-                                "Srivastava 2010", "Srivastava 2014"),
-                       Statistic = c(EqualCov:::Chaipitak2013Stat(lsmat),
-                                     EqualCov:::Ahmad2017Stat(lsmat),
-                                     EqualCov:::Schott2007Stat(lsmat),
-                                     EqualCov:::Srivastava2007Stat(lsmat),
-                                     EqualCov:::SrivastavaYanagihara2010Stat(lsmat),
-                                     EqualCov:::Srivastava2014Stat(lsmat),
-                                     EqualCov:::Chaipitak2013Stat(lsmat[-3]),
-                                     EqualCov:::Ahmad2017Stat(lsmat[-3]),
-                                     EqualCov:::Schott2007Stat(lsmat[-3]),
-                                     EqualCov:::Srivastava2007Stat(lsmat[-3]),
-                                     EqualCov:::SrivastavaYanagihara2010Stat(lsmat[-3]),
-                                     EqualCov:::Srivastava2014Stat(lsmat[-3])))
+    nullList2 <- ls[1:2]
+    powerList2 <- ls[c(1, 4)]
+    nullList3 <- ls[1:3]
+    powerList3 <- ls[c(1, 4, 5)]
+
+    if(reduction > originaldimension){
+      nullList2 <- lapply(nullList2, function(x){
+        t(nullprojection2 %*% t(x))
+      })
+
+      nullList3 <- lapply(nullList3, function(x){
+        t(nullprojection3 %*% t(x))
+      })
+
+      powerList2 <- lapply(powerList2, function(x){
+        t(powerprojection2 %*% t(x))
+      })
+
+      powerList3 <- lapply(powerList3, function(x){
+        t(powerprojection3 %*% t(x))
+      })
 
     }
-
-    lt2 <- lapply(lt, function(x){
-      t(projection2 %*% t(x))
-    })
-    lt3 <- lapply(lt, function(x){
-      t(projection3 %*% t(x))
-    })
-    lsmat3 <- list(lt3$Zero1, lt3$Zero2, lt3$Zero3)
-    lsmat2 <- list(lt2$Zero1, lt2$Zero2)
-
-    if(reduction < SampleSize){
-      df <- data.frame(SampleSize = SampleSize, originaldimension = originaldimension,
-                       reduction = reduction, Pops = c(rep("Three", 6), rep("Two", 6)),
-                       Test = c("Chaipitak", "Ahmad", "Schott", "Srivastava 2007",
-                                "Srivastava 2010", "Srivastava 2014", "Chaipitak",
-                                "Ahmad", "Schott", "Srivastava 2007", "Srivastava 2010", "Srivastava 2014"),
-                       Statistic = c(EqualCov:::Chaipitak2013Stat(lsmat3),
-                                     EqualCov:::Ahmad2017Stat(lsmat3),
-                                     EqualCov:::Schott2007Stat(lsmat3),
-                                     EqualCov:::Srivastava2007Stat(lsmat3),
-                                     EqualCov:::SrivastavaYanagihara2010Stat(lsmat3),
-                                     EqualCov:::Srivastava2014Stat(lsmat3),
-                                     EqualCov:::Chaipitak2013Stat(lsmat2),
-                                     EqualCov:::Ahmad2017Stat(lsmat2),
-                                     EqualCov:::Schott2007Stat(lsmat2),
-                                     EqualCov:::Srivastava2007Stat(lsmat2),
-                                     EqualCov:::SrivastavaYanagihara2010Stat(lsmat2),
-                                     EqualCov:::Srivastava2014Stat(lsmat2)))
-
-    }
-
-    if(reduction == SampleSize){
-      df <- data.frame(SampleSize = SampleSize, originaldimension = originaldimension,
-                       reduction = reduction, Pops = c(rep("Three", 6), rep("Two", 6)),
-                       Test = c("Chaipitak", "Ahmad", "Schott", "Srivastava 2007", "Srivastava 2010",
-                                "Srivastava 2014", "Chaipitak", "Ahmad", "Schott", "Srivastava 2007",
-                                "Srivastava 2010", "Srivastava 2014"),
-                       Statistic = c(EqualCov:::Chaipitak2013Stat(lsmat3),
-                                     EqualCov:::Ahmad2017Stat(lsmat3),
-                                     EqualCov:::Schott2007Stat(lsmat3),
-                                     EqualCov:::Srivastava2007Stat(lsmat3),
-                                     EqualCov:::SrivastavaYanagihara2010Stat(lsmat3),
-                                     EqualCov:::Srivastava2014Stat(lsmat3),
-                                     EqualCov:::Chaipitak2013Stat(lsmat2),
-                                     EqualCov:::Ahmad2017Stat(lsmat2),
-                                     EqualCov:::Schott2007Stat(lsmat2),
-                                     EqualCov:::Srivastava2007Stat(lsmat2),
-                                     EqualCov:::SrivastavaYanagihara2010Stat(lsmat2),
-                                     EqualCov:::Srivastava2014Stat(lsmat2)))
-
-    }
+      dfTest <- data_frame(SampleSize = SampleSize, dimension = originaldimension, reduction = reduction,
+                           Test = rep(c("Chaipitak", "Chaipitak pool", "Schott", "Schott pool",
+                                        "Srivastava 2007", "Srivastava 2010", "Srivastava 2014",
+                                        "Srivastava 2014 pool", "Ishii", "Ahmad"), 2),
+                           Pops = c(rep("Three", 10), rep("Two", 10)),
+                           `Null Statistic` = c(EqualCov:::Chaipitak2013Stat(nullList3),
+                                                EqualCov:::Chaipitak2013poolStat(nullList3),
+                                                EqualCov:::Schott2007Stat(nullList3),
+                                                EqualCov:::Schott2007pooledStat(nullList3),
+                                                EqualCov:::Srivastava2007Stat(nullList3),
+                                                EqualCov:::SrivastavaYanagihara2010Stat(nullList3),
+                                                EqualCov:::Srivastava2014Stat(nullList3),
+                                                EqualCov:::Srivastava2014poolStat(nullList3),
+                                                EqualCov:::Ishii2016Stat(nullList3),
+                                                abs(EqualCov:::Ahmad2017Stat(nullList3)),
+                                                EqualCov:::Chaipitak2013Stat(nullList2),
+                                                EqualCov:::Chaipitak2013poolStat(nullList2),
+                                                EqualCov:::Schott2007Stat(nullList2),
+                                                EqualCov:::Schott2007pooledStat(nullList2),
+                                                EqualCov:::Srivastava2007Stat(nullList2),
+                                                EqualCov:::SrivastavaYanagihara2010Stat(nullList2),
+                                                EqualCov:::Srivastava2014Stat(nullList2),
+                                                EqualCov:::Srivastava2014poolStat(nullList2),
+                                                EqualCov:::Ishii2016Stat(nullList2),
+                                                abs(EqualCov:::Ahmad2017Stat(nullList2))),
+                           `Power Statistic` = c(EqualCov:::Chaipitak2013Stat(powerList3),
+                                                 EqualCov:::Chaipitak2013poolStat(powerList3),
+                                                 EqualCov:::Schott2007Stat(powerList3),
+                                                 EqualCov:::Schott2007pooledStat(powerList3),
+                                                 EqualCov:::Srivastava2007Stat(powerList3),
+                                                 EqualCov:::SrivastavaYanagihara2010Stat(powerList3),
+                                                 EqualCov:::Srivastava2014Stat(powerList3),
+                                                 EqualCov:::Srivastava2014poolStat(powerList3),
+                                                 EqualCov:::Ishii2016Stat(powerList3),
+                                                 abs(EqualCov:::Ahmad2017Stat(powerList3)),
+                                                 EqualCov:::Chaipitak2013Stat(powerList2),
+                                                 EqualCov:::Chaipitak2013poolStat(powerList2),
+                                                 EqualCov:::Schott2007Stat(powerList2),
+                                                 EqualCov:::Schott2007pooledStat(powerList2),
+                                                 EqualCov:::Srivastava2007Stat(powerList2),
+                                                 EqualCov:::SrivastavaYanagihara2010Stat(powerList2),
+                                                 EqualCov:::Srivastava2014Stat(powerList2),
+                                                 EqualCov:::Srivastava2014poolStat(powerList2),
+                                                 EqualCov:::Ishii2016Stat(powerList2),
+                                                 abs(EqualCov:::Ahmad2017Stat(powerList2))))
 
     df
 
-  }, ls = ls, redMat2 = redMat2, redMat3 = redMat3, SampleSize = SampleSize, dimensions = dimensions)
-}, SampleSize = SampleSize, dimensions = dimensions)
-}, SampleSize = gridcomb$Samples, dimensions = gridcomb$dims, MoreArgs = list(df = mvndata), SIMPLIFY = FALSE))
+  }, ls = ls, nullredMat2 = nullredMat2, nullredMat3 = nullredMat3,
+  powerredMat2 = powerredMat2, powerredMat3 = powerredMat3,
+  SampleSize = SampleSize, dimensions = dimensions)
+}, SampleSize = SampleSize, dimensions = dimensions, reductionMethod = reductionMethod)
+}, SampleSize = gridcomb$Samples, dimensions = gridcomb$dims,
+MoreArgs = list(df = mvndata, reductionMethod = reductionMethod), SIMPLIFY = FALSE))
 
-save(NullTests, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/NullTests.RData"))
+save(statistics, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/statistics.RData"))
 
-pushover(message = "NullTests",
-         title = "Hey")
+pushover(message = "statistics",
+         title = Structure)
 
-cvs <- summarize(group_by(NullTests, SampleSize, originaldimension, Pops, reduction, Test),
-                      CriticalValue = quantile(Statistic, 0.95))
+cvs <- summarize(group_by(statistics, SampleSize, originaldimension, Pops, reduction, Test),
+                      CriticalValue = quantile(`Null Statistic`, 0.95))
 
 save(cvs, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/cvs.RData"))
 
 pushover(message = "cvs",
-         title = "Hey")
+         title = Structure)
 
-Powervaluestests <- ldply(mapply(function(SampleSize, dimensions, df){
-  ldply(mvndata, function(ls, SampleSize, dimensions){
-  ls <- lapply(ls, function(x){
-    x[1:SampleSize, 1:dimensions]
-  })[c(1, 4, 5)]
-  covs <- lapply(ls, cov)
-  # diffs <- lapply(covs, function(x){x - covs[[1]]})[-1]
-  # scatters <- mapply(`*`, covs, lapply(ls, function(x){nrow(x) - 1}), SIMPLIFY = FALSE)
-  # pooled <- Reduce(`+`, scatters) / Reduce(`+`, lapply(ls, function(x){nrow(x) - 1}))
-  # diffs <- lapply(covs, function(x){x - pooled})
-  redMat2 <- svd(covs[[1]])$u
-  redMat3 <- svd(covs[[1]])$u
-  #redMat2 <- svd(Reduce(cbind, diffs[-3]))$u
-  #redMat3 <- svd(Reduce(cbind, diffs))$u
-  #redMat3 <- songEquality(ls)$u
-  #redMat2 <- songEquality(ls[-3])$u
 
-  ldply(c(1:SampleSize, dimensions), function(reduction, ls, redMat2, redMat3, SampleSize, dimensions){
-    lt <- ls
-    projection2 <- t(redMat2[,1:reduction])
-    projection3 <- t(redMat3[,1:reduction])
-    SampleSize <- SampleSize
-    originaldimension <- dimensions
-
-    if(reduction == originaldimension){
-      lsmat <- list(lt$Zero1, lt$One, lt$Two)
-      df <- data.frame(SampleSize = SampleSize, originaldimension = originaldimension,
-                       reduction = reduction, Pops = c(rep("Three", 6), rep("Two", 6)),
-                       Test = c("Chaipitak", "Ahmad", "Schott", "Srivastava 2007", "Srivastava 2010",
-                                "Srivastava 2014", "Chaipitak", "Ahmad", "Schott", "Srivastava 2007",
-                                "Srivastava 2010", "Srivastava 2014"),
-                       Statistic = c(EqualCov:::Chaipitak2013Stat(lsmat),
-                                     EqualCov:::Ahmad2017Stat(lsmat),
-                                     EqualCov:::Schott2007Stat(lsmat),
-                                     EqualCov:::Srivastava2007Stat(lsmat),
-                                     EqualCov:::SrivastavaYanagihara2010Stat(lsmat),
-                                     EqualCov:::Srivastava2014Stat(lsmat),
-                                     EqualCov:::Chaipitak2013Stat(lsmat[-3]),
-                                     EqualCov:::Ahmad2017Stat(lsmat[-3]),
-                                     EqualCov:::Schott2007Stat(lsmat[-3]),
-                                     EqualCov:::Srivastava2007Stat(lsmat[-3]),
-                                     EqualCov:::SrivastavaYanagihara2010Stat(lsmat[-3]),
-                                     EqualCov:::Srivastava2014Stat(lsmat[-3])))
-
-    }
-
-    lt2 <- lapply(lt, function(x){
-      t(projection2 %*% t(x))
-    })
-    lt3 <- lapply(lt, function(x){
-      t(projection3 %*% t(x))
-    })
-    lsmat3 <- list(lt3$Zero1, lt3$One, lt3$Two)
-    lsmat2 <- list(lt2$Zero1, lt2$One)
-
-    if(reduction < SampleSize){
-
-      df <- data.frame(SampleSize = SampleSize, originaldimension = originaldimension,
-                       reduction = reduction, Pops = c(rep("Three", 6), rep("Two", 6)),
-                       Test = c("Chaipitak", "Ahmad", "Schott", "Srivastava 2007",
-                                "Srivastava 2010", "Srivastava 2014", "Chaipitak",
-                                "Ahmad", "Schott", "Srivastava 2007", "Srivastava 2010", "Srivastava 2014"),
-                       Statistic = c(EqualCov:::Chaipitak2013Stat(lsmat3),
-                                     EqualCov:::Ahmad2017Stat(lsmat3),
-                                     EqualCov:::Schott2007Stat(lsmat3),
-                                     EqualCov:::Srivastava2007Stat(lsmat3),
-                                     EqualCov:::SrivastavaYanagihara2010Stat(lsmat3),
-                                     EqualCov:::Srivastava2014Stat(lsmat3),
-                                     EqualCov:::Chaipitak2013Stat(lsmat2),
-                                     EqualCov:::Ahmad2017Stat(lsmat2),
-                                     EqualCov:::Schott2007Stat(lsmat2),
-                                     EqualCov:::Srivastava2007Stat(lsmat2),
-                                     EqualCov:::SrivastavaYanagihara2010Stat(lsmat2),
-                                     EqualCov:::Srivastava2014Stat(lsmat2)))
-
-    }
-
-    if(reduction == SampleSize){
-
-      df <- data.frame(SampleSize = SampleSize, originaldimension = originaldimension,
-                       reduction = reduction, Pops = c(rep("Three", 6), rep("Two", 6)),
-                       Test = c("Chaipitak", "Ahmad", "Schott", "Srivastava 2007", "Srivastava 2010",
-                                "Srivastava 2014", "Chaipitak", "Ahmad", "Schott", "Srivastava 2007",
-                                "Srivastava 2010", "Srivastava 2014"),
-                       Statistic = c(EqualCov:::Chaipitak2013Stat(lsmat3),
-                                     EqualCov:::Ahmad2017Stat(lsmat3),
-                                     EqualCov:::Schott2007Stat(lsmat3),
-                                     EqualCov:::Srivastava2007Stat(lsmat3),
-                                     EqualCov:::SrivastavaYanagihara2010Stat(lsmat3),
-                                     EqualCov:::Srivastava2014Stat(lsmat3),
-                                     EqualCov:::Chaipitak2013Stat(lsmat2),
-                                     EqualCov:::Ahmad2017Stat(lsmat2),
-                                     EqualCov:::Schott2007Stat(lsmat2),
-                                     EqualCov:::Srivastava2007Stat(lsmat2),
-                                     EqualCov:::SrivastavaYanagihara2010Stat(lsmat2),
-                                     EqualCov:::Srivastava2014Stat(lsmat2)))
-
-    }
-
-    df
-
-  }, ls = ls, redMat2 = redMat2, redMat3 = redMat3, SampleSize = SampleSize, dimensions = dimensions)
-}, SampleSize = SampleSize, dimensions = dimensions)
-}, SampleSize = gridcomb$Samples, dimensions = gridcomb$dims, MoreArgs = list(df = mvndata), SIMPLIFY = FALSE))
-
-save(Powervaluestests, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/Powervaluestests.RData"))
-
-pushover(message = "Powervaluestests",
-         title = "Hey")
-
-powerscorestests <- mutate(full_join(cvs, Powervaluestests),
+powerscorestests <- mutate(full_join(cvs, statistics),
                                 Significant = (Statistic > CriticalValue))
 
 save(powerscorestests, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/powerscorestests.RData"))
 
 pushover(message = "powerscorestests",
-         title = "Hey")
+         title = Structure)
 
 power <- summarise(group_by(powerscorestests,
                                      SampleSize, originaldimension, Pops, reduction, Test),
@@ -257,4 +153,4 @@ power <- summarise(group_by(powerscorestests,
 save(power, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/power.RData"))
 
 pushover(message = "power",
-         title = "Hey")
+         title = Structure)
