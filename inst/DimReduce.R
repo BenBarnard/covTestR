@@ -21,13 +21,13 @@ load(file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/mvnData/", Structure
 statistics <- ldply(mapply(function(SampleSize, dimensions, df, reductionMethod){
   ldply(mvndata, function(ls, SampleSize, dimensions, reductionMethod){
 
-    nullList <- list(datadf$Zero1[1:Samp, 1:Dim],
-                     datadf$Zero2[1:Samp, 1:Dim],
-                     datadf$Zero3[1:Samp, 1:Dim])
+    nullList <- list(ls$Zero1[1:Samp, 1:Dim],
+                     ls$Zero2[1:Samp, 1:Dim],
+                     ls$Zero3[1:Samp, 1:Dim])
 
-    powerList <- list(datadf$Zero1[1:Samp, 1:Dim],
-                      datadf$One[1:Samp, 1:Dim],
-                      datadf$Two[1:Samp, 1:Dim])
+    powerList <- list(ls$Zero1[1:Samp, 1:Dim],
+                      ls$One[1:Samp, 1:Dim],
+                      ls$Two[1:Samp, 1:Dim])
 
     nullredmat2 <- do.call(reductionMethod, nullList[-3])
     powerredmat2 <- do.call(reductionMethod, nullList[-3])
