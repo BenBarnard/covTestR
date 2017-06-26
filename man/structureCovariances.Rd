@@ -4,10 +4,12 @@
 \alias{structureCovariances}
 \title{Structure of Covariances}
 \usage{
-structureCovariances(x, Sigma, ..., covTest = BoxesM_test)
+structureCovariances(x, Sigma, ..., covTest = Nagao1973)
 }
 \arguments{
 \item{x}{data}
+
+\item{Sigma}{Population covariance matrix}
 
 \item{...}{other options passed to covTest method}
 
