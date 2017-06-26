@@ -6,12 +6,12 @@ using namespace arma;
 // source this function into an R session using the Rcpp::sourceCpp
 // function (or via the Source button on the editor toolbar). Learn
 // more about Rcpp at:
-  //
-  //   http://www.rcpp.org/
-  //   http://adv-r.had.co.nz/Rcpp.html
+//
+//   http://www.rcpp.org/
+//   http://adv-r.had.co.nz/Rcpp.html
 //   http://gallery.rcpp.org/
-  //
-  // [[Rcpp::depends(RcppArmadillo)]]
+//
+// [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::export]]
 double Ahmad2017Stat(List x) {
   int len = x.length();
@@ -70,9 +70,9 @@ double Ahmad2017Stat(List x) {
     }
   }
 
-  arma::mat pooledCov = Apool / ntot;
+  arma::mat pooledCov = Apool * pow(ntot, -1);
 
-  double stat = (len - 1) * Ei - 2 * Eij * pow(4 * (pow(len - 1, 2) * ninv + nijinv), -0.5) * pow(trace(pooledCov * pooledCov), -1);
+  double stat = (len - 1) * Ei - 2 * Eij * pow(4 * (pow(len - 1, 2) * ninv + nijinv), -0.5) * pow(Eij, -1);
 
   return stat;
 }
