@@ -142,7 +142,7 @@ pushover(message = "cvs",
 
 
 powerscorestests <- mutate(full_join(cvs, statistics),
-                                Significant = (Statistic > CriticalValue))
+                                Significant = (`Power Statistic` > CriticalValue))
 
 save(powerscorestests, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/", dimensions, " ", SampleSize, "/powerscorestests.RData"))
 
