@@ -75,7 +75,6 @@ double Srivastava2014Stat(List x) {
 
  double theta = 2 * a2 * ninv;
 
-arma::vec trcov(len);
   double stat = 0;
   for(int i = 0; i < len; ++i){
     arma::mat sampcovi = samplecov[i];
@@ -166,7 +165,7 @@ double Srivastava2014poolStat(List x) {
 
   arma::mat pooledCov = Apool * pow(ntot, -1);
 
-  arma::vec trcov(len);
+
   double stat = 0;
   for(int i = 0; i < len; ++i){
     arma::mat sampcovi = samplecov[i];

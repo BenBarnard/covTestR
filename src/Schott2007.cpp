@@ -47,13 +47,7 @@ double Schott2007Stat(List x) {
    pow(p * (ntot - 1) * (ntot + 2), -1) *
    (trace(pooledCov * pooledCov) - pow(ntot, -1) * pow(trace(pooledCov), 2));
 
-  double theta = 0;
-
-  for(int i = 0; i < len; ++i){
-    arma::mat mats = x[i];
-    int ns = mats.n_rows;
-  theta += 2 * a2 * ninv;
-  }
+  double theta = 2 * a2 * ninv;
 
   double stat = 0;
   for(int i = 0; i < len; ++i){
@@ -115,13 +109,7 @@ double Schott2007pooledStat(List x) {
     pow(p * (ntot - 1) * (ntot + 2), -1) *
     (trace(pooledCov * pooledCov) - pow(ntot, -1) * pow(trace(pooledCov), 2));
 
-  double theta = 0;
-
-  for(int i = 0; i < len; ++i){
-    arma::mat mats = x[i];
-    int ns = mats.n_rows;
-    theta += 2 * a2 * ninv;
-  }
+  double theta = 2 * a2 * ninv;
 
   double stat = 0;
   for(int i = 0; i < len; ++i){
