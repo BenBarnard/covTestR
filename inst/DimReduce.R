@@ -10,7 +10,7 @@ dimensions <- c(200)
 SampleSize <- c(10)
 gridcomb <- filter(expand.grid(Samples = SampleSize,
                                dims = dimensions),
-                   dims >= Samples)
+                   dims > Samples)
 
 Structure <- "Sri2014"
 

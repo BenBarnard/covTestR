@@ -7,13 +7,15 @@ library(pushoverr)
 set_pushover_user(user = "ufmfa6vc9s2fc2eh6phop9ej5ebxum")
 set_pushover_app(token = "azrd3hwrwgh2gs6igbvb8yy4mftoi7")
 
-dimensions <- c(20)
-SampleSize <- c(5)
+dimensions <- c(20, 40, 80, 160)
+SampleSize <- c(5, 10, 20, 40)
 covStruct <- "Unstructured"
 replications <- 1000
 
+gridcomb <- filter(expand.grid(Samples = SampleSize,
+                               dims = dimensions),
+                   dims > Samples)
 
-gridcomb <- expand.grid(Samples = SampleSize, dims = dimensions)
 
 load(paste0("E:/Ben/Box Sync/Statistics/Dissertation/mvnData/",
             covStruct, "/mvndata.RData"))
