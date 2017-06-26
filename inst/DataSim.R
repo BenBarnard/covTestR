@@ -6,9 +6,9 @@ set_pushover_app(token = "azrd3hwrwgh2gs6igbvb8yy4mftoi7")
 
 ## Autoregressive
 
-maxdimensions <- 1000
+maxdimensions <- 500
 maxSampleSize <- 100
-replications <- 10000
+replications <- 1000
 
 sigma1 <- sigma3 <- matrix(0, nrow = maxdimensions, ncol = maxdimensions)
 for(i in 1:maxdimensions){
