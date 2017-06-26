@@ -1,6 +1,7 @@
 #' Structure of Covariances
 #'
 #' @param x data
+#' @param Sigma Population covariance matrix
 #' @param ... other options passed to covTest method
 #' @param covTest equality of covariances test method
 #'
@@ -27,8 +28,8 @@
 #' @export
 #'
 #' @examples structureCovariances(iris, group = Species)
-structureCovariances <- function(x, Sigma, ..., covTest = BoxesM_test){
-  UseMethod("equalityCovariances")
+structureCovariances <- function(x, Sigma, ..., covTest = Nagao1973){
+  UseMethod("structureCovariances")
 }
 
 #' @export
@@ -37,7 +38,7 @@ structureCovariances <- function(x, Sigma, ..., covTest = BoxesM_test){
 #' @importFrom stats setNames
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
-structureCovariances.data.frame <- function(x, Sigma, ..., covTest = BoxesM_test){
+structureCovariances.data.frame <- function(x, Sigma, ..., covTest = Nagao1973){
   dots <- lazy_dots(...)
   groupname <- names(unique(x[paste(dots$group$expr)]))
   group <- as.character(unique(x[[paste(dots$group$expr)]]))
@@ -55,7 +56,7 @@ structureCovariances.data.frame <- function(x, Sigma, ..., covTest = BoxesM_test
 #' @importFrom stats setNames
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
-structureCovariances.grouped_df <- function(x, Sigma, ..., covTest = BoxesM_test){
+structureCovariances.grouped_df <- function(x, Sigma, ..., covTest = Nagao1973){
   groups <- attributes(x)$labels
   x <- as_data_frame(x)
   group <- as.character(groups[,1])
@@ -76,7 +77,7 @@ structureCovariances.grouped_df <- function(x, Sigma, ..., covTest = BoxesM_test
 #' @importFrom stats setNames
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
-structureCovariances.resample <- function(x, Sigma, ..., covTest = BoxesM_test){
+structureCovariances.resample <- function(x, Sigma, ..., covTest = Nagao1973){
   x <- as_data_frame(x)
   groups <- attributes(x)$labels
   group <- as.character(groups[,1])

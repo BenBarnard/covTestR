@@ -1,12 +1,10 @@
 #' Song Conical Variates For Structure of Covariance Tests
 #'
-#' @param x
-#' @param Sigma
+#' @param x data
+#' @param Sigma covariance matrix
 #'
-#' @return
 #' @export
-#'
-#' @examples
+#' @keywords internal
 songEquality <- function(x){
   UseMethod("songEquality")
 }
@@ -30,6 +28,7 @@ songEquality.list <- function(x){
   list(u = u, d = d)
 }
 
+#' Song Helper
 #' @export
 #' @keywords internal
 songHelper <- function(ai, Num, Dem){

@@ -96,7 +96,7 @@ equalityCovariances.resample <- function(x, ..., covTest = BoxesM){
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 equalityCovariances.list <- function(x, ..., covTest = BoxesM){
-  ls <- lazy_dots(...)
+  dots <- lazy_dots(...)
   matrix_ls <- x
     mat <- do.call(covTest, c(x = matrix_ls, lazy_eval(dots)))
     mat

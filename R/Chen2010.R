@@ -2,8 +2,7 @@
 #'
 #' Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
 #'
-#' @param x data as data.frame, grouped_df, resample or matrix object
-#' @param ... other options passed to functions
+#' @inheritParams structureCovariances
 #'
 #' @return Test statistic of the hypothesis test
 #'
@@ -22,7 +21,7 @@ Chen2010 <- function(x, Sigma = "identity", ...){
 #' @export
 #' @keywords internal
 #' @importFrom stats cov
-#' @importFrom stats pchisq
+#' @importFrom stats pnorm
 #'
 Chen2010.covariance <- function(x, Sigma = "identity", ...){
   p <- ncol(x)
@@ -72,7 +71,7 @@ Chen2010.covariance <- function(x, Sigma = "identity", ...){
 #' @export
 #' @keywords internal
 #' @importFrom stats cov
-#' @importFrom stats pchisq
+#' @importFrom stats pnorm
 #'
 Chen2010.matrix <- function(x, Sigma = "identity", ...){
   p <- ncol(x)

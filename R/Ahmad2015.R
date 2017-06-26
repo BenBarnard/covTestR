@@ -2,8 +2,7 @@
 #'
 #' Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
 #'
-#' @param x data as data.frame, grouped_df, resample or matrix object
-#' @param ... other options passed to functions
+#' @inheritParams structureCovariances
 #'
 #' @return Test statistic of the hypothesis test
 #'
@@ -13,7 +12,7 @@
 #' @references Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
 #' matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.
 #'
-#' @examples Ahmad2015(iris[1:50, 1:3])
+#' @examples structureCovariances(iris[,1:4], covTest = Ahmad2015)
 #'
 Ahmad2015 <- function(x, Sigma = "identity", ...){
   UseMethod("Ahmad2015")
@@ -22,7 +21,7 @@ Ahmad2015 <- function(x, Sigma = "identity", ...){
 #' @export
 #' @keywords internal
 #' @importFrom stats cov
-#' @importFrom stats pchisq
+#' @importFrom stats pnorm
 #'
 Ahmad2015.covariance <- function(x, Sigma = "identity", ...){
   p <- ncol(x)
@@ -72,7 +71,7 @@ Ahmad2015.covariance <- function(x, Sigma = "identity", ...){
 #' @export
 #' @keywords internal
 #' @importFrom stats cov
-#' @importFrom stats pchisq
+#' @importFrom stats pnorm
 #'
 Ahmad2015.matrix <- function(x, Sigma = "identity", ...){
   p <- ncol(x)

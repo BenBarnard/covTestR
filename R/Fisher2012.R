@@ -2,8 +2,7 @@
 #'
 #' Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
 #'
-#' @param x data as data.frame, grouped_df, resample or matrix object
-#' @param ... other options passed to functions
+#' @inheritParams structureCovariances
 #'
 #' @return Test statistic of the hypothesis test
 #'
@@ -22,7 +21,7 @@ Fisher2012 <- function(x, Sigma = "identity", ...){
 #' @export
 #' @keywords internal
 #' @importFrom stats cov
-#' @importFrom stats pchisq
+#' @importFrom stats pnorm
 #'
 Fisher2012.covariance <- function(x, Sigma = "identity", ...){
   p <- ncol(x)
@@ -72,7 +71,7 @@ Fisher2012.covariance <- function(x, Sigma = "identity", ...){
 #' @export
 #' @keywords internal
 #' @importFrom stats cov
-#' @importFrom stats pchisq
+#' @importFrom stats pnorm
 #'
 Fisher2012.matrix <- function(x, Sigma = "identity", ...){
   p <- ncol(x)
@@ -121,16 +120,16 @@ Fisher2012.matrix <- function(x, Sigma = "identity", ...){
 Fisher2012_ <- function(n, p, S_){
   c <- p / n
   ahat2 <- ((n ^ 2) / ((n - 1) * (n + 2) * p)) *
-    (tr(S_ %*% S_) - (tr(S_) ^ 2) / n)
+    (sum(diag(S_ %*% S_)) - (sum(diag(S_)) ^ 2) / n)
   gamma <- ((n ^ 5) * (n ^ 2 + n + 2)) /
     ((n + 1) * (n + 2) * (n + 4) * (n + 6) * (n - 1) * (n - 2) * (n - 3))
-  ahat4 <- (gamma / p) * (tr(S_ %*% S_ %*% S_ %*% S_) -
-                            (4 / n) * tr(S_ %*% S_ %*% S_) * tr(S_) -
+  ahat4 <- (gamma / p) * (sum(diag(S_ %*% S_ %*% S_ %*% S_)) -
+                            (4 / n) * sum(diag(S_ %*% S_ %*% S_)) * sum(diag(S_)) -
                             ((2 * (n ^ 2) + 3 * n - 6) / (n * (n ^ 2 + n + 2))) *
-                            (tr(S_ %*% S_) ^ 2) +
+                            (sum(diag(S_ %*% S_)) ^ 2) +
                             ((2 * (5 * n + 6)) / (n * (n ^ 2 + n + 2))) *
-                            tr(S_ %*% S_) * (tr(S_) ^ 2) -
+                            sum(diag(S_ %*% S_)) * (sum(diag(S_)) ^ 2) -
                             ((5 * n + 6) / ((n ^ 2) * (n ^ 2 + n + 2))) *
-                            (tr(S_) ^ 4))
+                            (sum(diag(S_)) ^ 4))
   (n / sqrt(8 * (c ^ 2 + 12 * c + 8))) * (ahat4 - 2 * ahat2 + 1)
 }
