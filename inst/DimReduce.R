@@ -132,7 +132,7 @@ save(statistics, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", 
 pushover(message = "statistics",
          title = Structure)
 
-cvs <- summarize(group_by(statistics, SampleSize, originaldimension, Pops, reduction, Test),
+cvs <- summarize(group_by(statistics, SampleSize, dimension, Pops, reduction, Test),
                       CriticalValue = quantile(`Null Statistic`, 0.95))
 
 save(cvs, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/", dimensions, " ", SampleSize, "/cvs.RData"))
@@ -150,7 +150,7 @@ pushover(message = "powerscorestests",
          title = Structure)
 
 power <- summarise(group_by(powerscorestests,
-                                     SampleSize, originaldimension, Pops, reduction, Test),
+                                     SampleSize, dimension, Pops, reduction, Test),
                             Power = mean(Significant))
 
 save(power, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/", dimensions, " ", SampleSize, "/power.RData"))
