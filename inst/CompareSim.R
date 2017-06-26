@@ -85,7 +85,7 @@ statistics <- ldply(lapply(mvndata, function(datadf, grid){
 }, grid = gridcomb))
 
 
-save(statistics, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/",
+save(statistics, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/",
                                covStruct, "/statistics.RData"))
 
 pushover(message = "Statistics",
@@ -97,7 +97,7 @@ pushover(message = "Statistics",
 cvs <- summarize(group_by(statistics, SampleSize, dimension, Test, Pops),
                  CriticalValue = quantile(`Null Statistic`, 0.95))
 
-save(cvs, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/",
+save(cvs, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/",
                         covStruct, "/cvs.RData"))
 
 pushover(message = "cvs",
@@ -110,7 +110,7 @@ pushover(message = "cvs",
 powerscorestests <- mutate(full_join(cvs, statistics),
                            Significant = (`Power Statistic` > CriticalValue))
 
-save(powerscorestests, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/",
+save(powerscorestests, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/",
                                      covStruct, "/powerscoretests.RData"))
 
 pushover(message = "powerscorestests",
@@ -123,7 +123,7 @@ power <- summarise(group_by(powerscorestests,
                             SampleSize, dimension, Pops, Test),
                    Power = mean(Significant))
 
-save(power, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/",
+save(power, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/",
                           covStruct, "/power.RData"))
 
 pushover(message = "power",
