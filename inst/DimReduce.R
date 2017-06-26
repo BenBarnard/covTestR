@@ -14,11 +14,12 @@ gridcomb <- filter(expand.grid(Samples = SampleSize,
                    dims > Samples)
 reductionMethod <- sdiff
 
+Structure <- "Sri2014"
+
 if(!(dir.exists(paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/", dimensions, " ", SampleSize, "/")))){
   dir.create(paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/", dimensions, " ", SampleSize, "/"))
 }
 
-Structure <- "Sri2014"
 
 load(file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/mvnData/", Structure, "/mvndata.RData"))
 
