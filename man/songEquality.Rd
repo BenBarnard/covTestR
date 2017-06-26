@@ -7,8 +7,11 @@
 songEquality(x)
 }
 \arguments{
-\item{Sigma}{}
+\item{x}{data}
+
+\item{Sigma}{covariance matrix}
 }
 \description{
 Song Conical Variates For Structure of Covariance Tests
 }
+\keyword{internal}

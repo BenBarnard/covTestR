@@ -14,7 +14,7 @@ gridcomb <- filter(expand.grid(Samples = SampleSize,
 
 Structure <- "Sri2014"
 
-load(file = paste0("E:/Ben/Box Sync/Statistics/", Structure, "/mvndata.RData"))
+load(file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/mvnData/", Structure, "/mvndata.RData"))
 
 NullTests <- ldply(mapply(function(SampleSize, dimensions, df){
   ldply(mvndata, function(ls, SampleSize, dimensions){
@@ -23,13 +23,13 @@ NullTests <- ldply(mapply(function(SampleSize, dimensions, df){
   })[1:3]
   covs <- lapply(ls, cov)
   #diffs <- lapply(covs, function(x){x - covs[[1]]})[-1]
-  scatters <- mapply(`*`, covs, lapply(ls, function(x){nrow(x) - 1}), SIMPLIFY = FALSE)
-  pooled <- Reduce(`+`, scatters) / Reduce(`+`, lapply(ls, function(x){nrow(x) - 1}))
-  diffs <- lapply(covs, function(x){x - pooled})
-  #redMat2 <- svd(covs[[1]])$u
-  #redMat3 <- svd(covs[[1]])$u
-  redMat2 <- svd(Reduce(cbind, diffs[-3]))$u
-  redMat3 <- svd(Reduce(cbind, diffs))$u
+  # scatters <- mapply(`*`, covs, lapply(ls, function(x){nrow(x) - 1}), SIMPLIFY = FALSE)
+  # pooled <- Reduce(`+`, scatters) / Reduce(`+`, lapply(ls, function(x){nrow(x) - 1}))
+  # diffs <- lapply(covs, function(x){x - pooled})
+  redMat2 <- svd(covs[[1]])$u
+  redMat3 <- svd(covs[[1]])$u
+  # redMat2 <- svd(Reduce(cbind, diffs[-3]))$u
+  # redMat3 <- svd(Reduce(cbind, diffs))$u
   #redMat3 <- songEquality(ls)$u
   #redMat2 <- songEquality(ls[-3])$u
 
@@ -119,7 +119,7 @@ NullTests <- ldply(mapply(function(SampleSize, dimensions, df){
 }, SampleSize = SampleSize, dimensions = dimensions)
 }, SampleSize = gridcomb$Samples, dimensions = gridcomb$dims, MoreArgs = list(df = mvndata), SIMPLIFY = FALSE))
 
-save(NullTests, file = paste0("E:/Ben/Box Sync/Statistics/", Structure, "/DimReduce/NullTests.RData"))
+save(NullTests, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/NullTests.RData"))
 
 pushover(message = "NullTests",
          title = "Hey")
@@ -127,7 +127,7 @@ pushover(message = "NullTests",
 cvs <- summarize(group_by(NullTests, SampleSize, originaldimension, Pops, reduction, Test),
                       CriticalValue = quantile(Statistic, 0.95))
 
-save(cvs, file = paste0("E:/Ben/Box Sync/Statistics/", Structure, "/DimReduce/cvs.RData"))
+save(cvs, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/cvs.RData"))
 
 pushover(message = "cvs",
          title = "Hey")
@@ -138,14 +138,14 @@ Powervaluestests <- ldply(mapply(function(SampleSize, dimensions, df){
     x[1:SampleSize, 1:dimensions]
   })[c(1, 4, 5)]
   covs <- lapply(ls, cov)
-  #diffs <- lapply(covs, function(x){x - covs[[1]]})[-1]
-  scatters <- mapply(`*`, covs, lapply(ls, function(x){nrow(x) - 1}), SIMPLIFY = FALSE)
-  pooled <- Reduce(`+`, scatters) / Reduce(`+`, lapply(ls, function(x){nrow(x) - 1}))
-  diffs <- lapply(covs, function(x){x - pooled})
-  #redMat2 <- svd(covs[[1]])$u
-  #redMat3 <- svd(covs[[1]])$u
-  redMat2 <- svd(Reduce(cbind, diffs[-3]))$u
-  redMat3 <- svd(Reduce(cbind, diffs))$u
+  # diffs <- lapply(covs, function(x){x - covs[[1]]})[-1]
+  # scatters <- mapply(`*`, covs, lapply(ls, function(x){nrow(x) - 1}), SIMPLIFY = FALSE)
+  # pooled <- Reduce(`+`, scatters) / Reduce(`+`, lapply(ls, function(x){nrow(x) - 1}))
+  # diffs <- lapply(covs, function(x){x - pooled})
+  redMat2 <- svd(covs[[1]])$u
+  redMat3 <- svd(covs[[1]])$u
+  #redMat2 <- svd(Reduce(cbind, diffs[-3]))$u
+  #redMat3 <- svd(Reduce(cbind, diffs))$u
   #redMat3 <- songEquality(ls)$u
   #redMat2 <- songEquality(ls[-3])$u
 
@@ -237,7 +237,7 @@ Powervaluestests <- ldply(mapply(function(SampleSize, dimensions, df){
 }, SampleSize = SampleSize, dimensions = dimensions)
 }, SampleSize = gridcomb$Samples, dimensions = gridcomb$dims, MoreArgs = list(df = mvndata), SIMPLIFY = FALSE))
 
-save(Powervaluestests, file = paste0("E:/Ben/Box Sync/Statistics/", Structure, "/DimReduce/Powervaluestests.RData"))
+save(Powervaluestests, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/Powervaluestests.RData"))
 
 pushover(message = "Powervaluestests",
          title = "Hey")
@@ -245,7 +245,7 @@ pushover(message = "Powervaluestests",
 powerscorestests <- mutate(full_join(cvs, Powervaluestests),
                                 Significant = (Statistic > CriticalValue))
 
-save(powerscorestests, file = paste0("E:/Ben/Box Sync/Statistics/", Structure, "/DimReduce/powerscorestests.RData"))
+save(powerscorestests, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/powerscorestests.RData"))
 
 pushover(message = "powerscorestests",
          title = "Hey")
@@ -254,7 +254,7 @@ power <- summarise(group_by(powerscorestests,
                                      SampleSize, originaldimension, Pops, reduction, Test),
                             Power = mean(Significant))
 
-save(power, file = paste0("E:/Ben/Box Sync/Statistics/", Structure, "/DimReduce/power.RData"))
+save(power, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/power.RData"))
 
 pushover(message = "power",
          title = "Hey")

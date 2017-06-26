@@ -7,9 +7,11 @@
 Chen2010(x, Sigma = "identity", ...)
 }
 \arguments{
-\item{x}{data as data.frame, grouped_df, resample or matrix object}
+\item{x}{data}
 
-\item{...}{other options passed to functions}
+\item{Sigma}{Population covariance matrix}
+
+\item{...}{other options passed to covTest method}
 }
 \value{
 Test statistic of the hypothesis test

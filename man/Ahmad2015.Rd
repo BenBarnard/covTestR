@@ -7,9 +7,11 @@
 Ahmad2015(x, Sigma = "identity", ...)
 }
 \arguments{
-\item{x}{data as data.frame, grouped_df, resample or matrix object}
+\item{x}{data}
 
-\item{...}{other options passed to functions}
+\item{Sigma}{Population covariance matrix}
+
+\item{...}{other options passed to covTest method}
 }
 \value{
 Test statistic of the hypothesis test
@@ -18,7 +20,7 @@ Test statistic of the hypothesis test
 Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
 }
 \examples{
-Ahmad2015(iris[1:50, 1:3])
+structureCovariances(iris[,1:4], covTest = Ahmad2015)
 
 }
 \references{
