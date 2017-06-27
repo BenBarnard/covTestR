@@ -127,7 +127,7 @@ statistics <- ldply(mvndata, function(ls, SampleSize, dimensions, reductionMetho
   SampleSize = SampleSize, dimensions = dimensions)
 }, SampleSize = SampleSize, dimensions = dimensions, reductionMethod = reductionMethod)
 
-statistics <- filter(statistics, !(is.na(`Power Statistic`)), !(is.na(`Null Statistic`)))
+statistics <- filter(statistics, !(is.nan(`Power Statistic`)), !(is.nan(`Null Statistic`)))
 
 save(statistics, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/", dimensions, " ", SampleSize, "/statistics.RData"))
 
