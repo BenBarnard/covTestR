@@ -56,7 +56,7 @@ statistics <- ldply(mvndata, function(ls, SampleSize, dimensions, reductionMetho
     nullList3 <- nullList
     powerList3 <- powerList
 
-    if(reduction > originaldimension){
+    if(reduction < originaldimension){
       nullList2 <- lapply(nullList2, function(x){
         t(nullprojection2 %*% t(x))
       })
