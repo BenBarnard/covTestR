@@ -12,12 +12,17 @@ SampleSize <- 10
 gridcomb <- filter(expand.grid(Samples = SampleSize,
                                dims = dimensions),
                    dims > Samples)
-reductionMethod <- sdiff
+reductionMethod <- reorderSdiff
+reductionMethodName <- "reorderSdiff"
 
 Structure <- "Sri2014"
 
-if(!(dir.exists(paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/", dimensions, " ", SampleSize, "/")))){
-  dir.create(paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/", dimensions, " ", SampleSize, "/"))
+if(!(dir.exists(paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/",
+                       Structure, "/DimReduce/", reductionMethodName,
+                       "/", dimensions, " ", SampleSize, "/")))){
+  dir.create(paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/",
+                    Structure, Structure, "/DimReduce/", reductionMethodName,
+                    "/", dimensions, " ", SampleSize, "/"), recursive = TRUE)
 }
 
 
@@ -129,7 +134,8 @@ statistics <- ldply(mvndata, function(ls, SampleSize, dimensions, reductionMetho
 
 statistics <- filter(statistics, !(is.nan(`Power Statistic`)), !(is.nan(`Null Statistic`)))
 
-save(statistics, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/", dimensions, " ", SampleSize, "/statistics.RData"))
+save(statistics, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/", reductionMethodName,
+                               "/", dimensions, " ", SampleSize, "/statistics.RData"))
 
 pushover(message = "statistics",
          title = Structure)
@@ -137,7 +143,8 @@ pushover(message = "statistics",
 cvs <- summarize(group_by(statistics, SampleSize, dimension, Pops, reduction, Test),
                       CriticalValue = quantile(`Null Statistic`, 0.95))
 
-save(cvs, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/", dimensions, " ", SampleSize, "/cvs.RData"))
+save(cvs, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/", reductionMethodName,
+                        "/", dimensions, " ", SampleSize, "/cvs.RData"))
 
 pushover(message = "cvs",
          title = Structure)
@@ -146,7 +153,8 @@ pushover(message = "cvs",
 powerscorestests <- mutate(full_join(cvs, statistics),
                                 Significant = (`Power Statistic` > CriticalValue))
 
-save(powerscorestests, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/", dimensions, " ", SampleSize, "/powerscorestests.RData"))
+save(powerscorestests, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/", reductionMethodName,
+                                     "/", dimensions, " ", SampleSize, "/powerscorestests.RData"))
 
 pushover(message = "powerscorestests",
          title = Structure)
@@ -155,7 +163,8 @@ power <- summarise(group_by(powerscorestests,
                                      SampleSize, dimension, Pops, reduction, Test),
                             Power = mean(Significant))
 
-save(power, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/", dimensions, " ", SampleSize, "/power.RData"))
+save(power, file = paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/", Structure, "/DimReduce/", reductionMethodName,
+                          "/", dimensions, " ", SampleSize, "/power.RData"))
 
 pushover(message = "power",
          title = Structure)
