@@ -21,7 +21,7 @@ if(!(dir.exists(paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/",
                        Structure, "/DimReduce/", reductionMethodName,
                        "/", dimensions, " ", SampleSize, "/")))){
   dir.create(paste0("E:/Ben/Box Sync/Statistics/Dissertation/Sims/",
-                    Structure, Structure, "/DimReduce/", reductionMethodName,
+                    Structure, "/DimReduce/", reductionMethodName,
                     "/", dimensions, " ", SampleSize, "/"), recursive = TRUE)
 }
 
