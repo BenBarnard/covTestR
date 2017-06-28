@@ -35,7 +35,7 @@ reorderSdiff <- function(ls){
   ordering <- order(weights, decreasing = TRUE)
   d <- weights[ordering]
   u <- svdlist$u[, ordering]
-  list(u = u, d = d)
+  u
 }
 
 
