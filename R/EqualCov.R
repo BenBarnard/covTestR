@@ -1,7 +1,7 @@
-#' EqualCov
+#' covTest
 #'
 #' Package Documentation
 #'
-#' @useDynLib EqualCov
+#' @useDynLib covTest
 #' @importFrom Rcpp sourceCpp
 NULL

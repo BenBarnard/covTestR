@@ -2,13 +2,13 @@ authors:
   Ben Barnard:
     href: http://benbarnard.bearstatistics.com
 navbar:
-  title: EqualCov
+  title: CovTest
   type: default
   right:
   - text: "Reference"
     href: reference/index.html
   - icon: fa-github
-    href: https://github.com/benbarnard/equalcov
+    href: https://github.com/benbarnard/covTest
   left:
   - text: "@ bearstatistics.com"
     href: http://www.bearstatistics.com

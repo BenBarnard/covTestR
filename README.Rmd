@@ -1,15 +1,15 @@
-# EqualCov
+# covTest
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/EqualCov)](https://cran.r-project.org/package=EqualCov)
-[![Coverage Status](https://img.shields.io/codecov/c/github/BenBarnard/EqualCov/master.svg)](https://codecov.io/github/BenBarnard/EqualCov?branch=master)
-[![Travis-CI Build Status](https://travis-ci.org/BenBarnard/EqualCov.svg?branch=master)](https://travis-ci.org/BenBarnard/EqualCov)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/BenBarnard/EqualCov?branch=master&svg=true)](https://ci.appveyor.com/project/BenBarnard/EqualCov)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/covTest)](https://cran.r-project.org/package=covTest)
+[![Coverage Status](https://img.shields.io/codecov/c/github/BenBarnard/covTest/master.svg)](https://codecov.io/github/BenBarnard/covTest?branch=master)
+[![Travis-CI Build Status](https://travis-ci.org/BenBarnard/covTest.svg?branch=master)](https://travis-ci.org/BenBarnard/covTest)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/BenBarnard/covTest?branch=master&svg=true)](https://ci.appveyor.com/project/BenBarnard/covTest)
 
 ## Overview
 
-EqualCov is an equality of covariance testing suite. Currently only equality of 2 and k group tests are available for high dimensional data. There are future plans for one sample tests for high dimensinal data, pretty print methods, and a wrapper function just to test.
+covTest is an equality of covariance testing suite. Currently only equality of 2 and k group tests are available for high dimensional data. There are future plans for one sample tests for high dimensinal data, pretty print methods, and a wrapper function just to test.
 
-In developing EqualCov we found it useful to have it play nice with the "tidyverse." At this point we have not thought of all the uses and combinations with these packages so if you think of something not currently implemented please file a minimal reproducible example on github.
+In developing covTest we found it useful to have it play nice with the "tidyverse." At this point we have not thought of all the uses and combinations with these packages so if you think of something not currently implemented please file a minimal reproducible example on github.
 
 ## Installation
 
@@ -19,7 +19,7 @@ You can install the latest development version from github with
 if (packageVersion("devtools") < 1.6) {
   install.packages("devtools")
 }
-devtools::install_github("benbarnard/EqualCov")
+devtools::install_github("benbarnard/covTest")
 ```
 
 If you encounter a clear bug, please file a minimal reproducible example on github.
@@ -30,7 +30,7 @@ This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
 library(tidyverse)
-library(EqualCov)
+library(covTest)
 
 iris %>% group_by(Species) %>% Chaipitak2013_test
 ```
