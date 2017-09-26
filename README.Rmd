@@ -15,7 +15,7 @@ In developing covTests we found it useful to have it play nice with the "tidyver
 
 You can install the latest development version from github with
 
-```{r}
+```{r, eval = FALSE}
 if (packageVersion("devtools") < 1.6) {
   install.packages("devtools")
 }
