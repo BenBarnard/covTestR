@@ -1,7 +1,7 @@
-#' covTest
+#' covTests
 #'
 #' Package Documentation
 #'
-#' @useDynLib covTest
+#' @useDynLib covTests
 #' @importFrom Rcpp sourceCpp
 NULL

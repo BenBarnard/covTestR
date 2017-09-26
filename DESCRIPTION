@@ -1,11 +1,11 @@
-Package: covTest
+Package: covTests
 Type: Package
-Title: Equality of Covariances for High Dimensional Data
+Title: Homogeneity of Covariance Matrix Tests
 Version: 0.1.0
-Authors@R: c(person("Ben", "Barnard", email = "ben_barnard@baylor.edu", role = c("aut", "cre")),
+Authors@R: c(person("Ben", "Barnard", email = "ben_barnard@outlook.com", role = c("aut", "cre")),
   person("Dean", "Young", email = "dean_young@baylor.edu", role = c("aut")))
-Maintainer: Ben Barnard <ben_barnard@baylor.edu>
-Description: Simulations for comparing equality of covariances tests.
+Maintainer: Ben Barnard <ben_barnard@outlook.com>
+Description: Testing functions for Covariance Matrix Testing.
 License: GPL-2
 LazyData: TRUE
 RoxygenNote: 6.0.1
