@@ -1,6 +1,6 @@
-Package: covTests
+Package: covTestR
 Type: Package
-Title: Homogeneity of Covariance Matrix Tests
+Title: Covariance Matrix Tests
 Version: 0.1.0
 Authors@R: c(person("Ben", "Barnard", email = "ben_barnard@outlook.com", role = c("aut", "cre")),
   person("Dean", "Young", email = "dean_young@baylor.edu", role = c("aut")))
