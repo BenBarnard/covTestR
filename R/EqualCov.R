@@ -9,6 +9,6 @@ NULL
 
 .onUnload <- function(libpath){
   library.dynam.unload(
-    "covTests", libpath
+    "covTestR", libpath
   )
 }
