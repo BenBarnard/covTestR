@@ -17,8 +17,16 @@
 #' @references Schott, J. (2007). A test for the equality of covariance matrices when the dimension
 #' is large relative to the sample sizes. Computational Statistics & Data Analysis, 51(12):6535-6542.
 #'
-#' @examples Schott2007(iris, group = Species)
-#'
+#' @examples 
+#' irisSpecies <- unique(iris$Species)
+#' 
+#' iris_ls <- lapply(irisSpecies, 
+#'     function(x){as.matrix(iris[iris$Species == x, 1:4])}
+#'                  )
+#'                  
+#' names(iris_ls) <- irisSpecies
+#' 
+#' Chaipitak2013(iris_ls)
 Schott2007 <- function(x, ...) {
 
   ls <- lazy_dots(...)

@@ -18,8 +18,15 @@ Test statistic of the hypothesis test
 Performs 2 and k sample equality of covariance matrix test using Schott 2007
 }
 \examples{
-Schott2007(iris, group = Species)
+irisSpecies <- unique(iris$Species)
 
+iris_ls <- lapply(irisSpecies, 
+    function(x){as.matrix(iris[iris$Species == x, 1:4])}
+                 )
+                 
+names(iris_ls) <- irisSpecies
+
+Chaipitak2013(iris_ls)
 }
 \references{
 Schott, J. (2007). A test for the equality of covariance matrices when the dimension

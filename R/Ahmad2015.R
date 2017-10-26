@@ -12,7 +12,6 @@
 #' @references Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
 #' matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.
 #'
-#' @examples structureCovariances(iris[,1:4], covTest = Ahmad2015)
 #'
 Ahmad2015 <- function(x, Sigma = "identity", ...){
   UseMethod("Ahmad2015")

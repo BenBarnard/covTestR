@@ -27,7 +27,6 @@
 #'
 #' @export
 #'
-#' @examples structureCovariances(iris, group = Species)
 structureCovariances <- function(x, Sigma, ..., covTest = Nagao1973){
   UseMethod("structureCovariances")
 }

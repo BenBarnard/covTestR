@@ -17,8 +17,16 @@
 #' @references Srivastava, M., Yanagihara, H., and Kubokawa T. (2014). Tests for covariance
 #' matrices in high dimension with less sample size. Journal of Multivariate Analysis, 130:289-309.
 #'
-#' @examples Srivastava2014(iris, group = Species)
-#'
+#' @examples 
+#' irisSpecies <- unique(iris$Species)
+#' 
+#' iris_ls <- lapply(irisSpecies, 
+#'     function(x){as.matrix(iris[iris$Species == x, 1:4])}
+#'                  )
+#'                  
+#' names(iris_ls) <- irisSpecies
+#' 
+#' Chaipitak2013(iris_ls)
 Srivastava2014 <- function(x, ...){
 
   ls <- lazy_dots(...)

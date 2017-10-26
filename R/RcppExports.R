@@ -2,82 +2,82 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 Ahmad2017Stat <- function(x) {
-    .Call('_covTests_Ahmad2017Stat', PACKAGE = 'covTests', x)
+    .Call(`_covTestR_Ahmad2017Stat`, x)
 }
 
 c3 <- function(x) {
-    .Call('_covTests_c3', PACKAGE = 'covTests', x)
+    .Call(`_covTestR_c3`, x)
 }
 
 c2 <- function(x) {
-    .Call('_covTests_c2', PACKAGE = 'covTests', x)
+    .Call(`_covTestR_c2`, x)
 }
 
 c1 <- function(x) {
-    .Call('_covTests_c1', PACKAGE = 'covTests', x)
+    .Call(`_covTestR_c1`, x)
 }
 
 bilinearquad <- function(x) {
-    .Call('_covTests_bilinearquad', PACKAGE = 'covTests', x)
+    .Call(`_covTestR_bilinearquad`, x)
 }
 
 bilinearsquare <- function(x) {
-    .Call('_covTests_bilinearsquare', PACKAGE = 'covTests', x)
+    .Call(`_covTestR_bilinearsquare`, x)
 }
 
 bilinearcube <- function(x) {
-    .Call('_covTests_bilinearcube', PACKAGE = 'covTests', x)
+    .Call(`_covTestR_bilinearcube`, x)
 }
 
 bilinearoff <- function(x) {
-    .Call('_covTests_bilinearoff', PACKAGE = 'covTests', x)
+    .Call(`_covTestR_bilinearoff`, x)
 }
 
 quadra <- function(x) {
-    .Call('_covTests_quadra', PACKAGE = 'covTests', x)
+    .Call(`_covTestR_quadra`, x)
 }
 
 BoxesMStat <- function(x) {
-    .Call('_covTests_BoxesMStat', PACKAGE = 'covTests', x)
+    .Call(`_covTestR_BoxesMStat`, x)
 }
 
 Chaipitak2013poolStat <- function(x) {
-    .Call('_covTests_Chaipitak2013poolStat', PACKAGE = 'covTests', x)
+    .Call(`_covTestR_Chaipitak2013poolStat`, x)
 }
 
 Chaipitak2013Stat <- function(x) {
-    .Call('_covTests_Chaipitak2013Stat', PACKAGE = 'covTests', x)
+    .Call(`_covTestR_Chaipitak2013Stat`, x)
 }
 
 Ishii2016Stat <- function(x) {
-    .Call('_covTests_Ishii2016Stat', PACKAGE = 'covTests', x)
+    .Call(`_covTestR_Ishii2016Stat`, x)
 }
 
 Schott2001Stat <- function(x) {
-    .Call('_covTests_Schott2001Stat', PACKAGE = 'covTests', x)
+    .Call(`_covTestR_Schott2001Stat`, x)
 }
 
 Schott2007Stat <- function(x) {
-    .Call('_covTests_Schott2007Stat', PACKAGE = 'covTests', x)
+    .Call(`_covTestR_Schott2007Stat`, x)
 }
 
 Schott2007pooledStat <- function(x) {
-    .Call('_covTests_Schott2007pooledStat', PACKAGE = 'covTests', x)
+    .Call(`_covTestR_Schott2007pooledStat`, x)
 }
 
 Srivastava2007Stat <- function(x) {
-    .Call('_covTests_Srivastava2007Stat', PACKAGE = 'covTests', x)
+    .Call(`_covTestR_Srivastava2007Stat`, x)
 }
 
 Srivastava2014Stat <- function(x) {
-    .Call('_covTests_Srivastava2014Stat', PACKAGE = 'covTests', x)
+    .Call(`_covTestR_Srivastava2014Stat`, x)
 }
 
 Srivastava2014poolStat <- function(x) {
-    .Call('_covTests_Srivastava2014poolStat', PACKAGE = 'covTests', x)
+    .Call(`_covTestR_Srivastava2014poolStat`, x)
 }
 
 SrivastavaYanagihara2010Stat <- function(x) {
-    .Call('_covTests_SrivastavaYanagihara2010Stat', PACKAGE = 'covTests', x)
+    .Call(`_covTestR_SrivastavaYanagihara2010Stat`, x)
 }
 

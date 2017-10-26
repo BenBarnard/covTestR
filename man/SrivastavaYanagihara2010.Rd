@@ -18,8 +18,15 @@ Test statistic for Srivastava and Yanagihara 2010
 Test of Equality of Covariances given by Srivastava and Yanagihara 2010
 }
 \examples{
-SrivastavaYanagihara2010(iris, group = Species)
+irisSpecies <- unique(iris$Species)
 
+iris_ls <- lapply(irisSpecies, 
+    function(x){as.matrix(iris[iris$Species == x, 1:4])}
+                 )
+                 
+names(iris_ls) <- irisSpecies
+
+Chaipitak2013(iris_ls)
 }
 \references{
 Srivastava, M. and Yanagihara, H. (2010). Testing the equality of several covariance matrices with

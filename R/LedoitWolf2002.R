@@ -12,7 +12,7 @@
 #' @references Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
 #' matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.
 #'
-#' @examples LedoitWolf2002_test(iris[1:50, 1:3])
+#' @examples LedoitWolf2002(as.matrix(iris[1:50, 1:3]))
 #'
 LedoitWolf2002 <- function(x, Sigma = "identity", ...){
   UseMethod("LedoitWolf2002")

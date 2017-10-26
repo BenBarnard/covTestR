@@ -1,8 +1,8 @@
-#' covTests
+#' covTestR
 #'
 #' Package Documentation
 #'
-#' @useDynLib covTestR
+#' @useDynLib covTestR, .registration = TRUE
 #' @importFrom Rcpp sourceCpp
 NULL
 

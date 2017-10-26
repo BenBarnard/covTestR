@@ -18,8 +18,15 @@ Test statistic of the hypothesis test
 Performs 2 and k sample equality of covariance matrix test using Srivastava et al. 2014
 }
 \examples{
-Srivastava2014(iris, group = Species)
+irisSpecies <- unique(iris$Species)
 
+iris_ls <- lapply(irisSpecies, 
+    function(x){as.matrix(iris[iris$Species == x, 1:4])}
+                 )
+                 
+names(iris_ls) <- irisSpecies
+
+Chaipitak2013(iris_ls)
 }
 \references{
 Srivastava, M., Yanagihara, H., and Kubokawa T. (2014). Tests for covariance

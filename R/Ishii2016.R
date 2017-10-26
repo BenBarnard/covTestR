@@ -15,7 +15,16 @@
 #' @importFrom stats cov
 #' @importFrom stats pf
 #'
-#' @examples Ishii2016_test(iris, group = Species)
+#' @examples 
+#' irisSpecies <- unique(iris$Species)
+#' 
+#' iris_ls <- lapply(irisSpecies, 
+#'     function(x){as.matrix(iris[iris$Species == x, 1:4])}
+#'                  )
+#'                  
+#' names(iris_ls) <- irisSpecies
+#' 
+#' Chaipitak2013(iris_ls)
 Ishii2016 <- function(x, ...) {
 
   ls <- lazy_dots(...)

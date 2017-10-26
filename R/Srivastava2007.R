@@ -20,8 +20,16 @@
 #' Conference on Advances in InterdisciplinaryStistics and Combinatorics, University of North Carolina
 #' at Greensboro, NC, USA.
 #'
-#' @examples Srivastava2007(iris, group = Species)
-#'
+#' @examples 
+#' irisSpecies <- unique(iris$Species)
+#' 
+#' iris_ls <- lapply(irisSpecies, 
+#'     function(x){as.matrix(iris[iris$Species == x, 1:4])}
+#'                  )
+#'                  
+#' names(iris_ls) <- irisSpecies
+#' 
+#' Chaipitak2013(iris_ls)
 Srivastava2007 <- function(x, ...){
 
   ls <- lazy_dots(...)

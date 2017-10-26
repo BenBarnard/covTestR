@@ -19,8 +19,16 @@
 #' @references Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
 #' matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.
 #'
-#' @examples Chaipitak2013_test(iris, group = Species)
-#'
+#' @examples 
+#' irisSpecies <- unique(iris$Species)
+#' 
+#' iris_ls <- lapply(irisSpecies, 
+#'     function(x){as.matrix(iris[iris$Species == x, 1:4])}
+#'                  )
+#'                  
+#' names(iris_ls) <- irisSpecies
+#' 
+#' Chaipitak2013(iris_ls)
 Ahmad2017 <- function(x, ...){
 
   ls <- lazy_dots(...)

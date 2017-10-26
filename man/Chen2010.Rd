@@ -20,7 +20,7 @@ Test statistic of the hypothesis test
 Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
 }
 \examples{
-Chen2010(iris[1:50, 1:3])
+Chen2010(as.matrix(iris[1:50, 1:3]))
 
 }
 \references{

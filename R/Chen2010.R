@@ -12,7 +12,7 @@
 #' @references Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
 #' matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.
 #'
-#' @examples Chen2010(iris[1:50, 1:3])
+#' @examples Chen2010(as.matrix(iris[1:50, 1:3]))
 #'
 Chen2010 <- function(x, Sigma = "identity", ...){
   UseMethod("Chen2010")

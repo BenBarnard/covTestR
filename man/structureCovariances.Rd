@@ -39,6 +39,3 @@ A list with class "htest" containing the following components:
 \description{
 Structure of Covariances
 }
-\examples{
-structureCovariances(iris, group = Species)
-}

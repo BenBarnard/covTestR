@@ -19,10 +19,6 @@ Test statistic of the hypothesis test
 \description{
 Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
 }
-\examples{
-structureCovariances(iris[,1:4], covTest = Ahmad2015)
-
-}
 \references{
 Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
 matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.

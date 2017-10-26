@@ -15,8 +15,16 @@
 #' @references Srivastava, M. and Yanagihara, H. (2010). Testing the equality of several covariance matrices with
 #' fewer observation that the dimension. Journal of Multivariate Analysis, 101(6):1319-1329.
 #'
-#' @examples SrivastavaYanagihara2010(iris, group = Species)
-#'
+#' @examples 
+#' irisSpecies <- unique(iris$Species)
+#' 
+#' iris_ls <- lapply(irisSpecies, 
+#'     function(x){as.matrix(iris[iris$Species == x, 1:4])}
+#'                  )
+#'                  
+#' names(iris_ls) <- irisSpecies
+#' 
+#' Chaipitak2013(iris_ls)
 SrivastavaYanagihara2010 <- function(x, ...){
 
   ls <- lazy_dots(...)
