@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Test of Equality of Covariances given by Box's M — BoxesM â€¢ covTestR</title>
+<title>Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013 — Fisher2012 â€¢ covTestR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -77,49 +77,57 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Test of Equality of Covariances given by Box's M</h1>
+    <h1>Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013</h1>
     </div>
 
     
-    <p>Test of Equality of Covariances given by Box's M</p>
+    <p>Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013</p>
     
 
-    <pre class="usage"><span class='fu'>BoxesM</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>Fisher2012</span>(<span class='no'>x</span>, <span class='kw'>Sigma</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>data as data.frame, grouped_df, resample or matrix object</p></td>
+      <td><p>data</p></td>
+    </tr>
+    <tr>
+      <th>Sigma</th>
+      <td><p>Population covariance matrix</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other options passed to functions</p></td>
+      <td><p>other options passed to covTest method</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Test statistic for Chaipitak 2013</p>
+    <p>Test statistic of the hypothesis test</p>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
+matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>irisSpecies</span> <span class='kw'>&lt;-</span> <span class='fu'>unique</span>(<span class='no'>iris</span>$<span class='no'>Species</span>)
-
-<span class='no'>iris_ls</span> <span class='kw'>&lt;-</span> <span class='fu'>lapply</span>(<span class='no'>irisSpecies</span>,
-    <span class='kw'>function</span>(<span class='no'>x</span>){<span class='fu'>as.matrix</span>(<span class='no'>iris</span>[<span class='no'>iris</span>$<span class='no'>Species</span> <span class='kw'>==</span> <span class='no'>x</span>, <span class='fl'>1</span>:<span class='fl'>4</span>])}
-                 )
-
-<span class='fu'>names</span>(<span class='no'>iris_ls</span>) <span class='kw'>&lt;-</span> <span class='no'>irisSpecies</span>
-
-<span class='fu'><a href='Chaipitak2013.html'>Chaipitak2013</a></span>(<span class='no'>iris_ls</span>)</div><div class='output co'>#&gt; 
-#&gt; 	Chaipitak and Chongchareon 2013 Equality of Covariance Test
+    <pre class="examples"><div class='input'><span class='fu'>Fisher2012</span>(<span class='fu'>as.matrix</span>(<span class='no'>iris</span>[<span class='fl'>1</span>:<span class='fl'>50</span>, <span class='fl'>1</span>:<span class='fl'>4</span>]))</div><div class='output co'>#&gt; 
+#&gt; 	Ledoit and Wolf 2002 Test of Covariance Structure
 #&gt; 
-#&gt; data:  setosa, versicolor and virginica
-#&gt; Chi Squared = 3.8455, df = 2, p-value = 0.1462
-#&gt; alternative hypothesis: true difference in covariances is not equal to 0
-#&gt; </div></pre>
+#&gt; data:  
+#&gt; Standard Normal = 5.6235, Mean = 0, Variance = 1, p-value = 9.354e-09
+#&gt; alternative hypothesis: true difference between the Sample Covariance and the Null Covarince Structure is not equal to 0
+#&gt; sample estimates:
+#&gt;              Sepal.Length Sepal.Width Petal.Length Petal.Width
+#&gt; Sepal.Length   0.12424898 0.099216327  0.016355102 0.010330612
+#&gt; Sepal.Width    0.09921633 0.143689796  0.011697959 0.009297959
+#&gt; Petal.Length   0.01635510 0.011697959  0.030159184 0.006069388
+#&gt; Petal.Width    0.01033061 0.009297959  0.006069388 0.011106122
+#&gt; </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -127,6 +135,8 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#references">References</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
