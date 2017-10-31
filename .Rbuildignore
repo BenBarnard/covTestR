@@ -8,3 +8,6 @@
 ^docs$
 ^_pkgdown\.yml$
 ^README\.html$
+\.o$
+\.so$
+\.dll$
