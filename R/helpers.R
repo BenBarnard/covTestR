@@ -2,7 +2,7 @@
 #'
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
-#'
+#' @keywords internal
 past <- function(xmin, ..., xmax){
   x <- c(list(...))
 
@@ -17,7 +17,7 @@ past <- function(xmin, ..., xmax){
 
 #' Trace of Matrix
 #'
-#'
+#' @keywords internal
 tr <- function(x){
   sum(diag(x))
 }

@@ -9,3 +9,4 @@ past(xmin, ..., xmax)
 \description{
 Paste Wrapper
 }
+\keyword{internal}

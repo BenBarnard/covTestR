@@ -9,3 +9,4 @@ tr(x)
 \description{
 Trace of Matrix
 }
+\keyword{internal}
