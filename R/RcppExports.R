@@ -5,38 +5,6 @@ Ahmad2017Stat <- function(x) {
     .Call(`_covTestR_Ahmad2017Stat`, x)
 }
 
-c3 <- function(x) {
-    .Call(`_covTestR_c3`, x)
-}
-
-c2 <- function(x) {
-    .Call(`_covTestR_c2`, x)
-}
-
-c1 <- function(x) {
-    .Call(`_covTestR_c1`, x)
-}
-
-bilinearquad <- function(x) {
-    .Call(`_covTestR_bilinearquad`, x)
-}
-
-bilinearsquare <- function(x) {
-    .Call(`_covTestR_bilinearsquare`, x)
-}
-
-bilinearcube <- function(x) {
-    .Call(`_covTestR_bilinearcube`, x)
-}
-
-bilinearoff <- function(x) {
-    .Call(`_covTestR_bilinearoff`, x)
-}
-
-quadra <- function(x) {
-    .Call(`_covTestR_quadra`, x)
-}
-
 BoxesMStat <- function(x) {
     .Call(`_covTestR_BoxesMStat`, x)
 }
@@ -79,5 +47,37 @@ Srivastava2014poolStat <- function(x) {
 
 SrivastavaYanagihara2010Stat <- function(x) {
     .Call(`_covTestR_SrivastavaYanagihara2010Stat`, x)
+}
+
+c3 <- function(x) {
+    .Call(`_covTestR_c3`, x)
+}
+
+c2 <- function(x) {
+    .Call(`_covTestR_c2`, x)
+}
+
+c1 <- function(x) {
+    .Call(`_covTestR_c1`, x)
+}
+
+bilinearquad <- function(x) {
+    .Call(`_covTestR_bilinearquad`, x)
+}
+
+bilinearsquare <- function(x) {
+    .Call(`_covTestR_bilinearsquare`, x)
+}
+
+bilinearcube <- function(x) {
+    .Call(`_covTestR_bilinearcube`, x)
+}
+
+bilinearoff <- function(x) {
+    .Call(`_covTestR_bilinearoff`, x)
+}
+
+quadra <- function(x) {
+    .Call(`_covTestR_quadra`, x)
 }
 

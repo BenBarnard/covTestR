@@ -17,94 +17,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// c3
-double c3(arma::mat x);
-RcppExport SEXP _covTestR_c3(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(c3(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// c2
-double c2(arma::mat x);
-RcppExport SEXP _covTestR_c2(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(c2(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// c1
-double c1(arma::mat x);
-RcppExport SEXP _covTestR_c1(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(c1(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// bilinearquad
-double bilinearquad(arma::mat x);
-RcppExport SEXP _covTestR_bilinearquad(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(bilinearquad(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// bilinearsquare
-double bilinearsquare(arma::mat x);
-RcppExport SEXP _covTestR_bilinearsquare(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(bilinearsquare(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// bilinearcube
-double bilinearcube(arma::mat x);
-RcppExport SEXP _covTestR_bilinearcube(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(bilinearcube(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// bilinearoff
-double bilinearoff(arma::mat x);
-RcppExport SEXP _covTestR_bilinearoff(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(bilinearoff(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// quadra
-double quadra(arma::mat x);
-RcppExport SEXP _covTestR_quadra(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(quadra(x));
-    return rcpp_result_gen;
-END_RCPP
-}
 // BoxesMStat
 double BoxesMStat(List x);
 RcppExport SEXP _covTestR_BoxesMStat(SEXP xSEXP) {
@@ -226,17 +138,97 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// c3
+double c3(arma::mat x);
+RcppExport SEXP _covTestR_c3(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(c3(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// c2
+double c2(arma::mat x);
+RcppExport SEXP _covTestR_c2(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(c2(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// c1
+double c1(arma::mat x);
+RcppExport SEXP _covTestR_c1(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(c1(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// bilinearquad
+double bilinearquad(arma::mat x);
+RcppExport SEXP _covTestR_bilinearquad(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(bilinearquad(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// bilinearsquare
+double bilinearsquare(arma::mat x);
+RcppExport SEXP _covTestR_bilinearsquare(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(bilinearsquare(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// bilinearcube
+double bilinearcube(arma::mat x);
+RcppExport SEXP _covTestR_bilinearcube(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(bilinearcube(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// bilinearoff
+double bilinearoff(arma::mat x);
+RcppExport SEXP _covTestR_bilinearoff(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(bilinearoff(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// quadra
+double quadra(arma::mat x);
+RcppExport SEXP _covTestR_quadra(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(quadra(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_covTestR_Ahmad2017Stat", (DL_FUNC) &_covTestR_Ahmad2017Stat, 1},
-    {"_covTestR_c3", (DL_FUNC) &_covTestR_c3, 1},
-    {"_covTestR_c2", (DL_FUNC) &_covTestR_c2, 1},
-    {"_covTestR_c1", (DL_FUNC) &_covTestR_c1, 1},
-    {"_covTestR_bilinearquad", (DL_FUNC) &_covTestR_bilinearquad, 1},
-    {"_covTestR_bilinearsquare", (DL_FUNC) &_covTestR_bilinearsquare, 1},
-    {"_covTestR_bilinearcube", (DL_FUNC) &_covTestR_bilinearcube, 1},
-    {"_covTestR_bilinearoff", (DL_FUNC) &_covTestR_bilinearoff, 1},
-    {"_covTestR_quadra", (DL_FUNC) &_covTestR_quadra, 1},
     {"_covTestR_BoxesMStat", (DL_FUNC) &_covTestR_BoxesMStat, 1},
     {"_covTestR_Chaipitak2013poolStat", (DL_FUNC) &_covTestR_Chaipitak2013poolStat, 1},
     {"_covTestR_Chaipitak2013Stat", (DL_FUNC) &_covTestR_Chaipitak2013Stat, 1},
@@ -248,6 +240,14 @@ static const R_CallMethodDef CallEntries[] = {
     {"_covTestR_Srivastava2014Stat", (DL_FUNC) &_covTestR_Srivastava2014Stat, 1},
     {"_covTestR_Srivastava2014poolStat", (DL_FUNC) &_covTestR_Srivastava2014poolStat, 1},
     {"_covTestR_SrivastavaYanagihara2010Stat", (DL_FUNC) &_covTestR_SrivastavaYanagihara2010Stat, 1},
+    {"_covTestR_c3", (DL_FUNC) &_covTestR_c3, 1},
+    {"_covTestR_c2", (DL_FUNC) &_covTestR_c2, 1},
+    {"_covTestR_c1", (DL_FUNC) &_covTestR_c1, 1},
+    {"_covTestR_bilinearquad", (DL_FUNC) &_covTestR_bilinearquad, 1},
+    {"_covTestR_bilinearsquare", (DL_FUNC) &_covTestR_bilinearsquare, 1},
+    {"_covTestR_bilinearcube", (DL_FUNC) &_covTestR_bilinearcube, 1},
+    {"_covTestR_bilinearoff", (DL_FUNC) &_covTestR_bilinearoff, 1},
+    {"_covTestR_quadra", (DL_FUNC) &_covTestR_quadra, 1},
     {NULL, NULL, 0}
 };
 
