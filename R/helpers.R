@@ -1,7 +1,5 @@
 #' Paste Wrapper
 #'
-#' @export
-#' @keywords internal
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #'
@@ -14,4 +12,12 @@ past <- function(xmin, ..., xmax){
     namevec <- c(xmin, paste0(" and ", xmax))
   }
   namevec
+}
+
+
+#' Trace of Matrix
+#'
+#'
+tr <- function(x){
+  sum(diag(x))
 }
