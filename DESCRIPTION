@@ -16,11 +16,9 @@ Suggests:
 Imports:
     lazyeval,
     stringr,
-    plyr,
     dplyr,
     shiny,
-    Rcpp,
-    RcppArmadillo
+    Rcpp
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 LinkingTo: Rcpp, RcppArmadillo
