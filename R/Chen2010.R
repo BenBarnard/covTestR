@@ -39,7 +39,7 @@ Chen2010.covariance <- function(x, Sigma = "identity", ...){
   }
 
 
-  statistic <- Chen2010_(n, p, x_)
+  statistic <- Chen2010Stat(x_)
   names(statistic) <- "Standard Normal"
 
   parameter <- c(0, 1)
@@ -85,7 +85,7 @@ Chen2010.matrix <- function(x, Sigma = "identity", ...){
     x_ <- x %*% solve(sv$u %*% diag(sqrt(sv$d)))
   }
 
-  statistic <- Chen2010_(n, p, x_)
+  statistic <- Chen2010Stat(x_)
   names(statistic) <- "Standard Normal"
 
   parameter <- c(0, 1)
@@ -112,14 +112,4 @@ Chen2010.matrix <- function(x, Sigma = "identity", ...){
               method = "Nagao 1973 Test of Covariance Structure")
   class(obj) <- "htest"
   obj
-}
-
-#' @keywords internal
-Chen2010_ <- function(n, p, x_){
-  n * (bilinearsquare(x_) / p -
-         2 * bilinearcube(x_) / p +
-         bilinearquad(x_) / p -
-         2 * quadra(x_) / p +
-         2 * bilinearoff(x_) / p +
-         1) / 2
 }

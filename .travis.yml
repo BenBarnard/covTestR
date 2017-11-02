@@ -6,7 +6,6 @@ cache: packages
 os:
   - linux
   - osx
-osx_image: xcode9.1
 r:
   - release
   - oldrel

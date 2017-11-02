@@ -38,7 +38,7 @@ Ahmad2015.covariance <- function(x, Sigma = "identity", ...){
   }
 
 
-  statistic <- Ahmad2015_(n, p, x_)
+  statistic <- Ahmad2015Stat(x_)
   names(statistic) <- "Normal"
 
   parameter <- c(0, 4 * (2 / (p / n + 1)))
@@ -84,7 +84,7 @@ Ahmad2015.matrix <- function(x, Sigma = "identity", ...){
     x_ <- x %*% solve(sv$u %*% diag(sqrt(sv$d)))
   }
 
-  statistic <- Ahmad2015_(n, p, x_)
+  statistic <- Ahmad2015Stat(x_)
   names(statistic) <- "Normal"
 
   parameter <- c(0, 4 * (2 / (p / n + 1)))
@@ -111,9 +111,4 @@ Ahmad2015.matrix <- function(x, Sigma = "identity", ...){
               method = "Nagao 1973 Test of Covariance Structure")
   class(obj) <- "htest"
   obj
-}
-
-#' @keywords internal
-Ahmad2015_ <- function(n, p, x_){
-  n * (c3(x_) / p - 2 * c1(x_) / p + 1)
 }
