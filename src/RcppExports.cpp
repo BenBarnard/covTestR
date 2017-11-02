@@ -8,7 +8,7 @@ using namespace Rcpp;
 
 // Ahmad2015Stat
 double Ahmad2015Stat(arma::mat x);
-RcppExport SEXP covTestR_Ahmad2015Stat(SEXP xSEXP) {
+RcppExport SEXP _covTestR_Ahmad2015Stat(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -19,7 +19,7 @@ END_RCPP
 }
 // Ahmad2017Stat
 double Ahmad2017Stat(List x);
-RcppExport SEXP covTestR_Ahmad2017Stat(SEXP xSEXP) {
+RcppExport SEXP _covTestR_Ahmad2017Stat(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -30,7 +30,7 @@ END_RCPP
 }
 // BoxesMStat
 double BoxesMStat(List x);
-RcppExport SEXP covTestR_BoxesMStat(SEXP xSEXP) {
+RcppExport SEXP _covTestR_BoxesMStat(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -41,7 +41,7 @@ END_RCPP
 }
 // Chaipitak2013poolStat
 double Chaipitak2013poolStat(List x);
-RcppExport SEXP covTestR_Chaipitak2013poolStat(SEXP xSEXP) {
+RcppExport SEXP _covTestR_Chaipitak2013poolStat(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -52,7 +52,7 @@ END_RCPP
 }
 // Chaipitak2013Stat
 double Chaipitak2013Stat(List x);
-RcppExport SEXP covTestR_Chaipitak2013Stat(SEXP xSEXP) {
+RcppExport SEXP _covTestR_Chaipitak2013Stat(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -63,7 +63,7 @@ END_RCPP
 }
 // Chen2010Stat
 double Chen2010Stat(arma::mat x);
-RcppExport SEXP covTestR_Chen2010Stat(SEXP xSEXP) {
+RcppExport SEXP _covTestR_Chen2010Stat(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -74,7 +74,7 @@ END_RCPP
 }
 // Ishii2016Stat
 double Ishii2016Stat(List x);
-RcppExport SEXP covTestR_Ishii2016Stat(SEXP xSEXP) {
+RcppExport SEXP _covTestR_Ishii2016Stat(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -85,7 +85,7 @@ END_RCPP
 }
 // Schott2001Stat
 double Schott2001Stat(List x);
-RcppExport SEXP covTestR_Schott2001Stat(SEXP xSEXP) {
+RcppExport SEXP _covTestR_Schott2001Stat(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -96,7 +96,7 @@ END_RCPP
 }
 // Schott2007Stat
 double Schott2007Stat(List x);
-RcppExport SEXP covTestR_Schott2007Stat(SEXP xSEXP) {
+RcppExport SEXP _covTestR_Schott2007Stat(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -107,7 +107,7 @@ END_RCPP
 }
 // Schott2007pooledStat
 double Schott2007pooledStat(List x);
-RcppExport SEXP covTestR_Schott2007pooledStat(SEXP xSEXP) {
+RcppExport SEXP _covTestR_Schott2007pooledStat(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -118,7 +118,7 @@ END_RCPP
 }
 // Srivastava2007Stat
 double Srivastava2007Stat(List x);
-RcppExport SEXP covTestR_Srivastava2007Stat(SEXP xSEXP) {
+RcppExport SEXP _covTestR_Srivastava2007Stat(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -129,7 +129,7 @@ END_RCPP
 }
 // Srivastava2014Stat
 double Srivastava2014Stat(List x);
-RcppExport SEXP covTestR_Srivastava2014Stat(SEXP xSEXP) {
+RcppExport SEXP _covTestR_Srivastava2014Stat(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -140,7 +140,7 @@ END_RCPP
 }
 // Srivastava2014poolStat
 double Srivastava2014poolStat(List x);
-RcppExport SEXP covTestR_Srivastava2014poolStat(SEXP xSEXP) {
+RcppExport SEXP _covTestR_Srivastava2014poolStat(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -151,7 +151,7 @@ END_RCPP
 }
 // SrivastavaYanagihara2010Stat
 double SrivastavaYanagihara2010Stat(List x);
-RcppExport SEXP covTestR_SrivastavaYanagihara2010Stat(SEXP xSEXP) {
+RcppExport SEXP _covTestR_SrivastavaYanagihara2010Stat(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -159,4 +159,27 @@ BEGIN_RCPP
     rcpp_result_gen = Rcpp::wrap(SrivastavaYanagihara2010Stat(x));
     return rcpp_result_gen;
 END_RCPP
+}
+
+static const R_CallMethodDef CallEntries[] = {
+    {"_covTestR_Ahmad2015Stat", (DL_FUNC) &_covTestR_Ahmad2015Stat, 1},
+    {"_covTestR_Ahmad2017Stat", (DL_FUNC) &_covTestR_Ahmad2017Stat, 1},
+    {"_covTestR_BoxesMStat", (DL_FUNC) &_covTestR_BoxesMStat, 1},
+    {"_covTestR_Chaipitak2013poolStat", (DL_FUNC) &_covTestR_Chaipitak2013poolStat, 1},
+    {"_covTestR_Chaipitak2013Stat", (DL_FUNC) &_covTestR_Chaipitak2013Stat, 1},
+    {"_covTestR_Chen2010Stat", (DL_FUNC) &_covTestR_Chen2010Stat, 1},
+    {"_covTestR_Ishii2016Stat", (DL_FUNC) &_covTestR_Ishii2016Stat, 1},
+    {"_covTestR_Schott2001Stat", (DL_FUNC) &_covTestR_Schott2001Stat, 1},
+    {"_covTestR_Schott2007Stat", (DL_FUNC) &_covTestR_Schott2007Stat, 1},
+    {"_covTestR_Schott2007pooledStat", (DL_FUNC) &_covTestR_Schott2007pooledStat, 1},
+    {"_covTestR_Srivastava2007Stat", (DL_FUNC) &_covTestR_Srivastava2007Stat, 1},
+    {"_covTestR_Srivastava2014Stat", (DL_FUNC) &_covTestR_Srivastava2014Stat, 1},
+    {"_covTestR_Srivastava2014poolStat", (DL_FUNC) &_covTestR_Srivastava2014poolStat, 1},
+    {"_covTestR_SrivastavaYanagihara2010Stat", (DL_FUNC) &_covTestR_SrivastavaYanagihara2010Stat, 1},
+    {NULL, NULL, 0}
+};
+
+RcppExport void R_init_covTestR(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
 }

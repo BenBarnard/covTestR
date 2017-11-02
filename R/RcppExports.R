@@ -2,58 +2,58 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 Ahmad2015Stat <- function(x) {
-    .Call('covTestR_Ahmad2015Stat', PACKAGE = 'covTestR', x)
+    .Call(`_covTestR_Ahmad2015Stat`, x)
 }
 
 Ahmad2017Stat <- function(x) {
-    .Call('covTestR_Ahmad2017Stat', PACKAGE = 'covTestR', x)
+    .Call(`_covTestR_Ahmad2017Stat`, x)
 }
 
 BoxesMStat <- function(x) {
-    .Call('covTestR_BoxesMStat', PACKAGE = 'covTestR', x)
+    .Call(`_covTestR_BoxesMStat`, x)
 }
 
 Chaipitak2013poolStat <- function(x) {
-    .Call('covTestR_Chaipitak2013poolStat', PACKAGE = 'covTestR', x)
+    .Call(`_covTestR_Chaipitak2013poolStat`, x)
 }
 
 Chaipitak2013Stat <- function(x) {
-    .Call('covTestR_Chaipitak2013Stat', PACKAGE = 'covTestR', x)
+    .Call(`_covTestR_Chaipitak2013Stat`, x)
 }
 
 Chen2010Stat <- function(x) {
-    .Call('covTestR_Chen2010Stat', PACKAGE = 'covTestR', x)
+    .Call(`_covTestR_Chen2010Stat`, x)
 }
 
 Ishii2016Stat <- function(x) {
-    .Call('covTestR_Ishii2016Stat', PACKAGE = 'covTestR', x)
+    .Call(`_covTestR_Ishii2016Stat`, x)
 }
 
 Schott2001Stat <- function(x) {
-    .Call('covTestR_Schott2001Stat', PACKAGE = 'covTestR', x)
+    .Call(`_covTestR_Schott2001Stat`, x)
 }
 
 Schott2007Stat <- function(x) {
-    .Call('covTestR_Schott2007Stat', PACKAGE = 'covTestR', x)
+    .Call(`_covTestR_Schott2007Stat`, x)
 }
 
 Schott2007pooledStat <- function(x) {
-    .Call('covTestR_Schott2007pooledStat', PACKAGE = 'covTestR', x)
+    .Call(`_covTestR_Schott2007pooledStat`, x)
 }
 
 Srivastava2007Stat <- function(x) {
-    .Call('covTestR_Srivastava2007Stat', PACKAGE = 'covTestR', x)
+    .Call(`_covTestR_Srivastava2007Stat`, x)
 }
 
 Srivastava2014Stat <- function(x) {
-    .Call('covTestR_Srivastava2014Stat', PACKAGE = 'covTestR', x)
+    .Call(`_covTestR_Srivastava2014Stat`, x)
 }
 
 Srivastava2014poolStat <- function(x) {
-    .Call('covTestR_Srivastava2014poolStat', PACKAGE = 'covTestR', x)
+    .Call(`_covTestR_Srivastava2014poolStat`, x)
 }
 
 SrivastavaYanagihara2010Stat <- function(x) {
-    .Call('covTestR_SrivastavaYanagihara2010Stat', PACKAGE = 'covTestR', x)
+    .Call(`_covTestR_SrivastavaYanagihara2010Stat`, x)
 }
 
