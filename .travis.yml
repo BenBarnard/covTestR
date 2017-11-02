@@ -1,7 +1,7 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: R
-sudo: false
+sudo: required
 cache: packages
 os:
   - linux
@@ -9,6 +9,9 @@ os:
 r:
   - release
   - devel
+before_install: -|
+  curl -LO http://r.research.att.com/libs/clang-4.0.0-darwin15.6-Release.tar.gz
+  sudo tar fvxz clang-4.0.0-darwin15.6-Release.tar.gz -C /
 after_success:
   - Rscript -e 'covr::codecov()'
   
