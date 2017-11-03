@@ -1,7 +1,7 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: R
-sudo: required
+sudo: false
 cache: packages
 os:
   - linux
@@ -11,9 +11,6 @@ r:
   - release
   - devel
 before_install:
-  - curl -L0 http://r.research.att.com/libs/clang-4.0.0-darwin15.6-Release.tar.gz
-  - sudo tar fvxz clang-4.0.0-darwin15.6-Release.tar.gz -C /
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then mkdir -p ~/.R && echo "SHLIB_OPENMP_CXXFLAGS = " >>~/.R/Makevars; fi
 after_success:
   - Rscript -e 'covr::codecov()'
-r_github_packages:
-  - hadley/devtools
