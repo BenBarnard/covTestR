@@ -7,6 +7,7 @@ os:
   - linux
   - osx
 r:
+  - oldrel
   - release
   - devel
 before_install: -|
@@ -14,4 +15,5 @@ before_install: -|
   sudo tar fvxz clang-4.0.0-darwin15.6-Release.tar.gz -C /
 after_success:
   - Rscript -e 'covr::codecov()'
-  
+r_github_packages:
+  - hadley/devtools
