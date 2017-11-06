@@ -10,13 +10,6 @@ r:
   - oldrel
   - release
   - devel
-before_install: 
-  - sudo chown -R $(whoami) /usr/local
-  - brew update
-  - brew upgrade gmp || true
-  - brew install gcc || brew unlink gcc || true
-  - brew tap r-hub/cran
-  - brew install autobrew
 after_success:
   - Rscript -e 'covr::codecov()'
 matrix:
