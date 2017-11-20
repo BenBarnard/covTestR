@@ -1,8 +1,7 @@
 #' Test of Equality of Covariances given by Srivastava and Yanagihara 2010
 #'
-#' @inheritParams Chaipitak2013
+#' @inherit homogeneityCovariances
 #'
-#' @return Test statistic for Srivastava and Yanagihara 2010
 #'
 #' @export
 #' @importFrom lazyeval lazy_dots
@@ -12,8 +11,7 @@
 #' @importFrom stats cov
 #' @importFrom stats pchisq
 #'
-#' @references Srivastava, M. and Yanagihara, H. (2010). Testing the equality of several covariance matrices with
-#' fewer observation that the dimension. Journal of Multivariate Analysis, 101(6):1319-1329.
+#' @references Srivastava, M. and Yanagihara, H. (2010). Testing the equality of several covariance matrices with fewer observation that the dimension. Journal of Multivariate Analysis, 101(6):1319-1329. <doi:10.1016/j.jmva.2009.12.010>
 #'
 #' @examples 
 #' irisSpecies <- unique(iris$Species)
@@ -38,13 +36,13 @@ SrivastavaYanagihara2010 <- function(x, ...){
 
   data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
 
-  names(statistic) <- "Chi Squared"
+  names(statistic) <- "Chi-Squared"
 
   parameter <- length(matrix_ls) - 1
   names(parameter) <- "df"
 
   null.value <- 0
-  names(null.value) <- "difference in covariances"
+  names(null.value) <- "difference in covariance matrices"
 
   p.value <- 1 - pchisq(statistic, parameter)
 
@@ -54,7 +52,7 @@ SrivastavaYanagihara2010 <- function(x, ...){
               estimate = NULL,
               null.value = null.value,
               alternative = "two.sided",
-              method = "Srivastava and Yanagihara 2010 Equality of Covariance Test",
+              method = "Srivastava and Yanagihara 2010 Homogeneity of Covariance Matrices Test",
               data.name = data.name)
   class(obj) <- "htest"
   obj

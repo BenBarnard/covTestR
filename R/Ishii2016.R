@@ -1,12 +1,11 @@
-#' Test of Equality of Covariances given by Schott 2007
+#' Test of Homogeneity of Covariance Matrices given by Ishii and Aoshima 2016
 #'
-#' @inheritParams Chaipitak2013
+#' @inherit homogeneityCovariances
 #'
 #' @references Ishii, A., Yata, K., and Aoshima, M. (2016). Asymptotic properties of the first pricipal
 #' component and equality tests of covariance matrices in high-dimesion, low-sample-size context. Journal
-#' of Statistical Planning and Inference, 170:186-199.
+#' of Statistical Planning and Inference, 170:186-199. <doi:10.1016/j.jspi.2015.10.007>
 #'
-#' @return Test Statistic for
 #' @export
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
@@ -24,7 +23,7 @@
 #'                  
 #' names(iris_ls) <- irisSpecies
 #' 
-#' Chaipitak2013(iris_ls)
+#' Ishii2016(iris_ls)
 Ishii2016 <- function(x, ...) {
 
   ls <- lazy_dots(...)
@@ -44,7 +43,7 @@ Ishii2016 <- function(x, ...) {
   names(parameter) <- c("df1", "df2")
 
   null.value <- 0
-  names(null.value) <- "difference in covariances"
+  names(null.value) <- "difference in covariance matrices"
 
   p.value <- 1 - pf(statistic, df1 = parameter[1], df2 = parameter[2])
 
@@ -55,7 +54,7 @@ Ishii2016 <- function(x, ...) {
               estimate = NULL,
               null.value = null.value,
               alternative = "two.sided",
-              method = "Ishii 2016 Equality of Covariance Test",
+              method = "Ishii and Aoshima 2016 Homogeneity of Covariance Matrices Test",
               data.name = data.name)
   class(obj) <- "htest"
   obj

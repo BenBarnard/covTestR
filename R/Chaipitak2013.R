@@ -1,11 +1,6 @@
-#' Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013
+#' Test of Homogeneity of Covariance Matrices given by Chaipitak and Chongcharoen 2013
 #'
-#' Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
-#'
-#' @param x data as data.frame, grouped_df, resample or matrix object
-#' @param ... other options passed to functions
-#'
-#' @return Test statistic of the hypothesis test
+#' @inherit homogeneityCovariances
 #'
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
@@ -16,8 +11,7 @@
 #'
 #' @export
 #'
-#' @references Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
-#' matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.
+#' @references Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277. <doi:10.3923/jas.2013.270.277>
 #'
 #' @examples 
 #' irisSpecies <- unique(iris$Species)
@@ -45,13 +39,13 @@ Chaipitak2013 <- function(x, ...){
 
 
 
-  names(statistic) <- "Chi Squared"
+  names(statistic) <- "Chi-Squared"
 
   parameter <- length(matrix_ls) - 1
   names(parameter) <- "df"
 
   null.value <- 0
-  names(null.value) <- "difference in covariances"
+  names(null.value) <- "difference in covariance matrices"
 
   p.value <- 1 - pchisq(statistic, parameter)
 
@@ -61,7 +55,7 @@ Chaipitak2013 <- function(x, ...){
               estimate = NULL,
               null.value = null.value,
               alternative = "two.sided",
-              method = "Chaipitak and Chongchareon 2013 Equality of Covariance Test",
+              method = "Chaipitak and Chongchareon 2013 Homogeneity of Covariance Matrices Test",
               data.name = data.name)
   class(obj) <- "htest"
   obj

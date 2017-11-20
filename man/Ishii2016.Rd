@@ -2,20 +2,42 @@
 % Please edit documentation in R/Ishii2016.R
 \name{Ishii2016}
 \alias{Ishii2016}
-\title{Test of Equality of Covariances given by Schott 2007}
+\title{Test of Homogeneity of Covariance Matrices given by Ishii and Aoshima 2016}
 \usage{
 Ishii2016(x, ...)
 }
 \arguments{
-\item{x}{data as data.frame, grouped_df, resample or matrix object}
+\item{x}{data}
 
-\item{...}{other options passed to functions}
+\item{...}{other options passed to covTest method}
 }
 \value{
-Test Statistic for
+A list with class "htest" containing the following components:
+
+\tabular{ll}{
+\code{statistic} \tab the value of homogeneity of covariance test statistic \cr
+\tab \cr
+\code{parameter} \tab the degrees of freedom for the chi-squared statistic \cr
+\tab \cr
+\code{p.value} \tab the p=value for the test \cr
+\tab \cr
+\code{estimate} \tab the estimated covariances if less than 5 dimensions \cr
+\tab \cr
+\code{null.value} \tab the specified hypothesized value of the covariance difference \cr
+\tab \cr
+\code{alternative} \tab a character string describing the alternative hyposthesis \cr
+\tab \cr
+\code{method} \tab a character string indicating what type of homogeneity of covariance test was performed \cr
+\tab \cr
+\code{data.name} \tab a character string giving the names of the data
+}
 }
 \description{
-Test of Equality of Covariances given by Schott 2007
+Test of Homogeneity of Covariance Matrices given by Ishii and Aoshima 2016
+}
+\details{
+The \code{\link{homogeneityCovariances}} function is a wrapper function that formats the data
+for the specific \code{covTest} functions.
 }
 \examples{
 irisSpecies <- unique(iris$Species)
@@ -26,10 +48,10 @@ iris_ls <- lapply(irisSpecies,
                  
 names(iris_ls) <- irisSpecies
 
-Chaipitak2013(iris_ls)
+Ishii2016(iris_ls)
 }
 \references{
 Ishii, A., Yata, K., and Aoshima, M. (2016). Asymptotic properties of the first pricipal
 component and equality tests of covariance matrices in high-dimesion, low-sample-size context. Journal
-of Statistical Planning and Inference, 170:186-199.
+of Statistical Planning and Inference, 170:186-199. \url{doi:10.1016/j.jspi.2015.10.007}
 }

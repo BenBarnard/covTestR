@@ -1,8 +1,6 @@
-#' Test of Equality of Covariances given by Schott 2007
+#' Test of Homogeneity of Covariance Matrices given by Schott 2007
 #'
-#' Performs 2 and k sample equality of covariance matrix test using Schott 2007
-#'
-#' @inheritParams Chaipitak2013
+#' @inherit homogeneityCovariances
 #'
 #' @return Test statistic of the hypothesis test
 #'
@@ -14,8 +12,7 @@
 #' @importFrom stats cov
 #' @importFrom stats pchisq
 #'
-#' @references Schott, J. (2007). A test for the equality of covariance matrices when the dimension
-#' is large relative to the sample sizes. Computational Statistics & Data Analysis, 51(12):6535-6542.
+#' @references Schott, J. (2007). A test for the equality of covariance matrices when the dimension is large relative to the sample sizes. Computational Statistics & Data Analysis, 51(12):6535-6542. <doi:10.1016/j.csda.2007.03.004>
 #'
 #' @examples 
 #' irisSpecies <- unique(iris$Species)
@@ -26,7 +23,7 @@
 #'                  
 #' names(iris_ls) <- irisSpecies
 #' 
-#' Chaipitak2013(iris_ls)
+#' Schott2007(iris_ls)
 Schott2007 <- function(x, ...) {
 
   ls <- lazy_dots(...)
@@ -40,13 +37,13 @@ Schott2007 <- function(x, ...) {
 
   data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
 
-  names(statistic) <- "Chi Squared"
+  names(statistic) <- "Chi-Squared"
 
   parameter <- 1
   names(parameter) <- "df"
 
   null.value <- 0
-  names(null.value) <- "difference in covariances"
+  names(null.value) <- "difference in covariance matrices"
 
   p.value <- 1 - pchisq(statistic, parameter)
 
@@ -56,7 +53,7 @@ Schott2007 <- function(x, ...) {
               estimate = NULL,
               null.value = null.value,
               alternative = "two.sided",
-              method = "Schott 2007 Equality of Covariance Test",
+              method = "Schott 2007 Homogeneity of Covariance Matrices Test",
               data.name = data.name)
   class(obj) <- "htest"
   obj

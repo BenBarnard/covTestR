@@ -7,15 +7,37 @@
 SrivastavaYanagihara2010(x, ...)
 }
 \arguments{
-\item{x}{data as data.frame, grouped_df, resample or matrix object}
+\item{x}{data}
 
-\item{...}{other options passed to functions}
+\item{...}{other options passed to covTest method}
 }
 \value{
-Test statistic for Srivastava and Yanagihara 2010
+A list with class "htest" containing the following components:
+
+\tabular{ll}{
+\code{statistic} \tab the value of homogeneity of covariance test statistic \cr
+\tab \cr
+\code{parameter} \tab the degrees of freedom for the chi-squared statistic \cr
+\tab \cr
+\code{p.value} \tab the p=value for the test \cr
+\tab \cr
+\code{estimate} \tab the estimated covariances if less than 5 dimensions \cr
+\tab \cr
+\code{null.value} \tab the specified hypothesized value of the covariance difference \cr
+\tab \cr
+\code{alternative} \tab a character string describing the alternative hyposthesis \cr
+\tab \cr
+\code{method} \tab a character string indicating what type of homogeneity of covariance test was performed \cr
+\tab \cr
+\code{data.name} \tab a character string giving the names of the data
+}
 }
 \description{
 Test of Equality of Covariances given by Srivastava and Yanagihara 2010
+}
+\details{
+The \code{\link{homogeneityCovariances}} function is a wrapper function that formats the data
+for the specific \code{covTest} functions.
 }
 \examples{
 irisSpecies <- unique(iris$Species)
@@ -29,6 +51,5 @@ names(iris_ls) <- irisSpecies
 Chaipitak2013(iris_ls)
 }
 \references{
-Srivastava, M. and Yanagihara, H. (2010). Testing the equality of several covariance matrices with
-fewer observation that the dimension. Journal of Multivariate Analysis, 101(6):1319-1329.
+Srivastava, M. and Yanagihara, H. (2010). Testing the equality of several covariance matrices with fewer observation that the dimension. Journal of Multivariate Analysis, 101(6):1319-1329. \url{doi:10.1016/j.jmva.2009.12.010}
 }

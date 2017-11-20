@@ -1,13 +1,15 @@
-#' Equality of Covariances
+#' Homogeneity of Covariance Matrices
+#' 
+#' Performs two and k sample homogeneity of covariance matrix tests.
 #'
 #' @param x data
 #' @param ... other options passed to covTest method
-#' @param covTest equality of covariances test method
+#' @param covTest homogeneity of covariances test method
 #'
 #' @return A list with class "htest" containing the following components:
 #'
 #'\tabular{ll}{
-#' \code{statistic} \tab the value of equality of covariance test statistic \cr
+#' \code{statistic} \tab the value of homogeneity of covariance test statistic \cr
 #' \tab \cr
 #' \code{parameter} \tab the degrees of freedom for the chi-squared statistic \cr
 #' \tab \cr
@@ -19,16 +21,19 @@
 #' \tab \cr
 #' \code{alternative} \tab a character string describing the alternative hyposthesis \cr
 #' \tab \cr
-#' \code{method} \tab a character string indicating what type of equality of covariance test was performed \cr
+#' \code{method} \tab a character string indicating what type of homogeneity of covariance test was performed \cr
 #' \tab \cr
 #' \code{data.name} \tab a character string giving the names of the data
 #'}
 #'
+#' @details The \code{\link{homogeneityCovariances}} function is a wrapper function that formats the data 
+#'   for the specific \code{covTest} functions.
+#'
 #' @export
 #'
-#' @examples equalityCovariances(iris, group = Species)
-equalityCovariances <- function(x, ..., covTest = BoxesM){
-  UseMethod("equalityCovariances")
+#' @examples homogeneityCovariances(iris, group = Species)
+homogeneityCovariances <- function(x, ..., covTest = BoxesM){
+  UseMethod("homogeneityCovariances")
 }
 
 #' @export
@@ -37,7 +42,7 @@ equalityCovariances <- function(x, ..., covTest = BoxesM){
 #' @importFrom stats setNames
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
-equalityCovariances.data.frame <- function(x, ..., covTest = BoxesM){
+homogeneityCovariances.data.frame <- function(x, ..., covTest = BoxesM){
   dots <- lazy_dots(...)
   groupname <- names(unique(x[paste(dots$group$expr)]))
   group <- as.character(unique(x[[paste(dots$group$expr)]]))
@@ -55,7 +60,7 @@ equalityCovariances.data.frame <- function(x, ..., covTest = BoxesM){
 #' @importFrom stats setNames
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
-equalityCovariances.grouped_df <- function(x, ..., covTest = BoxesM){
+homogeneityCovariances.grouped_df <- function(x, ..., covTest = BoxesM){
   groups <- attributes(x)$labels
   x <- as_data_frame(x)
   group <- as.character(groups[,1])
@@ -74,7 +79,7 @@ equalityCovariances.grouped_df <- function(x, ..., covTest = BoxesM){
 #' @importFrom stats setNames
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
-equalityCovariances.resample <- function(x, ..., covTest = BoxesM){
+homogeneityCovariances.resample <- function(x, ..., covTest = BoxesM){
   x <- as_data_frame(x)
   groups <- attributes(x)$labels
   group <- as.character(groups[,1])
@@ -95,7 +100,7 @@ equalityCovariances.resample <- function(x, ..., covTest = BoxesM){
 #' @importFrom stats setNames
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
-equalityCovariances.list <- function(x, ..., covTest = BoxesM){
+homogeneityCovariances.list <- function(x, ..., covTest = BoxesM){
   dots <- lazy_dots(...)
   matrix_ls <- x
     mat <- do.call(covTest, c(x = matrix_ls, lazy_eval(dots)))

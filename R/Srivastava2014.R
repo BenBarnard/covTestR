@@ -1,10 +1,6 @@
-#' Test of Equality of Covariances given by Srivastava et al. 2014
+#' Test of Homogeneity of Covariance Matrices given by Srivastava et al. 2014
 #'
-#' Performs 2 and k sample equality of covariance matrix test using Srivastava et al. 2014
-#'
-#' @inheritParams Chaipitak2013
-#'
-#' @return Test statistic of the hypothesis test
+#' @inherit homogeneityCovariances
 #'
 #' @export
 #' @importFrom lazyeval lazy_dots
@@ -14,8 +10,7 @@
 #' @importFrom stats cov
 #' @importFrom stats pchisq
 #'
-#' @references Srivastava, M., Yanagihara, H., and Kubokawa T. (2014). Tests for covariance
-#' matrices in high dimension with less sample size. Journal of Multivariate Analysis, 130:289-309.
+#' @references Srivastava, M., Yanagihara, H., and Kubokawa T. (2014). Tests for covariance matrices in high dimension with less sample size. Journal of Multivariate Analysis, 130:289-309. <doi:10.1016/j.jmva.2014.06.003>
 #'
 #' @examples 
 #' irisSpecies <- unique(iris$Species)
@@ -26,7 +21,7 @@
 #'                  
 #' names(iris_ls) <- irisSpecies
 #' 
-#' Chaipitak2013(iris_ls)
+#' Srivastava2014(iris_ls)
 Srivastava2014 <- function(x, ...){
 
   ls <- lazy_dots(...)
@@ -39,13 +34,13 @@ Srivastava2014 <- function(x, ...){
 
   data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
 
-  names(statistic) <- "Chi Squared"
+  names(statistic) <- "Chi-Squared"
 
   parameter <- 1
   names(parameter) <- "df"
 
   null.value <- 0
-  names(null.value) <- "difference in covariances"
+  names(null.value) <- "difference in covariance matrices"
 
   p.value <- 1 - pchisq(statistic, parameter)
 
@@ -56,7 +51,7 @@ Srivastava2014 <- function(x, ...){
               estimate = NULL,
               null.value = null.value,
               alternative = "two.sided",
-              method = "Srivastava et al. 2014 Equality of Covariance Test",
+              method = "Srivastava et al. 2014 Homogeneity of Covariance Matrices Test",
               data.name = data.name)
   class(obj) <- "htest"
   obj

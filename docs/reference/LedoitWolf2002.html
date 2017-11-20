@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013 — LedoitWolf2002 â€¢ covTestR</title>
+<title>Test of Structure of a Covariance Matrix given by Ledoit and Wolf 2002 — LedoitWolf2002 â€¢ covTestR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -77,11 +77,11 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013</h1>
+    <h1>Test of Structure of a Covariance Matrix given by Ledoit and Wolf 2002</h1>
     </div>
 
     
-    <p>Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013</p>
+    <p>Test of Structure of a Covariance Matrix given by Ledoit and Wolf 2002</p>
     
 
     <pre class="usage"><span class='fu'>LedoitWolf2002</span>(<span class='no'>x</span>, <span class='kw'>Sigma</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>)</pre>
@@ -105,21 +105,68 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Test statistic of the hypothesis test</p>
+    <p>A list with class "htest" containing the following components:</p><table><tr><td>
+<code>statistic</code> </td>
+<td> the value of equality of covariance test statistic </td>
+</tr><tr><td>
+</td>
+<td> </td>
+</tr><tr><td>
+<code>parameter</code> </td>
+<td> the degrees of freedom for the chi-squared statistic </td>
+</tr><tr><td>
+</td>
+<td> </td>
+</tr><tr><td>
+<code>p.value</code> </td>
+<td> the p=value for the test </td>
+</tr><tr><td>
+</td>
+<td> </td>
+</tr><tr><td>
+<code>estimate</code> </td>
+<td> the estimated covariances if less than 5 dimensions </td>
+</tr><tr><td>
+</td>
+<td> </td>
+</tr><tr><td>
+<code>null.value</code> </td>
+<td> the specified hypothesized value of the covariance difference </td>
+</tr><tr><td>
+</td>
+<td> </td>
+</tr><tr><td>
+<code>alternative</code> </td>
+<td> a character string describing the alternative hyposthesis </td>
+</tr><tr><td>
+</td>
+<td> </td>
+</tr><tr><td>
+<code>method</code> </td>
+<td> a character string indicating what type of equality of covariance test was performed </td>
+</tr><tr><td>
+</td>
+<td> </td>
+</tr></table>
+
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The <code><a href='structureCovariances.html'>structureCovariances</a></code> function is a wrapper function that formats the data
+for the specific <code>covTest</code> functions.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
-matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.</p>
+    <p>Ledoit, O., &amp; Wolf, M. (2002). Some Hypothesis Tests for the Covariance Matrix When the Dimension Is Large Compared to the Sample Size. The Annals of Statistics, 30(4), 1081–1102. &lt;doi:10.1214/aos/1031689018 &gt;</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>LedoitWolf2002</span>(<span class='fu'>as.matrix</span>(<span class='no'>iris</span>[<span class='fl'>1</span>:<span class='fl'>50</span>, <span class='fl'>1</span>:<span class='fl'>3</span>]))</div><div class='output co'>#&gt; 
-#&gt; 	Ledoit and Wolf 2002 Test of Covariance Structure
+#&gt; 	Ledoit and Wolf 2002 Test of Covariance Matrix Structure
 #&gt; 
 #&gt; data:  
 #&gt; Chi Squared = 65.988, df = 6, p-value = 2.71e-12
-#&gt; alternative hypothesis: true difference between the Sample Covariance and the Null Covarince Structure is not equal to 0
+#&gt; alternative hypothesis: true difference between the Sample Covariance Matrix and the Null Covariance Matrix Structure is not equal to 0
 #&gt; sample estimates:
 #&gt;              Sepal.Length Sepal.Width Petal.Length
 #&gt; Sepal.Length   0.12424898  0.09921633   0.01635510
@@ -134,6 +181,8 @@ matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.<
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#references">References</a></li>
       

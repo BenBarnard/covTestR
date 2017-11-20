@@ -1,16 +1,10 @@
-#' Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013
+#' Test of Structure of a Covariance Matrix given by Chen et al. 2010
 #'
-#' Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
-#'
-#' @inheritParams structureCovariances
-#'
-#' @return Test statistic of the hypothesis test
-#'
+#' @inherit structureCovariances
 #'
 #' @export
 #'
-#' @references Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
-#' matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.
+#' @references Chen, S., et al. (2010). Tests for High-Dimensional Covariance Matrices. Journal of the American Statistical Association, 105(490):810-819. <doi:10.1198/jasa.2010.tm09560>
 #'
 #' @examples Chen2010(as.matrix(iris[1:50, 1:3]))
 #'
@@ -46,7 +40,7 @@ Chen2010.covariance <- function(x, Sigma = "identity", ...){
   names(parameter) <- c("Mean", "Variance")
 
   null.value <- 0
-  names(null.value) <- "difference between the Sample Covariance and the Null Covarince Structure"
+  names(null.value) <- "difference between the Sample Covariance Matrix and the Null Covariance Matrix Structure"
 
   p.value <- 1 - pnorm(abs(statistic))
 
@@ -63,7 +57,7 @@ Chen2010.covariance <- function(x, Sigma = "identity", ...){
               estimate = estimate,
               null.value = null.value,
               alternative = "two.sided",
-              method = "Ledoit and Wolf 2002 Test of Covariance Structure")
+              method = "Chen et al. 2010 Test of Covariance Matrix Structure")
   class(obj) <- "htest"
   obj
 }
@@ -92,8 +86,8 @@ Chen2010.matrix <- function(x, Sigma = "identity", ...){
   names(parameter) <- c("Mean", "Variance")
 
   null.value <- 0
-  names(null.value) <- "difference between the Sample Covariance and the Null Covarince Structure"
-
+  names(null.value) <- "difference between the Sample Covariance Matrix and the Null Covariance Matrix Structure"
+  
   p.value <- 1 - pnorm(abs(statistic))
 
   estimate <- S
@@ -109,7 +103,7 @@ Chen2010.matrix <- function(x, Sigma = "identity", ...){
               estimate = estimate,
               null.value = null.value,
               alternative = "two.sided",
-              method = "Nagao 1973 Test of Covariance Structure")
+              method = "Chen et al. 2010 Test of Covariance Matrix Structure")
   class(obj) <- "htest"
   obj
 }

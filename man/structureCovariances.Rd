@@ -2,7 +2,7 @@
 % Please edit documentation in R/structureCovariances.R
 \name{structureCovariances}
 \alias{structureCovariances}
-\title{Structure of Covariances}
+\title{Structure of a Covariance Matrix}
 \usage{
 structureCovariances(x, Sigma, ..., covTest = Nagao1973)
 }
@@ -13,7 +13,7 @@ structureCovariances(x, Sigma, ..., covTest = Nagao1973)
 
 \item{...}{other options passed to covTest method}
 
-\item{covTest}{equality of covariances test method}
+\item{covTest}{structure of covariance matrix test method}
 }
 \value{
 A list with class "htest" containing the following components:
@@ -37,5 +37,9 @@ A list with class "htest" containing the following components:
 }
 }
 \description{
-Structure of Covariances
+Performs a structure of a covariance matrix test.
+}
+\details{
+The \code{\link{structureCovariances}} function is a wrapper function that formats the data
+for the specific \code{covTest} functions.
 }

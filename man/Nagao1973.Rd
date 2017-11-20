@@ -2,7 +2,7 @@
 % Please edit documentation in R/Nagao1973.R
 \name{Nagao1973}
 \alias{Nagao1973}
-\title{Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013}
+\title{Test of Structure of a Covariance Matrix given by Nagao 1973}
 \usage{
 Nagao1973(x, Sigma = "identity", ...)
 }
@@ -14,16 +14,37 @@ Nagao1973(x, Sigma = "identity", ...)
 \item{...}{other options passed to covTest method}
 }
 \value{
-Test statistic of the hypothesis test
+A list with class "htest" containing the following components:
+
+\tabular{ll}{
+\code{statistic} \tab the value of equality of covariance test statistic \cr
+\tab \cr
+\code{parameter} \tab the degrees of freedom for the chi-squared statistic \cr
+\tab \cr
+\code{p.value} \tab the p=value for the test \cr
+\tab \cr
+\code{estimate} \tab the estimated covariances if less than 5 dimensions \cr
+\tab \cr
+\code{null.value} \tab the specified hypothesized value of the covariance difference \cr
+\tab \cr
+\code{alternative} \tab a character string describing the alternative hyposthesis \cr
+\tab \cr
+\code{method} \tab a character string indicating what type of equality of covariance test was performed \cr
+\tab \cr
+\code{data.name} \tab a character string giving the names of the data
+}
 }
 \description{
-Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
+Test of Structure of a Covariance Matrix given by Nagao 1973
+}
+\details{
+The \code{\link{structureCovariances}} function is a wrapper function that formats the data
+for the specific \code{covTest} functions.
 }
 \examples{
 Nagao1973(as.matrix(iris[1:50, 1:3]))
 
 }
 \references{
-Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
-matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.
+Nagao, H. (1973). On Some Test Criteria for Covariance Matrix. The Annals of Statistics, 1(4), 700–709 \url{doi:}
 }

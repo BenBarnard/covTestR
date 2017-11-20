@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Structure of Covariances — structureCovariances â€¢ covTestR</title>
+<title>Structure of a Covariance Matrix — structureCovariances â€¢ covTestR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -77,11 +77,11 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Structure of Covariances</h1>
+    <h1>Structure of a Covariance Matrix</h1>
     </div>
 
     
-    <p>Structure of Covariances</p>
+    <p>Performs a structure of a covariance matrix test.</p>
     
 
     <pre class="usage"><span class='fu'>structureCovariances</span>(<span class='no'>x</span>, <span class='no'>Sigma</span>, <span class='no'>...</span>, <span class='kw'>covTest</span> <span class='kw'>=</span> <span class='no'>Nagao1973</span>)</pre>
@@ -103,7 +103,7 @@
     </tr>
     <tr>
       <th>covTest</th>
-      <td><p>equality of covariances test method</p></td>
+      <td><p>structure of covariance matrix test method</p></td>
     </tr>
     </table>
     
@@ -154,6 +154,11 @@
 </tr></table>
 
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The <code>structureCovariances</code> function is a wrapper function that formats the data
+for the specific <code>covTest</code> functions.</p>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -162,6 +167,8 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
           </ul>
 
   </div>

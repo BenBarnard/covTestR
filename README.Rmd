@@ -32,5 +32,5 @@ This is a basic example which shows you how to solve a common problem:
 library(tidyverse)
 library(covTestR)
 
-iris %>% group_by(Species) %>% equalityCovariances
+iris %>% group_by(Species) %>% homogeneityCovariances
 ```

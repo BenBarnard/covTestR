@@ -1,11 +1,6 @@
-#' Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013
+#' Test of Homogeneity of Covariance Matrices given by Ahmad 2017
 #'
-#' Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
-#'
-#' @param x data as data.frame, grouped_df, resample or matrix object
-#' @param ... other options passed to functions
-#'
-#' @return Test statistic of the hypothesis test
+#' @inherit homogeneityCovariances
 #'
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
@@ -16,8 +11,7 @@
 #'
 #' @export
 #'
-#' @references Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
-#' matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.
+#' @references Ahmad, R. (2017). Location-invariant test of homogeneity of large-dimensional covariance matrices. Journal of Statistical Theory and Practice, 11(4):731-745. <doi10.1080/15598608.2017.1308895>
 #'
 #' @examples 
 #' irisSpecies <- unique(iris$Species)
@@ -28,7 +22,7 @@
 #'                  
 #' names(iris_ls) <- irisSpecies
 #' 
-#' Chaipitak2013(iris_ls)
+#' Ahmad2017(iris_ls)
 Ahmad2017 <- function(x, ...){
 
   ls <- lazy_dots(...)
@@ -49,7 +43,7 @@ Ahmad2017 <- function(x, ...){
   names(parameter) <- c("Mean", "Variance")
 
   null.value <- 0
-  names(null.value) <- "difference in covariances"
+  names(null.value) <- "difference in covariance matrices"
 
   p.value <- 1 - pnorm(abs(statistic))
 
@@ -59,7 +53,7 @@ Ahmad2017 <- function(x, ...){
               estimate = NULL,
               null.value = null.value,
               alternative = "two.sided",
-              method = "Chaipitak and Chongchareon 2013 Equality of Covariance Test",
+              method = "Ahmad 2017 Homogeneity of Covariance Matrices Test",
               data.name = data.name)
   class(obj) <- "htest"
   obj
