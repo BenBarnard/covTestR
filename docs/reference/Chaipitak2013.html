@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013 — Chaipitak2013 â€¢ covTestR</title>
+<title>Test of Homogeneity of Covariance Matrices given by Chaipitak and Chongcharoen 2013 — Chaipitak2013 â€¢ covTestR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -77,11 +77,11 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013</h1>
+    <h1>Test of Homogeneity of Covariance Matrices given by Chaipitak and Chongcharoen 2013</h1>
     </div>
 
     
-    <p>Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013</p>
+    <p>Test of Homogeneity of Covariance Matrices given by Chaipitak and Chongcharoen 2013</p>
     
 
     <pre class="usage"><span class='fu'>Chaipitak2013</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -91,22 +91,69 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>data as data.frame, grouped_df, resample or matrix object</p></td>
+      <td><p>data</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other options passed to functions</p></td>
+      <td><p>other options passed to covTest method</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Test statistic of the hypothesis test</p>
+    <p>A list with class "htest" containing the following components:</p><table><tr><td>
+<code>statistic</code> </td>
+<td> the value of homogeneity of covariance test statistic </td>
+</tr><tr><td>
+</td>
+<td> </td>
+</tr><tr><td>
+<code>parameter</code> </td>
+<td> the degrees of freedom for the chi-squared statistic </td>
+</tr><tr><td>
+</td>
+<td> </td>
+</tr><tr><td>
+<code>p.value</code> </td>
+<td> the p=value for the test </td>
+</tr><tr><td>
+</td>
+<td> </td>
+</tr><tr><td>
+<code>estimate</code> </td>
+<td> the estimated covariances if less than 5 dimensions </td>
+</tr><tr><td>
+</td>
+<td> </td>
+</tr><tr><td>
+<code>null.value</code> </td>
+<td> the specified hypothesized value of the covariance difference </td>
+</tr><tr><td>
+</td>
+<td> </td>
+</tr><tr><td>
+<code>alternative</code> </td>
+<td> a character string describing the alternative hyposthesis </td>
+</tr><tr><td>
+</td>
+<td> </td>
+</tr><tr><td>
+<code>method</code> </td>
+<td> a character string indicating what type of homogeneity of covariance test was performed </td>
+</tr><tr><td>
+</td>
+<td> </td>
+</tr></table>
+
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The <code><a href='homogeneityCovariances.html'>homogeneityCovariances</a></code> function is a wrapper function that formats the data
+for the specific <code>covTest</code> functions.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
-matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.</p>
+    <p>Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277. <a href='doi:10.3923/jas.2013.270.277'>doi:10.3923/jas.2013.270.277</a></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -119,11 +166,12 @@ matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.<
 <span class='fu'>names</span>(<span class='no'>iris_ls</span>) <span class='kw'>&lt;-</span> <span class='no'>irisSpecies</span>
 
 <span class='fu'>Chaipitak2013</span>(<span class='no'>iris_ls</span>)</div><div class='output co'>#&gt; 
-#&gt; 	Chaipitak and Chongchareon 2013 Equality of Covariance Test
+#&gt; 	Chaipitak and Chongchareon 2013 Homogeneity of Covariance Matrices
+#&gt; 	Test
 #&gt; 
 #&gt; data:  setosa, versicolor and virginica
-#&gt; Chi Squared = 3.8455, df = 2, p-value = 0.1462
-#&gt; alternative hypothesis: true difference in covariances is not equal to 0
+#&gt; Chi-Squared = 3.8455, df = 2, p-value = 0.1462
+#&gt; alternative hypothesis: true difference in covariance matrices is not equal to 0
 #&gt; </div><div class='input'>
 </div></pre>
   </div>
@@ -133,6 +181,8 @@ matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.<
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#references">References</a></li>
       

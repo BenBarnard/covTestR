@@ -1,10 +1,6 @@
-#' Test of Equality of Covariances given by Srivastava 2007
+#' Test of Homogeneity of Covariance Matrices given by Srivastava 2007
 #'
-#' Performs 2 and k sample equality of covariance matrix test using Srivastava 2007
-#'
-#' @inheritParams Chaipitak2013
-#'
-#' @return Test statistic of the hypothesis test
+#' @inherit homogeneityCovariances
 #'
 #' @export
 #'
@@ -15,10 +11,7 @@
 #' @importFrom stats cov
 #' @importFrom stats pchisq
 #'
-#' @references Srivastava, M. S. (2007). Testing the equality of two covariance matrices and
-#' independence of two sub-vectors with fewer observations than the dimension. InInternational
-#' Conference on Advances in InterdisciplinaryStistics and Combinatorics, University of North Carolina
-#' at Greensboro, NC, USA.
+#' @references Srivastava, M. S. (2007). Testing the equality of two covariance matrices and independence of two sub-vectors with fewer observations than the dimension. InInternational Conference on Advances in InterdisciplinaryStistics and Combinatorics, University of North Carolina at Greensboro, NC, USA.
 #'
 #' @examples 
 #' irisSpecies <- unique(iris$Species)
@@ -29,7 +22,7 @@
 #'                  
 #' names(iris_ls) <- irisSpecies
 #' 
-#' Chaipitak2013(iris_ls)
+#' Srivastava2007(iris_ls)
 Srivastava2007 <- function(x, ...){
 
   ls <- lazy_dots(...)
@@ -43,13 +36,13 @@ Srivastava2007 <- function(x, ...){
 
   data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
 
-  names(statistic) <- "Chi Squared"
+  names(statistic) <- "Chi-Squared"
 
   parameter <- length(matrix_ls) - 1
   names(parameter) <- "df"
 
   null.value <- 0
-  names(null.value) <- "difference in covariances"
+  names(null.value) <- "difference in covariance matrices"
 
   p.value <- 1 - pchisq(statistic, parameter)
 
@@ -60,7 +53,7 @@ Srivastava2007 <- function(x, ...){
               estimate = NULL,
               null.value = null.value,
               alternative = "two.sided",
-              method = "Srivastava 2007 Equality of Covariance Test",
+              method = "Srivastava 2007 Homogeneity of Covariance Matrices Test",
               data.name = data.name)
   class(obj) <- "htest"
   obj

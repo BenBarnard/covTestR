@@ -1,9 +1,11 @@
-#' Structure of Covariances
+#' Structure of a Covariance Matrix
+#' 
+#' Performs a structure of a covariance matrix test.
 #'
 #' @param x data
 #' @param Sigma Population covariance matrix
 #' @param ... other options passed to covTest method
-#' @param covTest equality of covariances test method
+#' @param covTest structure of covariance matrix test method
 #'
 #' @return A list with class "htest" containing the following components:
 #'
@@ -24,6 +26,9 @@
 #' \tab \cr
 #' \code{data.name} \tab a character string giving the names of the data
 #'}
+#'
+#' @details The \code{\link{structureCovariances}} function is a wrapper function that formats the data 
+#'   for the specific \code{covTest} functions.
 #'
 #' @export
 #'

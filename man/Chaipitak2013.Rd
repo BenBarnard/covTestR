@@ -2,20 +2,42 @@
 % Please edit documentation in R/Chaipitak2013.R
 \name{Chaipitak2013}
 \alias{Chaipitak2013}
-\title{Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013}
+\title{Test of Homogeneity of Covariance Matrices given by Chaipitak and Chongcharoen 2013}
 \usage{
 Chaipitak2013(x, ...)
 }
 \arguments{
-\item{x}{data as data.frame, grouped_df, resample or matrix object}
+\item{x}{data}
 
-\item{...}{other options passed to functions}
+\item{...}{other options passed to covTest method}
 }
 \value{
-Test statistic of the hypothesis test
+A list with class "htest" containing the following components:
+
+\tabular{ll}{
+\code{statistic} \tab the value of homogeneity of covariance test statistic \cr
+\tab \cr
+\code{parameter} \tab the degrees of freedom for the chi-squared statistic \cr
+\tab \cr
+\code{p.value} \tab the p=value for the test \cr
+\tab \cr
+\code{estimate} \tab the estimated covariances if less than 5 dimensions \cr
+\tab \cr
+\code{null.value} \tab the specified hypothesized value of the covariance difference \cr
+\tab \cr
+\code{alternative} \tab a character string describing the alternative hyposthesis \cr
+\tab \cr
+\code{method} \tab a character string indicating what type of homogeneity of covariance test was performed \cr
+\tab \cr
+\code{data.name} \tab a character string giving the names of the data
+}
 }
 \description{
-Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
+Test of Homogeneity of Covariance Matrices given by Chaipitak and Chongcharoen 2013
+}
+\details{
+The \code{\link{homogeneityCovariances}} function is a wrapper function that formats the data
+for the specific \code{covTest} functions.
 }
 \examples{
 irisSpecies <- unique(iris$Species)
@@ -30,6 +52,5 @@ Chaipitak2013(iris_ls)
 
 }
 \references{
-Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
-matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.
+Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277. \url{doi:10.3923/jas.2013.270.277}
 }

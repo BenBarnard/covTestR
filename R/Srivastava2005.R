@@ -1,16 +1,11 @@
-#' Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013
+#' Test of Structure of a Covariance Matrix given by Srivastava 2005
 #'
-#' Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
-#'
-#' @inheritParams structureCovariances
-#'
-#' @return Test statistic of the hypothesis test
+#' @inherit structureCovariances
 #'
 #'
 #' @export
 #'
-#' @references Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
-#' matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.
+#' @references Srivastava, M. S. (2005). Some Tests Concerning the Covariance Matrix in High Dimensional Data. Journal of the Japan Statistical Society, 35(2), 251–272. <doi:10.14490/jjss.35.251>
 #'
 #' @examples Srivastava2005(as.matrix(iris[1:50, 1:4]))
 #'
@@ -45,7 +40,7 @@ Srivastava2005.covariance <- function(x, Sigma = "identity", ...){
   names(parameter) <- c("Mean", "Variance")
 
   null.value <- 0
-  names(null.value) <- "difference between the Sample Covariance and the Null Covarince Structure"
+  names(null.value) <- "difference between the Sample Covariance Matrix and the Null Covariance Matrix Structure"
 
   p.value <- 1 - pnorm(abs(statistic))
 
@@ -63,7 +58,7 @@ Srivastava2005.covariance <- function(x, Sigma = "identity", ...){
               estimate = estimate,
               null.value = null.value,
               alternative = "two.sided",
-              method = "Ledoit and Wolf 2002 Test of Covariance Structure")
+              method = "Srivastava 2005 Test of Covariance Matrix Structure")
   class(obj) <- "htest"
   obj
 }
@@ -94,8 +89,8 @@ Srivastava2005.matrix <- function(x, Sigma = "identity", ...){
   names(parameter) <- c("Mean", "Variance")
 
   null.value <- 0
-  names(null.value) <- "difference between the Sample Covariance and the Null Covarince Structure"
-
+  names(null.value) <- "difference between the Sample Covariance Matrix and the Null Covariance Matrix Structure"
+  
   p.value <- 1 - pnorm(abs(statistic))
 
   estimate <- S
@@ -111,7 +106,7 @@ Srivastava2005.matrix <- function(x, Sigma = "identity", ...){
               estimate = estimate,
               null.value = null.value,
               alternative = "two.sided",
-              method = "Ledoit and Wolf 2002 Test of Covariance Structure")
+              method = "Srivastava 2005 Test of Covariance Matrix Structure")
   class(obj) <- "htest"
   obj
 }

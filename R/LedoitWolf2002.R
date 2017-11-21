@@ -1,16 +1,10 @@
-#' Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013
+#' Test of Structure of a Covariance Matrix given by Ledoit and Wolf 2002
 #'
-#' Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
-#'
-#' @inheritParams structureCovariances
-#'
-#' @return Test statistic of the hypothesis test
-#'
+#' @inherit structureCovariances
 #'
 #' @export
 #'
-#' @references Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
-#' matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.
+#' @references Ledoit, O., & Wolf, M. (2002). Some Hypothesis Tests for the Covariance Matrix When the Dimension Is Large Compared to the Sample Size. The Annals of Statistics, 30(4), 1081–1102. <doi:10.1214/aos/1031689018 >
 #'
 #' @examples LedoitWolf2002(as.matrix(iris[1:50, 1:3]))
 #'
@@ -45,7 +39,7 @@ LedoitWolf2002.covariance <- function(x, Sigma = "identity", ...){
   names(parameter) <- "df"
 
   null.value <- 0
-  names(null.value) <- "difference between the Sample Covariance and the Null Covarince Structure"
+  names(null.value) <- "difference between the Sample Covariance Matrix and the Null Covariance Matrix Structure"
 
   p.value <- 1 - pchisq(statistic, parameter)
 
@@ -57,7 +51,7 @@ LedoitWolf2002.covariance <- function(x, Sigma = "identity", ...){
               estimate = estimate,
               null.value = null.value,
               alternative = "two.sided",
-              method = "Ledoit and Wolf 2002 Test of Covariance Structure")
+              method = "Ledoit and Wolf 2002 Test of Covariance Matrix Structure")
   class(obj) <- "htest"
   obj
 }
@@ -88,8 +82,8 @@ LedoitWolf2002.matrix <- function(x, Sigma = "identity", ...){
   names(parameter) <- "df"
 
   null.value <- 0
-  names(null.value) <- "difference between the Sample Covariance and the Null Covarince Structure"
-
+  names(null.value) <- "difference between the Sample Covariance Matrix and the Null Covariance Matrix Structure"
+  
   p.value <- 1 - pchisq(statistic, parameter)
 
   estimate <- S
@@ -100,7 +94,7 @@ LedoitWolf2002.matrix <- function(x, Sigma = "identity", ...){
               estimate = estimate,
               null.value = null.value,
               alternative = "two.sided",
-              method = "Ledoit and Wolf 2002 Test of Covariance Structure")
+              method = "Ledoit and Wolf 2002 Test of Covariance Matrix Structure")
   class(obj) <- "htest"
   obj
 }

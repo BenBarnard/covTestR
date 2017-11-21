@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Test of Equality of Covariances given by Schott 2001 — Schott2001 â€¢ covTestR</title>
+<title>Homogeneity of Covariance Matrices — homogeneityCovariances â€¢ covTestR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -77,14 +77,14 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Test of Equality of Covariances given by Schott 2001</h1>
+    <h1>Homogeneity of Covariance Matrices</h1>
     </div>
 
     
-    <p>Performs 2 and k sample equality of covariance matrix test using Schott 2001</p>
+    <p>Performs two and k sample homogeneity of covariance matrix tests.</p>
     
 
-    <pre class="usage"><span class='fu'>Schott2001</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>homogeneityCovariances</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>covTest</span> <span class='kw'>=</span> <span class='no'>BoxesM</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -97,28 +97,71 @@
       <th>...</th>
       <td><p>other options passed to covTest method</p></td>
     </tr>
+    <tr>
+      <th>covTest</th>
+      <td><p>homogeneity of covariances test method</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Test statistic of the hypothesis test</p>
+    <p>A list with class "htest" containing the following components:</p><table><tr><td>
+<code>statistic</code> </td>
+<td> the value of homogeneity of covariance test statistic </td>
+</tr><tr><td>
+</td>
+<td> </td>
+</tr><tr><td>
+<code>parameter</code> </td>
+<td> the degrees of freedom for the chi-squared statistic </td>
+</tr><tr><td>
+</td>
+<td> </td>
+</tr><tr><td>
+<code>p.value</code> </td>
+<td> the p=value for the test </td>
+</tr><tr><td>
+</td>
+<td> </td>
+</tr><tr><td>
+<code>estimate</code> </td>
+<td> the estimated covariances if less than 5 dimensions </td>
+</tr><tr><td>
+</td>
+<td> </td>
+</tr><tr><td>
+<code>null.value</code> </td>
+<td> the specified hypothesized value of the covariance difference </td>
+</tr><tr><td>
+</td>
+<td> </td>
+</tr><tr><td>
+<code>alternative</code> </td>
+<td> a character string describing the alternative hyposthesis </td>
+</tr><tr><td>
+</td>
+<td> </td>
+</tr><tr><td>
+<code>method</code> </td>
+<td> a character string indicating what type of homogeneity of covariance test was performed </td>
+</tr><tr><td>
+</td>
+<td> </td>
+</tr></table>
+
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The <code>homogeneityCovariances</code> function is a wrapper function that formats the data
+for the specific <code>covTest</code> functions.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>irisSpecies</span> <span class='kw'>&lt;-</span> <span class='fu'>unique</span>(<span class='no'>iris</span>$<span class='no'>Species</span>)
-
-<span class='no'>iris_ls</span> <span class='kw'>&lt;-</span> <span class='fu'>lapply</span>(<span class='no'>irisSpecies</span>,
-    <span class='kw'>function</span>(<span class='no'>x</span>){<span class='fu'>as.matrix</span>(<span class='no'>iris</span>[<span class='no'>iris</span>$<span class='no'>Species</span> <span class='kw'>==</span> <span class='no'>x</span>, <span class='fl'>1</span>:<span class='fl'>4</span>])}
-                 )
-
-<span class='fu'>names</span>(<span class='no'>iris_ls</span>) <span class='kw'>&lt;-</span> <span class='no'>irisSpecies</span>
-
-<span class='fu'><a href='Chaipitak2013.html'>Chaipitak2013</a></span>(<span class='no'>iris_ls</span>)</div><div class='output co'>#&gt; 
-#&gt; 	Chaipitak and Chongchareon 2013 Homogeneity of Covariance Matrices
-#&gt; 	Test
+    <pre class="examples"><div class='input'><span class='fu'>homogeneityCovariances</span>(<span class='no'>iris</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>Species</span>)</div><div class='output co'>#&gt; 
+#&gt; 	Boxes' M Homogeneity of Covariance Matrices Test
 #&gt; 
 #&gt; data:  setosa, versicolor and virginica
-#&gt; Chi-Squared = 3.8455, df = 2, p-value = 0.1462
+#&gt; Chi-Squared = 146.66, df = 2550, p-value = 1
 #&gt; alternative hypothesis: true difference in covariance matrices is not equal to 0
 #&gt; </div></pre>
   </div>
@@ -128,6 +171,8 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

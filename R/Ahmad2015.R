@@ -1,18 +1,14 @@
-#' Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013
+#' Test of Structure of a Covariance Matrix given by Ahmad and Rosen 2015
 #'
-#' Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
 #'
-#' @inheritParams structureCovariances
-#'
-#' @return Test statistic of the hypothesis test
+#' @inherit structureCovariances
 #'
 #'
 #' @export
 #'
-#' @references Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
-#' matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.
+#' @references Ahmad, M. R. and Rosen, D. von. (2015). Tests for high-dimensional covariance matrices using the theory of U-statistics. Journal of Statistical Computation and Simulation, 85(13), 2619–2631. <doi:10.1080/00949655.2014.948441>
 #'
-#'
+#' @examples Ahmad2015(as.matrix(iris[1:50, 1:3]))
 Ahmad2015 <- function(x, Sigma = "identity", ...){
   UseMethod("Ahmad2015")
 }
@@ -45,7 +41,7 @@ Ahmad2015.covariance <- function(x, Sigma = "identity", ...){
   names(parameter) <- c("Mean", "Variance")
 
   null.value <- 0
-  names(null.value) <- "difference between the Sample Covariance and the Null Covarince Structure"
+  names(null.value) <- "difference between the Sample Covariance Matrix and the Null Covariance Matrix Structure"
 
   p.value <- 1 - pnorm(abs(statistic), 0, 4 * (2 / (p / n + 1)))
 
@@ -62,7 +58,7 @@ Ahmad2015.covariance <- function(x, Sigma = "identity", ...){
               estimate = estimate,
               null.value = null.value,
               alternative = "two.sided",
-              method = "Ledoit and Wolf 2002 Test of Covariance Structure")
+              method = "Ahmad and Rosen 2015 Test of Covariance Matrix Structure")
   class(obj) <- "htest"
   obj
 }
@@ -91,7 +87,7 @@ Ahmad2015.matrix <- function(x, Sigma = "identity", ...){
   names(parameter) <- c("Mean", "Variance")
 
   null.value <- 0
-  names(null.value) <- "difference between the Sample Covariance and the Null Covarince Structure"
+  names(null.value) <- "difference between the Sample Covariance Matrix and the Null Covariance Matrix Structure"
 
   p.value <- 1 - pnorm(abs(statistic), 0, 4 * (2 / (p / n + 1)))
 
@@ -108,7 +104,7 @@ Ahmad2015.matrix <- function(x, Sigma = "identity", ...){
               estimate = estimate,
               null.value = null.value,
               alternative = "two.sided",
-              method = "Nagao 1973 Test of Covariance Structure")
+              method = "Ahmad and Rosen 2015 Test of Covariance Matrix Structure")
   class(obj) <- "htest"
   obj
 }

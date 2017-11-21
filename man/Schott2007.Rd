@@ -2,20 +2,24 @@
 % Please edit documentation in R/Schott2007.R
 \name{Schott2007}
 \alias{Schott2007}
-\title{Test of Equality of Covariances given by Schott 2007}
+\title{Test of Homogeneity of Covariance Matrices given by Schott 2007}
 \usage{
 Schott2007(x, ...)
 }
 \arguments{
-\item{x}{data as data.frame, grouped_df, resample or matrix object}
+\item{x}{data}
 
-\item{...}{other options passed to functions}
+\item{...}{other options passed to covTest method}
 }
 \value{
 Test statistic of the hypothesis test
 }
 \description{
-Performs 2 and k sample equality of covariance matrix test using Schott 2007
+Test of Homogeneity of Covariance Matrices given by Schott 2007
+}
+\details{
+The \code{\link{homogeneityCovariances}} function is a wrapper function that formats the data
+for the specific \code{covTest} functions.
 }
 \examples{
 irisSpecies <- unique(iris$Species)
@@ -26,9 +30,8 @@ iris_ls <- lapply(irisSpecies,
                  
 names(iris_ls) <- irisSpecies
 
-Chaipitak2013(iris_ls)
+Schott2007(iris_ls)
 }
 \references{
-Schott, J. (2007). A test for the equality of covariance matrices when the dimension
-is large relative to the sample sizes. Computational Statistics & Data Analysis, 51(12):6535-6542.
+Schott, J. (2007). A test for the equality of covariance matrices when the dimension is large relative to the sample sizes. Computational Statistics & Data Analysis, 51(12):6535-6542. \url{doi:10.1016/j.csda.2007.03.004}
 }

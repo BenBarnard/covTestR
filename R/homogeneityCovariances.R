@@ -1,4 +1,4 @@
-#' Homogeneity of Covariance Matrices
+#' Homogeneity of Covariance Matrices Test
 #' 
 #' Performs 2 and k sample homogeneity of covariance matrices test using test, 
 #' 'covTest.'
@@ -10,7 +10,7 @@
 #' @return A list with class "htest" containing the following components:
 #'
 #'\tabular{ll}{
-#' \code{statistic} \tab the value of equality of covariance test statistic \cr
+#' \code{statistic} \tab the value of homogeneity of covariance test statistic \cr
 #' \tab \cr
 #' \code{parameter} \tab the degrees of freedom for the chi-squared statistic \cr
 #' \tab \cr
@@ -22,10 +22,13 @@
 #' \tab \cr
 #' \code{alternative} \tab a character string describing the alternative hyposthesis \cr
 #' \tab \cr
-#' \code{method} \tab a character string indicating what type of equality of covariance test was performed \cr
+#' \code{method} \tab a character string indicating what type of homogeneity of covariance test was performed \cr
 #' \tab \cr
 #' \code{data.name} \tab a character string giving the names of the data
 #'}
+#'
+#' @details The \code{\link{homogeneityCovariances}} function is a wrapper function that formats the data 
+#'   for the specific \code{covTest} functions.
 #'
 #' @export
 #'

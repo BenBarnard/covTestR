@@ -1,16 +1,11 @@
-#' Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013
+#' Test of Structure of a Covariance Matrix given by Fisher 2012
 #'
-#' Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
-#'
-#' @inheritParams structureCovariances
-#'
-#' @return Test statistic of the hypothesis test
+#' @inherit structureCovariances
 #'
 #'
 #' @export
 #'
-#' @references Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
-#' matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.
+#' @references Fisher, T. J. (2012). On testing for an identity covariance matrix when the dimensionality equals or exceeds the sample size. Journal of Statistical Planning and Inference, 142(1), 312–326. <doi:10.1016/j.jspi.2011.07.019>
 #'
 #' @examples Fisher2012(as.matrix(iris[1:50, 1:4]))
 #'
@@ -45,7 +40,7 @@ Fisher2012.covariance <- function(x, Sigma = "identity", ...){
   names(parameter) <- c("Mean", "Variance")
 
   null.value <- 0
-  names(null.value) <- "difference between the Sample Covariance and the Null Covarince Structure"
+  names(null.value) <- "difference between the Sample Covariance Matrix and the Null Covariance Matrix Structure"
 
   p.value <- 1 - pnorm(abs(statistic))
 
@@ -63,7 +58,7 @@ Fisher2012.covariance <- function(x, Sigma = "identity", ...){
               estimate = estimate,
               null.value = null.value,
               alternative = "two.sided",
-              method = "Ledoit and Wolf 2002 Test of Covariance Structure")
+              method = "Fisher 2012 Test of Covariance Matrix Structure")
   class(obj) <- "htest"
   obj
 }
@@ -94,8 +89,8 @@ Fisher2012.matrix <- function(x, Sigma = "identity", ...){
   names(parameter) <- c("Mean", "Variance")
 
   null.value <- 0
-  names(null.value) <- "difference between the Sample Covariance and the Null Covarince Structure"
-
+  names(null.value) <- "difference between the Sample Covariance Matrix and the Null Covariance Matrix Structure"
+  
   p.value <- 1 - pnorm(abs(statistic))
 
   estimate <- S
@@ -111,7 +106,7 @@ Fisher2012.matrix <- function(x, Sigma = "identity", ...){
               estimate = estimate,
               null.value = null.value,
               alternative = "two.sided",
-              method = "Ledoit and Wolf 2002 Test of Covariance Structure")
+              method = "Fisher 2012 Test of Covariance Matrix Structure")
   class(obj) <- "htest"
   obj
 }

@@ -1,12 +1,6 @@
 #' Test of Homogeneity of Covariance Matrices given by Ahmad 2017
 #'
-#' Performs 2 and k sample homogeneity of covariance matrices test using Ahmaad 
-#' 2017.
-#'
-#' @param x data as data.frame, grouped_df, resample or matrix object
-#' @param ... other options passed to functions
-#'
-#' @return Test statistic of the hypothesis test
+#' @inherit homogeneityCovariances
 #'
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
@@ -17,9 +11,7 @@
 #'
 #' @export
 #'
-#' @references Ahmad, M. R. (2017). Location-invariant tests of homogeneity of 
-#' large-dimensional covariance matrices. Journal of Statistical Theory and 
-#' Practice, 1–15.
+#' @references Ahmad, R. (2017). Location-invariant test of homogeneity of large-dimensional covariance matrices. Journal of Statistical Theory and Practice, 11(4):731-745. <doi10.1080/15598608.2017.1308895>
 #'
 #' @examples 
 #' irisSpecies <- unique(iris$Species)
@@ -49,7 +41,7 @@ Ahmad2017 <- function(x, ...){
   names(parameter) <- c("Mean", "Variance")
 
   null.value <- 0
-  names(null.value) <- "difference in covariances"
+  names(null.value) <- "difference in covariance matrices"
 
   p.value <- 1 - pnorm(abs(statistic))
 
@@ -59,7 +51,7 @@ Ahmad2017 <- function(x, ...){
               estimate = NULL,
               null.value = null.value,
               alternative = "two.sided",
-              method = "Ahmad 2017 Homogeneity of Covariance Matrix Test",
+              method = "Ahmad 2017 Homogeneity of Covariance Matrices Test",
               data.name = data.name)
   class(obj) <- "htest"
   obj
