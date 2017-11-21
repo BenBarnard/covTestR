@@ -46,5 +46,5 @@ Fisher2012(as.matrix(iris[1:50, 1:4]))
 
 }
 \references{
-Fisher, T. J. (2012). On testing for an identity covariance matrix when the dimensionality equals or exceeds the sample size. Journal of Statistical Planning and Inference, 142(1), 312–326. \url{doi:10.1016/j.jspi.2011.07.019}
+Fisher, T. J. (2012). On Testing for an Identity Covariance Matrix when the Dimensionality Equals or Exceeds the Sample Size. Journal of Statistical Planning and Infernece, 142(1), 312-326. \url{doi:10.1016/j.jspi.2011.07.019}
 }

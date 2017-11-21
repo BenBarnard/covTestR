@@ -2,7 +2,7 @@
 % Please edit documentation in R/structureCovariances.R
 \name{structureCovariances}
 \alias{structureCovariances}
-\title{Structure of a Covariance Matrix}
+\title{Structure of a Covariance Matrix Test}
 \usage{
 structureCovariances(x, Sigma, ..., covTest = Nagao1973)
 }

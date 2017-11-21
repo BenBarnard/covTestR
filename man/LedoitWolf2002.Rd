@@ -46,5 +46,5 @@ LedoitWolf2002(as.matrix(iris[1:50, 1:3]))
 
 }
 \references{
-Ledoit, O., & Wolf, M. (2002). Some Hypothesis Tests for the Covariance Matrix When the Dimension Is Large Compared to the Sample Size. The Annals of Statistics, 30(4), 1081–1102. <doi:10.1214/aos/1031689018 >
+Ledoit, O., and Wolf, M. (2002). Some Hypothesis Tests for the Covariance Matrix When the Dimension Is Large Compared to the Sample Size. The Annals of Statistics, 30(4), 1081-1102. \url{doi:10.1214/aos/1031689018}
 }

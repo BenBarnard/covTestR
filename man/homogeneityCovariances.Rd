@@ -2,16 +2,16 @@
 % Please edit documentation in R/homogeneityCovariances.R
 \name{homogeneityCovariances}
 \alias{homogeneityCovariances}
-\title{Homogeneity of Covariance Matrices}
+\title{Homogeneity of Covariance Matrices Test}
 \usage{
 homogeneityCovariances(x, ..., covTest = BoxesM)
 }
 \arguments{
-\item{x}{data}
+\item{x}{data as a data frame, list of matrices, grouped data frame, or resample object}
 
 \item{...}{other options passed to covTest method}
 
-\item{covTest}{homogeneity of covariances test method}
+\item{covTest}{homogeneity of covariance matrices test method}
 }
 \value{
 A list with class "htest" containing the following components:
@@ -35,7 +35,8 @@ A list with class "htest" containing the following components:
 }
 }
 \description{
-Performs two and k sample homogeneity of covariance matrix tests.
+Performs 2 and k sample homogeneity of covariance matrices test using test,
+'covTest.'
 }
 \details{
 The \code{\link{homogeneityCovariances}} function is a wrapper function that formats the data

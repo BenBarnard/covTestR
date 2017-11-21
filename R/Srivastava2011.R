@@ -4,7 +4,7 @@
 #'
 #' @export
 #'
-#' @references Srivastava, M. S., Kollo, T., & von Rosen, D. (2011). Some tests for the covariance matrix with fewer observations than the dimension under non-normality. Journal of Multivariate Analysis, 102(6), 1090–1103. <doi:10.1016/j.jmva.2011.03.003>
+#' @references Srivastava, M. S., Kollo, T., and Rosen, D. von. (2011). Some Tests for the Covariance Matrix with Fewer Observations then the Dimension Under Non-normality. Journal of Multivariate Analysis, 102(6), 1090-1103. <doi:10.1016/j.jmva.2011.03.003>
 #'
 #' @examples Srivastava2011(as.matrix(iris[1:50, 1:4]))
 #'

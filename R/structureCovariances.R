@@ -1,4 +1,4 @@
-#' Structure of a Covariance Matrix
+#' Structure of a Covariance Matrix Test
 #' 
 #' Performs a structure of a covariance matrix test.
 #'

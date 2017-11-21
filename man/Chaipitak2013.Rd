@@ -7,7 +7,7 @@
 Chaipitak2013(x, ...)
 }
 \arguments{
-\item{x}{data}
+\item{x}{data as a data frame, list of matrices, grouped data frame, or resample object}
 
 \item{...}{other options passed to covTest method}
 }

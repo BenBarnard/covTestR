@@ -4,7 +4,7 @@
 #'
 #' @export
 #'
-#' @references Nagao, H. (1973). On Some Test Criteria for Covariance Matrix. The Annals of Statistics, 1(4), 700–709 <doi:>
+#' @references Nagao, H. (1973). On Some Test Criteria for Covariance Matrix. The Annals of Statistics, 1(4), 700-709
 #'
 #' @examples Nagao1973(as.matrix(iris[1:50, 1:3]))
 #'

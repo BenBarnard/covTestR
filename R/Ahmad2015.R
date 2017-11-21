@@ -6,9 +6,10 @@
 #'
 #' @export
 #'
-#' @references Ahmad, M. R. and Rosen, D. von. (2015). Tests for high-dimensional covariance matrices using the theory of U-statistics. Journal of Statistical Computation and Simulation, 85(13), 2619–2631. <doi:10.1080/00949655.2014.948441>
-#'
+#' @references Ahmad, M. R. and Rosen, D. von. (2015). Tests for high-dimensional conariance matrices using the theory of U-statistics. Journal of Statistical Computation and Simulation, 85(13), 2619-2631. <doi:10.1080/00940655.2014.948441>
+#' 
 #' @examples Ahmad2015(as.matrix(iris[1:50, 1:3]))
+#' 
 Ahmad2015 <- function(x, Sigma = "identity", ...){
   UseMethod("Ahmad2015")
 }
