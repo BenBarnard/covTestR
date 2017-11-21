@@ -38,8 +38,8 @@ A list with class "htest" containing the following components:
 Test of Structure of a Covariance Matrix given by Nagao 1973
 }
 \details{
-The \code{\link{structureCovariances}} function is a wrapper function that formats the data
-for the specific \code{covTest} functions.
+The \code{\link{structureCovariances}} function is a wrapper function that formats the data 
+  for the specific \code{covTest} functions.
 }
 \examples{
 Nagao1973(as.matrix(iris[1:50, 1:3]))

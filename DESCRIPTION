@@ -13,8 +13,6 @@ License: GPL-2
 LazyData: TRUE
 RoxygenNote: 6.0.1
 Suggests:
-    knitr,
-    rmarkdown,
     covr
 Imports:
     lazyeval,
@@ -22,7 +20,5 @@ Imports:
     dplyr,
     shiny,
     Rcpp
-VignetteBuilder: knitr
-Roxygen: list(markdown = TRUE)
 LinkingTo: Rcpp, RcppArmadillo
 SystemRequirements: C++11

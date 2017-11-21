@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Structure of a Covariance Matrix Test — structureCovariances â€¢ covTestR</title>
+<title>Covariance Matrix Testing Functions — covTestR-package â€¢ covTestR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -77,99 +77,25 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Structure of a Covariance Matrix Test</h1>
+    <h1>Covariance Matrix Testing Functions</h1>
     </div>
 
     
-    <p>Performs a structure of a covariance matrix test.</p>
+    <p>Testing functions for Covariance Matrices. These tests 
+include high-dimension homogeneity of covariance matrix testing described 
+by Schott (2007) 10.1016/j.csda.2007.03.004 and high-dimensional 
+one-sample tests of covariance matrix structure described by 
+Fisher, et al. (2010) 10.1016/j.jmva.2010.07.004. Covariance matrix
+tests use C++ to speed performance and allow larger data sets.</p>
     
 
-    <pre class="usage"><span class='fu'>structureCovariances</span>(<span class='no'>x</span>, <span class='no'>Sigma</span>, <span class='no'>...</span>, <span class='kw'>covTest</span> <span class='kw'>=</span> <span class='no'>Nagao1973</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>data</p></td>
-    </tr>
-    <tr>
-      <th>Sigma</th>
-      <td><p>Population covariance matrix</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>other options passed to covTest method</p></td>
-    </tr>
-    <tr>
-      <th>covTest</th>
-      <td><p>structure of covariance matrix test method</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A list with class "htest" containing the following components:</p><table><tr><td>
-<code>statistic</code> </td>
-<td> the value of equality of covariance test statistic </td>
-</tr><tr><td>
-</td>
-<td> </td>
-</tr><tr><td>
-<code>parameter</code> </td>
-<td> the degrees of freedom for the chi-squared statistic </td>
-</tr><tr><td>
-</td>
-<td> </td>
-</tr><tr><td>
-<code>p.value</code> </td>
-<td> the p=value for the test </td>
-</tr><tr><td>
-</td>
-<td> </td>
-</tr><tr><td>
-<code>estimate</code> </td>
-<td> the estimated covariances if less than 5 dimensions </td>
-</tr><tr><td>
-</td>
-<td> </td>
-</tr><tr><td>
-<code>null.value</code> </td>
-<td> the specified hypothesized value of the covariance difference </td>
-</tr><tr><td>
-</td>
-<td> </td>
-</tr><tr><td>
-<code>alternative</code> </td>
-<td> a character string describing the alternative hyposthesis </td>
-</tr><tr><td>
-</td>
-<td> </td>
-</tr><tr><td>
-<code>method</code> </td>
-<td> a character string indicating what type of equality of covariance test was performed </td>
-</tr><tr><td>
-</td>
-<td> </td>
-</tr></table>
-
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The <code>structureCovariances</code> function is a wrapper function that formats the data 
-  for the specific <code>covTest</code> functions.</p>
-    
+        
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-          </ul>
+                </ul>
 
   </div>
 </div>

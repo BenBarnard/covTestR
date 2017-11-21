@@ -38,13 +38,15 @@ A list with class "htest" containing the following components:
 Test of Structure of a Covariance Matrix given by Ahmad and Rosen 2015
 }
 \details{
-The \code{\link{structureCovariances}} function is a wrapper function that formats the data
-for the specific \code{covTest} functions.
+The \code{\link{structureCovariances}} function is a wrapper function that formats the data 
+  for the specific \code{covTest} functions.
 }
 \examples{
 Ahmad2015(as.matrix(iris[1:50, 1:3]))
 
 }
 \references{
-Ahmad, M. R. and Rosen, D. von. (2015). Tests for high-dimensional conariance matrices using the theory of U-statistics. Journal of Statistical Computation and Simulation, 85(13), 2619-2631. \url{doi:10.1080/00940655.2014.948441}
+Ahmad, M. R. and Rosen, D. von. (2015). Tests for High-Dimensional Covariance 
+Matrices Using the Theory of U-statistics. Journal of Statistical Computation and Simulation, 
+85(13), 2619-2631. \doi{10.1080/00949655.2014.948441}
 }

@@ -36,8 +36,8 @@ A list with class "htest" containing the following components:
 Test of Homogeneity of Covariance Matrices given by Chaipitak and Chongcharoen 2013
 }
 \details{
-The \code{\link{homogeneityCovariances}} function is a wrapper function that formats the data
-for the specific \code{covTest} functions.
+The \code{\link{homogeneityCovariances}} function is a wrapper function that formats the data 
+  for the specific \code{covTest} functions.
 }
 \examples{
 irisSpecies <- unique(iris$Species)
@@ -52,5 +52,5 @@ Chaipitak2013(iris_ls)
 
 }
 \references{
-Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277. \url{doi:10.3923/jas.2013.270.277}
+Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277. \doi{10.3923/jas.2013.270.277}
 }

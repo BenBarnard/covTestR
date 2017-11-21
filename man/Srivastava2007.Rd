@@ -36,8 +36,8 @@ A list with class "htest" containing the following components:
 Test of Homogeneity of Covariance Matrices given by Srivastava 2007
 }
 \details{
-The \code{\link{homogeneityCovariances}} function is a wrapper function that formats the data
-for the specific \code{covTest} functions.
+The \code{\link{homogeneityCovariances}} function is a wrapper function that formats the data 
+  for the specific \code{covTest} functions.
 }
 \examples{
 irisSpecies <- unique(iris$Species)

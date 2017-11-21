@@ -40,6 +40,6 @@ A list with class "htest" containing the following components:
 Performs a structure of a covariance matrix test.
 }
 \details{
-The \code{\link{structureCovariances}} function is a wrapper function that formats the data
-for the specific \code{covTest} functions.
+The \code{\link{structureCovariances}} function is a wrapper function that formats the data 
+  for the specific \code{covTest} functions.
 }

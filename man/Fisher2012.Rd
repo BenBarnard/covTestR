@@ -38,13 +38,13 @@ A list with class "htest" containing the following components:
 Test of Structure of a Covariance Matrix given by Fisher 2012
 }
 \details{
-The \code{\link{structureCovariances}} function is a wrapper function that formats the data
-for the specific \code{covTest} functions.
+The \code{\link{structureCovariances}} function is a wrapper function that formats the data 
+  for the specific \code{covTest} functions.
 }
 \examples{
 Fisher2012(as.matrix(iris[1:50, 1:4]))
 
 }
 \references{
-Fisher, T. J. (2012). On Testing for an Identity Covariance Matrix when the Dimensionality Equals or Exceeds the Sample Size. Journal of Statistical Planning and Infernece, 142(1), 312-326. \url{doi:10.1016/j.jspi.2011.07.019}
+Fisher, T. J. (2012). On Testing for an Identity Covariance Matrix when the Dimensionality Equals or Exceeds the Sample Size. Journal of Statistical Planning and Infernece, 142(1), 312-326. \doi{10.1016/j.jspi.2011.07.019}
 }

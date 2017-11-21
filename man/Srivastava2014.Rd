@@ -36,8 +36,8 @@ A list with class "htest" containing the following components:
 Test of Homogeneity of Covariance Matrices given by Srivastava et al. 2014
 }
 \details{
-The \code{\link{homogeneityCovariances}} function is a wrapper function that formats the data
-for the specific \code{covTest} functions.
+The \code{\link{homogeneityCovariances}} function is a wrapper function that formats the data 
+  for the specific \code{covTest} functions.
 }
 \examples{
 irisSpecies <- unique(iris$Species)
@@ -51,5 +51,5 @@ names(iris_ls) <- irisSpecies
 Srivastava2014(iris_ls)
 }
 \references{
-Srivastava, M., Yanagihara, H., and Kubokawa T. (2014). Tests for covariance matrices in high dimension with less sample size. Journal of Multivariate Analysis, 130:289-309. \url{doi:10.1016/j.jmva.2014.06.003}
+Srivastava, M., Yanagihara, H., and Kubokawa T. (2014). Tests for covariance matrices in high dimension with less sample size. Journal of Multivariate Analysis, 130:289-309. \doi{10.1016/j.jmva.2014.06.003}
 }

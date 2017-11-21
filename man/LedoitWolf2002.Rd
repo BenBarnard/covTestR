@@ -38,13 +38,13 @@ A list with class "htest" containing the following components:
 Test of Structure of a Covariance Matrix given by Ledoit and Wolf 2002
 }
 \details{
-The \code{\link{structureCovariances}} function is a wrapper function that formats the data
-for the specific \code{covTest} functions.
+The \code{\link{structureCovariances}} function is a wrapper function that formats the data 
+  for the specific \code{covTest} functions.
 }
 \examples{
 LedoitWolf2002(as.matrix(iris[1:50, 1:3]))
 
 }
 \references{
-Ledoit, O., and Wolf, M. (2002). Some Hypothesis Tests for the Covariance Matrix When the Dimension Is Large Compared to the Sample Size. The Annals of Statistics, 30(4), 1081-1102. \url{doi:10.1214/aos/1031689018}
+Ledoit, O., and Wolf, M. (2002). Some Hypothesis Tests for the Covariance Matrix When the Dimension Is Large Compared to the Sample Size. The Annals of Statistics, 30(4), 1081-1102. \doi{10.1214/aos/1031689018}
 }

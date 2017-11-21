@@ -36,8 +36,8 @@ A list with class "htest" containing the following components:
 Test of Homogeneity of Covariance Matrices given by Ahmad 2017
 }
 \details{
-The \code{\link{homogeneityCovariances}} function is a wrapper function that formats the data
-for the specific \code{covTest} functions.
+The \code{\link{homogeneityCovariances}} function is a wrapper function that formats the data 
+  for the specific \code{covTest} functions.
 }
 \examples{
 irisSpecies <- unique(iris$Species)
@@ -51,5 +51,5 @@ names(iris_ls) <- irisSpecies
 Ahmad2017(iris_ls)
 }
 \references{
-Ahmad, R. (2017). Location-invariant test of homogeneity of large-dimensional covariance matrices. Journal of Statistical Theory and Practice, 11(4):731-745. <doi10.1080/15598608.2017.1308895>
+Ahmad, R. (2017). Location-invariant test of homogeneity of large-dimensional covariance matrices. Journal of Statistical Theory and Practice, 11(4):731-745. \doi{10.1080/15598608.2017.1308895}
 }

@@ -4,7 +4,7 @@
 #'
 #' @references Ishii, A., Yata, K., and Aoshima, M. (2016). Asymptotic properties of the first pricipal
 #' component and equality tests of covariance matrices in high-dimesion, low-sample-size context. Journal
-#' of Statistical Planning and Inference, 170:186-199. <doi:10.1016/j.jspi.2015.10.007>
+#' of Statistical Planning and Inference, 170:186-199. \doi{10.1016/j.jspi.2015.10.007}
 #'
 #' @export
 #' @importFrom lazyeval lazy_dots

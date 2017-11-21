@@ -2,7 +2,7 @@
 % Please edit documentation in R/Schott2001.R
 \name{Schott2001}
 \alias{Schott2001}
-\title{Test of Equality of Covariances given by Schott 2001}
+\title{Test of Homogeneity of Covariance Matrices given by Schott 2001}
 \usage{
 Schott2001(x, ...)
 }
@@ -12,10 +12,32 @@ Schott2001(x, ...)
 \item{...}{other options passed to covTest method}
 }
 \value{
-Test statistic of the hypothesis test
+A list with class "htest" containing the following components:
+
+\tabular{ll}{
+\code{statistic} \tab the value of homogeneity of covariance test statistic \cr
+\tab \cr
+\code{parameter} \tab the degrees of freedom for the chi-squared statistic \cr
+\tab \cr
+\code{p.value} \tab the p=value for the test \cr
+\tab \cr
+\code{estimate} \tab the estimated covariances if less than 5 dimensions \cr
+\tab \cr
+\code{null.value} \tab the specified hypothesized value of the covariance difference \cr
+\tab \cr
+\code{alternative} \tab a character string describing the alternative hyposthesis \cr
+\tab \cr
+\code{method} \tab a character string indicating what type of homogeneity of covariance test was performed \cr
+\tab \cr
+\code{data.name} \tab a character string giving the names of the data
+}
 }
 \description{
-Performs 2 and k sample equality of covariance matrix test using Schott 2001
+Test of Homogeneity of Covariance Matrices given by Schott 2001
+}
+\details{
+The \code{\link{homogeneityCovariances}} function is a wrapper function that formats the data 
+  for the specific \code{covTest} functions.
 }
 \examples{
 irisSpecies <- unique(iris$Species)
@@ -27,4 +49,9 @@ iris_ls <- lapply(irisSpecies,
 names(iris_ls) <- irisSpecies
 
 Chaipitak2013(iris_ls)
+}
+\references{
+Schott, J (2001). Some Tests for the Equality of Covariance Matrices. 
+     Journal of Statistical Planniing and Inference. 94(1), 25-36. 
+     \doi{10.1016/S0378-3758(00)00209-3}
 }

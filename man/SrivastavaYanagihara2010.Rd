@@ -36,8 +36,8 @@ A list with class "htest" containing the following components:
 Test of Equality of Covariances given by Srivastava and Yanagihara 2010
 }
 \details{
-The \code{\link{homogeneityCovariances}} function is a wrapper function that formats the data
-for the specific \code{covTest} functions.
+The \code{\link{homogeneityCovariances}} function is a wrapper function that formats the data 
+  for the specific \code{covTest} functions.
 }
 \examples{
 irisSpecies <- unique(iris$Species)
@@ -51,5 +51,5 @@ names(iris_ls) <- irisSpecies
 Chaipitak2013(iris_ls)
 }
 \references{
-Srivastava, M. and Yanagihara, H. (2010). Testing the equality of several covariance matrices with fewer observation that the dimension. Journal of Multivariate Analysis, 101(6):1319-1329. \url{doi:10.1016/j.jmva.2009.12.010}
+Srivastava, M. and Yanagihara, H. (2010). Testing the equality of several covariance matrices with fewer observation that the dimension. Journal of Multivariate Analysis, 101(6):1319-1329. \doi{10.1016/j.jmva.2009.12.010}
 }

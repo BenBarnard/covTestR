@@ -36,8 +36,8 @@ A list with class "htest" containing the following components:
 Test of Homogeneity of Covariance Matrices given by Ishii and Aoshima 2016
 }
 \details{
-The \code{\link{homogeneityCovariances}} function is a wrapper function that formats the data
-for the specific \code{covTest} functions.
+The \code{\link{homogeneityCovariances}} function is a wrapper function that formats the data 
+  for the specific \code{covTest} functions.
 }
 \examples{
 irisSpecies <- unique(iris$Species)
@@ -53,5 +53,5 @@ Ishii2016(iris_ls)
 \references{
 Ishii, A., Yata, K., and Aoshima, M. (2016). Asymptotic properties of the first pricipal
 component and equality tests of covariance matrices in high-dimesion, low-sample-size context. Journal
-of Statistical Planning and Inference, 170:186-199. \url{doi:10.1016/j.jspi.2015.10.007}
+of Statistical Planning and Inference, 170:186-199. \doi{10.1016/j.jspi.2015.10.007}
 }

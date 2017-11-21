@@ -38,13 +38,13 @@ A list with class "htest" containing the following components:
 Test of Structure of a Covariance Matrix given by Srivastava 2005
 }
 \details{
-The \code{\link{structureCovariances}} function is a wrapper function that formats the data
-for the specific \code{covTest} functions.
+The \code{\link{structureCovariances}} function is a wrapper function that formats the data 
+  for the specific \code{covTest} functions.
 }
 \examples{
 Srivastava2005(as.matrix(iris[1:50, 1:4]))
 
 }
 \references{
-Srivastava, M. S. (2005). Some Tests Concerning the Covariance Matrix in High Dimensional Data. Journal of the Japan Statistical Society, 35(2), 251-272. \url{doi:10.14490/jjss.35.251}
+Srivastava, M. S. (2005). Some Tests Concerning the Covariance Matrix in High Dimensional Data. Journal of the Japan Statistical Society, 35(2), 251-272. \doi{10.14490/jjss.35.251}
 }

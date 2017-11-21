@@ -1,10 +1,7 @@
-#' Test of Equality of Covariances given by Schott 2001
+#' Test of Homogeneity of Covariance Matrices given by Schott 2001
 #'
-#' Performs 2 and k sample equality of covariance matrix test using Schott 2001
+#' @inherit homogeneityCovariances
 #'
-#' @inheritParams Chaipitak2013
-#'
-#' @return Test statistic of the hypothesis test
 #'
 #' @export
 #' @importFrom lazyeval lazy_dots
@@ -13,6 +10,10 @@
 #' @importFrom stringr str_replace
 #' @importFrom stats cov
 #' @importFrom stats pchisq
+#' 
+#' @references Schott, J (2001). Some Tests for the Equality of Covariance Matrices. 
+#'      Journal of Statistical Planniing and Inference. 94(1), 25-36. 
+#'      \doi{10.1016/S0378-3758(00)00209-3}
 #'
 #' @examples 
 #' irisSpecies <- unique(iris$Species)
@@ -37,13 +38,13 @@ Schott2001 <- function(x, ...) {
 
   data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
 
-  names(statistic) <- "Chi Squared"
+  names(statistic) <- "Chi-Squared"
 
   parameter <- 1
   names(parameter) <- "df"
 
   null.value <- 0
-  names(null.value) <- "difference in covariances"
+  names(null.value) <- "difference in covariance matrices"
 
   p.value <- 1 - pchisq(statistic, parameter)
 
@@ -54,7 +55,7 @@ Schott2001 <- function(x, ...) {
               estimate = NULL,
               null.value = null.value,
               alternative = "two.sided",
-              method = "Schott 2001 Equality of Covariance Test",
+              method = "Schott 2001 Homogeneity of Covariance Matrices Test",
               data.name = data.name)
   class(obj) <- "htest"
   obj

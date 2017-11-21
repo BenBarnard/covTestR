@@ -35,12 +35,12 @@ A list with class "htest" containing the following components:
 }
 }
 \description{
-Performs 2 and k sample homogeneity of covariance matrices test using test,
+Performs 2 and k sample homogeneity of covariance matrices test using test, 
 'covTest.'
 }
 \details{
-The \code{\link{homogeneityCovariances}} function is a wrapper function that formats the data
-for the specific \code{covTest} functions.
+The \code{\link{homogeneityCovariances}} function is a wrapper function that formats the data 
+  for the specific \code{covTest} functions.
 }
 \examples{
 homogeneityCovariances(iris, group = Species)
