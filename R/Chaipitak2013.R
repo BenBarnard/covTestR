@@ -43,8 +43,6 @@ Chaipitak2013 <- function(x, ...){
 
   data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
 
-
-
   names(statistic) <- "Chi Squared"
 
   parameter <- length(matrix_ls) - 1

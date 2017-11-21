@@ -15,7 +15,7 @@
 #'                  
 #' names(iris_ls) <- irisSpecies
 #' 
-#' Chaipitak2013(iris_ls)
+#' BoxesM(iris_ls)
 BoxesM <- function(x, ...){
   ls <- lazy_dots(...)
   matrix_ls <- x

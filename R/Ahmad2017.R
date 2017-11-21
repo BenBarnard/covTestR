@@ -1,6 +1,7 @@
-#' Test of Equality of Covariances given by Chaipitak and Chongcharoen 2013
+#' Test of Homogeneity of Covariance Matrices given by Ahmad 2017
 #'
-#' Performs 2 and k sample equality of covariance matrix test using Chaipitak and Chongcharoen 2013
+#' Performs 2 and k sample homogeneity of covariance matrices test using Ahmaad 
+#' 2017.
 #'
 #' @param x data as data.frame, grouped_df, resample or matrix object
 #' @param ... other options passed to functions
@@ -16,8 +17,9 @@
 #'
 #' @export
 #'
-#' @references Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance
-#' matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277.
+#' @references Ahmad, M. R. (2017). Location-invariant tests of homogeneity of 
+#' large-dimensional covariance matrices. Journal of Statistical Theory and 
+#' Practice, 1–15.
 #'
 #' @examples 
 #' irisSpecies <- unique(iris$Species)
@@ -28,7 +30,7 @@
 #'                  
 #' names(iris_ls) <- irisSpecies
 #' 
-#' Chaipitak2013(iris_ls)
+#' Ahmad2017(iris_ls)
 Ahmad2017 <- function(x, ...){
 
   ls <- lazy_dots(...)
@@ -40,8 +42,6 @@ Ahmad2017 <- function(x, ...){
   xother <- names(matrix_ls[-c(1, length(matrix_ls))])
 
   data.name <- Reduce(paste0, past(xmin = xmin, xother, xmax = xmax))
-
-
 
   names(statistic) <- "Standard Normal"
 
@@ -59,7 +59,7 @@ Ahmad2017 <- function(x, ...){
               estimate = NULL,
               null.value = null.value,
               alternative = "two.sided",
-              method = "Chaipitak and Chongchareon 2013 Equality of Covariance Test",
+              method = "Ahmad 2017 Homogeneity of Covariance Matrix Test",
               data.name = data.name)
   class(obj) <- "htest"
   obj
