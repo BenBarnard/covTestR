@@ -30,9 +30,9 @@ double BoxesMStat(List x) {
     arma::mat covar = cov(mats);
     samplecov[i] = covar;
     p = ps;
-    ntot += nsi - 1;
+    ntot += nsi - 1.0;
     ns[i] = nsi;
-    Apool += covar * (nsi - 1);
+    Apool += covar * (nsi - 1.0);
   }
 
   arma::mat pooledCov = Apool / ntot;
@@ -40,7 +40,7 @@ double BoxesMStat(List x) {
   double stat = 0;
   for(int i = 0; i < len; ++i){
     arma::mat sampcov = samplecov[i];
-    double n = ns[i] - 1;
+    double n = ns[i] - 1.0;
     stat += n * log(det(sampcov));
   }
 

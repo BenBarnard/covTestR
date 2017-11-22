@@ -39,20 +39,20 @@ double Chen2010Stat(arma::mat x) {
     }
   }
   
-  double bilinearquad = bilinearquadNum * 24 / (R::gammafn(nrow + 1) / R::gammafn(nrow - 3));
+  double bilinearquad = bilinearquadNum * 24.0 / (R::gammafn(nrow + 1.0) / R::gammafn(nrow - 3.0));
   
-  double bilinearsquare = bilinearsquareNum * 2 / (R::gammafn(nrow + 1) / R::gammafn(nrow - 1));
+  double bilinearsquare = bilinearsquareNum * 2.0 / (R::gammafn(nrow + 1.0) / R::gammafn(nrow - 1.0));
   
-  double bilinearcube = bilinearcubeNum * 6 / (R::gammafn(nrow + 1) / R::gammafn(nrow - 2));
+  double bilinearcube = bilinearcubeNum * 6.0 / (R::gammafn(nrow + 1.0) / R::gammafn(nrow - 2.0));
   
-  double bilinearoff = bilinearoffNum * 2 / (R::gammafn(nrow + 1) / R::gammafn(nrow - 1));
+  double bilinearoff = bilinearoffNum * 2.0 / (R::gammafn(nrow + 1.0) / R::gammafn(nrow - 1.0));
   
   double quadra = quadraNum / nrow;
   
   return nrow * (bilinearsquare / ncol -
-              2 * bilinearcube / ncol +
+              2.0 * bilinearcube / ncol +
               bilinearquad / ncol -
-              2 * quadra / ncol +
-              2 * bilinearoff / ncol +
-              1) / 2;
+              2.0 * quadra / ncol +
+              2.0 * bilinearoff / ncol +
+              1.0) / 2.0;
 }

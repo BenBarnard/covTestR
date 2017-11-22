@@ -20,9 +20,9 @@ double Ahmad2015Stat(arma::mat x) {
         x.submat(j, 0, j, ncol - 1).t());
     }
   }
-  double c3 = c3num * 2 / (nrow * (nrow - 1));
+  double c3 = c3num * 2.0 / (nrow * (nrow - 1.0));
   
   double c1 = c1num / nrow;
 
-  return nrow * (c3 / ncol - 2 * c1 / ncol + 1);
+  return nrow * (c3 / ncol - 2.0 * c1 / ncol + 1.0);
 }

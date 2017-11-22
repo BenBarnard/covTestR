@@ -32,7 +32,7 @@ double Srivastava2014Stat(List x) {
     arma::mat covar = cov(mats);
     samplecov[i] = covar;
 
-    Ai[i] = covar * (ns[i] - 1);
+    Ai[i] = covar * (ns[i] - 1.0);
 
     arma::rowvec scaled = mean(mats);
     arma::mat scaleddf(ns[i], ps);
@@ -50,17 +50,17 @@ double Srivastava2014Stat(List x) {
     }
 
     Di[i] = D;
-    ntot += ns[i] - 1;
+    ntot += ns[i] - 1.0;
 
-    ninv += pow(ns[i] - 1, -1);
+    ninv += pow(ns[i] - 1.0, -1.0);
   }
 
  for(int i = 0; i < len; ++i){
    arma::mat Ais = Ai[i];
    arma::mat D = Di[i];
 
-   a2i[i] = pow(p * ns[i] * (ns[i] - 1) * (ns[i] - 2) * (ns[i] - 3), -1) *
-     ((ns[i] - 2) * (ns[i] - 1) * trace(Ais * Ais) -
+   a2i[i] = pow(p * ns[i] * (ns[i] - 1.0) * (ns[i] - 2.0) * (ns[i] - 3.0), -1.0) *
+     ((ns[i] - 2.0) * (ns[i] - 1.0) * trace(Ais * Ais) -
      (ntot + len) * ntot * trace(D * D) +
      trace(Ais * Ais));
  }
@@ -73,15 +73,15 @@ double Srivastava2014Stat(List x) {
 
  double a2 = a2num * pow(ntot, -1);
 
- double theta = 2 * a2 * ninv;
+ double theta = 2.0 * a2 * ninv;
 
   double stat = 0;
   for(int i = 0; i < len; ++i){
     arma::mat sampcovi = samplecov[i];
     for(int j = i + 1; j < len; ++j){
       arma::mat sampcovj = samplecov[j];
-    stat += pow(a2i[i] + a2i[j] - (2 * pow(p, -1)) * trace(sampcovi * sampcovj), 2) *
-      pow(theta, -2);
+    stat += pow(a2i[i] + a2i[j] - (2.0 * pow(p, -1.0)) * trace(sampcovi * sampcovj), 2.0) *
+      pow(theta, -2.0);
     }
   }
 
@@ -119,7 +119,7 @@ double Srivastava2014poolStat(List x) {
     int ps = mats.n_cols;
     arma::mat covar = cov(mats);
     samplecov[i] = covar;
-    arma::mat A = covar * (ns[i] - 1);
+    arma::mat A = covar * (ns[i] - 1.0);
     Ai[i] = A;
 
     arma::rowvec scaled = mean(mats);
@@ -138,8 +138,8 @@ double Srivastava2014poolStat(List x) {
     }
 
     Di[i] = D;
-    ntot += ns[i] - 1;
-    ninv += pow(ns[i] - 1, -1);
+    ntot += ns[i] - 1.0;
+    ninv += pow(ns[i] - 1.0, -1.0);
     Apool += A;
   }
 
@@ -147,8 +147,8 @@ double Srivastava2014poolStat(List x) {
     arma::mat Ais = Ai[i];
     arma::mat D = Di[i];
 
-    a2i[i] = pow(p * ns[i] * (ns[i] - 1) * (ns[i] - 2) * (ns[i] - 3), -1) *
-      ((ns[i] - 2) * (ns[i] - 1) * trace(Ais * Ais) -
+    a2i[i] = pow(p * ns[i] * (ns[i] - 1.0) * (ns[i] - 2.0) * (ns[i] - 3.0), -1.0) *
+      ((ns[i] - 2.0) * (ns[i] - 1) * trace(Ais * Ais) -
       (ntot + len) * ntot * trace(D * D) +
       trace(Ais * Ais));
   }
@@ -159,11 +159,11 @@ double Srivastava2014poolStat(List x) {
     a2num += ns[i] * a2i[i];
   }
 
-  double a2 = a2num * pow(ntot, -1);
+  double a2 = a2num * pow(ntot, -1.0);
 
-  double theta = 2 * a2 * ninv;
+  double theta = 2.0 * a2 * ninv;
 
-  arma::mat pooledCov = Apool * pow(ntot, -1);
+  arma::mat pooledCov = Apool * pow(ntot, -1.0);
 
 
   double stat = 0;
@@ -171,7 +171,7 @@ double Srivastava2014poolStat(List x) {
     arma::mat sampcovi = samplecov[i];
     double ai = a2i[i];
 
-    stat += pow(pow(theta, -1) *  (ai + a2 - 2 * pow(p, -1) * trace(sampcovi * pooledCov)), 2);
+    stat += pow(pow(theta, -1.0) *  (ai + a2 - 2.0 * pow(p, -1.0) * trace(sampcovi * pooledCov)), 2.0);
   }
 
   return stat;

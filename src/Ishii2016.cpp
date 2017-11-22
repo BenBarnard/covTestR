@@ -20,7 +20,7 @@ double Ishii2016Stat(List x) {
   double p = pmat.n_cols;
   double ntot = 0;
   arma::mat Apool(p, p);
-  Apool.fill(0);
+  Apool.fill(0.0);
   arma::vec ns(len);
   List Ai(len);
   List lambda(len);
@@ -41,7 +41,7 @@ double Ishii2016Stat(List x) {
     j.fill(1);
     arma::mat A = mats.t() * (diag - J / ns[i]) * mats;
     Ai[i] = A;
-    arma::mat covar = A / (ns[i] - 1);
+    arma::mat covar = A / (ns[i] - 1.0);
     samplecov[i] = covar;
     p = ps;
 
@@ -56,7 +56,7 @@ double Ishii2016Stat(List x) {
     lambda[i] = lamb(0);
     eigendual[i] = eig;
 
-    ntot += ns[i] - 1;
+    ntot += ns[i] - 1.0;
     Apool += A;
 
   }
@@ -72,9 +72,9 @@ double Ishii2016Stat(List x) {
     double lambdai = lambda[i];
     arma::vec eigen = eigendual[i];
     double kii = ki[i];
-    double lambdatil = std::max(lambdai * pow(overallLambda[0], -1), overallLambda[0] * pow(lambdai, -1));
+    double lambdatil = std::max(lambdai * pow(overallLambda[0], -1.0), overallLambda[0] * pow(lambdai, -1.0));
     double eigentil = std::max(arma::as_scalar(eigen.t() * overalleigendual.col(0)), arma::as_scalar(overalleigendual.col(0).t() * eigen));
-    double ktil = std::max(kii * pow(k, -1), k * pow(kii, -1));
+    double ktil = std::max(kii * pow(k, -1.0), k * pow(kii, -1.0));
     stat += lambdatil * eigentil * ktil;
   }
 
