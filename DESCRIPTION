@@ -17,8 +17,9 @@ Suggests:
 Imports:
     lazyeval,
     stringr,
+    stringi,
     dplyr,
-    shiny,
-    Rcpp
+    Rcpp,
+    RcppArmadillo
 LinkingTo: Rcpp, RcppArmadillo
 SystemRequirements: C++11
