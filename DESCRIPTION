@@ -15,7 +15,7 @@ RoxygenNote: 6.0.1
 Suggests:
     covr
 Depends:
-    R (>= 3.4)
+    R (>= 3.3)
 Imports:
     lazyeval,
     dplyr,
