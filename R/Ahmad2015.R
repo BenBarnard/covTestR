@@ -6,9 +6,10 @@
 #'
 #' @export
 #'
-#' @references Ahmad, M. R. and Rosen, D. von. (2015). Tests for High-Dimensional Covariance 
-#' Matrices Using the Theory of U-statistics. Journal of Statistical Computation and Simulation, 
-#' 85(13), 2619-2631. \doi{10.1080/00949655.2014.948441}
+#' @references Ahmad, M. R. and Rosen, D. von. (2015). Tests for 
+#' High-Dimensional Covariance Matrices Using the Theory of U-statistics. 
+#' Journal of Statistical Computation and Simulation, 85(13), 2619-2631. 
+#' \href{http://doi.org/10.1080/00949655.2014.948441}{10.1080/00949655.2014.948441}
 #' 
 #' @examples Ahmad2015(as.matrix(iris[1:50, 1:3]))
 #' 

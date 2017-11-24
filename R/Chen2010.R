@@ -4,7 +4,9 @@
 #'
 #' @export
 #'
-#' @references Chen, S., et al. (2010). Tests for High-Dimensional Covariance Matrices. Journal of the American Statistical Association, 105(490):810-819. \doi{10.1198/jasa.2010.tm09560}
+#' @references Chen, S., et al. (2010). Tests for High-Dimensional 
+#' Covariance Matrices. Journal of the American Statistical Association, 
+#' 105(490):810-819. \href{http://doi.org/10.1198/jasa.2010.tm09560}{10.1198/jasa.2010.tm09560}
 #'
 #' @examples Chen2010(as.matrix(iris[1:50, 1:3]))
 #'

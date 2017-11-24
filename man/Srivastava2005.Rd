@@ -46,5 +46,7 @@ Srivastava2005(as.matrix(iris[1:50, 1:4]))
 
 }
 \references{
-Srivastava, M. S. (2005). Some Tests Concerning the Covariance Matrix in High Dimensional Data. Journal of the Japan Statistical Society, 35(2), 251-272. \doi{10.14490/jjss.35.251}
+Srivastava, M. S. (2005). Some Tests Concerning the 
+Covariance Matrix in High Dimensional Data. Journal of the Japan 
+Statistical Society, 35(2), 251-272. \href{http://doi.org/10.14490/jjss.35.251}{10.14490/jjss.35.251}
 }

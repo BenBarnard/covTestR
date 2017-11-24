@@ -51,7 +51,7 @@ names(iris_ls) <- irisSpecies
 Chaipitak2013(iris_ls)
 }
 \references{
-Schott, J (2001). Some Tests for the Equality of Covariance Matrices. 
-     Journal of Statistical Planniing and Inference. 94(1), 25-36. 
-     \doi{10.1016/S0378-3758(00)00209-3}
+Schott, J (2001). Some Tests for the Equality of Covariance
+Matrices. Journal of Statistical Planniing and Inference. 94(1), 25-36. 
+\href{http://doi.org/10.1016/S0378-3758(00)00209-3}{10.1016/S0378-3758(00)00209-3}
 }

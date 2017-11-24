@@ -51,5 +51,9 @@ names(iris_ls) <- irisSpecies
 Srivastava2007(iris_ls)
 }
 \references{
-Srivastava, M. S. (2007). Testing the equality of two covariance matrices and independence of two sub-vectors with fewer observations than the dimension. InInternational Conference on Advances in InterdisciplinaryStistics and Combinatorics, University of North Carolina at Greensboro, NC, USA.
+Srivastava, M. S. (2007). Testing the equality of two 
+covariance matrices and independence of two sub-vectors with fewer 
+observations than the dimension. InInternational Conference on 
+Advances in InterdisciplinaryStistics and Combinatorics, University 
+of North Carolina at Greensboro, NC, USA.
 }

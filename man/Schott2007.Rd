@@ -33,5 +33,8 @@ names(iris_ls) <- irisSpecies
 Schott2007(iris_ls)
 }
 \references{
-Schott, J. (2007). A test for the equality of covariance matrices when the dimension is large relative to the sample sizes. Computational Statistics & Data Analysis, 51(12):6535-6542. \doi{10.1016/j.csda.2007.03.004}
+Schott, J. (2007). A test for the equality of covariance 
+matrices when the dimension is large relative to the sample sizes. 
+Computational Statistics & Data Analysis, 51(12):6535-6542. 
+\href{http://doi.org/10.1016/j.csda.2007.03.004}{10.1016/j.csda.2007.03.004}
 }

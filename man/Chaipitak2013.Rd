@@ -52,5 +52,8 @@ Chaipitak2013(iris_ls)
 
 }
 \references{
-Chaipitak, S. and Chongcharoen, S. (2013). A test for testing the equality of two covariance matrices for high-dimensional data. Journal of Applied Sciences, 13(2):270-277. \doi{10.3923/jas.2013.270.277}
+Chaipitak, S. and Chongcharoen, S. (2013). A test for 
+testing the equality of two covariance matrices for high-dimensional 
+data. Journal of Applied Sciences, 13(2):270-277. 
+\href{http://doi.org/10.3923/jas.2013.270.277}{10.3923/jas.2013.270.277}
 }

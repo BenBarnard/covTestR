@@ -51,5 +51,8 @@ names(iris_ls) <- irisSpecies
 Srivastava2014(iris_ls)
 }
 \references{
-Srivastava, M., Yanagihara, H., and Kubokawa T. (2014). Tests for covariance matrices in high dimension with less sample size. Journal of Multivariate Analysis, 130:289-309. \doi{10.1016/j.jmva.2014.06.003}
+Srivastava, M., Yanagihara, H., and Kubokawa T. (2014). 
+Tests for covariance matrices in high dimension with less sample size. 
+Journal of Multivariate Analysis, 130:289-309. 
+\href{http://doi.org/10.1016/j.jmva.2014.06.003}{10.1016/j.jmva.2014.06.003}
 }
