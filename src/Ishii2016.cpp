@@ -23,9 +23,9 @@ double Ishii2016Stat(List x) {
   Apool.fill(0.0);
   arma::vec ns(len);
   List Ai(len);
-  List lambda(len);
+  arma::vec lambda(len);
   List eigendual(len);
-  List ki(len);
+  arma::vec ki(len);
 
  for(int i = 0; i < len; ++i){
     arma::mat mats = x[i];
@@ -71,10 +71,10 @@ double Ishii2016Stat(List x) {
   for(int i = 0; i < len; ++i){
     double lambdai = lambda[i];
     arma::vec eigen = eigendual[i];
-    double kii = ki[i];
+    double kiii = ki[i];
     double lambdatil = std::max(lambdai * pow(overallLambda[0], -1.0), overallLambda[0] * pow(lambdai, -1.0));
     double eigentil = std::max(arma::as_scalar(eigen.t() * overalleigendual.col(0)), arma::as_scalar(overalleigendual.col(0).t() * eigen));
-    double ktil = std::max(kii * pow(k, -1.0), k * pow(kii, -1.0));
+    double ktil = std::max(kiii * pow(k, -1.0), k * pow(kiii, -1.0));
     stat += lambdatil * eigentil * ktil;
   }
 
