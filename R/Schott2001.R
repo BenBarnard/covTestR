@@ -5,10 +5,6 @@
 #'
 #' @export
 #' @importFrom lazyeval lazy_dots
-#' @importFrom lazyeval lazy_eval
-#' @importFrom stringr str_detect
-#' @importFrom stringr str_replace
-#' @importFrom stats cov
 #' @importFrom stats pchisq
 #' 
 #' @references Schott, J (2001). Some Tests for the Equality of Covariance Matrices. 

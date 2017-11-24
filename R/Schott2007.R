@@ -6,10 +6,6 @@
 #'
 #' @export
 #' @importFrom lazyeval lazy_dots
-#' @importFrom lazyeval lazy_eval
-#' @importFrom stringr str_detect
-#' @importFrom stringr str_replace
-#' @importFrom stats cov
 #' @importFrom stats pchisq
 #'
 #' @references Schott, J. (2007). A test for the equality of covariance matrices when the dimension is large relative to the sample sizes. Computational Statistics & Data Analysis, 51(12):6535-6542. \doi{10.1016/j.csda.2007.03.004}

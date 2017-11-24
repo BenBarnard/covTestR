@@ -14,7 +14,6 @@ Chen2010 <- function(x, Sigma = "identity", ...){
 
 #' @export
 #' @keywords internal
-#' @importFrom stats cov
 #' @importFrom stats pnorm
 #'
 Chen2010.covariance <- function(x, Sigma = "identity", ...){

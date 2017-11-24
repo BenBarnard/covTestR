@@ -3,10 +3,6 @@
 #' @inherit homogeneityCovariances
 #'
 #' @importFrom lazyeval lazy_dots
-#' @importFrom lazyeval lazy_eval
-#' @importFrom stringr str_replace
-#' @importFrom stringr str_detect
-#' @importFrom stats cov
 #' @importFrom stats pchisq
 #'
 #' @export

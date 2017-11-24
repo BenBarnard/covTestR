@@ -18,7 +18,6 @@ Ahmad2015 <- function(x, Sigma = "identity", ...){
 
 #' @export
 #' @keywords internal
-#' @importFrom stats cov
 #' @importFrom stats pnorm
 #'
 Ahmad2015.covariance <- function(x, Sigma = "identity", ...){

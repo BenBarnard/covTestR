@@ -4,10 +4,6 @@
 #'
 #' @export
 #' @importFrom lazyeval lazy_dots
-#' @importFrom lazyeval lazy_eval
-#' @importFrom stringr str_detect
-#' @importFrom stringr str_replace
-#' @importFrom stats cov
 #' @importFrom stats pchisq
 #'
 #' @references Srivastava, M., Yanagihara, H., and Kubokawa T. (2014). Tests for covariance matrices in high dimension with less sample size. Journal of Multivariate Analysis, 130:289-309. \doi{10.1016/j.jmva.2014.06.003}

@@ -16,10 +16,7 @@ Suggests:
     covr
 Imports:
     lazyeval,
-    stringr,
-    stringi,
     dplyr,
-    Rcpp,
-    RcppArmadillo
+    Rcpp
 LinkingTo: Rcpp, RcppArmadillo
 SystemRequirements: C++11

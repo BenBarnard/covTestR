@@ -5,10 +5,6 @@
 #'
 #' @export
 #' @importFrom lazyeval lazy_dots
-#' @importFrom lazyeval lazy_eval
-#' @importFrom stringr str_detect
-#' @importFrom stringr str_replace
-#' @importFrom stats cov
 #' @importFrom stats pchisq
 #'
 #' @references Srivastava, M. and Yanagihara, H. (2010). Testing the equality of several covariance matrices with fewer observation that the dimension. Journal of Multivariate Analysis, 101(6):1319-1329. \doi{10.1016/j.jmva.2009.12.010}

@@ -15,7 +15,6 @@ Fisher2012 <- function(x, Sigma = "identity", ...){
 
 #' @export
 #' @keywords internal
-#' @importFrom stats cov
 #' @importFrom stats pnorm
 #'
 Fisher2012.covariance <- function(x, Sigma = "identity", ...){

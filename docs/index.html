@@ -58,49 +58,61 @@
     
     
 <div class="contents">
-<section id="covtestr" class="level1"><div class="page-header"><h1>covTestR</h1></div>
+<div id="covtestr" class="section level1">
+<div class="page-header"><h1 class="hasAnchor">
+<a href="#covtestr" class="anchor"></a>covTestR</h1></div>
 
-<section id="overview" class="level2"><h2>Overview</h2>
+<div id="overview" class="section level2">
+<h2 class="hasAnchor">
+<a href="#overview" class="anchor"></a>Overview</h2>
 <p>covTestR is an equality of covariance testing suite. Currently only equality of 2 and k group tests are available for high dimensional data. There are future plans for one sample tests for high dimensinal data, pretty print methods, and a wrapper function just to test.</p>
 <p>In developing covTests we found it useful to have it play nice with the “tidyverse.” At this point we have not thought of all the uses and combinations with these packages so if you think of something not currently implemented please file a minimal reproducible example on github.</p>
-</section><section id="installation" class="level2"><h2>Installation</h2>
+</div>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install the latest development version from github with</p>
-<pre class="sourceCode r" id="cb1"><code class="sourceCode r"><div class="sourceLine" id="cb1-1" data-line-number="1">
-<span class="cf">if</span> (<span class="kw">packageVersion</span>(<span class="st">"devtools"</span>) <span class="op">&lt;</span><span class="st"> </span><span class="fl">1.6</span>) {</div>
-<div class="sourceLine" id="cb1-2" data-line-number="2">  <span class="kw">install.packages</span>(<span class="st">"devtools"</span>)</div>
-<div class="sourceLine" id="cb1-3" data-line-number="3">}</div>
-<div class="sourceLine" id="cb1-4" data-line-number="4">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"benbarnard/covTestR"</span>)</div></code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="kw">packageVersion</span>(<span class="st">"devtools"</span>) <span class="op">&lt;</span><span class="st"> </span><span class="fl">1.6</span>) {
+  <span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
+}
+devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"benbarnard/covTestR"</span>)</code></pre></div>
 <p>If you encounter a clear bug, please file a minimal reproducible example on github.</p>
-</section><section id="example" class="level2"><h2>Example</h2>
+</div>
+<div id="example" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example" class="anchor"></a>Example</h2>
 <p>This is a basic example which shows you how to solve a common problem:</p>
-<pre class="sourceCode r" id="cb2"><code class="sourceCode r"><div class="sourceLine" id="cb2-1" data-line-number="1">
-<span class="kw">library</span>(tidyverse)</div></code></pre>
-<pre><code>## Loading tidyverse: ggplot2
-## Loading tidyverse: tibble
-## Loading tidyverse: tidyr
-## Loading tidyverse: readr
-## Loading tidyverse: purrr
-## Loading tidyverse: dplyr</code></pre>
-<pre><code>## Conflicts with tidy packages ----------------------------------------------</code></pre>
-<pre><code>## filter(): dplyr, stats
-## lag():    dplyr, stats</code></pre>
-<pre class="sourceCode r" id="cb6"><code class="sourceCode r"><div class="sourceLine" id="cb6-1" data-line-number="1">
-<span class="kw">library</span>(covTestR)</div>
-<div class="sourceLine" id="cb6-2" data-line-number="2"></div>
-<div class="sourceLine" id="cb6-3" data-line-number="3">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span>homogeneityCovariances</div></code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)</code></pre></div>
+<pre><code>## ── Attaching packages ─────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 2.2.1     ✔ purrr   0.2.4
+## ✔ tibble  1.3.4     ✔ dplyr   0.7.4
+## ✔ tidyr   0.7.2     ✔ stringr 1.2.0
+## ✔ readr   1.1.1     ✔ forcats 0.2.0</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(covTestR)
+
+iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span>homogeneityCovariances</code></pre></div>
 <pre><code>## 
 ##  Boxes' M Homogeneity of Covariance Matrices Test
 ## 
 ## data:  setosa, versicolor and virginica
 ## Chi-Squared = 146.66, df = 2550, p-value = 1
 ## alternative hypothesis: true difference in covariance matrices is not equal to 0</code></pre>
-</section></section>
+</div>
+</div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2 class="hasAnchor">
-<a href="#sidebar" class="anchor"></a>License</h2>
+<a href="#sidebar" class="anchor"></a>Links</h2>
+<ul class="list-unstyled">
+<li>Download from CRAN at <br><a href="https://cran.r-project.org/package=covTestR">https://​cran.r-project.org/​package=covTestR</a>
+</li>
+</ul>
+<h2>License</h2>
 <p><a href="https://www.r-project.org/Licenses/GPL-2">GPL-2</a></p>
 <h2>Developers</h2>
 <ul class="list-unstyled">

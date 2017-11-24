@@ -1,7 +1,5 @@
 #' Paste Wrapper
 #'
-#' @importFrom lazyeval lazy_dots
-#' @importFrom lazyeval lazy_eval
 #' @keywords internal
 past <- function(xmin, ..., xmax){
   x <- c(list(...))

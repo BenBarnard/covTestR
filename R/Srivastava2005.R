@@ -15,7 +15,6 @@ Srivastava2005 <- function(x, Sigma = "identity", ...){
 
 #' @export
 #' @keywords internal
-#' @importFrom stats cov
 #' @importFrom stats pchisq
 #'
 Srivastava2005.covariance <- function(x, Sigma = "identity", ...){

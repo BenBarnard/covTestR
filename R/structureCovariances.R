@@ -38,7 +38,6 @@ structureCovariances <- function(x, Sigma, ..., covTest = Nagao1973){
 
 #' @export
 #' @keywords internal
-#' @importFrom dplyr as_data_frame
 #' @importFrom stats setNames
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
