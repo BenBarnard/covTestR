@@ -1,7 +1,6 @@
 #include <RcppArmadillo.h>
 using namespace Rcpp;
 using namespace arma;
-
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::export]]
 double Chen2010Stat(arma::mat x) {

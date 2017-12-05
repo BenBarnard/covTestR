@@ -1,7 +1,6 @@
 #include <RcppArmadillo.h>
 using namespace Rcpp;
 using namespace arma;
-
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::export]]
 double Ahmad2015Stat(arma::mat x) {

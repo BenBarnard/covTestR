@@ -1,16 +1,6 @@
 #include <RcppArmadillo.h>
 using namespace Rcpp;
 using namespace arma;
-
-// This is a simple example of exporting a C++ function to R. You can
-// source this function into an R session using the Rcpp::sourceCpp
-// function (or via the Source button on the editor toolbar). Learn
-// more about Rcpp at:
-//
-//   http://www.rcpp.org/
-//   http://adv-r.had.co.nz/Rcpp.html
-//   http://gallery.rcpp.org/
-//
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::export]]
 double Ahmad2017Stat(List x) {
@@ -37,9 +27,12 @@ double Ahmad2017Stat(List x) {
       for(int r = k + 1; r < ni; ++r){
         for(int kp = r + 1; kp < ni; ++kp){
           for(int rp = kp + 1; rp < ni; ++rp){
-            E += as_scalar(pow((mati.row(k).t() - mati.row(r).t()).t() * (mati.row(kp).t() - mati.row(rp).t()), 2.0) +
-            pow((mati.row(k).t() - mati.row(kp).t()).t() * (mati.row(r).t() - mati.row(rp).t()), 2.0) +
-            pow((mati.row(k).t() - mati.row(rp).t()).t() * (mati.row(kp).t() - mati.row(r).t()), 2.0));;
+            double firstquad = arma::as_scalar((mati.row(k).t() - mati.row(r).t()).t() * (mati.row(kp).t() - mati.row(rp).t()));
+            double secquad = arma::as_scalar((mati.row(k).t() - mati.row(kp).t()).t() * (mati.row(r).t() - mati.row(rp).t()));
+            double thirdquad = arma::as_scalar((mati.row(k).t() - mati.row(rp).t()).t() * (mati.row(kp).t() - mati.row(r).t()));
+            E += pow(firstquad, 2.0) +
+            pow(secquad, 2.0) +
+            pow(thirdquad, 2.0);
             }
           }
         }
@@ -57,8 +50,9 @@ double Ahmad2017Stat(List x) {
         for(int r = k + 1; r < ni; ++r){
           for(int l = 0; l < nj; ++l) {
             for(int s = l + 1; s < nj; ++s){
-              Eijs += as_scalar(pow((mati.row(k).t() - mati.row(r).t()).t() *
-              (mati.row(l).t() - mati.row(s).t()), 2.0));;
+              double Eijfirstquad = arma::as_scalar((mati.row(k).t() - mati.row(r).t()).t() *
+                                              (mati.row(l).t() - mati.row(s).t()));
+              Eijs += pow(Eijfirstquad, 2.0);
             }
           }
         }
@@ -69,10 +63,10 @@ double Ahmad2017Stat(List x) {
       nijinv += 2.0 / ni * nj;
     }
   }
+  
+  double length = len;
 
-  arma::mat pooledCov = Apool / ntot;
-
-  double stat = (len - 1.0) * Ei - 2.0 * Eij * pow(4.0 * (pow(len - 1.0, 2.0) * ninv + nijinv), -0.5) / Eij;
+  double stat = (length - 1.0) * Ei - 2.0 * Eij * pow(4.0 * (pow(length - 1.0, 2.0) * ninv + nijinv), -0.5) / Eij;
 
   return stat;
 }

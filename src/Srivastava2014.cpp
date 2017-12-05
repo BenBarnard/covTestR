@@ -1,16 +1,6 @@
 #include <RcppArmadillo.h>
 using namespace Rcpp;
 using namespace arma;
-
-// This is a simple example of exporting a C++ function to R. You can
-// source this function into an R session using the Rcpp::sourceCpp
-// function (or via the Source button on the editor toolbar). Learn
-// more about Rcpp at:
-//
-//   http://www.rcpp.org/
-//   http://adv-r.had.co.nz/Rcpp.html
-//   http://gallery.rcpp.org/
-//
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::export]]
 double Srivastava2014Stat(List x) {
@@ -28,7 +18,7 @@ double Srivastava2014Stat(List x) {
  for(int i = 0; i < len; ++i){
     arma::mat mats = x[i];
     ns[i] = mats.n_rows;
-    int ps = mats.n_cols;
+    double ps = mats.n_cols;
     arma::mat covar = cov(mats);
     samplecov[i] = covar;
 
@@ -80,7 +70,8 @@ double Srivastava2014Stat(List x) {
     arma::mat sampcovi = samplecov[i];
     for(int j = i + 1; j < len; ++j){
       arma::mat sampcovj = samplecov[j];
-    stat += pow(a2i[i] + a2i[j] - (2.0 * pow(p, -1.0)) * trace(sampcovi * sampcovj), 2.0) *
+      double samplecovijtrace = trace(sampcovi * sampcovj);
+    stat += pow(a2i[i] + a2i[j] - (2.0 * pow(p, -1.0)) * samplecovijtrace, 2.0) *
       pow(theta, -2.0);
     }
   }
@@ -88,15 +79,6 @@ double Srivastava2014Stat(List x) {
   return stat;
 }
 
-// This is a simple example of exporting a C++ function to R. You can
-// source this function into an R session using the Rcpp::sourceCpp
-// function (or via the Source button on the editor toolbar). Learn
-// more about Rcpp at:
-//
-//   http://www.rcpp.org/
-//   http://adv-r.had.co.nz/Rcpp.html
-//   http://gallery.rcpp.org/
-//
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::export]]
 double Srivastava2014poolStat(List x) {
@@ -116,7 +98,7 @@ double Srivastava2014poolStat(List x) {
   for(int i = 0; i < len; ++i){
     arma::mat mats = x[i];
     ns[i] = mats.n_rows;
-    int ps = mats.n_cols;
+    double ps = mats.n_cols;
     arma::mat covar = cov(mats);
     samplecov[i] = covar;
     arma::mat A = covar * (ns[i] - 1.0);
@@ -170,8 +152,8 @@ double Srivastava2014poolStat(List x) {
   for(int i = 0; i < len; ++i){
     arma::mat sampcovi = samplecov[i];
     double ai = a2i[i];
-
-    stat += pow(pow(theta, -1.0) *  (ai + a2 - 2.0 * pow(p, -1.0) * trace(sampcovi * pooledCov)), 2.0);
+    double samplecovipooledtrace = trace(sampcovi * pooledCov);
+    stat += pow(pow(theta, -1.0) *  (ai + a2 - 2.0 * pow(p, -1.0) * samplecovipooledtrace), 2.0);
   }
 
   return stat;

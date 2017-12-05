@@ -1,16 +1,6 @@
 #include <RcppArmadillo.h>
 using namespace Rcpp;
 using namespace arma;
-
-// This is a simple example of exporting a C++ function to R. You can
-// source this function into an R session using the Rcpp::sourceCpp
-// function (or via the Source button on the editor toolbar). Learn
-// more about Rcpp at:
-//
-//   http://www.rcpp.org/
-//   http://adv-r.had.co.nz/Rcpp.html
-//   http://gallery.rcpp.org/
-//
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::export]]
 double Srivastava2007Stat(List x) {
@@ -26,59 +16,63 @@ double Srivastava2007Stat(List x) {
 
  for(int i = 0; i < len; ++i){
     arma::mat mats = x[i];
-    int n = mats.n_rows;
+    double n = mats.n_rows;
     ns[i] = n;
-    int ps = mats.n_cols;
+    double ps = mats.n_cols;
     arma::mat covar = cov(mats);
     samplecov[i] = covar;
 
 
-    a2i[i] = pow(n - 1, 2) *
-      pow(ps * (n - 2) * (n + 1), -1)*
-      (trace(covar * covar) - pow(n - 1, -1) * pow(trace(covar), 2));
+    double covar2trace = trace(covar * covar);
+    double covartrace = trace(covar);
+    a2i[i] = pow(n - 1.0, 2.0) *
+      pow(ps * (n - 2.0) * (n + 1.0), -1.0)*
+      (covar2trace - pow(n - 1.0, -1.0) * pow(covartrace, 2.0));
 
-    ntot += n - 1;
-    Apool += covar * (n - 1);
+    ntot += n - 1.0;
+    Apool += covar * (n - 1.0);
   }
 
  arma::mat pooledCov = Apool / ntot;
- double a2 = pow(ntot, 2) *
-   pow(p * (ntot - 1) * (ntot + 2), -1) *
-   (trace(pooledCov * pooledCov) - pow(ntot, -1) *
-   pow(trace(pooledCov), 2));
+ double pooledcov2trace = trace(pooledCov * pooledCov);
+ double pooledcovtrace = trace(pooledCov);
+ double a2 = pow(ntot, 2.0) *
+   pow(p * (ntot - 1.0) * (ntot + 2.0), -1.0) *
+   (pooledcov2trace - pow(ntot, -1.0) *
+   pow(pooledcovtrace, 2.0));
 
-  double a1 = trace(pooledCov) * pow(p, -1);
+  double a1 = pooledcovtrace * pow(p, -1.0);
 
-  double c0 = pow(ntot, 4) + 6 * pow(ntot, 3) + 21 * pow(ntot, 2) + 18 * ntot;
-  double c1 = 4 * pow(ntot, 3) + 12 * pow(ntot, 2) + 18 * ntot;
-  double c2 = 6 * pow(ntot, 2) + 4 * ntot;
-  double c3 = 2 * pow(ntot, 3) + 5 * pow(ntot, 2) + 7 * ntot;
+  double c0 = pow(ntot, 4.0) + 6.0 * pow(ntot, 3.0) + 21.0 * pow(ntot, 2.0) + 18.0 * ntot;
+  double c1 = 4.0 * pow(ntot, 3.0) + 12.0 * pow(ntot, 2.0) + 18.0 * ntot;
+  double c2 = 6.0 * pow(ntot, 2.0) + 4.0 * ntot;
+  double c3 = 2.0 * pow(ntot, 3.0) + 5.0 * pow(ntot, 2.0) + 7.0 * ntot;
 
-  double a4 = pow(c0, -1) *
-    (pow(p, -1) * trace(Apool * Apool * Apool * Apool) -
+  double a4 = pow(c0, -1.0) *
+    (pow(p, -1.0) * trace(Apool * Apool * Apool * Apool) -
     p * c1 * a1 -
-    pow(p, 2) * c2 * pow(a1, 2) * a2 -
-    p * c3 * pow(a2, 2) -
-    ntot * pow(p, 3) * pow(a1, 4));
+    pow(p, 2.0) * c2 * pow(a1, 2.0) * a2 -
+    p * c3 * pow(a2, 2.0) -
+    ntot * pow(p, 3.0) * pow(a1, 4.0));
 
  arma::vec eta2i(len);
  double abarnum = 0;
  double abardem = 0;
 
  for(int i = 0; i < len; ++i){
-   eta2i[i] = 4 * pow(ns[i] - 1, -2) * pow(a2, 2) *
-     (1 + 2 * (ns[i] - 1) * a4 *
-     pow(p * pow(a2, 2), -1));
+   eta2i[i] = 4.0 * pow(ns[i] - 1.0, -2.0) * pow(a2, 2.0) *
+     (1.0 + 2.0 * (ns[i] - 1.0) * a4 *
+     pow(p * pow(a2, 2.0), -1.0));
 
-   abarnum += a2i[i] * pow(eta2i[i], -1);
-   abardem += pow(eta2i[i], -1);
+   abarnum += a2i[i] * pow(eta2i[i], -1.0);
+   abardem += pow(eta2i[i], -1.0);
  }
 
  double abar = abarnum / abardem;
 
   double stat = 0;
   for(int i = 0; i < len; ++i){
-    stat += pow(a2i[i] - abar, 2) * pow(eta2i[i], -1);
+    stat += pow(a2i[i] - abar, 2.0) * pow(eta2i[i], -1.0);
   }
 
   return stat;

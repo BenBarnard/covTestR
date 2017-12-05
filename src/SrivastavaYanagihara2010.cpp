@@ -1,16 +1,6 @@
 #include <RcppArmadillo.h>
 using namespace Rcpp;
 using namespace arma;
-
-// This is a simple example of exporting a C++ function to R. You can
-// source this function into an R session using the Rcpp::sourceCpp
-// function (or via the Source button on the editor toolbar). Learn
-// more about Rcpp at:
-//
-//   http://www.rcpp.org/
-//   http://adv-r.had.co.nz/Rcpp.html
-//   http://gallery.rcpp.org/
-//
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::export]]
 double SrivastavaYanagihara2010Stat(List x) {
@@ -29,15 +19,17 @@ double SrivastavaYanagihara2010Stat(List x) {
     arma::mat mats = x[i];
     double n = mats.n_rows;
     ns[i] = n;
-    int ps = mats.n_cols;
+    double ps = mats.n_cols;
     arma::mat covar = cov(mats);
     samplecov[i] = covar;
 
+    double covartrace = trace(covar);
+    double covar2trace = trace(covar * covar);
     a2i[i] = pow(n - 1.0, 2.0) *
       pow(ps * (n - 2.0) * (n + 1.0), -1.0) *
-      (trace(covar * covar) - pow(n - 1.0, -1.0) * pow(trace(covar), 2.0));
+      (covar2trace - pow(n - 1.0, -1.0) * pow(covartrace, 2.0));
 
-    a1i[i] = trace(covar) * pow(ps, -1.0);
+    a1i[i] = covartrace * pow(ps, -1.0);
 
     ntot += n - 1.0;
     Apool += covar * (n - 1.0);
@@ -45,12 +37,14 @@ double SrivastavaYanagihara2010Stat(List x) {
 
   arma::mat pooledCov = Apool / ntot;
 
+ double pooledcov2trace = trace(pooledCov * pooledCov);
+ double pooledcovtrace = trace(pooledCov);
  double a2 = pow(ntot, 2.0) *
    pow(p * (ntot - 1.0) * (ntot + 2.0), -1.0) *
-   (trace(pooledCov * pooledCov) - pow(ntot, -1.0) *
-   pow(trace(pooledCov), 2.0));
+   (pooledcov2trace - pow(ntot, -1.0) *
+   pow(pooledcovtrace, 2.0));
 
-  double a1 = trace(pooledCov) * pow(p, -1.0);
+  double a1 = pooledcovtrace * pow(p, -1.0);
 
   double a3 = pow(ntot * (pow(ntot, 2.0) + 30 * ntot + 4.0), -10) *
     (trace(Apool * Apool * Apool) * pow(p, -1.0) -

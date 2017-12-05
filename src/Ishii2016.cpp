@@ -1,16 +1,6 @@
 #include <RcppArmadillo.h>
 using namespace Rcpp;
 using namespace arma;
-
-// This is a simple example of exporting a C++ function to R. You can
-// source this function into an R session using the Rcpp::sourceCpp
-// function (or via the Source button on the editor toolbar). Learn
-// more about Rcpp at:
-//
-//   http://www.rcpp.org/
-//   http://adv-r.had.co.nz/Rcpp.html
-//   http://gallery.rcpp.org/
-//
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::export]]
 double Ishii2016Stat(List x) {
@@ -31,7 +21,7 @@ double Ishii2016Stat(List x) {
     arma::mat mats = x[i];
     double nsi = mats.n_rows;
     ns[i] = nsi;
-    int ps = mats.n_cols;
+    double ps = mats.n_cols;
     arma::mat diag(ns[i], ns[i]);
     diag.fill(0);
     diag.eye(ns[i], ns[i]);
