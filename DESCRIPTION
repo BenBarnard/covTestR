@@ -1,7 +1,7 @@
 Package: covTestR
 Type: Package
 Title: Covariance Matrix Tests
-Version: 0.1.2.9000
+Version: 0.1.2.9001
 Authors@R: c(person("Ben", "Barnard", email = "ben_barnard@outlook.com", role = c("aut", "cre")),
   person("Dean", "Young", email = "dean_young@baylor.edu", role = c("aut")))
 Maintainer: Ben Barnard <ben_barnard@outlook.com>
