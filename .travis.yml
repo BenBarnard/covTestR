@@ -8,11 +8,25 @@ os:
   - osx
 r:
   - oldrel
-  - release
   - devel
-after_success:
-  - Rscript -e 'covr::codecov()'
 matrix:
+  include:
+    - r: release
+      os: linux
+      after_success:
+       - Rscript -e 'devtools::install_github("r-lib/pkgdown")'
+       - Rscript -e 'pkgdown::build_site()'
+       - Rscript -e 'covr::codecov()'
+      deploy:
+        provider: pages
+        skip_cleanup: true
+        github_token: $GITHUB_PAT
+        on:
+          branch: master
+        local_dir: ${TRAVIS_BUILD_DIR}/docs
+        target_branch: master-web
+    - r: release
+      os: osx
   exclude:
     - r: devel
       os: osx
