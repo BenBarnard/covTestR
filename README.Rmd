@@ -1,7 +1,7 @@
 # covTestR
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/covTestR)](https://cran.r-project.org/package=covTestR)
-[![CRAN_Downloads_Badge](http://cranlogs.r-pkg.org/badges/grand-total/covTestR)](https://cran.r-project.org/package=covTestR)
+[![CRAN_Downloads_Badge](http://cranlogs.r-pkg.org/badges/grand-total/covTestR)](http://cranlogs.r-pkg.org/badges/grand-total/covTestR)
 [![codecov](https://codecov.io/gh/BenBarnard/covTestR/branch/devel/graph/badge.svg)](https://codecov.io/gh/BenBarnard/covTestR)
 [![Travis-CI Build Status](https://travis-ci.org/BenBarnard/covTestR.svg?branch=devel)](https://travis-ci.org/BenBarnard/covTestR)
 
