@@ -116,6 +116,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// Srivastava2005Stat
+double Srivastava2005Stat(arma::mat x);
+RcppExport SEXP _covTestR_Srivastava2005Stat(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(Srivastava2005Stat(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 // Srivastava2007Stat
 double Srivastava2007Stat(List x);
 RcppExport SEXP _covTestR_Srivastava2007Stat(SEXP xSEXP) {
@@ -172,6 +183,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_covTestR_Schott2001Stat", (DL_FUNC) &_covTestR_Schott2001Stat, 1},
     {"_covTestR_Schott2007Stat", (DL_FUNC) &_covTestR_Schott2007Stat, 1},
     {"_covTestR_Schott2007pooledStat", (DL_FUNC) &_covTestR_Schott2007pooledStat, 1},
+    {"_covTestR_Srivastava2005Stat", (DL_FUNC) &_covTestR_Srivastava2005Stat, 1},
     {"_covTestR_Srivastava2007Stat", (DL_FUNC) &_covTestR_Srivastava2007Stat, 1},
     {"_covTestR_Srivastava2014Stat", (DL_FUNC) &_covTestR_Srivastava2014Stat, 1},
     {"_covTestR_Srivastava2014poolStat", (DL_FUNC) &_covTestR_Srivastava2014poolStat, 1},

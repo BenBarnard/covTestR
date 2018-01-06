@@ -34,7 +34,7 @@ Srivastava2005.covariance <- function(x, Sigma = "identity", ...){
     S_ <- t(x_) %*% x_
   }
 
-  statistic <- Srivastava2005_(n, p, S_)
+  statistic <- Srivastava2005Stat(S_)
   names(statistic) <- "Standard Normal"
 
   parameter <- c(0, 1)
@@ -83,7 +83,7 @@ Srivastava2005.matrix <- function(x, Sigma = "identity", ...){
     S_ <- t(x_) %*% x_
   }
 
-  statistic <- Srivastava2005_(n, p, S_)
+  statistic <- Srivastava2005Stat(S_)
   names(statistic) <- "Standard Normal"
 
   parameter <- c(0, 1)
@@ -110,10 +110,4 @@ Srivastava2005.matrix <- function(x, Sigma = "identity", ...){
               method = "Srivastava 2005 Test of Covariance Matrix Structure")
   class(obj) <- "htest"
   obj
-}
-
-#' @keywords internal
-Srivastava2005_ <- function(n, p, S_){
-  n * ((n ^ 2 / (p * (n - 1) * (n + 2))) *
-         (tr(S_ %*% S_) - tr(S_) ^ 2 / n) - 2 * tr(S_) / p + 1) / 2
 }
