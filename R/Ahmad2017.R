@@ -23,9 +23,15 @@
 #' 
 #' Ahmad2017(iris_ls)
 Ahmad2017 <- function(x, ...){
-
+  
   ls <- lazy_dots(...)
-  matrix_ls <- x
+  
+  samples <- order(sapply(x, function(dat){
+    nrow(dat)
+  }), decreasing = TRUE)
+  
+  matrix_ls <- x[samples]
+  
   statistic <- Ahmad2017Stat(matrix_ls)
 
   xmin <- names(matrix_ls[1])

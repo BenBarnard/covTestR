@@ -41,7 +41,7 @@ Srivastava2005.covariance <- function(x, Sigma = "identity", ...){
   names(parameter) <- c("Mean", "Variance")
 
   null.value <- 0
-  names(null.value) <- "difference between the Sample Covariance Matrix and the Null Covariance Matrix Structure"
+  names(null.value) <- "difference between the Sample \nCovariance Matrix and the Null Covariance Matrix Structure\n"
 
   p.value <- 1 - pnorm(abs(statistic))
 
@@ -90,7 +90,7 @@ Srivastava2005.matrix <- function(x, Sigma = "identity", ...){
   names(parameter) <- c("Mean", "Variance")
 
   null.value <- 0
-  names(null.value) <- "difference between the Sample Covariance Matrix and the Null Covariance Matrix Structure"
+  names(null.value) <- "difference between the Sample \nCovariance Matrix and the Null Covariance Matrix Structure\n"
   
   p.value <- 1 - pnorm(abs(statistic))
 
