@@ -4,7 +4,7 @@
 \alias{structureCovariances}
 \title{Structure of a Covariance Matrix Test}
 \usage{
-structureCovariances(x, Sigma, ..., covTest = Nagao1973)
+structureCovariances(x, Sigma = "identity", ..., covTest = Nagao1973)
 }
 \arguments{
 \item{x}{data}
