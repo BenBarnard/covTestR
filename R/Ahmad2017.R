@@ -1,7 +1,3 @@
-#' Test of Homogeneity of Covariance Matrices given by Ahmad 2017
-#'
-#' @inherit homogeneityCovariances
-#'
 #' @importFrom lazyeval lazy_dots
 #' @importFrom stats pnorm
 #'
@@ -11,17 +7,7 @@
 #' of large-dimensional covariance matrices. Journal of Statistical 
 #' Theory and Practice, 11(4):731-745. 
 #' \href{http://doi.org/10.1080/15598608.2017.1308895}{10.1080/15598608.2017.1308895}
-#'
-#' @examples 
-#' irisSpecies <- unique(iris$Species)
-#' 
-#' iris_ls <- lapply(irisSpecies, 
-#'     function(x){as.matrix(iris[iris$Species == x, 1:4])}
-#'                  )
-#'                  
-#' names(iris_ls) <- irisSpecies
-#' 
-#' Ahmad2017(iris_ls)
+#' @rdname homogeneityStatistics
 Ahmad2017 <- function(x, ...){
   
   ls <- lazy_dots(...)

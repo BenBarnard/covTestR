@@ -1,7 +1,3 @@
-#' Test of Homogeneity of Covariance Matrices given by Srivastava 2007
-#'
-#' @inherit homogeneityCovariances
-#'
 #' @export
 #'
 #' @importFrom lazyeval lazy_dots
@@ -12,17 +8,7 @@
 #' observations than the dimension. InInternational Conference on 
 #' Advances in InterdisciplinaryStistics and Combinatorics, University 
 #' of North Carolina at Greensboro, NC, USA.
-#'
-#' @examples 
-#' irisSpecies <- unique(iris$Species)
-#' 
-#' iris_ls <- lapply(irisSpecies, 
-#'     function(x){as.matrix(iris[iris$Species == x, 1:4])}
-#'                  )
-#'                  
-#' names(iris_ls) <- irisSpecies
-#' 
-#' Srivastava2007(iris_ls)
+#' @rdname homogeneityStatistics
 Srivastava2007 <- function(x, ...){
 
   ls <- lazy_dots(...)

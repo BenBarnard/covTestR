@@ -1,8 +1,3 @@
-#' Test of Equality of Covariances given by Srivastava and Yanagihara 2010
-#'
-#' @inherit homogeneityCovariances
-#'
-#'
 #' @export
 #' @importFrom lazyeval lazy_dots
 #' @importFrom stats pchisq
@@ -11,17 +6,7 @@
 #' equality of several covariance matrices with fewer observation that 
 #' the dimension. Journal of Multivariate Analysis, 101(6):1319-1329. 
 #' \href{http://doi.org/10.1016/j.jmva.2009.12.010}{10.1016/j.jmva.2009.12.010}
-#'
-#' @examples 
-#' irisSpecies <- unique(iris$Species)
-#' 
-#' iris_ls <- lapply(irisSpecies, 
-#'     function(x){as.matrix(iris[iris$Species == x, 1:4])}
-#'                  )
-#'                  
-#' names(iris_ls) <- irisSpecies
-#' 
-#' Chaipitak2013(iris_ls)
+#' @rdname homogeneityStatistics
 SrivastavaYanagihara2010 <- function(x, ...){
 
   ls <- lazy_dots(...)

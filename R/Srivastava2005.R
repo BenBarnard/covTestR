@@ -1,16 +1,9 @@
-#' Test of Structure of a Covariance Matrix given by Srivastava 2005
-#'
-#' @inherit structureCovariances
-#'
-#'
 #' @export
 #'
 #' @references Srivastava, M. S. (2005). Some Tests Concerning the 
 #' Covariance Matrix in High Dimensional Data. Journal of the Japan 
 #' Statistical Society, 35(2), 251-272. \href{http://doi.org/10.14490/jjss.35.251}{10.14490/jjss.35.251}
-#'
-#' @examples Srivastava2005(as.matrix(iris[1:50, 1:4]))
-#'
+#' @rdname structureStatistics
 Srivastava2005 <- function(x, Sigma = "identity", ...){
   UseMethod("Srivastava2005")
 }

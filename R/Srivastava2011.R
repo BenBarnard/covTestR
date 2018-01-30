@@ -1,16 +1,10 @@
-#' Test of Structure of a Covariance Matrix given by Srivastava et al. 2011.
-#'
-#' @inherit structureCovariances
-#'
 #' @export
 #'
 #' @references Srivastava, M. S., Kollo, T., and Rosen, D. von. (2011). 
 #' Some Tests for the Covariance Matrix with Fewer Observations then 
 #' the Dimension Under Non-normality. Journal of Multivariate Analysis, 
 #' 102(6), 1090-1103. \href{http://doi.org/10.1016/j.jmva.2011.03.003}{10.1016/j.jmva.2011.03.003}
-#'
-#' @examples Srivastava2011(as.matrix(iris[1:50, 1:4]))
-#'
+#' @rdname structureStatistics
 Srivastava2011 <- function(x, Sigma = "identity", ...){
   UseMethod("Srivastava2011")
 }

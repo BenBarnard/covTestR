@@ -1,4 +1,4 @@
-#' Homogeneity of Covariance Matrices Test
+#' Test Wrapper for Homogeneity of Covariance Matrices
 #' 
 #' Performs 2 and k sample homogeneity of covariance matrices test using test, 
 #' 'covTest.'
@@ -31,6 +31,7 @@
 #'   for the specific \code{covTest} functions.
 #'
 #' @export
+#' @family Testing for Homogeneity of Covariance Matrices
 #'
 #' @examples homogeneityCovariances(iris, group = Species)
 homogeneityCovariances <- function(x, ..., covTest = BoxesM){

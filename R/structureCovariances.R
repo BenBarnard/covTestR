@@ -1,4 +1,4 @@
-#' Structure of a Covariance Matrix Test
+#' Test Wrapper for Structure of a Covariance Matrices
 #' 
 #' Performs a structure of a covariance matrix test.
 #'
@@ -29,7 +29,7 @@
 #'
 #' @details The \code{\link{structureCovariances}} function is a wrapper function that formats the data 
 #'   for the specific \code{covTest} functions.
-#'
+#' @family Testing for Structure of Covariance Matrices  
 #' @export
 #'
 structureCovariances <- function(x, Sigma = "identity", ..., covTest = Nagao1973){

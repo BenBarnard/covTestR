@@ -12,6 +12,8 @@ Description: Testing functions for Covariance Matrices. These tests include high
 License: GPL-2
 LazyData: TRUE
 RoxygenNote: 6.0.1
+URL: https://covTestR.bearstatistics.com
+BugReports: https://github.com/BenBarnard/covTestR/issues
 Suggests:
     covr
 Depends:

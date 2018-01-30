@@ -1,7 +1,3 @@
-#' Test of Homogeneity of Covariance Matrices given by Chaipitak and Chongcharoen 2013
-#'
-#' @inherit homogeneityCovariances
-#'
 #' @importFrom lazyeval lazy_dots
 #' @importFrom stats pchisq
 #'
@@ -11,18 +7,7 @@
 #' testing the equality of two covariance matrices for high-dimensional 
 #' data. Journal of Applied Sciences, 13(2):270-277. 
 #' \href{http://doi.org/10.3923/jas.2013.270.277}{10.3923/jas.2013.270.277}
-#'
-#' @examples 
-#' irisSpecies <- unique(iris$Species)
-#' 
-#' iris_ls <- lapply(irisSpecies, 
-#'     function(x){as.matrix(iris[iris$Species == x, 1:4])}
-#'                  )
-#'                  
-#' names(iris_ls) <- irisSpecies
-#' 
-#' Chaipitak2013(iris_ls)
-#'
+#' @rdname homogeneityStatistics
 Chaipitak2013 <- function(x, ...){
 
   ls <- lazy_dots(...)
