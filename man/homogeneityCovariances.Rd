@@ -2,7 +2,7 @@
 % Please edit documentation in R/homogeneityCovariances.R
 \name{homogeneityCovariances}
 \alias{homogeneityCovariances}
-\title{Homogeneity of Covariance Matrices Test}
+\title{Test Wrapper for Homogeneity of Covariance Matrices}
 \usage{
 homogeneityCovariances(x, ..., covTest = BoxesM)
 }
@@ -44,4 +44,7 @@ The \code{\link{homogeneityCovariances}} function is a wrapper function that for
 }
 \examples{
 homogeneityCovariances(iris, group = Species)
+}
+\seealso{
+Other Testing for Homogeneity of Covariance Matrices: \code{\link{Ahmad2017}}
 }

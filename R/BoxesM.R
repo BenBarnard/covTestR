@@ -1,19 +1,5 @@
-#' Test of Homogeneity of Covariance Matrices Box's M
-#'
-#' @inherit homogeneityCovariances
-#'
 #' @export
-#'
-#' @examples 
-#' irisSpecies <- unique(iris$Species)
-#' 
-#' iris_ls <- lapply(irisSpecies, 
-#'     function(x){as.matrix(iris[iris$Species == x, 1:4])}
-#'                  )
-#'                  
-#' names(iris_ls) <- irisSpecies
-#' 
-#' BoxesM(iris_ls)
+#' @rdname homogeneityStatistics
 BoxesM <- function(x, ...){
   ls <- lazy_dots(...)
   matrix_ls <- x

@@ -1,7 +1,3 @@
-#' Test of Homogeneity of Covariance Matrices given by Srivastava et al. 2014
-#'
-#' @inherit homogeneityCovariances
-#'
 #' @export
 #' @importFrom lazyeval lazy_dots
 #' @importFrom stats pchisq
@@ -10,17 +6,7 @@
 #' Tests for covariance matrices in high dimension with less sample size. 
 #' Journal of Multivariate Analysis, 130:289-309. 
 #' \href{http://doi.org/10.1016/j.jmva.2014.06.003}{10.1016/j.jmva.2014.06.003}
-#'
-#' @examples 
-#' irisSpecies <- unique(iris$Species)
-#' 
-#' iris_ls <- lapply(irisSpecies, 
-#'     function(x){as.matrix(iris[iris$Species == x, 1:4])}
-#'                  )
-#'                  
-#' names(iris_ls) <- irisSpecies
-#' 
-#' Srivastava2014(iris_ls)
+#' @rdname homogeneityStatistics
 Srivastava2014 <- function(x, ...){
 
   ls <- lazy_dots(...)

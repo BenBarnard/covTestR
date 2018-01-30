@@ -1,9 +1,3 @@
-#' Test of Homogeneity of Covariance Matrices given by Schott 2007
-#'
-#' @inherit homogeneityCovariances
-#'
-#' @return Test statistic of the hypothesis test
-#'
 #' @export
 #' @importFrom lazyeval lazy_dots
 #' @importFrom stats pchisq
@@ -12,17 +6,7 @@
 #' matrices when the dimension is large relative to the sample sizes. 
 #' Computational Statistics & Data Analysis, 51(12):6535-6542. 
 #' \href{http://doi.org/10.1016/j.csda.2007.03.004}{10.1016/j.csda.2007.03.004}
-#'
-#' @examples 
-#' irisSpecies <- unique(iris$Species)
-#' 
-#' iris_ls <- lapply(irisSpecies, 
-#'     function(x){as.matrix(iris[iris$Species == x, 1:4])}
-#'                  )
-#'                  
-#' names(iris_ls) <- irisSpecies
-#' 
-#' Schott2007(iris_ls)
+#' @rdname homogeneityStatistics
 Schott2007 <- function(x, ...) {
 
   ls <- lazy_dots(...)

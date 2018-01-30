@@ -2,9 +2,9 @@
 % Please edit documentation in R/structureCovariances.R
 \name{structureCovariances}
 \alias{structureCovariances}
-\title{Structure of a Covariance Matrix Test}
+\title{Test Wrapper for Structure of a Covariance Matrices}
 \usage{
-structureCovariances(x, Sigma, ..., covTest = Nagao1973)
+structureCovariances(x, Sigma = "identity", ..., covTest = Nagao1973)
 }
 \arguments{
 \item{x}{data}
@@ -42,4 +42,7 @@ Performs a structure of a covariance matrix test.
 \details{
 The \code{\link{structureCovariances}} function is a wrapper function that formats the data 
   for the specific \code{covTest} functions.
+}
+\seealso{
+Other Testing for Structure of Covariance Matrices: \code{\link{Ahmad2015}}
 }

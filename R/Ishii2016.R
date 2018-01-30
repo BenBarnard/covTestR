@@ -1,27 +1,12 @@
-#' Test of Homogeneity of Covariance Matrices given by Ishii and Aoshima 2016
-#'
-#' @inherit homogeneityCovariances
-#'
 #' @references Ishii, A., Yata, K., and Aoshima, M. (2016). Asymptotic 
 #' properties of the first pricipal component and equality tests of 
 #' covariance matrices in high-dimesion, low-sample-size context. Journal 
 #' of Statistical Planning and Inference, 170:186-199. 
 #' \href{http://doi.org/10.1016/j.jspi.2015.10.007}{10.1016/j.jspi.2015.10.007}
-#'
+#' @rdname homogeneityStatistics
 #' @export
 #' @importFrom lazyeval lazy_dots
 #' @importFrom stats pf
-#'
-#' @examples 
-#' irisSpecies <- unique(iris$Species)
-#' 
-#' iris_ls <- lapply(irisSpecies, 
-#'     function(x){as.matrix(iris[iris$Species == x, 1:4])}
-#'                  )
-#'                  
-#' names(iris_ls) <- irisSpecies
-#' 
-#' Ishii2016(iris_ls)
 Ishii2016 <- function(x, ...) {
 
   ls <- lazy_dots(...)

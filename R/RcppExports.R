@@ -41,6 +41,10 @@ Schott2007pooledStat <- function(x) {
     .Call(`_covTestR_Schott2007pooledStat`, x)
 }
 
+Srivastava2005Stat <- function(x) {
+    .Call(`_covTestR_Srivastava2005Stat`, x)
+}
+
 Srivastava2007Stat <- function(x) {
     .Call(`_covTestR_Srivastava2007Stat`, x)
 }

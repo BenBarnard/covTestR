@@ -1,8 +1,3 @@
-#' Test of Homogeneity of Covariance Matrices given by Schott 2001
-#'
-#' @inherit homogeneityCovariances
-#'
-#'
 #' @export
 #' @importFrom lazyeval lazy_dots
 #' @importFrom stats pchisq
@@ -10,17 +5,7 @@
 #' @references Schott, J (2001). Some Tests for the Equality of Covariance
 #' Matrices. Journal of Statistical Planniing and Inference. 94(1), 25-36. 
 #' \href{http://doi.org/10.1016/S0378-3758(00)00209-3}{10.1016/S0378-3758(00)00209-3}
-#'
-#' @examples 
-#' irisSpecies <- unique(iris$Species)
-#' 
-#' iris_ls <- lapply(irisSpecies, 
-#'     function(x){as.matrix(iris[iris$Species == x, 1:4])}
-#'                  )
-#'                  
-#' names(iris_ls) <- irisSpecies
-#' 
-#' Chaipitak2013(iris_ls)
+#' @rdname homogeneityStatistics
 Schott2001 <- function(x, ...) {
 
   ls <- lazy_dots(...)

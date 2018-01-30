@@ -1,7 +1,7 @@
 Package: covTestR
 Type: Package
 Title: Covariance Matrix Tests
-Version: 0.1.2
+Version: 0.1.2.9004
 Authors@R: c(person("Ben", "Barnard", email = "ben_barnard@outlook.com", role = c("aut", "cre")),
   person("Dean", "Young", email = "dean_young@baylor.edu", role = c("aut")))
 Maintainer: Ben Barnard <ben_barnard@outlook.com>
@@ -12,6 +12,8 @@ Description: Testing functions for Covariance Matrices. These tests include high
 License: GPL-2
 LazyData: TRUE
 RoxygenNote: 6.0.1
+URL: https://covTestR.bearstatistics.com
+BugReports: https://github.com/BenBarnard/covTestR/issues
 Suggests:
     covr
 Depends:

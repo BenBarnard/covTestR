@@ -1,4 +1,4 @@
-#' Homogeneity of Covariance Matrices Test
+#' Test Wrapper for Homogeneity of Covariance Matrices
 #' 
 #' Performs 2 and k sample homogeneity of covariance matrices test using test, 
 #' 'covTest.'
@@ -31,6 +31,7 @@
 #'   for the specific \code{covTest} functions.
 #'
 #' @export
+#' @family Testing for Homogeneity of Covariance Matrices
 #'
 #' @examples homogeneityCovariances(iris, group = Species)
 homogeneityCovariances <- function(x, ..., covTest = BoxesM){
@@ -48,7 +49,8 @@ homogeneityCovariances.data.frame <- function(x, ..., covTest = BoxesM){
   group <- as.character(unique(x[[paste(dots$group$expr)]]))
   dots <- dots[!("group" %in% names(dots))]
   x <- setNames(lapply(group, function(y){
-    as.matrix(x[x[groupname] == y,][names(x) != groupname])
+    x_group <- x[x[groupname] == y,][names(x) != groupname]
+    x_mat <- matrix(as.numeric(unlist(x_group)), nrow = nrow(x_group))
   }), group)
    mat <- do.call(covTest, c(x = list(x), lazy_eval(dots)))
    mat
@@ -66,7 +68,8 @@ homogeneityCovariances.grouped_df <- function(x, ..., covTest = BoxesM){
   group <- as.character(groups[,1])
   groupname <- names(groups)
   x <- setNames(lapply(group, function(y){
-    as.matrix(x[x[groupname] == y,][names(x) != groupname])
+    x_group <- x[x[groupname] == y,][names(x) != groupname]
+    x_mat <- matrix(as.numeric(unlist(x_group)), nrow = nrow(x_group))
   }), group)
   dots <- lazy_dots(...)
   mat <- do.call(covTest, c(x = list(x), lazy_eval(dots)))
@@ -85,7 +88,8 @@ homogeneityCovariances.resample <- function(x, ..., covTest = BoxesM){
   group <- as.character(groups[,1])
   groupname <- names(groups)
   ls <- setNames(lapply(group, function(y){
-    as.matrix(x[x[groupname] == y,][names(x) != groupname])
+    x_group <- x[x[groupname] == y,][names(x) != groupname]
+    x_mat <- matrix(as.numeric(unlist(x_group)), nrow = nrow(x_group))
   }), group)
   dots <- lazy_dots(...)
   lapply(ls, function(x){
