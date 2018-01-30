@@ -5,7 +5,6 @@
 #' 
 #' @param x data as a list of matrices
 #' @param ... other options passed to covTest method
-#' @param covTest homogeneity of covariance matrices test method
 #'
 #' @return A list with class "htest" containing the following components:
 #'

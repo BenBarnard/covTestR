@@ -38,8 +38,6 @@ SrivastavaYanagihara2010(x, ...)
 \item{x}{data as a list of matrices}
 
 \item{...}{other options passed to covTest method}
-
-\item{covTest}{homogeneity of covariance matrices test method}
 }
 \value{
 A list with class "htest" containing the following components:

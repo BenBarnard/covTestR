@@ -33,8 +33,6 @@ Srivastava2011(x, Sigma = "identity", ...)
 \item{Sigma}{Population covariance matrix as a matrix}
 
 \item{...}{other options passed to covTest method}
-
-\item{covTest}{structure of covariance matrix test method}
 }
 \value{
 A list with class "htest" containing the following components:

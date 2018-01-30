@@ -5,7 +5,6 @@
 #' @param x data as a list of matrices
 #' @param Sigma Population covariance matrix as a matrix
 #' @param ... other options passed to covTest method
-#' @param covTest structure of covariance matrix test method
 #'
 #' @return A list with class "htest" containing the following components:
 #'
