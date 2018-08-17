@@ -38,68 +38,47 @@ structureCovariances <- function(x, Sigma = "identity", ..., covTest = Nagao1973
 
 #' @export
 #' @keywords internal
-#' @importFrom stats setNames
-#' @importFrom lazyeval lazy_dots
-#' @importFrom lazyeval lazy_eval
-structureCovariances.data.frame <- function(x, Sigma = "identity", ..., covTest = Nagao1973){
-  dots <- lazy_dots(...)
-  groupname <- names(unique(x[paste(dots$group$expr)]))
-  if(!(identical(groupname, character(0)))){
-    group <- as.character(unique(x[[paste(dots$group$expr)]]))
-  dots <- dots[!("group" %in% names(dots))]
-  ls <- setNames(lapply(group, function(y){
-    x_group <- x[x[groupname] == group,][names(x) != groupname]
-    x_mat <- matrix(as.numeric(unlist(x_group)), nrow = nrow(x_group))
-  }), group)
-  }else{
-    ls <- list(Data = matrix(as.numeric(unlist(x)), nrow = nrow(x)))
-  }
-  lapply(ls, function(x){
-    mat <- do.call(covTest, c(x = list(x), Sigma = list(Sigma), lazy_eval(dots)))
+#' @importFrom rlang enexprs invoke list2
+#' @importFrom purrr map
+structureCovariances.data.frame <- function(x, Sigma = "identity", group, ..., covTest = Nagao1973){
+  
+  dots <- enexprs(...)
+  group <- enexpr(group)
+  
+  x <- map(split(x, eval_tidy(group, x)), function(y){
+    
+    as.matrix(y[-which(names(y) == paste(group))], ncol = length(names(y)) - 1)
+  })
+  
+  
+  lapply(x, function(y){
+    call <- list2(y, Sigma = Sigma, group = group, dots)
+    mat <- invoke(covTest, call)
     mat
   })
 }
 
 #' @export
 #' @keywords internal
-#' @importFrom dplyr as_data_frame
-#' @importFrom stats setNames
-#' @importFrom lazyeval lazy_dots
-#' @importFrom lazyeval lazy_eval
+#' @importFrom rlang enexprs invoke list2
+#' @importFrom purrr map
 structureCovariances.grouped_df <- function(x, Sigma = "identity", ..., covTest = Nagao1973){
-  groups <- attributes(x)$labels
-  x <- as_data_frame(x)
-  group <- as.character(groups[,1])
-  groupname <- names(groups)
-  ls <- setNames(lapply(group, function(y){
-    x_group <- x[x[groupname] == group,][names(x) != groupname]
-    x_mat <- matrix(as.numeric(unlist(x_group)), nrow = nrow(x_group))
-  }), group)
-  dots <- lazy_dots(...)
-  lapply(ls, function(x){
-    mat <- do.call(covTest, c(x = list(x), Sigma = list(Sigma), lazy_eval(dots)))
+  
+  dots <- enexprs(...)
+  
+  group <- attributes(x)$vars
+  
+  x <- map(split(x, attributes(x)$labels), function(y){
+    
+    as.matrix(y[-which(names(y) == paste(group))], ncol = length(names(y)) - 1)
+  })
+  
+  lapply(x, function(y){
+    call <- list2(y, Sigma = Sigma, group = group, dots)
+    mat <- rlang::invoke(covTest, call)
     mat
   })
+ 
+
 }
 
-#' @export
-#' @keywords internal
-#' @importFrom dplyr as_data_frame
-#' @importFrom stats setNames
-#' @importFrom lazyeval lazy_dots
-#' @importFrom lazyeval lazy_eval
-structureCovariances.resample <- function(x, Sigma = "identity", ..., covTest = Nagao1973){
-  x <- as_data_frame(x)
-  groups <- attributes(x)$labels
-  group <- as.character(groups[,1])
-  groupname <- names(groups)
-  ls <- setNames(lapply(group, function(y){
-    x_group <- x[x[groupname] == group,][names(x) != groupname]
-    x_mat <- matrix(as.numeric(unlist(x_group)), nrow = nrow(x_group))
-  }), group)
-  dots <- lazy_dots(...)
-  lapply(ls, function(x){
-    mat <- do.call(covTest, c(x = list(x), Sigma = list(Sigma), lazy_eval(dots)))
-    mat
-  })
-}

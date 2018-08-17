@@ -1,6 +1,6 @@
 #' @export
 #'
-#' @importFrom lazyeval lazy_dots
+#' @importFrom rlang list2
 #' @importFrom stats pchisq
 #'
 #' @references Srivastava, M. S. (2007). Testing the equality of two 
@@ -11,7 +11,7 @@
 #' @rdname homogeneityStatistics
 Srivastava2007 <- function(x, ...){
 
-  ls <- lazy_dots(...)
+  ls <- list2(...)
   matrix_ls <- x
 
   statistic <- Srivastava2007Stat(matrix_ls)

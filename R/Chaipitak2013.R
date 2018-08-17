@@ -1,4 +1,4 @@
-#' @importFrom lazyeval lazy_dots
+#' @importFrom rlang list2
 #' @importFrom stats pchisq
 #'
 #' @export
@@ -10,7 +10,7 @@
 #' @rdname homogeneityStatistics
 Chaipitak2013 <- function(x, ...){
 
-  ls <- lazy_dots(...)
+  ls <- list2(...)
   matrix_ls <- x
 
   statistic <- Chaipitak2013Stat(matrix_ls)

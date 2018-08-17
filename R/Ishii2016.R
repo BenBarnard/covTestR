@@ -5,11 +5,11 @@
 #' \href{http://doi.org/10.1016/j.jspi.2015.10.007}{10.1016/j.jspi.2015.10.007}
 #' @rdname homogeneityStatistics
 #' @export
-#' @importFrom lazyeval lazy_dots
+#' @importFrom rlang list2
 #' @importFrom stats pf
 Ishii2016 <- function(x, ...) {
 
-  ls <- lazy_dots(...)
+  ls <- list2(...)
   matrix_ls <- x
 
   statistic <- Ishii2016Stat(matrix_ls)

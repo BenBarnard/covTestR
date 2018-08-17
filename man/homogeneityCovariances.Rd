@@ -48,3 +48,4 @@ homogeneityCovariances(iris, group = Species)
 \seealso{
 Other Testing for Homogeneity of Covariance Matrices: \code{\link{Ahmad2017}}
 }
+\concept{Testing for Homogeneity of Covariance Matrices}

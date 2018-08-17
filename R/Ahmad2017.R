@@ -1,4 +1,4 @@
-#' @importFrom lazyeval lazy_dots
+#' @importFrom rlang list2
 #' @importFrom stats pnorm
 #'
 #' @export
@@ -10,7 +10,7 @@
 #' @rdname homogeneityStatistics
 Ahmad2017 <- function(x, ...){
   
-  ls <- lazy_dots(...)
+  ls <- list2(...)
   
   samples <- order(sapply(x, function(dat){
     nrow(dat)
