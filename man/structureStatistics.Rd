@@ -96,3 +96,4 @@ the Dimension Under Non-normality. Journal of Multivariate Analysis,
 \seealso{
 Other Testing for Structure of Covariance Matrices: \code{\link{structureCovariances}}
 }
+\concept{Testing for Structure of Covariance Matrices}

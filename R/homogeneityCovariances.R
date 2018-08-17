@@ -40,71 +40,50 @@ homogeneityCovariances <- function(x, ..., covTest = BoxesM){
 
 #' @export
 #' @keywords internal
-#' @importFrom stats setNames
-#' @importFrom lazyeval lazy_dots
-#' @importFrom lazyeval lazy_eval
-homogeneityCovariances.data.frame <- function(x, ..., covTest = BoxesM){
-  dots <- lazy_dots(...)
-  groupname <- names(unique(x[paste(dots$group$expr)]))
-  group <- as.character(unique(x[[paste(dots$group$expr)]]))
-  dots <- dots[!("group" %in% names(dots))]
-  x <- setNames(lapply(group, function(y){
-    x_group <- x[x[groupname] == y,][names(x) != groupname]
-    x_mat <- matrix(as.numeric(unlist(x_group)), nrow = nrow(x_group))
-  }), group)
-   mat <- do.call(covTest, c(x = list(x), lazy_eval(dots)))
+#' @importFrom rlang enexprs enexpr eval_tidy invoke list2
+#' @importFrom purrr map
+homogeneityCovariances.data.frame <- function(x, group, ..., covTest = BoxesM){
+  dots <- enexprs(...)
+  group <- enexpr(group)
+
+  x <- map(split(x, eval_tidy(group, x)), function(y){
+    
+    as.matrix(y[-which(names(y) == paste(group))], ncol = length(names(y)) - 1)
+  })
+  
+  ls <- list2(x, group, dots)
+   mat <- rlang::invoke(covTest, ls)
    mat
 }
 
 #' @export
 #' @keywords internal
-#' @importFrom dplyr as_data_frame
-#' @importFrom stats setNames
-#' @importFrom lazyeval lazy_dots
-#' @importFrom lazyeval lazy_eval
+#' @importFrom rlang enexprs invoke list2
+#' @importFrom purrr map
 homogeneityCovariances.grouped_df <- function(x, ..., covTest = BoxesM){
-  groups <- attributes(x)$labels
-  x <- as_data_frame(x)
-  group <- as.character(groups[,1])
-  groupname <- names(groups)
-  x <- setNames(lapply(group, function(y){
-    x_group <- x[x[groupname] == y,][names(x) != groupname]
-    x_mat <- matrix(as.numeric(unlist(x_group)), nrow = nrow(x_group))
-  }), group)
-  dots <- lazy_dots(...)
-  mat <- do.call(covTest, c(x = list(x), lazy_eval(dots)))
+ 
+  dots <- enexprs(...)
+  
+  group <- attributes(x)$vars
+  
+  x <- map(split(x, attributes(x)$labels), function(y){
+    
+    as.matrix(y[-which(names(y) == paste(group))], ncol = length(names(y)) - 1)
+  })
+  
+  ls <- list2(x, group = group, dots)
+  mat <- rlang::invoke(covTest, ls)
   mat
 }
 
-#' @export
-#' @keywords internal
-#' @importFrom dplyr as_data_frame
-#' @importFrom stats setNames
-#' @importFrom lazyeval lazy_dots
-#' @importFrom lazyeval lazy_eval
-homogeneityCovariances.resample <- function(x, ..., covTest = BoxesM){
-  x <- as_data_frame(x)
-  groups <- attributes(x)$labels
-  group <- as.character(groups[,1])
-  groupname <- names(groups)
-  ls <- setNames(lapply(group, function(y){
-    x_group <- x[x[groupname] == y,][names(x) != groupname]
-    x_mat <- matrix(as.numeric(unlist(x_group)), nrow = nrow(x_group))
-  }), group)
-  dots <- lazy_dots(...)
-  lapply(ls, function(x){
-    mat <- do.call(covTest, c(x = list(x), lazy_eval(dots)))
-    mat
-  })
-}
 
 #' @export
 #' @keywords internal
-#' @importFrom lazyeval lazy_dots
-#' @importFrom lazyeval lazy_eval
+#' @importFrom rlang invoke list2 enexprs
 homogeneityCovariances.list <- function(x, ..., covTest = BoxesM){
-  dots <- lazy_dots(...)
+  dots <- enexprs(...)
   matrix_ls <- x
-    mat <- do.call(covTest, c(x = matrix_ls, lazy_eval(dots)))
+  ls <- list2(x, dots)
+    mat <- rlang::invoke(covTest, ls)
     mat
 }

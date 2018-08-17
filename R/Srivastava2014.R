@@ -1,5 +1,5 @@
 #' @export
-#' @importFrom lazyeval lazy_dots
+#' @importFrom rlang list2
 #' @importFrom stats pchisq
 #'
 #' @references Srivastava, M., Yanagihara, H., and Kubokawa T. (2014). 
@@ -9,7 +9,7 @@
 #' @rdname homogeneityStatistics
 Srivastava2014 <- function(x, ...){
 
-  ls <- lazy_dots(...)
+  ls <- list2(...)
   matrix_ls <- x
   statistic <- Srivastava2014Stat(matrix_ls)
 

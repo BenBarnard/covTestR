@@ -60,8 +60,7 @@ Fisher2012.covariance <- function(x, Sigma = "identity", ...){
 
 #' @export
 #' @keywords internal
-#' @importFrom stats cov
-#' @importFrom stats pnorm
+#' @importFrom stats pnorm cov
 #'
 Fisher2012.matrix <- function(x, Sigma = "identity", ...){
   p <- ncol(x)

@@ -119,3 +119,4 @@ the dimension. Journal of Multivariate Analysis, 101(6):1319-1329.
 \seealso{
 Other Testing for Homogeneity of Covariance Matrices: \code{\link{homogeneityCovariances}}
 }
+\concept{Testing for Homogeneity of Covariance Matrices}

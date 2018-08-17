@@ -1,5 +1,5 @@
 #' @export
-#' @importFrom lazyeval lazy_dots
+#' @importFrom rlang list2
 #' @importFrom stats pchisq
 #' 
 #' @references Schott, J (2001). Some Tests for the Equality of Covariance
@@ -8,7 +8,7 @@
 #' @rdname homogeneityStatistics
 Schott2001 <- function(x, ...) {
 
-  ls <- lazy_dots(...)
+  ls <- list2(...)
   matrix_ls <- x
 
   statistic <- Schott2001Stat(matrix_ls)

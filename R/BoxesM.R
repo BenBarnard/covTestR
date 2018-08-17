@@ -1,7 +1,10 @@
 #' @export
+#' 
+#' @importFrom rlang list2
+#' 
 #' @rdname homogeneityStatistics
 BoxesM <- function(x, ...){
-  ls <- lazy_dots(...)
+  ls <- list2(...)
   matrix_ls <- x
   statistic <- BoxesMStat(matrix_ls)
   

@@ -46,3 +46,4 @@ The \code{\link{structureCovariances}} function is a wrapper function that forma
 \seealso{
 Other Testing for Structure of Covariance Matrices: \code{\link{Ahmad2015}}
 }
+\concept{Testing for Structure of Covariance Matrices}
