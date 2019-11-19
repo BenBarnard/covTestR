@@ -2,9 +2,9 @@ Package: covTestR
 Type: Package
 Title: Covariance Matrix Tests
 Version: 0.1.4
-Authors@R: c(person("Ben", "Barnard", email = "ben_barnard@outlook.com", role = c("aut", "cre")),
+Authors@R: c(person("Ben", "Barnard", email = "benbarnard87@gmail.com", role = c("aut", "cre")),
   person("Dean", "Young", email = "dean_young@baylor.edu", role = c("aut")))
-Maintainer: Ben Barnard <ben_barnard@outlook.com>
+Maintainer: Ben Barnard <benbarnard87@gmail.com>
 Description: Testing functions for Covariance Matrices. These tests include high-dimension homogeneity of covariance
   matrix testing described by Schott (2007) <doi:10.1016/j.csda.2007.03.004> and high-dimensional one-sample tests of 
   covariance matrix structure described by Fisher, et al. (2010) <doi:10.1016/j.jmva.2010.07.004>. Covariance matrix
