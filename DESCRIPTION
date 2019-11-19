@@ -11,7 +11,7 @@ Description: Testing functions for Covariance Matrices. These tests include high
   tests use C++ to speed performance and allow larger data sets.
 License: GPL-2
 LazyData: TRUE
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 URL: https://covtestr.bearstatistics.com
 BugReports: https://github.com/BenBarnard/covTestR/issues
 Depends:
@@ -22,3 +22,4 @@ Imports:
     Rcpp
 LinkingTo: Rcpp, RcppArmadillo
 SystemRequirements: C++11
+Encoding: UTF-8
