@@ -14,11 +14,7 @@ matrix:
     - r: release
       os: linux
       after_success:
-       - Rscript -e 'install.packages("tidyverse")'
-       - Rscript -e 'devtools::install_github("BenBarnard/covTestR")'
-       - Rscript -e 'devtools::install_github("r-lib/pkgdown")'
-       - Rscript -e 'pkgdown::build_site()'
-       - Rscript -e 'covr::codecov()'
+       - Rscript after.R
       deploy:
         provider: pages
         skip_cleanup: true
